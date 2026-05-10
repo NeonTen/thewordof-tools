@@ -130,19 +130,95 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
   const handlePrint = () => window.print()
 
   // Rendering Helpers
-  const renderSkills = (accentColor = '#2563eb') => (
-    <div style={{ marginBottom: '24px' }}>
-      <h2 style={{ fontSize: '14px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px', borderBottom: `1px solid ${accentColor}`, paddingBottom: '4px', color: templateId === 'futuristic' ? 'white' : '#111827' }}>Skills</h2>
-      {skillMode === 'text' ? (
+  const getHeadingStyle = (title: string, accentColor: string) => {
+    const base: React.CSSProperties = {
+      fontSize: '14px',
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      letterSpacing: '0.05em',
+      marginBottom: '12px',
+      color: templateId === 'futuristic' ? 'white' : '#111827',
+      display: 'block',
+    }
+
+    if (templateId === 'modern' || templateId === 'creative' || templateId === 'classic') {
+      return { ...base, borderBottom: `2px solid ${accentColor}`, paddingBottom: '4px' }
+    }
+    if (templateId === 'elegant') {
+      return { ...base, borderBottom: `1px solid ${accentColor}`, paddingBottom: '6px', textAlign: 'center' as const, fontWeight: 'normal' }
+    }
+    if (templateId === 'bold') {
+      return { ...base, borderLeft: `4px solid ${accentColor}`, paddingLeft: '15px', marginBottom: '15px' }
+    }
+    if (templateId === 'sidebar') {
+      return { ...base, fontSize: '16px', borderBottom: `1px solid ${accentColor}`, paddingBottom: '4px' }
+    }
+    if (templateId === 'futuristic') {
+      return { ...base, color: '#38bdf8', fontSize: '14px', letterSpacing: '2px', border: 'none' }
+    }
+    if (templateId === 'startup') {
+      if (title === 'Contact' || title === 'Skills') {
+        return { ...base, fontSize: '14px', color: '#64748b', marginBottom: '12px', border: 'none' }
+      }
+      return { ...base, fontSize: '20px', color: accentColor, borderBottom: `2px solid ${accentColor}`, paddingBottom: '4px', textTransform: 'none' as const }
+    }
+    if (templateId === 'tech') {
+      return { ...base, fontFamily: 'monospace', color: accentColor, textTransform: 'none' as const, border: 'none' }
+    }
+
+    return base
+  }
+
+  const renderSection = (title: string, content: React.ReactNode, accentColor = '#2563eb') => {
+    if (!content) return null
+    
+    // Tech template has a very specific structure for some sections
+    if (templateId === 'tech' && (title === 'Experience' || title === 'Projects' || title === 'Education')) {
+      const constName = title.toUpperCase()
+      return (
+        <div style={{ marginTop: '24px', paddingTop: '24px', borderTop: '1px dashed #cbd5e1' }}>
+          <h3 style={getHeadingStyle(title, accentColor)}>const {constName} = [</h3>
+          {content}
+          <h3 style={getHeadingStyle(title, accentColor)}>]</h3>
+        </div>
+      )
+    }
+
+    return (
+      <div style={{ marginBottom: '32px' }}>
+        <h2 style={getHeadingStyle(title, accentColor)}>{title}</h2>
+        {content}
+      </div>
+    )
+  }
+
+  const renderSummary = (accentColor = '#2563eb') => 
+    renderSection("Summary", 
+      <p style={{ 
+        fontSize: '14px', 
+        lineHeight: '1.6', 
+        color: templateId === 'futuristic' ? 'rgba(255,255,255,0.8)' : '#374151',
+        margin: 0,
+        textAlign: templateId === 'elegant' ? 'center' : 'left' as const,
+        fontStyle: (templateId === 'elegant' || templateId === 'minimal') ? 'italic' : 'normal'
+      }}>
+        {templateId === 'tech' ? `/* ${cv.summary} */` : cv.summary}
+      </p>, 
+      accentColor
+    )
+
+  const renderSkills = (accentColor = '#2563eb') => 
+    renderSection("Skills", 
+      skillMode === 'text' ? (
         <p style={{ fontSize: '14px', color: templateId === 'futuristic' ? 'rgba(255,255,255,0.8)' : '#374151', margin: 0 }}>{cv.skillsText}</p>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {skills.map(s => {
             if (templateId === 'tech') {
               const dots = Math.floor(s.rating / 10);
               const bar = '[' + '='.repeat(dots) + '>'.repeat(dots > 0 ? 1 : 0) + ' '.repeat(Math.max(0, 10 - dots - (dots > 0 ? 1 : 0))) + ']';
               return (
-                <div key={s.id} style={{ fontFamily: 'monospace', fontSize: '13px', color: '#334155' }}>
+                <div key={s.id} style={{ fontFamily: 'monospace', fontSize: '13px', color: '#334155', paddingLeft: '20px' }}>
                   <span style={{ color: '#2563eb' }}>{s.name}</span>: {bar} {s.rating}%
                 </div>
               );
@@ -160,47 +236,82 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
             );
           })}
         </div>
-      )}
-    </div>
-  )
+      ), 
+      accentColor
+    )
 
-  const renderProjects = (accentColor = '#2563eb') => (
-    projects.length > 0 && (
-      <div style={{ marginBottom: '24px' }}>
-        <h2 style={{ fontSize: '14px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px', borderBottom: `1px solid ${accentColor}`, paddingBottom: '4px', color: templateId === 'futuristic' ? 'white' : '#111827' }}>Projects</h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {projects.map(p => (
+  const renderExperience = (accentColor = '#2563eb') => 
+    renderSection("Experience", 
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {experience.map(e => {
+          if (templateId === 'tech') {
+            return <div key={e.id} style={{ paddingLeft: '20px', color: '#334155', fontSize: '13px' }}><p style={{ margin: 0 }}>{`{ role: "${e.role}", company: "${e.company}", desc: "${e.desc}" },`}</p></div>
+          }
+          if (templateId === 'futuristic') {
+            return (
+              <div key={e.id} style={{ borderLeft: '2px solid rgba(56,189,248,0.3)', paddingLeft: '20px', position: 'relative' }}>
+                <div style={{ position: 'absolute', left: '-5px', top: '6px', width: '8px', height: '8px', backgroundColor: '#38bdf8', borderRadius: '50%', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }} />
+                <div style={{ fontWeight: 'bold', fontSize: '16px' }}>{e.role}</div>
+                <div style={{ fontSize: '13px', color: 'rgba(56,189,248,0.7)' }}>{e.company} / {e.period}</div>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', marginTop: '8px', margin: 0 }}>{e.desc}</p>
+              </div>
+            )
+          }
+          return (
+            <div key={e.id}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                <span style={{ color: templateId === 'futuristic' ? 'white' : 'inherit' }}>{e.role} {templateId === 'elegant' ? '|' : '@'} {e.company}</span>
+                <span style={{ fontSize: '12px', color: '#666', fontWeight: 'normal' }}>{e.period}</span>
+              </div>
+              <p style={{ fontSize: '13px', color: '#4b5563', marginTop: '4px', margin: 0 }}>{e.desc}</p>
+            </div>
+          )
+        })}
+      </div>, 
+      accentColor
+    )
+
+  const renderProjects = (accentColor = '#2563eb') => 
+    projects.length > 0 && renderSection("Projects", 
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {projects.map(p => {
+          if (templateId === 'tech') {
+            return <div key={p.id} style={{ paddingLeft: '20px', color: '#334155', fontSize: '13px' }}><p style={{ margin: 0 }}>{`{ title: "${p.title}", link: "${p.link}", desc: "${p.desc}" },`}</p></div>
+          }
+          return (
             <div key={p.id}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <h3 style={{ fontWeight: '600', color: templateId === 'futuristic' ? '#38bdf8' : '#111827', margin: 0 }}>{p.title}</h3>
+                <h3 style={{ fontWeight: '600', color: templateId === 'futuristic' ? '#38bdf8' : '#111827', margin: 0, fontSize: '14px' }}>{p.title}</h3>
                 <span style={{ fontSize: '12px', color: accentColor }}>{p.link}</span>
               </div>
-              <p style={{ fontSize: '14px', color: templateId === 'futuristic' ? 'rgba(255,255,255,0.6)' : '#374151', margin: '2px 0 0 0' }}>{p.desc}</p>
+              <p style={{ fontSize: '14px', color: templateId === 'futuristic' ? 'rgba(255,255,255,0.6)' : '#374151', margin: '4px 0 0 0' }}>{p.desc}</p>
             </div>
-          ))}
-        </div>
-      </div>
+          )
+        })}
+      </div>, 
+      accentColor
     )
-  )
 
-  const renderEducation = (accentColor = '#2563eb') => (
-    education.length > 0 && (
-      <div style={{ marginBottom: '24px' }}>
-        <h2 style={{ fontSize: '14px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px', borderBottom: `1px solid ${accentColor}`, paddingBottom: '4px', color: templateId === 'futuristic' ? 'white' : '#111827' }}>Education</h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {education.map(edu => (
+  const renderEducation = (accentColor = '#2563eb') => 
+    education.length > 0 && renderSection("Education", 
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {education.map(edu => {
+          if (templateId === 'tech') {
+            return <div key={edu.id} style={{ paddingLeft: '20px', color: '#334155', fontSize: '13px' }}><p style={{ margin: 0 }}>{`{ school: "${edu.school}", degree: "${edu.degree}", period: "${edu.period}" },`}</p></div>
+          }
+          return (
             <div key={edu.id}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
                 <span style={{ color: templateId === 'futuristic' ? 'white' : 'inherit' }}>{edu.school}</span>
-                <span style={{ color: templateId === 'futuristic' ? 'rgba(255,255,255,0.4)' : '#6b7280', fontSize: '12px' }}>{edu.period}</span>
+                <span style={{ color: templateId === 'futuristic' ? 'rgba(255,255,255,0.4)' : '#6b7280', fontSize: '12px', fontWeight: 'normal' }}>{edu.period}</span>
               </div>
               <p style={{ fontSize: '13px', color: templateId === 'futuristic' ? 'rgba(255,255,255,0.6)' : '#4b5563', margin: 0 }}>{edu.degree}</p>
             </div>
-          ))}
-        </div>
-      </div>
+          )
+        })}
+      </div>, 
+      accentColor
     )
-  )
 
   return (<>
     {/* Global Print Styles to fix margins */}
@@ -401,10 +512,11 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
                 <p style={{ fontSize: '20px', color: '#2563eb', fontWeight: '600', margin: '4px 0 0 0' }}>{cv.title}</p>
                 <div style={{ display: 'flex', gap: '15px', marginTop: '10px', fontSize: '13px', color: '#6b7280' }}><span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span></div>
               </div>
-              <div style={{ marginBottom: '24px' }}><h2 style={{ fontSize: '14px', fontWeight: 'bold', textTransform: 'uppercase', color: '#2563eb', marginBottom: '8px' }}>Summary</h2><p style={{ fontSize: '14px', lineHeight: '1.6', color: '#374151' }}>{cv.summary}</p></div>
+              {renderSummary('#2563eb')}
               {renderSkills('#2563eb')}
-              <div style={{ marginBottom: '24px' }}><h2 style={{ fontSize: '14px', fontWeight: 'bold', textTransform: 'uppercase', color: '#2563eb', marginBottom: '8px' }}>Experience</h2>{experience.map(e => <div key={e.id} style={{ marginBottom: '15px' }}><p style={{ fontWeight: 'bold', margin: 0 }}>{e.role} @ {e.company}</p><p style={{ fontSize: '12px', color: '#666' }}>{e.period}</p><p style={{ fontSize: '13px' }}>{e.desc}</p></div>)}</div>
-              {renderProjects('#2563eb')}{renderEducation('#2563eb')}
+              {renderExperience('#2563eb')}
+              {renderProjects('#2563eb')}
+              {renderEducation('#2563eb')}
             </div>
           )}
 
@@ -412,10 +524,11 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
           {templateId === 'elegant' && (
             <div style={{ padding: '60px', fontFamily: 'serif' }}>
               <div style={{ textAlign: 'center', marginBottom: '40px' }}><h1 style={{ fontSize: '38px', letterSpacing: '2px', fontWeight: 'normal', textTransform: 'uppercase', marginBottom: '10px' }}>{cv.name}</h1><div style={{ display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '13px', color: '#666' }}><span>{cv.location}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.email}</span></div></div>
-              <p style={{ textAlign: 'center', fontSize: '15px', fontStyle: 'italic', maxWidth: '600px', margin: '0 auto 30px auto', borderTop: '1px solid #ccc', paddingTop: '20px' }}>{cv.summary}</p>
+              {renderSummary('#000')}
               {renderSkills('#000')}
-              <div style={{ marginTop: '40px' }}><h3 style={{ textTransform: 'uppercase', fontSize: '14px', borderBottom: '1px solid #000', marginBottom: '15px' }}>Experience</h3>{experience.map(e => <div key={e.id} style={{ marginBottom: '15px' }}><p style={{ fontWeight: 'bold', margin: 0 }}>{e.role} | {e.company}</p><p style={{ fontSize: '14px' }}>{e.desc}</p></div>)}</div>
-              {renderProjects('#000')}{renderEducation('#000')}
+              {renderExperience('#000')}
+              {renderProjects('#000')}
+              {renderEducation('#000')}
             </div>
           )}
 
@@ -424,8 +537,19 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
             <div style={{ padding: '60px' }}>
                <h1 style={{ fontSize: '42px', fontWeight: '300', margin: 0 }}>{cv.name}</h1>
                <div style={{ display: 'grid', gridTemplateColumns: '150px 1fr', gap: '40px', marginTop: '40px' }}>
-                  <div style={{ fontSize: '12px', color: '#999', lineHeight: '2' }}>{photo && <img src={photo} style={{ width: '100px', height: '100px', borderRadius: '50%', marginBottom: '20px', objectFit: 'cover' }} />}<p>{cv.email}</p><p>{cv.phone}</p></div>
-                  <div><p style={{ fontSize: '15px', fontStyle: 'italic', marginBottom: '30px' }}>{cv.summary}</p>{renderSkills()}{experience.map(e => <div key={e.id} style={{ marginBottom: '15px' }}><p><b>{e.role}</b> - {e.company}</p><p style={{ fontSize: '13px' }}>{e.desc}</p></div>)}{renderProjects()}{renderEducation()}</div>
+                  <div style={{ fontSize: '12px', color: '#999', lineHeight: '2' }}>
+                    {photo && <img src={photo} style={{ width: '100px', height: '100px', borderRadius: '50%', marginBottom: '20px', objectFit: 'cover' }} />}
+                    <p>{cv.email}</p>
+                    <p>{cv.phone}</p>
+                    <p>{cv.location}</p>
+                  </div>
+                  <div>
+                    {renderSummary()}
+                    {renderSkills()}
+                    {renderExperience()}
+                    {renderProjects()}
+                    {renderEducation()}
+                  </div>
                </div>
             </div>
           )}
@@ -441,8 +565,17 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
                 {photo && <img src={photo} style={{ width: '120px', height: '120px', borderRadius: '12px', border: '4px solid #3b82f6', objectFit: 'cover' }} />}
               </div>
               <div style={{ padding: '40px', display: 'grid', gridTemplateColumns: '1fr 250px', gap: '40px' }}>
-                <div><h2 style={{ borderLeft: '4px solid #3b82f6', paddingLeft: '15px', textTransform: 'uppercase', fontSize: '18px', fontWeight: '900' }}>Summary</h2><p style={{ fontSize: '14px', marginTop: '10px' }}>{cv.summary}</p><h2 style={{ borderLeft: '4px solid #3b82f6', paddingLeft: '15px', textTransform: 'uppercase', fontSize: '18px', fontWeight: '900', marginTop: '30px' }}>Experience</h2>{experience.map(e => <div key={e.id} style={{ marginTop: '20px' }}><p style={{ fontWeight: 'bold' }}>{e.role} / {e.company}</p><p style={{ fontSize: '13px' }}>{e.desc}</p></div>)}{renderProjects('#3b82f6')}{renderEducation('#3b82f6')}</div>
-                <div style={{ backgroundColor: '#f3f4f6', padding: '20px', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}><h3 style={{ fontWeight: 'bold' }}>Contact</h3><p style={{ fontSize: '12px' }}>{cv.email}<br/>{cv.phone}</p><div style={{ marginTop: '20px' }}>{renderSkills('#3b82f6')}</div></div>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {renderSummary('#3b82f6')}
+                  {renderExperience('#3b82f6')}
+                  {renderProjects('#3b82f6')}
+                  {renderEducation('#3b82f6')}
+                </div>
+                <div style={{ backgroundColor: '#f3f4f6', padding: '20px', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+                  <h3 style={{ fontWeight: 'bold', marginBottom: '10px' }}>Contact</h3>
+                  <p style={{ fontSize: '12px', margin: '0 0 20px 0' }}>{cv.email}<br/>{cv.phone}<br/>{cv.location}</p>
+                  {renderSkills('#3b82f6')}
+                </div>
               </div>
             </div>
           )}
@@ -453,13 +586,15 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
                <div style={{ backgroundColor: '#f8fafc', padding: '40px 20px', borderRight: '1px solid #e2e8f0', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
                   {photo && <img src={photo} style={{ width: '140px', height: '140px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 30px auto', display: 'block', border: '4px solid white', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }} />}
                   <h2 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '20px', color: '#1e293b' }}>Contact</h2>
-                  <div style={{ fontSize: '13px', color: '#64748b', display: 'flex', flexDirection: 'column', gap: '10px' }}><p>{cv.email}</p><p>{cv.phone}</p><p>{cv.location}</p></div>
-                  <div style={{ marginTop: '40px' }}>{renderSkills('#1e293b')}</div>
+                  <div style={{ fontSize: '13px', color: '#64748b', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '40px' }}><p>{cv.email}</p><p>{cv.phone}</p><p>{cv.location}</p></div>
+                  {renderSkills('#1e293b')}
                </div>
-               <div style={{ padding: '60px 40px' }}>
+               <div style={{ padding: '60px 40px', display: 'flex', flexDirection: 'column' }}>
                   <h1 style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', margin: 0 }}>{cv.name}</h1><p style={{ fontSize: '18px', color: '#64748b', marginBottom: '40px' }}>{cv.title}</p>
-                  <h2 style={{ fontSize: '16px', fontWeight: 'bold', textTransform: 'uppercase', color: '#1e293b', marginBottom: '10px' }}>Summary</h2><p style={{ fontSize: '14px', marginBottom: '30px', color: '#334155' }}>{cv.summary}</p>
-                  <h2 style={{ fontSize: '16px', fontWeight: 'bold', textTransform: 'uppercase', color: '#1e293b', marginBottom: '10px' }}>Professional History</h2>{experience.map(e => <div key={e.id} style={{ marginBottom: '20px' }}><p style={{ fontWeight: 'bold', margin: 0 }}>{e.role}</p><p style={{ fontSize: '12px', color: '#64748b', marginBottom: '5px' }}>{e.company} | {e.period}</p><p style={{ fontSize: '14px', color: '#334155' }}>{e.desc}</p></div>)}{renderProjects('#1e293b')}{renderEducation('#1e293b')}
+                  {renderSummary('#1e293b')}
+                  {renderExperience('#1e293b')}
+                  {renderProjects('#1e293b')}
+                  {renderEducation('#1e293b')}
                </div>
             </div>
           )}
@@ -470,18 +605,21 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
                <div style={{ position: 'absolute', top: 0, right: 0, width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%)' }} />
                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid rgba(56,189,248,0.3)', paddingBottom: '30px', marginBottom: '40px' }}>
                   <div><h1 style={{ fontSize: '48px', fontWeight: 'bold', letterSpacing: '-2px', margin: 0, background: 'linear-gradient(to right, #38bdf8, #818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{cv.name}</h1><p style={{ fontSize: '20px', color: '#38bdf8', letterSpacing: '4px', textTransform: 'uppercase', marginTop: '5px' }}>{cv.title}</p></div>
-                  <div style={{ textAlign: 'right', fontSize: '13px', color: 'rgba(255,255,255,0.6)' }}><p>{cv.email}</p><p>{cv.phone}</p></div>
-               </div>
-               <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '60px' }}>
-                  <div className="space-y-10">
-                    <div><h2 style={{ color: '#38bdf8', fontSize: '14px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '15px' }}>Objective</h2><p style={{ fontSize: '15px', lineHeight: '1.8', color: 'rgba(255,255,255,0.8)' }}>{cv.summary}</p></div>
-                    <div><h2 style={{ color: '#38bdf8', fontSize: '14px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '15px' }}>Timeline</h2>{experience.map(e => <div key={e.id} style={{ borderLeft: '2px solid rgba(56,189,248,0.3)', paddingLeft: '20px', marginBottom: '30px', position: 'relative' }}><div style={{ position: 'absolute', left: '-5px', top: '0', width: '8px', height: '8px', backgroundColor: '#38bdf8', borderRadius: '50%', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }} /><div style={{ fontWeight: 'bold', fontSize: '16px' }}>{e.role}</div><div style={{ fontSize: '13px', color: 'rgba(56,189,248,0.7)' }}>{e.company} / {e.period}</div><p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', marginTop: '8px' }}>{e.desc}</p></div>)}</div>
-                    {renderProjects('#38bdf8')}
+                  <div style={{ textAlign: 'right', fontSize: '13px', color: 'rgba(255,255,255,0.6)' }}>
+                    <p style={{ margin: 0 }}>{cv.email}</p>
+                    <p style={{ margin: '4px 0 0 0' }}>{cv.phone}</p>
+                    <p style={{ margin: '4px 0 0 0' }}>{cv.location}</p>
                   </div>
-                  <div>
-                    {photo && <img src={photo} style={{ width: '100%', borderRadius: '30px', border: '1px solid rgba(56,189,248,0.5)', padding: '10px', marginBottom: '30px' }} />}
-                    {renderSkills('#38bdf8')}
+               </div>
+               <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '60px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {renderSummary('#38bdf8')}
+                    {renderExperience('#38bdf8')}
+                    {renderProjects('#38bdf8')}
                     {renderEducation('#38bdf8')}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {renderSkills('#38bdf8')}
                   </div>
                </div>
             </div>
@@ -491,20 +629,46 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
           {templateId === 'classic' && (
             <div style={{ padding: '60px', fontFamily: '"Times New Roman", Times, serif' }}>
                <div style={{ textAlign: 'center', borderBottom: '1px solid #000', paddingBottom: '10px', marginBottom: '30px' }}><h1 style={{ fontSize: '36px', margin: 0 }}>{cv.name}</h1><p style={{ fontSize: '14px' }}>{cv.email} | {cv.phone} | {cv.location}</p></div>
-               <div style={{ marginBottom: '25px' }}><h2 style={{ fontSize: '16px', borderBottom: '1px solid #000', textTransform: 'uppercase' }}>Objective</h2><p style={{ fontSize: '14px', marginTop: '5px' }}>{cv.summary}</p></div>
+               {renderSummary('#000')}
                {renderSkills('#000')}
-               <div style={{ marginBottom: '25px' }}><h2 style={{ fontSize: '16px', borderBottom: '1px solid #000', textTransform: 'uppercase' }}>Experience</h2>{experience.map(e => <div key={e.id} style={{ marginTop: '10px' }}><div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}><span>{e.role}</span><span>{e.period}</span></div><p style={{ fontStyle: 'italic', fontSize: '14px' }}>{e.company}</p><p style={{ fontSize: '14px' }}>{e.desc}</p></div>)}</div>
-               {renderProjects('#000')}{renderEducation('#000')}
+               {renderExperience('#000')}
+               {renderProjects('#000')}
+               {renderEducation('#000')}
             </div>
           )}
 
           {/* Startup Template */}
           {templateId === 'startup' && (
             <div style={{ padding: '40px' }}>
-               <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '40px' }}>{photo && <img src={photo} style={{ width: '120px', height: '120px', borderRadius: '30px', objectFit: 'cover' }} />}<div><h1 style={{ fontSize: '40px', fontWeight: 'black', letterSpacing: '-1.5px', color: '#0f172a' }}>{cv.name}</h1><p style={{ fontSize: '18px', color: '#6366f1', fontWeight: 'bold' }}>{cv.title}</p></div></div>
+               <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '30px' }}>
+                 {photo && <img src={photo} style={{ width: '120px', height: '120px', borderRadius: '30px', objectFit: 'cover' }} />}
+                 <div>
+                   <h1 style={{ fontSize: '40px', fontWeight: 'black', letterSpacing: '-1.5px', color: '#0f172a' }}>{cv.name}</h1>
+                   <p style={{ fontSize: '18px', color: '#6366f1', fontWeight: 'bold' }}>{cv.title}</p>
+                 </div>
+               </div>
+               
+               <div style={{ width: '100%', marginBottom: '40px' }}>
+                 {renderSummary('#6366f1')}
+               </div>
+
                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '40px' }}>
-                  <div><div style={{ backgroundColor: '#f1f5f9', padding: '20px', borderRadius: '20px', marginBottom: '30px', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}><p style={{ fontSize: '14px', color: '#475569' }}>{cv.summary}</p></div><h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '15px' }}>Experience</h2>{experience.map(e => <div key={e.id} style={{ marginBottom: '25px' }}><p style={{ fontWeight: 'bold', fontSize: '16px' }}>{e.role}</p><p style={{ color: '#6366f1', fontSize: '13px' }}>{e.company} / {e.period}</p><p style={{ fontSize: '14px', color: '#475569' }}>{e.desc}</p></div>)}</div>
-                  <div>{renderSkills('#6366f1')}{renderProjects('#6366f1')}{renderEducation('#6366f1')}</div>
+                  <div>
+                    {renderExperience('#6366f1')}
+                    {renderProjects('#6366f1')}
+                    {renderEducation('#6366f1')}
+                  </div>
+                  <div>
+                    {renderSection("Contact", 
+                      <div style={{ fontSize: '13px', color: '#475569', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <p style={{ margin: 0 }}>{cv.email}</p>
+                        <p style={{ margin: 0 }}>{cv.phone}</p>
+                        <p style={{ margin: 0 }}>{cv.location}</p>
+                      </div>,
+                      '#64748b'
+                    )}
+                    {renderSkills('#6366f1')}
+                  </div>
                </div>
             </div>
           )}
@@ -515,11 +679,18 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
               <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '40px 20px', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
                 {photo && <img src={photo} style={{ width: '120px', height: '120px', borderRadius: '24px', objectFit: 'cover', marginBottom: '20px', border: '4px solid rgba(255,255,255,0.2)' }} />}
                 <h1 style={{ fontSize: '28px', fontWeight: '900', lineHeight: '1.1', marginBottom: '10px' }}>{cv.name}</h1><p style={{ fontSize: '14px', opacity: 0.8, marginBottom: '40px' }}>{cv.title}</p>
-                <div style={{ fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}><p>{cv.email}</p><p>{cv.phone}</p></div>
+                <div style={{ fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <p style={{ margin: 0 }}>{cv.email}</p>
+                  <p style={{ margin: 0 }}>{cv.phone}</p>
+                  <p style={{ margin: 0 }}>{cv.location}</p>
+                </div>
               </div>
-              <div style={{ padding: '40px' }}>
-                <h2 style={{ color: '#2563eb', fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>About</h2><p style={{ fontSize: '14px', marginBottom: '30px' }}>{cv.summary}</p>
-                {renderSkills('#2563eb')}<h2 style={{ color: '#2563eb', fontSize: '18px', fontWeight: 'bold', marginTop: '30px' }}>History</h2>{experience.map(e => <div key={e.id} style={{ marginBottom: '20px' }}><p style={{ fontWeight: 'bold' }}>{e.role}</p><p style={{ fontSize: '12px' }}>{e.company} | {e.period}</p><p style={{ fontSize: '13px' }}>{e.desc}</p></div>)}{renderProjects('#2563eb')}{renderEducation('#2563eb')}
+              <div style={{ padding: '40px', display: 'flex', flexDirection: 'column' }}>
+                {renderSummary('#2563eb')}
+                {renderSkills('#2563eb')}
+                {renderExperience('#2563eb')}
+                {renderProjects('#2563eb')}
+                {renderEducation('#2563eb')}
               </div>
             </div>
           )}
@@ -531,32 +702,15 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
                   <h1 style={{ fontSize: '24px', margin: 0 }}>&gt; {cv.name}</h1>
                   <p style={{ color: '#2563eb' }}>// {cv.title}</p>
                   <div style={{ display: 'flex', gap: '20px', fontSize: '12px', marginTop: '10px' }}>
-                    <span>@: {cv.email}</span><span>#: {cv.phone}</span>
+                    <span>@: {cv.email}</span><span>#: {cv.phone}</span><span>L: {cv.location}</span>
                   </div>
                </div>
-               <div style={{ marginTop: '20px' }}>
-                  <p style={{ color: '#64748b', marginBottom: '30px' }}>/* {cv.summary} */</p>
+               <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column' }}>
+                  {renderSummary('#2563eb')}
                   {renderSkills('#2563eb')}
-                  
-                  <h3 style={{ color: '#2563eb', fontSize: '14px', marginBottom: '5px' }}>const EXPERIENCE = [</h3>
-                  {experience.map(e => <div key={e.id} style={{ paddingLeft: '20px', color: '#334155', fontSize: '13px' }}><p style={{ margin: 0 }}>{`{ role: "${e.role}", company: "${e.company}", desc: "${e.desc}" },`}</p></div>)}
-                  <h3 style={{ color: '#2563eb', fontSize: '14px' }}>]</h3>
-
-                  {projects.length > 0 && (
-                    <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px dashed #cbd5e1' }}>
-                      <h3 style={{ color: '#2563eb', fontSize: '14px', marginBottom: '5px' }}>const PROJECTS = [</h3>
-                      {projects.map(p => <div key={p.id} style={{ paddingLeft: '20px', color: '#334155', fontSize: '13px' }}><p style={{ margin: 0 }}>{`{ title: "${p.title}", link: "${p.link}", desc: "${p.desc}" },`}</p></div>)}
-                      <h3 style={{ color: '#2563eb', fontSize: '14px' }}>]</h3>
-                    </div>
-                  )}
-
-                  {education.length > 0 && (
-                    <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px dashed #cbd5e1' }}>
-                      <h3 style={{ color: '#2563eb', fontSize: '14px', marginBottom: '5px' }}>const EDUCATION = [</h3>
-                      {education.map(edu => <div key={edu.id} style={{ paddingLeft: '20px', color: '#334155', fontSize: '13px' }}><p style={{ margin: 0 }}>{`{ school: "${edu.school}", degree: "${edu.degree}", period: "${edu.period}" },`}</p></div>)}
-                      <h3 style={{ color: '#2563eb', fontSize: '14px' }}>]</h3>
-                    </div>
-                  )}
+                  {renderExperience('#2563eb')}
+                  {renderProjects('#2563eb')}
+                  {renderEducation('#2563eb')}
                </div>
             </div>
           )}
