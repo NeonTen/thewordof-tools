@@ -18,14 +18,15 @@ export function SyncPlanButton() {
       
       if (result.success) {
         setSynced(true)
-        // This triggers next-auth to refresh the session JWT with explicit new data
-        await update({ role: "PRO" })
-        // Force a page reload after a short delay to ensure all server components update
+        await update({ role: result.role })
         setTimeout(() => {
           window.location.reload()
         }, 1000)
       } else if (result.message) {
+        // Refresh session in case role changed to USER in DB
+        await update({})
         alert(result.message)
+        window.location.reload()
       } else if (result.error) {
         alert(result.error)
       }

@@ -13,7 +13,12 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Loader2 } from "lucide-react"
 
-const userAuthSchema = z.object({
+const loginSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  password: z.string().min(1, { message: "Password is required." }),
+})
+
+const registerSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
   password: z.string()
     .min(8, { message: "Password must be at least 8 characters long." })
@@ -22,7 +27,7 @@ const userAuthSchema = z.object({
     }),
 })
 
-type FormData = z.infer<typeof userAuthSchema>
+type FormData = z.infer<typeof registerSchema>
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   type: "login" | "register"
@@ -34,7 +39,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(userAuthSchema),
+    resolver: zodResolver(type === "register" ? registerSchema : loginSchema),
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false)
