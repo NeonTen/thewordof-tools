@@ -1,11 +1,15 @@
 import { SchemaGenerator } from "@/components/tools/schema-generator"
+import { auth } from "@/auth"
 
 export const metadata = {
   title: "SEO Schema Generator",
   description: "Generate JSON-LD schema markup for your website.",
 }
 
-export default function SchemaGeneratorPage() {
+export default async function SchemaGeneratorPage() {
+  const session = await auth()
+  const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
+
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -15,7 +19,7 @@ export default function SchemaGeneratorPage() {
         </p>
       </div>
 
-      <SchemaGenerator />
+      <SchemaGenerator isPro={isPro} />
     </div>
   )
 }

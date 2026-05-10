@@ -1,202 +1,775 @@
 "use client"
 
-import React, { useState } from "react"
-import { Copy, Check } from "lucide-react"
+import React, { useState, useEffect } from "react"
+import { 
+  Copy, 
+  Check, 
+  Sparkles, 
+  Wand2, 
+  Loader2, 
+  Plus, 
+  Trash2, 
+  Info,
+  ChevronRight,
+  Code,
+  Layout,
+  Globe,
+  User as UserIcon,
+  ShoppingBag,
+  Home as HomeIcon,
+  Utensils,
+  Briefcase,
+  Video,
+  Calendar,
+  GraduationCap,
+  MessageSquare,
+  Package
+} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select"
+import { ProGate } from "@/components/ui/pro-gate"
+import { cn } from "@/lib/utils"
 
-export function SchemaGenerator() {
+const SCHEMA_TYPES = [
+  { id: "article", label: "Article", icon: Layout, desc: "Blog posts, news, or articles" },
+  { id: "faq", label: "FAQ Page", icon: MessageSquare, desc: "Frequently asked questions" },
+  { id: "product", label: "Product", icon: ShoppingBag, desc: "E-commerce products" },
+  { id: "local-business", label: "Local Business", icon: HomeIcon, desc: "Physical stores or services" },
+  { id: "recipe", label: "Recipe", icon: Utensils, desc: "Cooking instructions" },
+  { id: "job-posting", label: "Job Posting", icon: Briefcase, desc: "Hiring opportunities" },
+  { id: "event", label: "Event", icon: Calendar, desc: "Concerts, webinars, or meetups" },
+  { id: "video", label: "Video", icon: Video, desc: "Embedded video content" },
+  { id: "how-to", label: "How-To", icon: Wand2, desc: "Step-by-step guides" },
+  { id: "person", label: "Person", icon: UserIcon, desc: "Biographical info" },
+  { id: "organization", label: "Organization", icon: Globe, desc: "Company or brand details" },
+  { id: "software", label: "Software App", icon: Code, desc: "Desktop or mobile apps" },
+  { id: "course", label: "Course", icon: GraduationCap, desc: "Educational lessons" },
+  { id: "review", label: "Review", icon: MessageSquare, desc: "Individual product reviews" },
+  { id: "breadcrumb", label: "Breadcrumb", icon: Layout, desc: "Page hierarchy navigation" },
+]
+
+export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
+  const [activeType, setActiveType] = useState("article")
   const [copied, setCopied] = useState(false)
+  const [aiPrompt, setAiPrompt] = useState("")
+  const [isAiLoading, setIsAiLoading] = useState(false)
+  const [output, setOutput] = useState("")
 
-  // Article State
-  const [articleState, setArticleState] = useState({
-    headline: "Article Headline",
-    image: "https://example.com/image.jpg",
-    author: "Author Name",
-    datePublished: new Date().toISOString().split('T')[0]
+  // Comprehensive Form States
+  const [formData, setFormData] = useState<any>({
+    article: { headline: "", author: "", image: "", datePublished: new Date().toISOString().split('T')[0] },
+    faq: [{ q: "", a: "" }],
+    product: { name: "", image: "", description: "", brand: "", sku: "", price: "", currency: "USD", availability: "InStock" },
+    "local-business": { name: "", image: "", address: "", telephone: "", url: "", priceRange: "$$" },
+    recipe: { name: "", image: "", description: "", cookTime: "PT30M", ingredients: "", calories: "" },
+    "job-posting": { title: "", description: "", company: "", location: "", salary: "", currency: "USD", type: "FULL_TIME" },
+    event: { name: "", startDate: "", endDate: "", location: "", description: "", price: "" },
+    video: { name: "", description: "", thumbnailUrl: "", uploadDate: "", duration: "PT2M30S" },
+    "how-to": { name: "", totalTime: "PT1H", steps: [{ text: "" }] },
+    person: { name: "", jobTitle: "", url: "", sameAs: "" },
+    organization: { name: "", url: "", logo: "" },
+    software: { name: "", operatingSystem: "Windows, macOS", applicationCategory: "Utility", price: "0" },
+    course: { name: "", description: "", provider: "" },
+    review: { item: "", author: "", rating: "5", body: "" },
+    breadcrumb: [{ name: "Home", item: "https://example.com/" }, { name: "Category", item: "https://example.com/cat" }],
   })
 
-  // FAQ State
-  const [faqState, setFaqState] = useState([
-    { q: "What is this tool?", a: "This is a schema generator." }
-  ])
+  useEffect(() => {
+    generateSchema()
+  }, [formData, activeType])
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
+  const generateSchema = () => {
+    let schema: any = { "@context": "https://schema.org" }
+    const data = formData[activeType]
+
+    switch (activeType) {
+      case "article":
+        schema["@type"] = "Article"
+        schema.headline = data.headline
+        schema.author = { "@type": "Person", name: data.author }
+        schema.image = data.image
+        schema.datePublished = data.datePublished
+        break
+      case "faq":
+        schema["@type"] = "FAQPage"
+        schema.mainEntity = data.map((f: any) => ({
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": { "@type": "Answer", "text": f.a }
+        }))
+        break
+      case "product":
+        schema["@type"] = "Product"
+        schema.name = data.name
+        schema.image = data.image
+        schema.description = data.description
+        schema.brand = { "@type": "Brand", name: data.brand }
+        schema.sku = data.sku
+        schema.offers = {
+          "@type": "Offer",
+          "price": data.price,
+          "priceCurrency": data.currency,
+          "availability": `https://schema.org/${data.availability}`
+        }
+        break
+      case "local-business":
+        schema["@type"] = "LocalBusiness"
+        schema.name = data.name
+        schema.image = data.image
+        schema.address = { "@type": "PostalAddress", "streetAddress": data.address }
+        schema.telephone = data.telephone
+        schema.url = data.url
+        schema.priceRange = data.priceRange
+        break
+      case "recipe":
+        schema["@type"] = "Recipe"
+        schema.name = data.name
+        schema.image = data.image
+        schema.description = data.description
+        schema.cookTime = data.cookTime
+        schema.recipeIngredient = data.ingredients.split('\n').filter((s: string) => s.trim())
+        schema.nutrition = { "@type": "NutritionInformation", "calories": data.calories }
+        break
+      case "job-posting":
+        schema["@type"] = "JobPosting"
+        schema.title = data.title
+        schema.description = data.description
+        schema.hiringOrganization = { "@type": "Organization", "name": data.company }
+        schema.jobLocation = { "@type": "Place", "address": data.location }
+        schema.baseSalary = { "@type": "MonetaryAmount", "currency": data.currency, "value": data.salary }
+        schema.employmentType = data.type
+        break
+      case "event":
+        schema["@type"] = "Event"
+        schema.name = data.name
+        schema.startDate = data.startDate
+        schema.endDate = data.endDate
+        schema.location = { "@type": "Place", "name": data.location }
+        schema.description = data.description
+        schema.offers = { "@type": "Offer", "price": data.price, "priceCurrency": "USD" }
+        break
+      case "video":
+        schema["@type"] = "VideoObject"
+        schema.name = data.name
+        schema.description = data.description
+        schema.thumbnailUrl = data.thumbnailUrl
+        schema.uploadDate = data.uploadDate
+        schema.duration = data.duration
+        break
+      case "how-to":
+        schema["@type"] = "HowTo"
+        schema.name = data.name
+        schema.totalTime = data.totalTime
+        schema.step = data.steps.map((s: any) => ({ "@type": "HowToStep", "text": s.text }))
+        break
+      case "person":
+        schema["@type"] = "Person"
+        schema.name = data.name
+        schema.jobTitle = data.jobTitle
+        schema.url = data.url
+        schema.sameAs = data.sameAs.split('\n').filter((s: string) => s.trim())
+        break
+      case "organization":
+        schema["@type"] = "Organization"
+        schema.name = data.name
+        schema.url = data.url
+        schema.logo = data.logo
+        break
+      case "software":
+        schema["@type"] = "SoftwareApplication"
+        schema.name = data.name
+        schema.operatingSystem = data.operatingSystem
+        schema.applicationCategory = data.applicationCategory
+        schema.offers = { "@type": "Offer", "price": data.price, "priceCurrency": "USD" }
+        break
+      case "course":
+        schema["@type"] = "Course"
+        schema.name = data.name
+        schema.description = data.description
+        schema.provider = { "@type": "Organization", "name": data.provider }
+        break
+      case "review":
+        schema["@type"] = "Review"
+        schema.itemReviewed = { "@type": "Thing", "name": data.item }
+        schema.author = { "@type": "Person", "name": data.author }
+        schema.reviewRating = { "@type": "Rating", "ratingValue": data.rating }
+        schema.reviewBody = data.body
+        break
+      case "breadcrumb":
+        schema["@type"] = "BreadcrumbList"
+        schema.itemListElement = data.map((b: any, i: number) => ({
+          "@type": "ListItem",
+          "position": i + 1,
+          "name": b.name,
+          "item": b.item
+        }))
+        break
+      default:
+        schema["@type"] = activeType.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')
+        Object.assign(schema, data)
+    }
+
+    setOutput(`<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`)
+  }
+
+  const handleAiGenerate = async () => {
+    if (!aiPrompt) return
+    setIsAiLoading(true)
+    try {
+      const res = await fetch("/api/tools/ai-schema", {
+        method: "POST",
+        body: JSON.stringify({ prompt: aiPrompt, type: activeType })
+      })
+      if (res.ok) {
+        const json = await res.json()
+        setOutput(`<script type="application/ld+json">\n${JSON.stringify(json, null, 2)}\n</script>`)
+      }
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setIsAiLoading(false)
+    }
+  }
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(output)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const generateArticleSchema = () => {
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": articleState.headline,
-      "image": [articleState.image],
-      "datePublished": `${articleState.datePublished}T08:00:00+08:00`,
-      "author": [{
-          "@type": "Person",
-          "name": articleState.author
-      }]
-    }
-    return `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`
-  }
-
-  const generateFAQSchema = () => {
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": faqState.map(f => ({
-        "@type": "Question",
-        "name": f.q,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": f.a
-        }
-      }))
-    }
-    return `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`
+  const updateField = (field: string, value: any) => {
+    setFormData({
+      ...formData,
+      [activeType]: { ...formData[activeType], [field]: value }
+    })
   }
 
   return (
-    <>
-      <Card>
-        <CardHeader>
-          <CardTitle>JSON-LD Schema Builder</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="article" className="w-full">
-            <TabsList className="mb-4">
-              <TabsTrigger value="article">Article Schema</TabsTrigger>
-              <TabsTrigger value="faq">FAQ Schema</TabsTrigger>
-            </TabsList>
+    <div className="grid lg:grid-cols-[300px_1fr] gap-8 items-start">
+      {/* Sidebar - Schema Selection */}
+      <div className="space-y-4">
+        <div className="hidden lg:block space-y-1">
+          {SCHEMA_TYPES.map((type) => {
+            const Icon = type.icon
+            return (
+              <button
+                key={type.id}
+                onClick={() => setActiveType(type.id)}
+                className={cn(
+                  "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group",
+                  activeType === type.id 
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
+                    : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Icon className={cn("h-4 w-4 shrink-0", activeType === type.id ? "text-white" : "group-hover:text-primary")} />
+                <div className="text-left overflow-hidden">
+                  <p className="truncate font-black">{type.label}</p>
+                  <p className={cn("text-[10px] truncate opacity-70", activeType === type.id ? "text-white" : "text-muted-foreground")}>
+                    {type.desc}
+                  </p>
+                </div>
+                {activeType === type.id && <ChevronRight className="ml-auto h-3 w-3 opacity-50" />}
+              </button>
+            )
+          })}
+        </div>
+        
+        {/* Mobile Selection */}
+        <div className="lg:hidden">
+          <Label className="mb-2 block">Schema Type</Label>
+          <Select value={activeType} onValueChange={setActiveType}>
+            <SelectTrigger className="h-12 rounded-xl">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {SCHEMA_TYPES.map(t => (
+                <SelectItem key={t.id} value={t.id}>{t.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
 
-            <TabsContent value="article" className="grid lg:grid-cols-2 gap-8">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Headline</Label>
-                  <Input value={articleState.headline} onChange={e => setArticleState({...articleState, headline: e.target.value})} />
+      <div className="space-y-8">
+        {/* Main Interface */}
+        <div className="grid xl:grid-cols-2 gap-8 items-start">
+          {/* Editor Area */}
+          <div className="space-y-6">
+            <Card className="border-none shadow-sm overflow-hidden bg-muted/20">
+              <CardHeader className="bg-muted/30 border-b pb-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    {React.createElement(SCHEMA_TYPES.find(t => t.id === activeType)?.icon || Layout, { className: "h-4 w-4" })}
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Edit {SCHEMA_TYPES.find(t => t.id === activeType)?.label}</CardTitle>
+                    <CardDescription className="text-xs">Fill in the fields to generate JSON-LD</CardDescription>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label>Image URL</Label>
-                  <Input value={articleState.image} onChange={e => setArticleState({...articleState, image: e.target.value})} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Author</Label>
-                  <Input value={articleState.author} onChange={e => setArticleState({...articleState, author: e.target.value})} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Date Published</Label>
-                  <Input type="date" value={articleState.datePublished} onChange={e => setArticleState({...articleState, datePublished: e.target.value})} />
-                </div>
-              </div>
-              <div className="relative">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="absolute top-2 right-2 bg-background"
-                  onClick={() => copyToClipboard(generateArticleSchema())}
-                >
-                  {copied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
-                  {copied ? "Copied" : "Copy"}
-                </Button>
-                <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm font-mono whitespace-pre-wrap h-[300px]">
-                  {generateArticleSchema()}
-                </pre>
-              </div>
-            </TabsContent>
+              </CardHeader>
+              <CardContent className="p-6 space-y-4">
+                {activeType === "article" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Headline</Label>
+                      <Input placeholder="The ultimate guide to..." value={formData.article.headline} onChange={e => updateField("headline", e.target.value)} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Author</Label>
+                        <Input placeholder="John Doe" value={formData.article.author} onChange={e => updateField("author", e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Date Published</Label>
+                        <Input type="date" value={formData.article.datePublished} onChange={e => updateField("datePublished", e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Featured Image URL</Label>
+                      <Input placeholder="https://..." value={formData.article.image} onChange={e => updateField("image", e.target.value)} />
+                    </div>
+                  </>
+                )}
 
-            <TabsContent value="faq" className="grid lg:grid-cols-2 gap-8">
-              <div className="space-y-4">
-                {faqState.map((faq, idx) => (
-                  <div key={idx} className="space-y-2 p-4 border rounded-md relative">
+                {activeType === "faq" && (
+                  <div className="space-y-4">
+                    {formData.faq.map((f: any, i: number) => (
+                      <div key={i} className="p-4 border rounded-xl bg-background space-y-3 relative group">
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="absolute top-2 right-2 text-muted-foreground hover:text-red-500 transition-colors h-7 w-7"
+                          onClick={() => {
+                            const newFaq = formData.faq.filter((_: any, idx: number) => idx !== i)
+                            setFormData({...formData, faq: newFaq})
+                          }}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                        <div className="space-y-2">
+                          <Label className="text-xs font-black uppercase text-muted-foreground">Question {i + 1}</Label>
+                          <Input value={f.q} onChange={e => {
+                            const newFaq = [...formData.faq]
+                            newFaq[i].q = e.target.value
+                            setFormData({...formData, faq: newFaq})
+                          }} />
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-xs font-black uppercase text-muted-foreground">Answer</Label>
+                          <Textarea value={f.a} className="min-h-[60px]" onChange={e => {
+                            const newFaq = [...formData.faq]
+                            newFaq[i].a = e.target.value
+                            setFormData({...formData, faq: newFaq})
+                          }} />
+                        </div>
+                      </div>
+                    ))}
                     <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="absolute top-1 right-1 text-red-500"
-                      onClick={() => setFaqState(faqState.filter((_, i) => i !== idx))}
+                      variant="outline" 
+                      className="w-full border-dashed border-2 h-12 rounded-xl text-primary font-bold"
+                      onClick={() => setFormData({...formData, faq: [...formData.faq, { q: "", a: "" }]})}
                     >
-                      Remove
+                      <Plus className="h-4 w-4 mr-2" /> Add Question
                     </Button>
-                    <Label>Question {idx + 1}</Label>
-                    <Input 
-                      value={faq.q} 
-                      onChange={e => {
-                        const newFaq = [...faqState]
-                        newFaq[idx].q = e.target.value
-                        setFaqState(newFaq)
-                      }} 
-                    />
-                    <Label>Answer</Label>
+                  </div>
+                )}
+
+                {activeType === "product" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Product Name</Label>
+                      <Input value={formData.product.name} onChange={e => updateField("name", e.target.value)} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Brand</Label>
+                        <Input value={formData.product.brand} onChange={e => updateField("brand", e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Price</Label>
+                        <Input type="number" value={formData.product.price} onChange={e => updateField("price", e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Description</Label>
+                      <Textarea value={formData.product.description} onChange={e => updateField("description", e.target.value)} />
+                    </div>
+                  </>
+                )}
+
+                {activeType === "local-business" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Business Name</Label>
+                      <Input value={formData["local-business"].name} onChange={e => updateField("name", e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Street Address</Label>
+                      <Input placeholder="123 Main St, New York, NY" value={formData["local-business"].address} onChange={e => updateField("address", e.target.value)} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Telephone</Label>
+                        <Input placeholder="+1..." value={formData["local-business"].telephone} onChange={e => updateField("telephone", e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Price Range</Label>
+                        <Input placeholder="e.g. $$" value={formData["local-business"].priceRange} onChange={e => updateField("priceRange", e.target.value)} />
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {activeType === "recipe" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Recipe Name</Label>
+                      <Input value={formData.recipe.name} onChange={e => updateField("name", e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Ingredients (One per line)</Label>
+                      <Textarea placeholder="2 eggs&#10;1 cup flour..." value={formData.recipe.ingredients} onChange={e => updateField("ingredients", e.target.value)} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Cook Time</Label>
+                        <Input placeholder="PT30M" value={formData.recipe.cookTime} onChange={e => updateField("cookTime", e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Calories</Label>
+                        <Input placeholder="250 kcal" value={formData.recipe.calories} onChange={e => updateField("calories", e.target.value)} />
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {activeType === "job-posting" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Job Title</Label>
+                      <Input value={formData["job-posting"].title} onChange={e => updateField("title", e.target.value)} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Company</Label>
+                        <Input value={formData["job-posting"].company} onChange={e => updateField("company", e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Location</Label>
+                        <Input value={formData["job-posting"].location} onChange={e => updateField("location", e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Description</Label>
+                      <Textarea value={formData["job-posting"].description} onChange={e => updateField("description", e.target.value)} />
+                    </div>
+                  </>
+                )}
+
+                {activeType === "event" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Event Name</Label>
+                      <Input value={formData.event.name} onChange={e => updateField("name", e.target.value)} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Start Date</Label>
+                        <Input type="datetime-local" value={formData.event.startDate} onChange={e => updateField("startDate", e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Price</Label>
+                        <Input type="number" value={formData.event.price} onChange={e => updateField("price", e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Location</Label>
+                      <Input placeholder="Online or Venue Name" value={formData.event.location} onChange={e => updateField("location", e.target.value)} />
+                    </div>
+                  </>
+                )}
+
+                {activeType === "video" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Video Title</Label>
+                      <Input value={formData.video.name} onChange={e => updateField("name", e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Thumbnail URL</Label>
+                      <Input placeholder="https://..." value={formData.video.thumbnailUrl} onChange={e => updateField("thumbnailUrl", e.target.value)} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Upload Date</Label>
+                        <Input type="date" value={formData.video.uploadDate} onChange={e => updateField("uploadDate", e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Duration</Label>
+                        <Input placeholder="PT2M30S" value={formData.video.duration} onChange={e => updateField("duration", e.target.value)} />
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {activeType === "how-to" && (
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label>Guide Name</Label>
+                      <Input placeholder="How to..." value={formData["how-to"].name} onChange={e => updateField("name", e.target.value)} />
+                    </div>
+                    {formData["how-to"].steps.map((s: any, i: number) => (
+                      <div key={i} className="flex gap-2">
+                        <div className="pt-2 text-xs font-bold opacity-30">{i+1}</div>
+                        <Textarea 
+                          placeholder="Describe this step..." 
+                          className="min-h-[40px]" 
+                          value={s.text} 
+                          onChange={e => {
+                            const newSteps = [...formData["how-to"].steps]
+                            newSteps[i].text = e.target.value
+                            setFormData({...formData, "how-to": {...formData["how-to"], steps: newSteps}})
+                          }}
+                        />
+                      </div>
+                    ))}
+                    <Button variant="outline" size="sm" onClick={() => setFormData({...formData, "how-to": {...formData["how-to"], steps: [...formData["how-to"].steps, { text: "" }]}})}>
+                      Add Step
+                    </Button>
+                  </div>
+                )}
+
+                {activeType === "person" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Full Name</Label>
+                      <Input placeholder="Jane Smith" value={formData.person.name} onChange={e => updateField("name", e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Job Title</Label>
+                      <Input placeholder="Software Engineer" value={formData.person.jobTitle} onChange={e => updateField("jobTitle", e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Social Links (One per line)</Label>
+                      <Textarea placeholder="https://linkedin.com/..." value={formData.person.sameAs} onChange={e => updateField("sameAs", e.target.value)} />
+                    </div>
+                  </>
+                )}
+
+                {activeType === "organization" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Organization Name</Label>
+                      <Input placeholder="Acme Corp" value={formData.organization.name} onChange={e => updateField("name", e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Website URL</Label>
+                      <Input placeholder="https://..." value={formData.organization.url} onChange={e => updateField("url", e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Logo URL</Label>
+                      <Input placeholder="https://..." value={formData.organization.logo} onChange={e => updateField("logo", e.target.value)} />
+                    </div>
+                  </>
+                )}
+
+                {activeType === "software" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Application Name</Label>
+                      <Input value={formData.software.name} onChange={e => updateField("name", e.target.value)} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Category</Label>
+                        <Input placeholder="Utility, Game..." value={formData.software.applicationCategory} onChange={e => updateField("applicationCategory", e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Price</Label>
+                        <Input value={formData.software.price} onChange={e => updateField("price", e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Operating System</Label>
+                      <Input placeholder="Windows, Android..." value={formData.software.operatingSystem} onChange={e => updateField("operatingSystem", e.target.value)} />
+                    </div>
+                  </>
+                )}
+
+                {activeType === "course" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Course Name</Label>
+                      <Input value={formData.course.name} onChange={e => updateField("name", e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Provider</Label>
+                      <Input placeholder="Coursera, Udemy..." value={formData.course.provider} onChange={e => updateField("provider", e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Description</Label>
+                      <Textarea value={formData.course.description} onChange={e => updateField("description", e.target.value)} />
+                    </div>
+                  </>
+                )}
+
+                {activeType === "review" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>Item Name</Label>
+                      <Input placeholder="iPhone 15 Pro" value={formData.review.item} onChange={e => updateField("item", e.target.value)} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Reviewer Name</Label>
+                        <Input placeholder="John Doe" value={formData.review.author} onChange={e => updateField("author", e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Rating (1-5)</Label>
+                        <Input type="number" min="1" max="5" value={formData.review.rating} onChange={e => updateField("rating", e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Review Body</Label>
+                      <Textarea value={formData.review.body} onChange={e => updateField("body", e.target.value)} />
+                    </div>
+                  </>
+                )}
+
+                {activeType === "breadcrumb" && (
+                  <div className="space-y-4">
+                    {formData.breadcrumb.map((b: any, i: number) => (
+                      <div key={i} className="flex gap-2">
+                        <Input placeholder="Name" value={b.name} onChange={e => {
+                          const newB = [...formData.breadcrumb]
+                          newB[i].name = e.target.value
+                          setFormData({...formData, breadcrumb: newB})
+                        }} />
+                        <Input placeholder="URL" value={b.item} onChange={e => {
+                          const newB = [...formData.breadcrumb]
+                          newB[i].item = e.target.value
+                          setFormData({...formData, breadcrumb: newB})
+                        }} />
+                        <Button variant="ghost" size="icon" onClick={() => setFormData({...formData, breadcrumb: formData.breadcrumb.filter((_:any,idx:number)=>idx!==i)})}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button variant="outline" size="sm" onClick={() => setFormData({...formData, breadcrumb: [...formData.breadcrumb, { name: "", item: "" }]})}>
+                      Add Item
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* AI Generator Section */}
+            <ProGate 
+              feature="AI Smart Schema Generator" 
+              isPro={isPro}
+            >
+              <Card className="border-2 border-amber-500/20 shadow-xl shadow-amber-500/5 overflow-hidden">
+                <CardHeader className="bg-amber-500/5 border-b border-amber-500/10">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-amber-500" />
+                    <CardTitle className="text-lg">AI Smart Generator</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6 space-y-4">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black text-amber-600 uppercase tracking-widest">Describe your content</Label>
                     <Textarea 
-                      value={faq.a} 
-                      onChange={e => {
-                        const newFaq = [...faqState]
-                        newFaq[idx].a = e.target.value
-                        setFaqState(newFaq)
-                      }} 
+                      placeholder="e.g., A blog post about AI tools for 2024 written by Jane Smith with a featured image at https://example.com/ai.jpg" 
+                      className="min-h-[100px] bg-amber-500/[0.02] border-amber-500/10 focus-visible:ring-amber-500"
+                      value={aiPrompt}
+                      onChange={(e) => setAiPrompt(e.target.value)}
                     />
                   </div>
-                ))}
-                <Button onClick={() => setFaqState([...faqState, { q: "", a: "" }])}>
-                  Add Question
-                </Button>
-              </div>
-              <div className="relative">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="absolute top-2 right-2 bg-background"
-                  onClick={() => copyToClipboard(generateFAQSchema())}
-                >
-                  {copied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
-                  {copied ? "Copied" : "Copy"}
-                </Button>
-                <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm font-mono whitespace-pre-wrap h-full min-h-[300px]">
-                  {generateFAQSchema()}
-                </pre>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+                  <Button 
+                    className="w-full bg-amber-500 hover:bg-amber-600 text-white font-black h-12 rounded-xl"
+                    onClick={handleAiGenerate}
+                    disabled={isAiLoading || !aiPrompt}
+                  >
+                    {isAiLoading ? (
+                      <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                    ) : (
+                      <Wand2 className="h-5 w-5 mr-2" />
+                    )}
+                    {isAiLoading ? "Processing Magic..." : "Generate Schema with AI"}
+                  </Button>
+                </CardContent>
+              </Card>
+            </ProGate>
+          </div>
 
-      {/* SEO Section */}
-      <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-20">
-        <section>
-          <h2 className="text-2xl font-black tracking-tight mb-4">What is JSON-LD Schema Markup?</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            JSON-LD (JavaScript Object Notation for Linked Data) is the recommended format by Google for adding structured data to your web pages. It allows search engines to understand the content and context of your page, enabling rich results in Google Search like star ratings, FAQs, and article details.
-          </p>
-          <p className="text-muted-foreground mt-4 leading-relaxed">
-            Unlike microdata, JSON-LD is placed in a <code className="text-primary font-bold bg-primary/10 px-1 rounded">{"<script>"}</code> tag in your page's head and does not require modifying your HTML structure. This makes it easy to implement and maintain.
-          </p>
-        </section>
-        <section className="bg-muted/30 p-8 rounded-3xl border border-primary/5">
-          <h3 className="text-xl font-black tracking-tight mb-6">Why Schema Markup Matters</h3>
-          <ul className="space-y-4 list-none p-0">
-            {[
-              { title: "Rich Results in Google", desc: "Schema enables rich snippets — FAQ dropdowns, article dates, star ratings — that increase CTR by up to 30% compared to standard results." },
-              { title: "Better AI Understanding", desc: "As AI-powered search grows, structured data helps LLMs and AI agents understand and cite your content accurately." },
-              { title: "No Ranking Impact, Big CTR Impact", desc: "Schema doesn't directly improve rankings, but richer search listings drive significantly more clicks from the same position." },
-              { title: "FAQ Schema", desc: "FAQ schema is particularly powerful — it shows expandable Q&A pairs directly in search results, taking up 3–4x more screen real estate." },
-            ].map((item, i) => (
-              <li key={i} className="flex gap-4">
-                <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-black text-primary">{i + 1}</div>
-                <div>
-                  <h4 className="font-bold text-foreground leading-none mb-1">{item.title}</h4>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
+          {/* Preview Area */}
+          <div className="space-y-4 sticky top-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Code className="h-4 w-4 text-primary" />
+                <span className="text-sm font-black uppercase tracking-widest text-muted-foreground">JSON-LD Output</span>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="h-8 rounded-lg font-bold text-xs gap-2"
+                onClick={copyToClipboard}
+              >
+                {copied ? <Check className="h-3 w-3 text-green-500" /> : <Copy className="h-3 w-3" />}
+                {copied ? "Copied!" : "Copy Code"}
+              </Button>
+            </div>
+            <div className="relative">
+              <pre className="bg-zinc-950 text-zinc-300 p-6 rounded-3xl overflow-x-auto text-[11px] font-mono whitespace-pre-wrap min-h-[500px] max-h-[800px] shadow-2xl ring-1 ring-white/10 leading-relaxed custom-scrollbar">
+                {output}
+              </pre>
+              <div className="absolute top-4 right-4 pointer-events-none opacity-20">
+                <Layout className="h-32 w-32 rotate-12" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SEO Info Section */}
+        <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-20">
+          <section>
+            <h2 className="text-2xl font-black tracking-tight mb-4">What is JSON-LD Schema Markup?</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              JSON-LD (JavaScript Object Notation for Linked Data) is the recommended format by Google for adding structured data to your web pages. It allows search engines to understand the content and context of your page, enabling rich results in Google Search like star ratings, FAQs, and article details.
+            </p>
+          </section>
+          <section className="bg-muted/30 p-8 rounded-3xl border border-primary/5">
+            <h3 className="text-xl font-black tracking-tight mb-6">Why Schema Markup Matters</h3>
+            <ul className="space-y-4 list-none p-0">
+              {[
+                { title: "Rich Results in Google", desc: "Schema enables rich snippets — FAQ dropdowns, article dates, star ratings — that increase CTR by up to 30%." },
+                { title: "Better AI Understanding", desc: "Structured data helps LLMs and AI agents (like Perplexity or ChatGPT) understand and cite your content accurately." },
+                { title: "Indented Results", desc: "FAQ and How-To schema take up more vertical space in Google, pushing competitors further down the page." },
+              ].map((item, i) => (
+                <li key={i} className="flex gap-4">
+                  <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-black text-primary">{i + 1}</div>
+                  <div>
+                    <h4 className="font-bold text-foreground leading-none mb-1">{item.title}</h4>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
