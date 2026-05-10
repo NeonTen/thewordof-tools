@@ -7,8 +7,9 @@ import { auth } from "@/auth"
 import { UpgradeButton } from "@/components/pricing/upgrade-button"
 
 export const metadata = {
-  title: "Pricing — TheWordOf Tools",
-  description: "Free forever for core features. Upgrade to Pro for unlimited access, bulk processing, and priority AI generation.",
+  title: "Transparent Pricing — TheWordOf Tools Pro",
+  description: "Start for free and stay for free. Upgrade to Pro for unlimited batch processing, priority AI generation, and full CV building. Simple monthly billing, cancel anytime.",
+  keywords: ["SaaS pricing", "AI tools pricing", "TheWordOf Pro features", "affordable AI utilities"]
 }
 
 import { Header } from "@/components/layout/header"

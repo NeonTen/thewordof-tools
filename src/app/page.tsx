@@ -29,10 +29,10 @@ export default async function Home() {
             </div>
             <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
               The ultimate <br />
-              <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">AI utility platform</span>
+              <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">AI Productivity Dashboard</span>
             </h1>
             <p className="max-w-2xl mx-auto text-muted-foreground text-lg sm:text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
-              Stop switching tabs. Generate invoices, optimize images, calculate EMIs, write AI captions, and more with our state-of-the-art utility toolkit.
+              Stop switching tabs. TheWordOf Tools provides 13+ professional, browser-based utilities including AI invoice generators, image converters, SEO tag builders, and viral caption creators.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-700">
               <Link href={session ? "/dashboard" : "/tools"}>

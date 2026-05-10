@@ -5,8 +5,9 @@ import { ProBadge } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
 
 export const metadata = {
-  title: "Free Online Tools — TheWordOf Tools",
-  description: "Free browser-based tools for image conversion, SVG compression, code minification, financial calculators, AI content generation, and more.",
+  title: "13+ Free Online AI Tools — TheWordOf Utility Dashboard",
+  description: "Access a suite of free, browser-based tools for image conversion, SVG optimization, AI SEO generation, professional invoices, and financial calculators. No sign-up required.",
+  keywords: ["free online tools", "AI productivity", "browser based utilities", "bulk image converter", "SVG minifier", "AI tools for creators"]
 }
 
 const allTools = [
