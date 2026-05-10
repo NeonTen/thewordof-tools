@@ -20,7 +20,12 @@ export async function POST(req: Request) {
       return new NextResponse("User already exists", { status: 400 })
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    if (!passwordRegex.test(password)) {
+      return new NextResponse("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.", { status: 400 })
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12)
 
     const user = await prisma.user.create({
       data: {

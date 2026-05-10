@@ -64,9 +64,6 @@ export default async function DashboardPage() {
         "bg-gradient-to-br border-primary/10 from-primary/10 via-primary/5 to-background"
       )}>
         <PlanSection />
-        <div className="px-6 pb-6">
-          <DashboardSuccess />
-        </div>
       </Card>
     </div>
   )

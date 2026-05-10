@@ -8,6 +8,8 @@ import { CardContent } from "@/components/ui/card"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 
+import { DashboardSuccess } from "./dashboard-success"
+
 export function PlanSection() {
   const { data: session } = useSession()
   const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
@@ -40,6 +42,7 @@ export function PlanSection() {
           </div>
         )}
       </div>
+      <DashboardSuccess />
     </CardContent>
   )
 }
