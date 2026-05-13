@@ -406,7 +406,7 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
                       </Button>
                     </div>
                     <div className="flex items-center gap-4 px-1">
-                      <Slider value={[s.rating]} max={100} step={1} onValueChange={(val) => updateSkill(s.id, 'rating', val[0])} className="flex-1" />
+                      <Slider value={[s.rating]} max={100} step={1} onValueChange={(val) => updateSkill(s.id, 'rating', Array.isArray(val) ? val[0] : val)} className="flex-1" />
                       <span className="text-xs font-bold w-8 text-right">{s.rating}%</span>
                     </div>
                   </div>
@@ -486,7 +486,7 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
         <div className="sticky top-24 print:hidden">
           <div className="flex justify-between items-center bg-card p-4 rounded-2xl border shadow-sm mb-4">
             <div className="flex items-center gap-3">
-              <Select value={templateId} onValueChange={(val) => setTemplateId(val)}>
+              <Select value={templateId} onValueChange={(val) => setTemplateId(val || "modern")}>
                 <SelectTrigger className="w-[180px] font-bold capitalize"><SelectValue placeholder="Modern" /></SelectTrigger>
                 <SelectContent>
                   {TEMPLATES.map(t => (

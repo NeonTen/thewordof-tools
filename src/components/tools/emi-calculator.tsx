@@ -8,7 +8,7 @@ import { Slider } from "@/components/ui/slider"
 
 const COLORS = ['#0088FE', '#FF8042']
 
-export function EmiCalculator() {
+export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
   const [principal, setPrincipal] = useState(500000)
   const [rate, setRate] = useState(8.5)
   const [tenure, setTenure] = useState(20)

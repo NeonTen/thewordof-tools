@@ -15,7 +15,7 @@ import {
   ArrowRight,
   Maximize2,
   Search,
-  LayoutSplit,
+  Columns2,
   Eye,
   Info,
   ChevronRight,

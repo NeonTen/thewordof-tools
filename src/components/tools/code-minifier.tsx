@@ -16,7 +16,7 @@ const minifyCSS = (css: string) => css.replace(/\s+/g, ' ').replace(/\/\*.*?\*\/
 const minifyHTML = (html: string) => html.replace(/<!--[\s\S]*?-->/g, '').replace(/>\s+</g, '><').replace(/\s{2,}/g, ' ').trim()
 const minifyJS = (js: string) => js.replace(/\/\/.*|\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').trim()
 
-export function CodeMinifier() {
+export function CodeMinifier({ isPro = false }: { isPro?: boolean }) {
   const [input, setInput] = useState("")
   const [output, setOutput] = useState("")
   const [language, setLanguage] = useState<"js" | "css" | "html">("js")

@@ -274,7 +274,7 @@ export default function AdminUsersPage() {
           </DialogHeader>
           <div className="py-4">
             <Label>Select Role</Label>
-            <Select value={newRole} onValueChange={setNewRole}>
+            <Select value={newRole} onValueChange={(val) => setNewRole(val as string)}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -306,7 +306,7 @@ export default function AdminUsersPage() {
           </DialogHeader>
           <div className="py-4">
             <Label>Select Plan</Label>
-            <Select value={newPlan} onValueChange={setNewPlan}>
+            <Select value={newPlan} onValueChange={(val) => setNewPlan(val as string)}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>

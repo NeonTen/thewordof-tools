@@ -289,7 +289,7 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
         {/* Mobile Selection */}
         <div className="lg:hidden">
           <Label className="mb-2 block">Schema Type</Label>
-          <Select value={activeType} onValueChange={setActiveType}>
+          <Select value={activeType} onValueChange={(val) => setActiveType(val || "")}>
             <SelectTrigger className="h-12 rounded-xl">
               <SelectValue />
             </SelectTrigger>

@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
 
-export function TextDiff() {
+export function TextDiff({ isPro = false }: { isPro?: boolean }) {
   const [text1, setText1] = useState("")
   const [text2, setText2] = useState("")
   const [diffResult, setDiffResult] = useState<Change[]>([])

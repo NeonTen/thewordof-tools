@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export function PromptGenerator() {
+export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
   const [copied, setCopied] = useState(false)
   
   const [formData, setFormData] = useState({

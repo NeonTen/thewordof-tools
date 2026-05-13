@@ -8,7 +8,7 @@ import { Slider } from "@/components/ui/slider"
 
 const COLORS = ['#10b981', '#6366f1'] // Emerald for invested, Indigo for returns
 
-export function SipCalculator() {
+export function SipCalculator({ isPro = false }: { isPro?: boolean }) {
   const [investment, setInvestment] = useState(10000)
   const [returnRate, setReturnRate] = useState(12)
   const [years, setYears] = useState(10)

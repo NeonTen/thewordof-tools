@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 
-export function LlmsTxtGenerator() {
+export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
   const [formData, setFormData] = useState({
     brandName: "",
     description: "",

@@ -47,8 +47,8 @@ function Button({
   size = "default",
   asChild = false,
   ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
-  const Comp = asChild ? Slot : "button"
+}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants> & { asChild?: boolean }) {
+  const Comp = (asChild ? Slot : "button") as any
   
   return (
     <Comp

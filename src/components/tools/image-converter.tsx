@@ -394,7 +394,7 @@ export function ImageConverter({ isPro = false }: { isPro?: boolean }) {
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Output Format</Label>
-                <Select value={format} onValueChange={setFormat}>
+                <Select value={format} onValueChange={(val) => setFormat(val || "")}>
                   <SelectTrigger className="h-12 font-bold">
                     <SelectValue />
                   </SelectTrigger>
@@ -422,7 +422,7 @@ export function ImageConverter({ isPro = false }: { isPro?: boolean }) {
                   min={1} 
                   max={100} 
                   step={1}
-                  onValueChange={(val) => setQuality(val[0])}
+                  onValueChange={(val) => setQuality(Array.isArray(val) ? val[0] : val)}
                   disabled={format === "image/png"}
                   className="py-4"
                 />
@@ -454,7 +454,7 @@ export function ImageConverter({ isPro = false }: { isPro?: boolean }) {
               </div>
 
               {resizeMode === "preset" && (
-                <Select value={preset} onValueChange={setPreset}>
+                <Select value={preset} onValueChange={(val) => setPreset(val || "")}>
                   <SelectTrigger className="h-10">
                     <SelectValue placeholder="Select preset..." />
                   </SelectTrigger>
