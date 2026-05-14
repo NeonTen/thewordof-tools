@@ -31,6 +31,7 @@ import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { processImage, IMAGE_PRESETS, formatBytes, ResizeOptions } from "@/lib/image-utils"
+import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
 
 interface ImageFile {
   id: string
@@ -93,8 +94,13 @@ export function ImageConverter({ isPro = false }: { isPro?: boolean }) {
   const [quality, setQuality] = useState<number>(80)
   const [isProcessing, setIsProcessing] = useState(false)
   const [globalProgress, setGlobalProgress] = useState(0)
+  const [usedToday, setUsedToday] = useState(0)
   
-  const currentMax = isPro ? 1000 : MAX_FREE_IMAGES
+  React.useEffect(() => {
+    if (!isPro) setUsedToday(getDailyUsage("image-converter"))
+  }, [isPro])
+  
+  const currentMax = isPro ? 1000 : Math.max(0, MAX_FREE_IMAGES - usedToday)
   
   // Resize states
   const [resizeMode, setResizeMode] = useState<"original" | "manual" | "preset">("original")
@@ -195,6 +201,10 @@ export function ImageConverter({ isPro = false }: { isPro?: boolean }) {
     }
 
     setIsProcessing(false)
+    if (!isPro) {
+      const newUsed = incrementDailyUsage("image-converter", done)
+      setUsedToday(newUsed)
+    }
   }
 
   const downloadAll = async () => {
@@ -263,7 +273,9 @@ export function ImageConverter({ isPro = false }: { isPro?: boolean }) {
               </div>
               <h3 className="font-black text-2xl tracking-tight">Drop your images here</h3>
               <p className="text-muted-foreground mt-2 max-w-sm">
-                Bulk process up to {currentMax} images at once. Supports JPG, PNG, WEBP, AVIF.
+                {isPro 
+                  ? "Bulk process up to 1,000 images at once. Supports JPG, PNG, WEBP, AVIF." 
+                  : `Process up to 5 images per day. You have ${currentMax} left for today.`}
               </p>
               
               {images.length >= currentMax && !isPro && (

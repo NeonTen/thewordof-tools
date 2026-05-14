@@ -11,7 +11,18 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
+import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
+
 export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
+  const [usedToday, setUsedToday] = useState(0)
+  const MAX_FREE = 3
+
+  React.useEffect(() => {
+    if (!isPro) setUsedToday(getDailyUsage("caption-generator"))
+  }, [isPro])
+
+  const limitReached = !isPro && usedToday >= MAX_FREE
+
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
   
   const [formData, setFormData] = useState({
@@ -50,6 +61,10 @@ export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
       console.error(error)
     } finally {
       setIsLoading(false)
+      if (res.ok && !isPro) {
+        const newUsed = incrementDailyUsage("caption-generator")
+        setUsedToday(newUsed)
+      }
     }
   }
 
@@ -132,14 +147,24 @@ export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={isLoading || !formData.topic}>
+            <Button type="submit" className="w-full" disabled={isLoading || !formData.topic || limitReached}>
               {isLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <Sparkles className="mr-2 h-4 w-4" />
               )}
-              {isLoading ? "Generating..." : "Generate Captions"}
+              {isLoading ? "Generating..." : limitReached ? "Daily Limit Reached" : "Generate Captions"}
             </Button>
+            {limitReached && (
+              <p className="text-[10px] text-center text-muted-foreground">
+                You've reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
+              </p>
+            )}
+            {!isPro && !limitReached && (
+              <p className="text-[10px] text-center text-muted-foreground">
+                {MAX_FREE - usedToday} of {MAX_FREE} free generations left today
+              </p>
+            )}
           </form>
         </CardContent>
       </Card>

@@ -8,11 +8,21 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
+import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
 
 export function SeoGenerator({ isPro = false }: { isPro?: boolean }) {
   const [copiedField, setCopiedField] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [result, setResult] = useState<any>(null)
+  const [usedToday, setUsedToday] = useState(0)
+  const MAX_FREE = 3
+
+  React.useEffect(() => {
+    if (!isPro) setUsedToday(getDailyUsage("seo-generator"))
+  }, [isPro])
+
+  const limitReached = !isPro && usedToday >= MAX_FREE
   
   const [formData, setFormData] = useState({
     keyword: "",
@@ -41,6 +51,14 @@ export function SeoGenerator({ isPro = false }: { isPro?: boolean }) {
       console.error(error)
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleGenerate = async (e: React.FormEvent) => {
+    await onSubmit(e)
+    if (!isPro) {
+      const newUsed = incrementDailyUsage("seo-generator")
+      setUsedToday(newUsed)
     }
   }
 
@@ -109,14 +127,24 @@ export function SeoGenerator({ isPro = false }: { isPro?: boolean }) {
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={isLoading || !formData.keyword}>
+            <Button onClick={handleGenerate} className="w-full" disabled={isLoading || !formData.keyword || limitReached}>
               {isLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <Search className="mr-2 h-4 w-4" />
               )}
-              {isLoading ? "Analyzing..." : "Generate SEO Meta"}
+              {isLoading ? "Analyzing..." : limitReached ? "Daily Limit Reached" : "Generate SEO Meta"}
             </Button>
+            {limitReached && (
+              <p className="text-[10px] text-center text-muted-foreground">
+                You've reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
+              </p>
+            )}
+            {!isPro && !limitReached && (
+              <p className="text-[10px] text-center text-muted-foreground">
+                {MAX_FREE - usedToday} of {MAX_FREE} free generations left today
+              </p>
+            )}
           </form>
         </CardContent>
       </Card>

@@ -25,14 +25,14 @@ export default async function Home() {
 
           <div className="container mx-auto px-6 max-w-6xl text-center space-y-8">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest animate-in fade-in slide-in-from-bottom-4 duration-1000">
-              <Sparkles className="h-3 w-3" /> 13+ Pro tools in one place
+              <Sparkles className="h-3 w-3" /> Growing Suite of AI Tools
             </div>
             <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
               The ultimate <br />
               <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">AI Productivity Dashboard</span>
             </h1>
             <p className="max-w-2xl mx-auto text-muted-foreground text-lg sm:text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
-              Stop switching tabs. TheWordOf Tools provides 13+ professional, browser-based utilities including AI invoice generators, image converters, SEO tag builders, and viral caption creators.
+              Stop switching tabs. TheWordOf Tools provides an ever-expanding collection of professional, browser-based utilities including AI invoice generators, image converters, SEO tag builders, and viral caption creators.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-700">
               <Link href={session ? "/dashboard" : "/tools"}>
@@ -87,7 +87,7 @@ export default async function Home() {
             <div className="text-center mt-12">
               <Link href="/tools">
                 <Button variant="ghost" className="font-bold hover:text-primary">
-                  See all 13+ tools <ArrowRight className="ml-2 h-4 w-4" />
+                  Explore all tools <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
@@ -129,34 +129,47 @@ export default async function Home() {
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Free vs Pro</h2>
               <p className="text-muted-foreground">{isPro ? "You are currently enjoying all Pro benefits." : "Core features are free forever. Upgrade for high-volume needs."}</p>
             </div>
-            <div className="max-w-4xl mx-auto overflow-hidden rounded-2xl border bg-background shadow-2xl">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b bg-muted/50">
-                    <th className="text-left py-6 px-8 font-bold text-base">Feature</th>
-                    <th className="text-center py-6 px-8 font-bold text-base">Free</th>
-                    <th className="text-center py-6 px-8 font-bold text-base text-primary">Pro</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    ["Core Utility Tools", "Unlimited", "Unlimited"],
-                    ["Image Processing", "5 images/batch", "Unlimited"],
-                    ["SVG Compression", "5 files/batch", "Unlimited"],
-                    ["AI Captions", "3/generation", "10/generation"],
-                    ["AI CV Builder", "Basic", "Pro Template + PDF"],
-                    ["Invoice Generator", "3/month", "Unlimited"],
-                    ["Priority Support", "—", "✓"],
-                    ["No Ads/Banners", "—", "✓"],
-                  ].map(([feature, free, pro], i) => (
-                    <tr key={i} className="border-b last:border-0 hover:bg-muted/5 transition-colors">
-                      <td className="py-4 px-8 font-medium">{feature}</td>
-                      <td className="py-4 px-8 text-center text-muted-foreground">{free}</td>
-                      <td className="py-4 px-8 text-center text-primary font-bold">{pro}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            
+            <div className="max-w-4xl mx-auto overflow-x-auto -mx-6 px-6">
+              <div className="inline-block min-w-full align-middle">
+                <div className="overflow-hidden rounded-2xl border bg-background shadow-2xl">
+                  <table className="min-w-full divide-y divide-border text-sm">
+                    <thead>
+                      <tr className="bg-muted/50">
+                        <th scope="col" className="text-left py-6 px-8 font-black uppercase tracking-widest text-xs">Feature</th>
+                        <th scope="col" className="text-center py-6 px-8 font-black uppercase tracking-widest text-xs">Free</th>
+                        <th scope="col" className="text-center py-6 px-8 font-black uppercase tracking-widest text-xs text-primary">Pro</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-border">
+                      {[
+                        ["Core Utility Tools", "Unlimited", "Unlimited"],
+                        ["Batch Image Processing", "5 / day", "Unlimited"],
+                        ["SVG Optimization", "5 / day", "Unlimited"],
+                        ["Bulk ZIP Exports", "5 / day", "Unlimited"],
+                        ["AI Caption Generator", "3 per gen", "10+ per gen"],
+                        ["AI CV Builder", "Basic Summary", "Full Pro CV + PDF"],
+                        ["Invoice Generator", "3 / month", "Unlimited + Branding"],
+                        ["AI SEO Generator", "3 / day", "Unlimited"],
+                        ["AI Prompt Optimizer", "3 / day", "Unlimited + History"],
+                        ["LLMS.txt Builder", "1 / day", "Unlimited"],
+                        ["Advanced SEO Schema", "Basic", "Advanced"],
+                        ["Priority AI Queue", "—", "✓ Instant"],
+                        ["Ad-Free Experience", "—", "✓"],
+                        ["History Tracking", "—", "✓"],
+                        ["Early Access", "—", "✓"],
+                        ["Priority Support", "—", "✓ Email"],
+                      ].map(([feature, free, pro], i) => (
+                        <tr key={i} className="hover:bg-muted/5 transition-colors">
+                          <td className="py-4 px-8 font-bold whitespace-nowrap">{feature}</td>
+                          <td className="py-4 px-8 text-center text-muted-foreground whitespace-nowrap">{free}</td>
+                          <td className="py-4 px-8 text-center text-primary font-black whitespace-nowrap">{pro}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -167,7 +180,7 @@ export default async function Home() {
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-center mb-16">Common Questions</h2>
             <div className="space-y-6">
               {[
-                { q: "Is it really free?", a: "Yes. All 13+ tools have a generous free tier that works forever without a credit card." },
+                { q: "Is it really free?", a: "Yes. All tools have a generous free tier that works forever. We are constantly adding new utilities to the collection." },
                 { q: "Is my data secure?", a: "100%. All processing (except AI generation) happens directly in your browser. We never see your files." },
                 { q: "Can I use AI tools for free?", a: "Yes, every AI tool has a daily free limit. You can upgrade to Pro for high-volume use." },
                 { q: "Do you offer refunds?", a: "Yes, we offer a 7-day money-back guarantee for our Pro subscription if you are not satisfied." },
@@ -203,7 +216,7 @@ export default async function Home() {
               </Link>
               {!isPro && (
                 <Link href="/pricing">
-                  <Button variant="outline" size="lg" className="h-16 px-12 border-white/20 hover:bg-white/10 text-white text-lg font-bold rounded-2xl">
+                  <Button variant="ghost" size="lg" className="h-16 px-12 border-2 border-primary-foreground/20 hover:bg-primary-foreground/10 text-primary-foreground hover:text-primary-foreground text-lg font-bold rounded-2xl">
                     View Pro Features
                   </Button>
                 </Link>

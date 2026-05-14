@@ -8,10 +8,10 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   metadataBase: new URL("https://thewordof.com"),
   title: {
-    default: "TheWordOf Tools - 13+ AI Utility Tools in One Dashboard",
+    default: "TheWordOf Tools - Ever-Expanding AI Utility Platform",
     template: "%s | TheWordOf Tools",
   },
-  description: "The ultimate AI utility platform for modern businesses. Generate professional invoices, create viral AI captions, optimize images, build CVs, and more - all in one dashboard.",
+  description: "An ever-expanding collection of professional AI tools in one dashboard. Generate professional invoices, create viral AI captions, optimize images, build CVs, and more - all in one dashboard.",
   keywords: [
     "AI Tools", 
     "Invoice Generator", 
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://thewordof.com",
-    title: "TheWordOf Tools - 13+ AI Utility Tools",
+    title: "TheWordOf Tools - Ever-Expanding AI Utility Tools",
     description: "The ultimate AI utility platform. Stop switching tabs and start getting things done with our all-in-one productivity toolkit.",
     siteName: "TheWordOf Tools",
     images: [
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "TheWordOf Tools - AI Utility Platform",
-    description: "13+ Pro tools in one place. Generate invoices, optimize images, calculate EMIs, and more.",
+    description: "An ever-expanding collection of pro tools in one place. Generate invoices, optimize images, calculate EMIs, and more.",
     images: ["/og-image.png"],
     creator: "@thewordof",
   },

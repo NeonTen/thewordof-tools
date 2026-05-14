@@ -11,6 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 import { ProGate } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
+import { getMonthlyUsage, incrementMonthlyUsage } from "@/lib/usage-limit"
 
 // Pure native toggle — no Base UI dependency, always reliable
 function NativeToggle({
@@ -55,6 +56,15 @@ function NativeToggle({
 
 export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
   
+  const [usedThisMonth, setUsedThisMonth] = useState(0)
+  const MAX_FREE_INVOICES = 3
+
+  React.useEffect(() => {
+    if (!isPro) setUsedThisMonth(getMonthlyUsage("invoice-generator"))
+  }, [isPro])
+
+  const limitReached = !isPro && usedThisMonth >= MAX_FREE_INVOICES
+
   const [invoice, setInvoice] = useState({
     invoiceNumber: "INV-001",
     date: new Date().toISOString().split('T')[0],
@@ -256,11 +266,32 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
       {/* Preview Panel */}
       <div className="space-y-4 print:space-y-0">
         <div className="relative">
-          <div className="flex justify-end mb-4 print:hidden">
-            <Button onClick={() => window.print()} className="bg-primary">
+          <div className="flex flex-col sm:flex-row items-center justify-end gap-4 mb-4 print:hidden">
+            {!isPro && (
+              <span className="text-xs font-bold text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
+                {MAX_FREE_INVOICES - usedThisMonth} of {MAX_FREE_INVOICES} free invoices left this month
+              </span>
+            )}
+            <Button 
+              onClick={() => {
+                window.print()
+                if (!isPro) {
+                  const newUsed = incrementMonthlyUsage("invoice-generator")
+                  setUsedThisMonth(newUsed)
+                }
+              }} 
+              className="bg-primary"
+              disabled={limitReached}
+            >
               <Printer className="mr-2 h-4 w-4" /> Print / Save as PDF
             </Button>
           </div>
+          {limitReached && (
+            <div className="mb-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-2xl text-center">
+              <p className="text-sm font-bold text-amber-700 dark:text-amber-400">Monthly limit reached! Upgrade to Pro for unlimited invoices.</p>
+              <Link href="/pricing" className="text-xs font-black text-primary hover:underline mt-1 block uppercase">View Pricing →</Link>
+            </div>
+          )}
           <div className="border rounded-lg bg-white text-black p-8 shadow-sm print:shadow-none print:border-none print:p-0 overflow-hidden relative">
             {/* Watermark */}
             {invoice.showWatermark && (

@@ -5,7 +5,7 @@ import { ProBadge } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
 
 export const metadata = {
-  title: "13+ Free Online AI Tools — TheWordOf Utility Dashboard",
+  title: "Free Online AI Tools & Growing — TheWordOf Utility Dashboard",
   description: "Access a suite of free, browser-based tools for image conversion, SVG optimization, AI SEO generation, professional invoices, and financial calculators. No sign-up required.",
   keywords: ["free online tools", "AI productivity", "browser based utilities", "bulk image converter", "SVG minifier", "AI tools for creators"]
 }
@@ -72,6 +72,17 @@ export default async function ToolsPage() {
             </Link>
           )
         })}
+        
+        {/* Coming Soon Card */}
+        <Card className="h-full border-dashed border-2 bg-muted/20 flex items-center justify-center p-5 group transition-colors hover:bg-muted/30">
+          <div className="text-center space-y-2">
+            <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+              <Sparkles className="h-5 w-5 text-muted-foreground" />
+            </div>
+            <p className="font-bold text-sm text-muted-foreground">More Tools Coming Soon</p>
+            <p className="text-[10px] text-muted-foreground/70 uppercase tracking-widest font-black">Building 24/7</p>
+          </div>
+        </Card>
       </div>
     </div>
   )

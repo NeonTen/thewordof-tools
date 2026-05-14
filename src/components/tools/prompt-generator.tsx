@@ -10,8 +10,18 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
+import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
 
 export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
+  const [usedToday, setUsedToday] = useState(0)
+  const MAX_FREE = 3
+
+  React.useEffect(() => {
+    if (!isPro) setUsedToday(getDailyUsage("prompt-generator"))
+  }, [isPro])
+
+  const limitReached = !isPro && usedToday >= MAX_FREE
   const [copied, setCopied] = useState(false)
   
   const [formData, setFormData] = useState({
@@ -49,6 +59,10 @@ export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
       console.error(error)
     } finally {
       setIsLoading(false)
+      if (res.ok && !isPro) {
+        const newUsed = incrementDailyUsage("prompt-generator")
+        setUsedToday(newUsed)
+      }
     }
   }
 
@@ -111,14 +125,24 @@ export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={isLoading || !formData.goal}>
+            <Button type="submit" className="w-full" disabled={isLoading || !formData.goal || limitReached}>
               {isLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <Lightbulb className="mr-2 h-4 w-4" />
               )}
-              {isLoading ? "Optimizing..." : "Generate Optimal Prompt"}
+              {isLoading ? "Optimizing..." : limitReached ? "Daily Limit Reached" : "Generate Optimal Prompt"}
             </Button>
+            {limitReached && (
+              <p className="text-[10px] text-center text-muted-foreground">
+                You've reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
+              </p>
+            )}
+            {!isPro && !limitReached && (
+              <p className="text-[10px] text-center text-muted-foreground">
+                {MAX_FREE - usedToday} of {MAX_FREE} free generations left today
+              </p>
+            )}
           </form>
         </CardContent>
       </Card>

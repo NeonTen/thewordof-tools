@@ -192,45 +192,51 @@ export default async function PricingPage() {
           ))}
         </div>
 
-        {/* Feature Comparison Table */}
-        <div>
-          <h2 className="text-3xl font-black tracking-tight text-center mb-12">Compare plans</h2>
-          <div className="overflow-x-auto rounded-2xl border">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-muted/50">
-                  <th className="text-left py-4 px-6 font-bold">Feature</th>
-                  <th className="text-center py-4 px-6 font-bold">Free</th>
-                  <th className="text-center py-4 px-6 font-bold text-primary">Pro</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["Image Converter", "5 images/batch", "Unlimited"],
-                  ["SVG Compressor", "5 files/batch", "Unlimited"],
-                  ["Bulk ZIP Download", "Up to 5 files", "Unlimited"],
-                  ["AI Captions", "3 captions/generation", "10 captions + all platforms"],
-                  ["AI CV Builder", "Basic summary", "Full CV + PDF export"],
-                  ["AI SEO Generator", "1 page/day", "Unlimited"],
-                  ["AI Prompt Generator", "3 prompts/day", "Unlimited + history"],
-                  ["Invoice Generator", "3/month", "Unlimited + custom branding"],
-                  ["LLMS.txt Generator", "1/day", "Unlimited"],
-                  ["Calculators (EMI, SIP)", "Unlimited", "Unlimited"],
-                  ["Code Minifier", "Unlimited", "Unlimited"],
-                  ["Text Diff", "Unlimited", "Unlimited"],
-                  ["Schema Generator", "Unlimited", "Unlimited"],
-                  ["Priority AI generation", "—", "✓"],
-                  ["No upgrade banners", "—", "✓"],
-                  ["Early access to new tools", "—", "✓"],
-                ].map(([feature, free, pro], i) => (
-                  <tr key={i} className={cn("border-b last:border-0", i % 2 === 0 ? "bg-background" : "bg-muted/20")}>
-                    <td className="py-3 px-6 font-medium">{feature}</td>
-                    <td className="py-3 px-6 text-center text-muted-foreground">{free}</td>
-                    <td className="py-3 px-6 text-center text-primary font-semibold">{pro}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="space-y-8">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl font-black tracking-tight">Detailed Feature Comparison</h2>
+            <p className="text-muted-foreground">Everything you get with our Free and Pro plans.</p>
+          </div>
+          <div className="overflow-x-auto -mx-6 px-6 pb-4">
+            <div className="inline-block min-w-full align-middle">
+              <div className="overflow-hidden border rounded-2xl bg-background">
+                <table className="min-w-full divide-y divide-border">
+                  <thead>
+                    <tr className="bg-muted/50">
+                      <th scope="col" className="py-4 px-6 text-left text-sm font-black uppercase tracking-widest text-foreground">Feature</th>
+                      <th scope="col" className="py-4 px-6 text-center text-sm font-black uppercase tracking-widest text-foreground">Free</th>
+                      <th scope="col" className="py-4 px-6 text-center text-sm font-black uppercase tracking-widest text-primary">Pro</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border">
+                    {[
+                      ["Core Utility Tools", "Unlimited", "Unlimited"],
+                      ["Batch Image Processing", "5 / day", "Unlimited"],
+                      ["SVG Optimization", "5 / day", "Unlimited"],
+                      ["Bulk ZIP Exports", "5 / day", "Unlimited"],
+                      ["AI Caption Generator", "3 per gen", "10+ per gen"],
+                      ["AI CV Builder", "Basic Summary", "Full Pro CV + PDF"],
+                      ["Invoice Generator", "3 / month", "Unlimited + Branding"],
+                      ["AI SEO Generator", "3 / day", "Unlimited"],
+                      ["AI Prompt Optimizer", "3 / day", "Unlimited + History"],
+                      ["LLMS.txt Builder", "1 / day", "Unlimited"],
+                      ["Advanced SEO Schema", "Basic", "Advanced"],
+                      ["Priority AI Queue", "—", "✓ Instant"],
+                      ["Ad-Free Experience", "—", "✓"],
+                      ["History Tracking", "—", "✓"],
+                      ["Early Access", "—", "✓"],
+                      ["Priority Support", "—", "✓ Email"],
+                    ].map(([feature, free, pro], i) => (
+                      <tr key={i} className="hover:bg-muted/5 transition-colors">
+                        <td className="py-4 px-8 font-bold whitespace-nowrap">{feature}</td>
+                        <td className="py-4 px-8 text-center text-muted-foreground whitespace-nowrap">{free}</td>
+                        <td className="py-4 px-8 text-center text-primary font-black whitespace-nowrap">{pro}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
 

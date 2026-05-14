@@ -34,6 +34,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { optimizeSVG, SVGOptions } from "@/lib/svg-utils"
+import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
 
 // Pure native toggle — no Base UI dependency, always reliable
 function NativeToggle({
@@ -95,7 +96,13 @@ export function SVGCompressor({ isPro = false }: { isPro?: boolean }) {
   const [isOptimizing, setIsOptimizing] = useState(false)
   const [copied, setCopied] = useState(false)
   
-  const currentMax = isPro ? 1000 : MAX_FREE_FILES
+  const [usedToday, setUsedToday] = useState(0)
+  
+  React.useEffect(() => {
+    if (!isPro) setUsedToday(getDailyUsage("svg-compressor"))
+  }, [isPro])
+  
+  const currentMax = isPro ? 1000 : Math.max(0, MAX_FREE_FILES - usedToday)
   
   // Optimization settings
   const [options, setOptions] = useState<SVGOptions>({
@@ -171,6 +178,10 @@ export function SVGCompressor({ isPro = false }: { isPro?: boolean }) {
     
     // Use isOptimizing (not isProcessing — that was a bug)
     setIsOptimizing(false)
+    if (!isPro) {
+      const newUsed = incrementDailyUsage("svg-compressor", activeTab === "paste" ? 1 : svgFiles.length)
+      setUsedToday(newUsed)
+    }
   }
 
   const copyToClipboard = (text: string) => {
@@ -258,7 +269,9 @@ export function SVGCompressor({ isPro = false }: { isPro?: boolean }) {
                       </div>
                       <h3 className="text-xl font-black tracking-tight">Drop your SVG files</h3>
                       <p className="text-sm text-muted-foreground mt-2">
-                        Bulk process up to {currentMax} SVGs at once.
+                        {isPro 
+                          ? "Bulk process up to 1,000 SVGs at once." 
+                          : `Process up to 5 SVGs per day. You have ${currentMax} left for today.`}
                       </p>
 
                       {svgFiles.length >= currentMax && !isPro && (

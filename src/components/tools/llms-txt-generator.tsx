@@ -8,8 +8,19 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
+import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
 
 export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
+  const [usedToday, setUsedToday] = useState(0)
+  const MAX_FREE = 1
+
+  React.useEffect(() => {
+    if (!isPro) setUsedToday(getDailyUsage("llms-txt"))
+  }, [isPro])
+
+  const limitReached = !isPro && usedToday >= MAX_FREE
+
   const [formData, setFormData] = useState({
     brandName: "",
     description: "",
@@ -49,6 +60,12 @@ export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
       console.error(error)
     } finally {
       setIsLoading(false)
+      if (!isPro) {
+        // Only increment if we actually got a response (setOutput would have text)
+        // Since it's a stream, we just assume if it finished without error
+        const newUsed = incrementDailyUsage("llms-txt")
+        setUsedToday(newUsed)
+      }
     }
   }
 
@@ -131,12 +148,14 @@ export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
                 />
               </div>
 
-              <Button type="submit" className="w-full h-12 gap-2 mt-4 font-bold rounded-xl shadow-lg shadow-primary/20" disabled={isLoading}>
+              <Button type="submit" className="w-full h-12 gap-2 mt-4 font-bold rounded-xl shadow-lg shadow-primary/20" disabled={isLoading || limitReached}>
                 {isLoading ? (
                   <span className="flex items-center gap-2">
                     <span className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
                     Generating...
                   </span>
+                ) : limitReached ? (
+                  "Daily Limit Reached"
                 ) : (
                   <>
                     <Sparkles className="h-4 w-4" />
@@ -144,6 +163,16 @@ export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
                   </>
                 )}
               </Button>
+              {limitReached && (
+                <p className="text-[10px] text-center text-muted-foreground mt-2">
+                  You've reached your 1 daily generation. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
+                </p>
+              )}
+              {!isPro && !limitReached && (
+                <p className="text-[10px] text-center text-muted-foreground mt-2">
+                  {MAX_FREE - usedToday} of {MAX_FREE} free generation left today
+                </p>
+              )}
             </form>
           </CardContent>
         </Card>
