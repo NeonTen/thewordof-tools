@@ -47,6 +47,10 @@ export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
       })
 
       if (res.ok && res.body) {
+        if (!isPro) {
+          const newUsed = incrementDailyUsage("prompt-generator")
+          setUsedToday(newUsed)
+        }
         const reader = res.body.getReader()
         const decoder = new TextDecoder()
         while (true) {
@@ -59,10 +63,6 @@ export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
       console.error(error)
     } finally {
       setIsLoading(false)
-      if (res.ok && !isPro) {
-        const newUsed = incrementDailyUsage("prompt-generator")
-        setUsedToday(newUsed)
-      }
     }
   }
 

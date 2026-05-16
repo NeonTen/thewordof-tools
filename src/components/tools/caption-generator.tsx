@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 // Removed useCompletion
 import { Loader2, Copy, Check, Sparkles, MessageSquare } from "lucide-react"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -49,6 +50,10 @@ export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
       })
 
       if (res.ok && res.body) {
+        if (!isPro) {
+          const newUsed = incrementDailyUsage("caption-generator")
+          setUsedToday(newUsed)
+        }
         const reader = res.body.getReader()
         const decoder = new TextDecoder()
         while (true) {
@@ -61,10 +66,6 @@ export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
       console.error(error)
     } finally {
       setIsLoading(false)
-      if (res.ok && !isPro) {
-        const newUsed = incrementDailyUsage("caption-generator")
-        setUsedToday(newUsed)
-      }
     }
   }
 

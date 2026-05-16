@@ -48,7 +48,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           email: user.email,
           name: user.name,
           image: user.image,
-          role: user.role
+          role: user.role,
+          proExpiresAt: user.proExpiresAt
         }
       }
     })
@@ -58,6 +59,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.role = user.role
         token.id = user.id
+        token.proExpiresAt = user.proExpiresAt
+      }
+      
+      // Auto-expire PRO role if passed proExpiresAt
+      if (token.role === "PRO" && token.proExpiresAt) {
+        if (new Date(token.proExpiresAt as string | Date) < new Date()) {
+          token.role = "USER"
+          token.proExpiresAt = null
+          // Fire and forget DB update
+          prisma.user.update({
+            where: { id: token.id as string },
+            data: { role: "USER", proExpiresAt: null }
+          }).catch(console.error)
+        }
       }
       
       // If we trigger a manual update (like after payment sync)
@@ -88,6 +103,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.role = token.role as any
         session.user.id = token.id as string
         session.user.name = token.name as string
+        if (token.proExpiresAt) {
+          session.user.proExpiresAt = new Date(token.proExpiresAt as string | Date)
+        }
       }
       return session
     }

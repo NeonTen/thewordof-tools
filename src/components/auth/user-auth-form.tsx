@@ -19,6 +19,7 @@ const loginSchema = z.object({
 })
 
 const registerSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters long." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
   password: z.string()
     .min(8, { message: "Password must be at least 8 characters long." })
@@ -39,7 +40,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(type === "register" ? registerSchema : loginSchema),
+    resolver: zodResolver(type === "register" ? registerSchema : loginSchema) as any,
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false)
@@ -55,7 +56,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
         const res = await fetch("/api/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: data.email, password: data.password }),
+          body: JSON.stringify({ name: data.name, email: data.email, password: data.password }),
         })
         if (res.ok) {
           const signInResult = await signIn("credentials", {
@@ -98,6 +99,28 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)} method="POST">
         <div className="grid gap-2">
+          {type === "register" && (
+            <div className="grid gap-1">
+              <Label className="sr-only" htmlFor="name">
+                Name
+              </Label>
+              <Input
+                id="name"
+                placeholder="Your Name"
+                type="text"
+                autoCapitalize="words"
+                autoComplete="name"
+                autoCorrect="off"
+                disabled={isLoading || isGoogleLoading}
+                {...register("name")}
+              />
+              {errors?.name && (
+                <p className="px-1 text-xs text-red-600">
+                  {errors.name.message}
+                </p>
+              )}
+            </div>
+          )}
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
               Email

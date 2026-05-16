@@ -5,7 +5,7 @@ import { CheckCircle2 } from "lucide-react"
 
 export function DashboardSuccess() {
   const searchParams = useSearchParams()
-  const isSuccess = searchParams?.get("success") === "true"
+  const isSuccess = searchParams?.get("success") === "true" || searchParams?.get("status") === "success"
 
   if (!isSuccess) return null
 

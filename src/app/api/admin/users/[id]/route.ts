@@ -13,7 +13,7 @@ export async function PATCH(
     const { id } = await params
     
     if (session?.user?.role !== "ADMIN") {
-      return new NextResponse("Unauthorized", { status: 401 })
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     const body = await req.json()
@@ -98,9 +98,9 @@ export async function PATCH(
     }
 
     return NextResponse.json({ message: "User updated successfully" })
-  } catch (error) {
+  } catch (error: any) {
     console.error("ADMIN_USER_PATCH", error)
-    return new NextResponse("Internal Error", { status: 500 })
+    return NextResponse.json({ error: error.message || "Internal Error" }, { status: 500 })
   }
 }
 
@@ -114,12 +114,12 @@ export async function DELETE(
     const { id } = await params
     
     if (session?.user?.role !== "ADMIN") {
-      return new NextResponse("Unauthorized", { status: 401 })
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     // Don't allow deleting self
     if (id === session.user.id) {
-      return new NextResponse("Cannot delete yourself", { status: 400 })
+      return NextResponse.json({ error: "Cannot delete yourself" }, { status: 400 })
     }
 
     await prisma.user.delete({
@@ -127,8 +127,8 @@ export async function DELETE(
     })
 
     return NextResponse.json({ message: "User deleted successfully" })
-  } catch (error) {
+  } catch (error: any) {
     console.error("ADMIN_USER_DELETE", error)
-    return new NextResponse("Internal Error", { status: 500 })
+    return NextResponse.json({ error: error.message || "Internal Error" }, { status: 500 })
   }
 }

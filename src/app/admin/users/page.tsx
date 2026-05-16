@@ -71,10 +71,17 @@ export default function AdminUsersPage() {
   const fetchUsers = async () => {
     try {
       const res = await fetch("/api/admin/users")
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: "Failed to fetch users" }))
+        console.error("Fetch users error:", errorData)
+        setUsers([])
+        return
+      }
       const data = await res.json()
       setUsers(data)
     } catch (error) {
-      console.error(error)
+      console.error("Fetch users exception:", error)
+      setUsers([])
     } finally {
       setLoading(false)
     }
@@ -148,7 +155,7 @@ export default function AdminUsersPage() {
 
       <Card className="border-none shadow-sm overflow-hidden py-0">
         <Table>
-          <TableHeader className="bg-zinc-200/80">
+          <TableHeader className="bg-muted/80">
             <TableRow className="hover:bg-transparent border-none">
               <TableHead className="font-bold h-10 px-4">User</TableHead>
               <TableHead className="font-bold h-10 px-4">Role</TableHead>
@@ -178,7 +185,7 @@ export default function AdminUsersPage() {
               const hasPremium = user.role === 'PRO' || user.role === 'ADMIN' || currentSub?.plan === 'PREMIUM'
               
               return (
-                <TableRow key={user.id} className="hover:bg-zinc-50/20 transition-colors border-zinc-100">
+                <TableRow key={user.id} className="hover:bg-muted/50 transition-colors border-border">
                   <TableCell className="py-2 px-4">
                     <div className="flex items-center gap-3">
                       <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
@@ -192,9 +199,9 @@ export default function AdminUsersPage() {
                   </TableCell>
                   <TableCell className="py-2 px-4">
                     <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider ${
-                      user.role === 'ADMIN' ? 'bg-red-100 text-red-700' : 
-                      user.role === 'PRO' ? 'bg-amber-100 text-amber-700' : 
-                      'bg-zinc-100 text-zinc-600'
+                      user.role === 'ADMIN' ? 'bg-destructive/10 text-destructive' : 
+                      user.role === 'PRO' ? 'bg-primary/10 text-primary' : 
+                      'bg-muted text-muted-foreground'
                     }`}>
                       {user.role === 'ADMIN' ? <Shield className="h-2.5 w-2.5" /> : <UserIcon className="h-2.5 w-2.5" />}
                       {user.role}
@@ -202,7 +209,7 @@ export default function AdminUsersPage() {
                   </TableCell>
                   <TableCell className="py-2 px-4">
                     <div className="flex items-center gap-2">
-                      <span className={`h-1.5 w-1.5 rounded-full ${hasPremium ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-zinc-300'}`} />
+                      <span className={`h-1.5 w-1.5 rounded-full ${hasPremium ? 'bg-primary shadow-[0_0_8px_rgba(var(--primary),0.5)]' : 'bg-muted-foreground/50'}`} />
                       <span className="text-xs font-bold">{hasPremium ? 'PREMIUM' : 'FREE'}</span>
                     </div>
                   </TableCell>
@@ -211,7 +218,7 @@ export default function AdminUsersPage() {
                   </TableCell>
                   <TableCell className="py-2 px-4">
                     <DropdownMenu>
-                      <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-zinc-100 transition-colors">
+                      <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition-colors">
                         <MoreVertical className="h-4 w-4" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-[200px]">
@@ -243,7 +250,7 @@ export default function AdminUsersPage() {
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem 
-                            className="text-red-600 focus:bg-red-50 focus:text-red-600"
+                            className="text-destructive focus:bg-destructive/10 focus:text-destructive"
                             onClick={() => {
                               setSelectedUser(user)
                               setIsDeleteOpen(true)
@@ -359,9 +366,9 @@ export default function AdminUsersPage() {
 
       {/* Delete Dialog */}
       <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <DialogContent className="border-red-100">
+        <DialogContent className="border-destructive/20">
           <DialogHeader>
-            <DialogTitle className="text-red-600 flex items-center gap-2">
+            <DialogTitle className="text-destructive flex items-center gap-2">
               <AlertCircle className="h-5 w-5" />
               Confirm Deletion
             </DialogTitle>

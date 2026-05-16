@@ -51,7 +51,6 @@ export default async function PricingPage() {
       period: "per month",
       description: "For power users and professionals who need zero limits.",
       cta: "Upgrade to Pro",
-      priceId: process.env.STRIPE_PRO_PRICE_ID || "price_placeholder_id",
       highlight: true,
       badge: "Most Popular",
       features: [
@@ -150,7 +149,7 @@ export default async function PricingPage() {
                     </Button>
                   ) : (
                     <UpgradeButton 
-                      priceId={plan.priceId!} 
+                      user={session?.user}
                       className="shadow-lg shadow-primary/20"
                     >
                       {plan.cta}

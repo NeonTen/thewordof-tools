@@ -7,7 +7,7 @@ export async function GET() {
     const session = await auth()
     
     if (session?.user?.role !== "ADMIN") {
-      return new NextResponse("Unauthorized", { status: 401 })
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     const users = await prisma.user.findMany({
@@ -21,8 +21,8 @@ export async function GET() {
     })
 
     return NextResponse.json(users)
-  } catch (error) {
+  } catch (error: any) {
     console.error("ADMIN_USERS_GET", error)
-    return new NextResponse("Internal Error", { status: 500 })
+    return NextResponse.json({ error: error.message || "Internal Error" }, { status: 500 })
   }
 }

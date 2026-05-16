@@ -120,8 +120,12 @@ export default async function BillingPage() {
                   <span className="font-bold">{isPro ? "₹499.00" : "₹0.00"}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Next Billing Date</span>
-                  <span className="font-bold">Automated</span>
+                  <span className="text-muted-foreground">{isPro ? "Expires On" : "Next Billing Date"}</span>
+                  <span className="font-bold">
+                    {isPro && subscription?.currentPeriodEnd 
+                      ? new Intl.DateTimeFormat('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(subscription.currentPeriodEnd))
+                      : (isPro ? "Automated" : "N/A")}
+                  </span>
                 </div>
               </div>
             </CardContent>
