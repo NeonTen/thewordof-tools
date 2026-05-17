@@ -271,10 +271,15 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
             )}
             <Button 
               onClick={async () => {
-                window.print()
                 if (!isPro) {
-                  await incrementUsage(1)
+                  try {
+                    await incrementUsage(1)
+                  } catch {
+                    alert("Could not record usage – please try again.")
+                    return
+                  }
                 }
+                window.print()
               }} 
               className="bg-primary"
               disabled={limitReached}

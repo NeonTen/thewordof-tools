@@ -1,24 +1,29 @@
+import { auth } from "@/auth"
 import { NextRequest, NextResponse } from "next/server"
 import { headers } from "next/headers"
 import crypto from "crypto"
-import { auth } from "@/auth"
-import { prisma } from "@/lib/prisma"
 
 export const dynamic = 'force-dynamic'
-// Helper to hash visitor IP addresses securely for GDPR compliance
+export const revalidate = 0
+
+interface PrismaModuleType {
+  prisma: import("@prisma/client").PrismaClient
+}
+
+// Helper to obtain a stable identifier – logged in user ID or hashed IP for guests
 async function getIdentifier(req: NextRequest): Promise<string> {
   const session = await auth()
   if (session?.user?.id) {
     return session.user.id
   }
-  
+
   const headerList = await headers()
   const reqIp = (req as unknown as { ip?: string }).ip
-  const rawIp = headerList.get("x-forwarded-for")?.split(",")[0] || 
-                headerList.get("x-real-ip") || 
+  const rawIp = headerList.get("x-forwarded-for")?.split(",")[0] ||
+                headerList.get("x-real-ip") ||
                 reqIp ||
                 "127.0.0.1"
-                
+
   return crypto.createHash("sha256").update(rawIp).digest("hex")
 }
 
@@ -43,6 +48,10 @@ export async function GET(req: NextRequest) {
     const identifier = await getIdentifier(req)
     const dateStr = getDateStr(period)
 
+    // Load prisma dynamically to bypass circular dependencies
+    const prismaModule = (await import("@/lib/prisma")) as unknown as PrismaModuleType
+    const prisma = prismaModule.prisma
+
     const record = await prisma.toolUsage.findUnique({
       where: {
         toolKey_identifier_date_period: {
@@ -54,7 +63,8 @@ export async function GET(req: NextRequest) {
       },
     })
 
-    return NextResponse.json({ count: record ? record.count : 0 })
+    const count = record ? record.count : 0
+    return NextResponse.json({ count })
   } catch (error) {
     console.error("GET /api/usage error:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
@@ -72,6 +82,10 @@ export async function POST(req: NextRequest) {
 
     const identifier = await getIdentifier(req)
     const dateStr = getDateStr(period)
+
+    // Load prisma dynamically
+    const prismaModule = (await import("@/lib/prisma")) as unknown as PrismaModuleType
+    const prisma = prismaModule.prisma
 
     const record = await prisma.toolUsage.upsert({
       where: {
