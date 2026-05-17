@@ -12,15 +12,11 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
-  const [usedToday, setUsedToday] = useState(0)
+  const { count: usedToday, increment: incrementUsage } = useUsageLimit("caption-generator", "daily")
   const MAX_FREE = 3
-
-  React.useEffect(() => {
-    if (!isPro) setUsedToday(getDailyUsage("caption-generator"))
-  }, [isPro])
 
   const limitReached = !isPro && usedToday >= MAX_FREE
 
@@ -51,8 +47,7 @@ export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
 
       if (res.ok && res.body) {
         if (!isPro) {
-          const newUsed = incrementDailyUsage("caption-generator")
-          setUsedToday(newUsed)
+          await incrementUsage(1)
         }
         const reader = res.body.getReader()
         const decoder = new TextDecoder()
@@ -158,7 +153,7 @@ export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
             </Button>
             {limitReached && (
               <p className="text-[10px] text-center text-muted-foreground">
-                You've reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
+                You&apos;ve reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
               </p>
             )}
             {!isPro && !limitReached && (
@@ -215,7 +210,7 @@ export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
           An AI caption generator uses large language models to create engaging, platform-optimized captions for your social media posts. Instead of staring at a blank text box, you provide your topic, tone, and platform — and the AI writes captions tailored to your audience.
         </p>
         <p className="text-muted-foreground mt-4 leading-relaxed">
-          Whether you need punchy one-liners for Twitter/X, hashtag-heavy Instagram captions, or professional LinkedIn posts, our generator adapts its style and length to match each platform's best practices.
+          Whether you need punchy one-liners for Twitter/X, hashtag-heavy Instagram captions, or professional LinkedIn posts, our generator adapts its style and length to match each platform&apos;s best practices.
         </p>
       </section>
       <section className="bg-muted/30 p-8 rounded-3xl border border-primary/5">
