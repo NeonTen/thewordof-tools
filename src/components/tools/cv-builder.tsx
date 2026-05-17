@@ -1,10 +1,11 @@
 "use client"
 
 import React, { useState } from "react"
-import { Download, Loader2, Sparkles, Plus, Trash2, User, Layout, Image as ImageIcon, Crown, Star, AlignLeft, BarChart3 } from "lucide-react"
+import { Download, Loader2, Sparkles, Plus, Trash2, User, Layout, Image as ImageIcon, Crown, Star, AlignLeft, BarChart3, ArrowRight, X } from "lucide-react"
 import { ProGate } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
 import { AIParserModal, type CVParserResult } from "./ai-parser-modal"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -42,6 +43,7 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
   const [photo, setPhoto] = useState<string | null>(null)
   const [skillMode, setSkillMode] = useState<'text' | 'bars'>('text')
   const [showAIParserModal, setShowAIParserModal] = useState(false)
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
 
   const [cv, setCv] = useState({
     name: "John Doe",
@@ -548,7 +550,17 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
         <div className="sticky top-24 print:hidden">
           <div className="flex justify-between items-center bg-card p-4 rounded-2xl border shadow-sm mb-4">
             <div className="flex items-center gap-3">
-              <Select value={templateId} onValueChange={(val) => setTemplateId(val || "modern")}>
+              <Select 
+                value={templateId} 
+                onValueChange={(val) => {
+                  const selected = TEMPLATES.find(t => t.id === val)
+                  if (selected?.pro && !isPro) {
+                    setShowUpgradeModal(true)
+                  } else {
+                    setTemplateId(val || "modern")
+                  }
+                }}
+              >
                 <SelectTrigger className="w-[180px] font-bold capitalize"><SelectValue placeholder="Modern" /></SelectTrigger>
                 <SelectContent>
                   {TEMPLATES.map(t => (
@@ -792,6 +804,49 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
         onApply={handleApplyAIData}
         onClose={() => setShowAIParserModal(false)}
       />
+    )}
+    {showUpgradeModal && (
+      <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+        <div 
+          className="absolute inset-0 bg-background/80 backdrop-blur-md animate-in fade-in duration-300" 
+          onClick={() => setShowUpgradeModal(false)} 
+        />
+        <div className="relative w-full max-w-sm overflow-hidden rounded-3xl border bg-background p-8 shadow-2xl animate-in zoom-in-95 duration-300">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute top-4 right-4 h-8 w-8 rounded-full" 
+            onClick={() => setShowUpgradeModal(false)}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <div className="text-center space-y-6">
+            <div className="mx-auto w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center">
+              <Crown className="h-8 w-8 text-amber-500" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-2xl font-black tracking-tight">Premium Template</h3>
+              <p className="text-muted-foreground leading-relaxed text-xs">
+                This stunning layout is a premium feature. Upgrade to the <span className="font-bold text-foreground">Pro</span> or <span className="font-bold text-foreground">Business</span> tier to access all resume templates and premium tools.
+              </p>
+            </div>
+            <div className="grid gap-3 pt-2">
+              <Button size="lg" className="h-11 font-black text-xs shadow-xl shadow-primary/20" asChild>
+                <Link href="/pricing" onClick={() => setShowUpgradeModal(false)}>
+                  View Pro Plans <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="font-bold text-xs text-muted-foreground" 
+                onClick={() => setShowUpgradeModal(false)}
+              >
+                Maybe later
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
     )}
   </>)
 }
