@@ -4,6 +4,7 @@ import crypto from "crypto"
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 
+export const dynamic = 'force-dynamic'
 // Helper to hash visitor IP addresses securely for GDPR compliance
 async function getIdentifier(req: NextRequest): Promise<string> {
   const session = await auth()

@@ -7,7 +7,7 @@ export function useUsageLimit(toolKey: string, period: "daily" | "monthly" = "da
 
   const fetchUsage = useCallback(async () => {
     try {
-      const res = await fetch(`/api/usage?toolKey=${toolKey}&period=${period}`)
+      const res = await fetch(`/api/usage?toolKey=${toolKey}&period=${period}`, { cache: "no-store" })
       if (res.ok) {
         const data = await res.json()
         setCount(data.count)
