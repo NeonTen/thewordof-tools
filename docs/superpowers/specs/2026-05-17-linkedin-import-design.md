@@ -31,7 +31,8 @@ Allow Business-tier users to import their LinkedIn public profile into the CV Bu
 
 - Accepts `{ url: string }` in the request body
 - Validates URL format (must be a `linkedin.com/in/` URL)
-- Fetches the profile page using realistic browser `User-Agent` and `Accept` headers; 10-second timeout
+- Fetches the profile page using a whitelisted crawler `User-Agent` (`facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)`) and matching headers to bypass LinkedIn 999 anti-bot blocking; 10-second timeout
+- Intercepts `404 Page Not Found` response status codes specifically to accurately identify and report private or restricted profile settings
 - Strips the HTML to readable text (removes `<script>`, `<style>`, nav/footer elements)
 - Sends the text to Gemini with a structured extraction prompt
 - Returns `LinkedInImportResult` on success, or `{ error: ErrorCode }` on failure
@@ -109,8 +110,8 @@ Fields that Gemini cannot find are returned as empty strings `""` or empty array
 
 | Code | Condition | User-facing message |
 |---|---|---|
-| `profile_not_public` | LinkedIn served a login wall or empty profile | "We couldn't read this profile. Make sure it's set to Public on LinkedIn." |
-| `fetch_failed` | Network error or timeout (>10s) | "Couldn't reach LinkedIn. Check the URL and try again." |
+| `profile_not_public` | LinkedIn served a login wall, returned HTTP 404 (private/restricted settings), or empty profile | "This profile appears to be private or restricted. To import, please ensure your profile's public visibility is turned ON in LinkedIn (Settings & Privacy -> Visibility -> Edit your public profile)." |
+| `fetch_failed` | Network error, timeout (>10s), or rate limit (HTTP 999/429) | "Couldn't reach LinkedIn. Check the URL and try again." |
 | `parse_failed` | Gemini returned no usable fields | "AI couldn't extract your profile. Try a different URL format (e.g. linkedin.com/in/your-name)." |
 | `invalid_url` | URL doesn't match `linkedin.com/in/` | "Please enter a valid LinkedIn profile URL (e.g. linkedin.com/in/your-name)." |
 | `unauthorized` | User is not Business or Admin | 403 response — client should not reach this state |
