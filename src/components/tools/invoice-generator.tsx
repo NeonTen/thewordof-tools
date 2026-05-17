@@ -288,7 +288,7 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
               <Link href="/pricing" className="text-xs font-black text-primary hover:underline mt-1 block uppercase">View Pricing →</Link>
             </div>
           )}
-          <div className="border rounded-lg bg-white text-black p-8 shadow-sm print:shadow-none print:border-none print:px-8 print:py-8 overflow-hidden relative">
+          <div className="border rounded-lg bg-white text-black p-8 shadow-sm print:shadow-none print:border-none print:px-16 print:py-12 overflow-hidden relative">
             {/* Watermark */}
             {invoice.showWatermark && (
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-45 opacity-[0.03] pointer-events-none select-none z-0">
