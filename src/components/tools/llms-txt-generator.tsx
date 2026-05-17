@@ -9,15 +9,11 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
-  const [usedToday, setUsedToday] = useState(0)
+  const { count: usedToday, increment: incrementUsage } = useUsageLimit("llms-txt", "daily")
   const MAX_FREE = 1
-
-  React.useEffect(() => {
-    if (!isPro) setUsedToday(getDailyUsage("llms-txt"))
-  }, [isPro])
 
   const limitReached = !isPro && usedToday >= MAX_FREE
 
@@ -63,8 +59,7 @@ export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
       if (!isPro) {
         // Only increment if we actually got a response (setOutput would have text)
         // Since it's a stream, we just assume if it finished without error
-        const newUsed = incrementDailyUsage("llms-txt")
-        setUsedToday(newUsed)
+        await incrementUsage(1)
       }
     }
   }
@@ -165,7 +160,7 @@ export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
               </Button>
               {limitReached && (
                 <p className="text-[10px] text-center text-muted-foreground mt-2">
-                  You've reached your 1 daily generation. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
+                  You&apos;ve reached your 1 daily generation. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
                 </p>
               )}
               {!isPro && !limitReached && (
