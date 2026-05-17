@@ -30,7 +30,7 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/next-env.d.ts": {
-    "mtime": 1779014862.9333394,
+    "mtime": 1779024530.5968199,
     "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/tools/cv-builder/page.tsx": {
-    "mtime": 1779012565.8888159,
-    "ast_hash": "4465d4e8cf2fd23fffc6eb4816e61805",
+    "mtime": 1779022886.8663201,
+    "ast_hash": "8a1844761064823d1f039ffb8f62a509",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/tools/prompt-generator/page.tsx": {
@@ -284,6 +284,11 @@
     "ast_hash": "be9213713e7a5f9e637cf7c82866916b",
     "semantic_hash": ""
   },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/usage/route.ts": {
+    "mtime": 1779028015.5870335,
+    "ast_hash": "78909cbed5800a1081830554eedc2a27",
+    "semantic_hash": ""
+  },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/user/update/route.ts": {
     "mtime": 1778385961.235072,
     "ast_hash": "0f72fd1ae31482b6962255753bd6a03d",
@@ -322,6 +327,11 @@
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/ai/llms-txt/route.ts": {
     "mtime": 1779012596.0165148,
     "ast_hash": "575ffcaf94f51d2526155cd79938a10a",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/ai/cv-parser/route.ts": {
+    "mtime": 1779025654.0271537,
+    "ast_hash": "afb17fd1c81304001d75ebec1e9142bf",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/paypal/capture-order/route.ts": {
@@ -365,13 +375,13 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/pricing/page.tsx": {
-    "mtime": 1779013060.5271175,
-    "ast_hash": "4c7e7cbaba393f1e03a5dea005a2e559",
+    "mtime": 1779025728.6887343,
+    "ast_hash": "14236c155fb1ef8b9c25d6f6da1a7235",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/theme-provider.tsx": {
-    "mtime": 1777865250.3622332,
-    "ast_hash": "fd3699b7330dd650753972a449acda00",
+    "mtime": 1779027351.03228,
+    "ast_hash": "e1b35994426df1d6ceed931479438c11",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/theme-toggle.tsx": {
@@ -410,8 +420,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/ui/pro-gate.tsx": {
-    "mtime": 1779012841.6157997,
-    "ast_hash": "1ec5d092de695955cbc61f93c9fb1684",
+    "mtime": 1779022886.8669488,
+    "ast_hash": "314696b00c5e1bbf9e568a9d5c2420e7",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/ui/label.tsx": {
@@ -495,28 +505,28 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/invoice-generator.tsx": {
-    "mtime": 1778972743.9128995,
-    "ast_hash": "b25028a8429d3f9dd7cfc1b8b9ebe91a",
+    "mtime": 1779027994.9560094,
+    "ast_hash": "c901947a9397465e33b9f2a9dda30bac",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/caption-generator.tsx": {
-    "mtime": 1778972718.5972812,
-    "ast_hash": "c31fd11f371b9a446a8c3282525e9aaf",
+    "mtime": 1779028194.6082504,
+    "ast_hash": "b0bd5d2d107012843d2cd42dad828d46",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/cv-builder.tsx": {
-    "mtime": 1778649167.2984726,
-    "ast_hash": "327806bad7f1041817964572b8b2da34",
+    "mtime": 1779027980.3283331,
+    "ast_hash": "0a90a4fa417864c657038afd75be2516",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/llms-txt-generator.tsx": {
-    "mtime": 1778727694.5229256,
-    "ast_hash": "a7dc4df1111608200075d7ec8acc9204",
+    "mtime": 1779027908.3933756,
+    "ast_hash": "468a9d7199dee2d0541be14fc374b572",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/prompt-generator.tsx": {
-    "mtime": 1778972775.555152,
-    "ast_hash": "54d948283dc0595387db26f7ab255204",
+    "mtime": 1779027890.5305667,
+    "ast_hash": "87b90c5928c777474104d2270935bfb1",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/emi-calculator.tsx": {
@@ -525,23 +535,33 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/svg-compressor.tsx": {
-    "mtime": 1779012877.310417,
-    "ast_hash": "f094e325f9e06e63236dd131eebded42",
+    "mtime": 1779027943.5405586,
+    "ast_hash": "e280b531f7c6b3e79527c33d1187556a",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/image-converter.tsx": {
-    "mtime": 1779012861.4038103,
-    "ast_hash": "477deeac754393033134d0f023014bd5",
+    "mtime": 1779027931.7417684,
+    "ast_hash": "87ab25633fc076bc54545760064f8499",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/seo-generator.tsx": {
-    "mtime": 1778727671.4870148,
-    "ast_hash": "ec795f8f65d5cc1a014561e6534fad38",
+    "mtime": 1779027872.0499241,
+    "ast_hash": "86eccd1f02c0ea65715263037173ac2e",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/ai-preview-modal.tsx": {
+    "mtime": 1779025668.8994496,
+    "ast_hash": "afde72521b6524ea31c7b28ea985381a",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/schema-generator.tsx": {
     "mtime": 1778648999.548828,
     "ast_hash": "ff721fe160ca11dfebf2a8275abfc25c",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/ai-parser-modal.tsx": {
+    "mtime": 1779025779.486248,
+    "ast_hash": "13d863e9132be131eaef94370038bd32",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/sip-calculator.tsx": {
@@ -622,6 +642,11 @@
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/pricing/pricing-cards.tsx": {
     "mtime": 1779013072.8407218,
     "ast_hash": "58d44454b2b9917ac4d86aba9daa8036",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/hooks/use-usage-limit.ts": {
+    "mtime": 1779027823.1215193,
+    "ast_hash": "20ed4949b5950b6d355a47b8d919721a",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/lib/prisma.ts": {
@@ -877,6 +902,46 @@
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/.agents/skills/subagent-driven-development/code-quality-reviewer-prompt.md": {
     "mtime": 1779018148.0175803,
     "ast_hash": "fc5e2ea930681d4228debaa3714f6ea0",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/plans/2026-05-17-linkedin-import-fix.md": {
+    "mtime": 1779024446.851587,
+    "ast_hash": "6ad3017ce053f2248492418037dc2b59",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/plans/2026-05-17-ai-cv-parser-plan.md": {
+    "mtime": 1779025639.9093168,
+    "ast_hash": "ed4f1230748853d3956b56bedfc96246",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/plans/2026-05-17-linkedin-import.md": {
+    "mtime": 1779021842.8044147,
+    "ast_hash": "dbf1a079a1881ec399f052825b3a26d9",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-17-linkedin-import-design.md": {
+    "mtime": 1779024436.42237,
+    "ast_hash": "fcae923285dd878c8c08c81d6cbccb83",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-17-ai-cv-parser-design.md": {
+    "mtime": 1779025584.7406383,
+    "ast_hash": "6c9456da9a2980e37482f14b89b298bf",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/.superpowers/brainstorm/91122-1779020160/content/waiting.html": {
+    "mtime": 1779020759.8460178,
+    "ast_hash": "44b3ae034f564b8ed722d684a274336d",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/.superpowers/brainstorm/91122-1779020160/content/ui-flow.html": {
+    "mtime": 1779020666.9314594,
+    "ast_hash": "edc7e999414fa61d3aae0e06cf73d6d3",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/.superpowers/brainstorm/91122-1779020160/content/approaches.html": {
+    "mtime": 1779020517.6695895,
+    "ast_hash": "e60a3d14fc8e174c647eebd747597792",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/public/file.svg": {
