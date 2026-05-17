@@ -66,7 +66,7 @@ export function LinkedInImportModal({ onApply, onClose }: LinkedInImportModalPro
       if (!res.ok || data.error) {
         const errMap: Record<string, string> = {
           invalid_url: "Please enter a valid LinkedIn profile URL (e.g. linkedin.com/in/your-name).",
-          profile_not_public: "We couldn't read this profile. Make sure it's set to 'Public' on LinkedIn.",
+          profile_not_public: "This profile appears to be private or restricted. To import, please ensure your profile's public visibility is turned ON in LinkedIn settings (Settings & Privacy -> Visibility -> Edit your public profile).",
           fetch_failed: "Couldn't reach LinkedIn. Check the URL or try again later.",
           parse_failed: "AI was unable to extract your profile info. Please verify your profile details."
         }
