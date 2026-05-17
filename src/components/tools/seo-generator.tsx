@@ -9,18 +9,20 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
+
+interface SeoResult {
+  title: string
+  description: string
+  keywords: string[]
+}
 
 export function SeoGenerator({ isPro = false }: { isPro?: boolean }) {
   const [copiedField, setCopiedField] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [result, setResult] = useState<any>(null)
-  const [usedToday, setUsedToday] = useState(0)
+  const [result, setResult] = useState<SeoResult | null>(null)
+  const { count: usedToday, increment: incrementUsage } = useUsageLimit("seo-generator", "daily")
   const MAX_FREE = 3
-
-  React.useEffect(() => {
-    if (!isPro) setUsedToday(getDailyUsage("seo-generator"))
-  }, [isPro])
 
   const limitReached = !isPro && usedToday >= MAX_FREE
   
@@ -57,8 +59,7 @@ export function SeoGenerator({ isPro = false }: { isPro?: boolean }) {
   const handleGenerate = async (e: React.FormEvent) => {
     await onSubmit(e)
     if (!isPro) {
-      const newUsed = incrementDailyUsage("seo-generator")
-      setUsedToday(newUsed)
+      await incrementUsage(1)
     }
   }
 
@@ -137,7 +138,7 @@ export function SeoGenerator({ isPro = false }: { isPro?: boolean }) {
             </Button>
             {limitReached && (
               <p className="text-[10px] text-center text-muted-foreground">
-                You've reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
+                You&apos;ve reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
               </p>
             )}
             {!isPro && !limitReached && (
