@@ -93,7 +93,7 @@ export default async function PricingPage() {
                       ["Bulk ZIP Exports", "5 / day", "Up to 1,000 / batch", "Unlimited"],
                       ["AI Caption Generator", "3 per gen", "10+ per gen", "Unlimited"],
                       ["AI CV Builder", "Basic Summary", "Full Pro CV + PDF", "Full Pro CV + PDF"],
-                      ["LinkedIn Profile Import", "—", "—", "✓ One-click import"],
+                      ["✨ Global AI CV Parser", "—", "—", "✓ One-click import"],
                       ["Invoice Generator", "3 / month", "Unlimited + Branding", "Unlimited + Branding"],
                       ["AI SEO Generator", "3 / day", "Unlimited", "Unlimited"],
                       ["AI Prompt Optimizer", "3 / day", "Unlimited + History", "Unlimited + History"],

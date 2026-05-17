@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { Download, Loader2, Sparkles, Plus, Trash2, User, Layout, Image as ImageIcon, Crown, Star, AlignLeft, BarChart3 } from "lucide-react"
 import { ProGate } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
-import { LinkedInImportModal, type LinkedInImportResult } from "./linkedin-import-modal"
+import { AIParserModal, type CVParserResult } from "./ai-parser-modal"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -34,24 +34,26 @@ const TEMPLATES = [
   { id: 'startup', name: 'startup', pro: true },
 ]
 
+const generateUniqueId = () => Date.now() + Math.random()
+
 export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boolean; isBusiness?: boolean }) {
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
   const [templateId, setTemplateId] = useState('modern')
   const [photo, setPhoto] = useState<string | null>(null)
   const [skillMode, setSkillMode] = useState<'text' | 'bars'>('text')
-  const [showLinkedInModal, setShowLinkedInModal] = useState(false)
+  const [showAIParserModal, setShowAIParserModal] = useState(false)
 
   const [cv, setCv] = useState({
     name: "John Doe",
-    title: "Software Engineer",
+    title: "Senior Full Stack Engineer",
+    phone: "+1 555 123 4567",
     email: "john@example.com",
-    phone: "+1 234 567 890",
     location: "San Francisco, CA",
     summary: "A passionate software engineer with experience in building scalable web applications.",
     skillsText: "React, Next.js, TypeScript, Node.js, PostgreSQL"
   })
 
-  const handleApplyLinkedInData = (data: LinkedInImportResult) => {
+  const handleApplyAIData = (data: CVParserResult) => {
     // Update main details
     setCv(prev => ({
       ...prev,
@@ -102,25 +104,37 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
     { id: 1, title: "E-commerce Platform", link: "github.com/john/shop", desc: "Built a full-stack shop using Next.js and Stripe." }
   ])
 
-  const addSkill = () => setSkills([...skills, { id: Date.now(), name: "", rating: 80 }])
+  const addSkill = () => {
+    const id = generateUniqueId()
+    setSkills([...skills, { id, name: "", rating: 80 }])
+  }
   const removeSkill = (id: number) => setSkills(skills.filter(s => s.id !== id))
   const updateSkill = (id: number, field: string, value: string | number) => {
     setSkills(skills.map(s => s.id === id ? { ...s, [field]: value } : s))
   }
 
-  const addExperience = () => setExperience([...experience, { id: Date.now(), company: "", role: "", period: "", desc: "" }])
+  const addExperience = () => {
+    const id = generateUniqueId()
+    setExperience([...experience, { id, company: "", role: "", period: "", desc: "" }])
+  }
   const removeExperience = (id: number) => setExperience(experience.filter(e => e.id !== id))
   const updateExperience = (id: number, field: string, value: string) => {
     setExperience(experience.map(e => e.id === id ? { ...e, [field]: value } : e))
   }
 
-  const addEducation = () => setEducation([...education, { id: Date.now(), school: "", degree: "", period: "" }])
+  const addEducation = () => {
+    const id = generateUniqueId()
+    setEducation([...education, { id, school: "", degree: "", period: "" }])
+  }
   const removeEducation = (id: number) => setEducation(education.filter(e => e.id !== id))
   const updateEducation = (id: number, field: string, value: string) => {
     setEducation(education.map(e => e.id === id ? { ...e, [field]: value } : e))
   }
 
-  const addProject = () => setProjects([...projects, { id: Date.now(), title: "", link: "", desc: "" }])
+  const addProject = () => {
+    const id = generateUniqueId()
+    setProjects([...projects, { id, title: "", link: "", desc: "" }])
+  }
   const removeProject = (id: number) => setProjects(projects.filter(p => p.id !== id))
   const updateProject = (id: number, field: string, value: string) => {
     setProjects(projects.map(p => p.id === id ? { ...p, [field]: value } : p))
@@ -378,15 +392,15 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Personal Details</CardTitle>
             <div className="flex items-center gap-3">
-              <ProGate feature="LinkedIn Import" isPro={isBusiness} tier="business">
+              <ProGate feature="AI Resume Parser" isPro={isBusiness} tier="business">
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  onClick={() => setShowLinkedInModal(true)} 
+                  onClick={() => setShowAIParserModal(true)} 
                   className="font-bold border-purple-500/20 hover:bg-purple-500/5 text-purple-600 dark:text-purple-400 gap-1.5"
                 >
                   <span className="h-2 w-2 rounded-full bg-purple-500 animate-pulse" />
-                  Import from LinkedIn
+                  ✨ Import with AI
                 </Button>
               </ProGate>
               <ProGate feature="User Photo" isPro={isPro}>
@@ -748,7 +762,7 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
             <div style={{ padding: '40px', fontFamily: 'monospace', backgroundColor: '#f8fafc', minHeight: '297mm', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
                <div style={{ border: '1px solid #e2e8f0', backgroundColor: 'white', padding: '20px' }}>
                   <h1 style={{ fontSize: '24px', margin: 0 }}>&gt; {cv.name}</h1>
-                  <p style={{ color: '#2563eb' }}>// {cv.title}</p>
+                  <p style={{ color: '#2563eb' }}>{"// "}{cv.title}</p>
                   <div style={{ display: 'flex', gap: '20px', fontSize: '12px', marginTop: '10px' }}>
                     <span>@: {cv.email}</span><span>#: {cv.phone}</span><span>L: {cv.location}</span>
                   </div>
@@ -773,10 +787,10 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
         <p className="text-muted-foreground">Professional CVs are the key to landing high-paying jobs. Our AI helps you craft the perfect summary and experience descriptions tailored to your industry.</p>
       </section>
     </div>
-    {showLinkedInModal && (
-      <LinkedInImportModal
-        onApply={handleApplyLinkedInData}
-        onClose={() => setShowLinkedInModal(false)}
+    {showAIParserModal && (
+      <AIParserModal
+        onApply={handleApplyAIData}
+        onClose={() => setShowAIParserModal(false)}
       />
     )}
   </>)
