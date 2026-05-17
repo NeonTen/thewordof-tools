@@ -14,16 +14,20 @@ interface ProGateProps {
   isPro?: boolean
   /** Extra classes on the wrapper */
   className?: string
+  /** The subscription tier required to unlock this feature */
+  tier?: 'pro' | 'business'
 }
 
 /**
  * Wraps any Pro-gated action. In Phase 1 isPro is always false (client-side only).
  * In Phase 2 pass the user's real plan from a server session.
  */
-export function ProGate({ children, feature, isPro = false, className }: ProGateProps) {
+export function ProGate({ children, feature, isPro = false, className, tier = 'pro' }: ProGateProps) {
   const [showPrompt, setShowPrompt] = useState(false)
 
   if (isPro) return <>{children}</>
+
+  const isBusinessTier = tier === 'business'
 
   return (
     <div className={cn("relative group", className)}>
@@ -73,16 +77,18 @@ export function ProGate({ children, feature, isPro = false, className }: ProGate
               </div>
               
               <div className="space-y-2">
-                <h3 className="text-2xl font-black tracking-tight">Pro Feature</h3>
+                <h3 className="text-2xl font-black tracking-tight">
+                  {isBusinessTier ? "Business Feature" : "Pro Feature"}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  <span className="font-bold text-foreground">{feature}</span> requires a Pro subscription. Upgrade now to unlock all premium tools and unlimited processing.
+                  <span className="font-bold text-foreground">{feature}</span> requires a {isBusinessTier ? "Business" : "Pro"} subscription. Upgrade now to unlock all premium tools and unlimited processing.
                 </p>
               </div>
 
               <div className="grid gap-3 pt-2">
                 <Button size="lg" className="h-12 font-black text-base shadow-xl shadow-primary/20" asChild>
                   <Link href="/pricing" onClick={() => setShowPrompt(false)}>
-                    View Pro Plans <ArrowRight className="ml-2 h-5 w-5" />
+                    View {isBusinessTier ? "Business" : "Pro"} Plans <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
                 <Button 
