@@ -12,9 +12,10 @@ async function getIdentifier(req: NextRequest): Promise<string> {
   }
   
   const headerList = await headers()
+  const reqIp = (req as unknown as { ip?: string }).ip
   const rawIp = headerList.get("x-forwarded-for")?.split(",")[0] || 
                 headerList.get("x-real-ip") || 
-                req.ip ||
+                reqIp ||
                 "127.0.0.1"
                 
   return crypto.createHash("sha256").update(rawIp).digest("hex")
