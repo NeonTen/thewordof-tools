@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 import { ProGate } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
-import { getMonthlyUsage, incrementMonthlyUsage } from "@/lib/usage-limit"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 // Pure native toggle — no Base UI dependency, always reliable
 function NativeToggle({
@@ -57,16 +57,8 @@ function NativeToggle({
 
 export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
   
-  const [usedThisMonth, setUsedThisMonth] = useState(0)
+  const { count: usedThisMonth, increment: incrementUsage } = useUsageLimit("invoice-generator", "monthly")
   const MAX_FREE_INVOICES = 3
-
-  React.useEffect(() => {
-    const usage = getMonthlyUsage("invoice-generator")
-    if (usage !== 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setUsedThisMonth(usage)
-    }
-  }, [])
 
   const limitReached = !isPro && usedThisMonth >= MAX_FREE_INVOICES
 
@@ -278,11 +270,10 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
               </span>
             )}
             <Button 
-              onClick={() => {
+              onClick={async () => {
                 window.print()
                 if (!isPro) {
-                  const newUsed = incrementMonthlyUsage("invoice-generator")
-                  setUsedThisMonth(newUsed)
+                  await incrementUsage(1)
                 }
               }} 
               className="bg-primary"
