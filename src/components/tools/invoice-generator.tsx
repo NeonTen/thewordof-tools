@@ -57,13 +57,16 @@ function NativeToggle({
 
 export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
   
-  const [usedThisMonth, setUsedThisMonth] = useState(() => {
-    if (typeof window !== "undefined") {
-      return getMonthlyUsage("invoice-generator")
-    }
-    return 0
-  })
+  const [usedThisMonth, setUsedThisMonth] = useState(0)
   const MAX_FREE_INVOICES = 3
+
+  React.useEffect(() => {
+    const usage = getMonthlyUsage("invoice-generator")
+    if (usage !== 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setUsedThisMonth(usage)
+    }
+  }, [])
 
   const limitReached = !isPro && usedThisMonth >= MAX_FREE_INVOICES
 
