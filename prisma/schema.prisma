@@ -126,3 +126,16 @@ model SupportTicket {
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model ToolUsage {
+  id         String   @id @default(cuid())
+  toolKey    String
+  identifier String   // User ID if logged in, hashed IP address if anonymous
+  period     String   // "daily" or "monthly"
+  date       String   // "YYYY-MM-DD" for daily, "YYYY-MM" for monthly
+  count      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([toolKey, identifier, date, period])
+}
