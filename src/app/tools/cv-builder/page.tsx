@@ -8,7 +8,9 @@ export const metadata = {
 
 export default async function CvBuilderPage() {
   const session = await auth()
-  const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
+  const role = session?.user?.role
+  const isPro = role === "PRO" || role === "BUSINESS" || role === "ADMIN"
+  const isBusiness = role === "BUSINESS" || role === "ADMIN"
 
   return (
     <div className="flex flex-col gap-8">
@@ -19,7 +21,7 @@ export default async function CvBuilderPage() {
         </p>
       </div>
 
-      <CvBuilder isPro={isPro} />
+      <CvBuilder isPro={isPro} isBusiness={isBusiness} />
     </div>
   )
 }
