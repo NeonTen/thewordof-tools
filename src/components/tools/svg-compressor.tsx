@@ -34,7 +34,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { optimizeSVG, SVGOptions } from "@/lib/svg-utils"
-import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 // Pure native toggle — no Base UI dependency, always reliable
 function NativeToggle({
@@ -99,11 +99,7 @@ export function SVGCompressor({ role = "USER" }: { role?: string }) {
   const [isOptimizing, setIsOptimizing] = useState(false)
   const [copied, setCopied] = useState(false)
   
-  const [usedToday, setUsedToday] = useState(0)
-  
-  React.useEffect(() => {
-    if (!isPro) setUsedToday(getDailyUsage("svg-compressor"))
-  }, [isPro])
+  const { count: usedToday, increment: incrementUsage } = useUsageLimit("svg-compressor", "daily")
   
   const currentMax = isBusiness
     ? 100000
@@ -155,7 +151,7 @@ export function SVGCompressor({ role = "USER" }: { role?: string }) {
     })
   }, [currentMax])
 
-  const optimizeAll = () => {
+  const optimizeAll = async () => {
     setIsOptimizing(true)
     
     // If in Paste mode
@@ -186,8 +182,7 @@ export function SVGCompressor({ role = "USER" }: { role?: string }) {
     // Use isOptimizing (not isProcessing — that was a bug)
     setIsOptimizing(false)
     if (!isPro) {
-      const newUsed = incrementDailyUsage("svg-compressor", activeTab === "paste" ? 1 : svgFiles.length)
-      setUsedToday(newUsed)
+      await incrementUsage(activeTab === "paste" ? 1 : svgFiles.length)
     }
   }
 
