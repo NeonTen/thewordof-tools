@@ -11,15 +11,11 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
-  const [usedToday, setUsedToday] = useState(0)
+  const { count: usedToday, increment: incrementUsage } = useUsageLimit("prompt-generator", "daily")
   const MAX_FREE = 3
-
-  React.useEffect(() => {
-    if (!isPro) setUsedToday(getDailyUsage("prompt-generator"))
-  }, [isPro])
 
   const limitReached = !isPro && usedToday >= MAX_FREE
   const [copied, setCopied] = useState(false)
@@ -48,8 +44,7 @@ export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
 
       if (res.ok && res.body) {
         if (!isPro) {
-          const newUsed = incrementDailyUsage("prompt-generator")
-          setUsedToday(newUsed)
+          await incrementUsage(1)
         }
         const reader = res.body.getReader()
         const decoder = new TextDecoder()
@@ -135,7 +130,7 @@ export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
             </Button>
             {limitReached && (
               <p className="text-[10px] text-center text-muted-foreground">
-                You've reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
+                You&apos;ve reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
               </p>
             )}
             {!isPro && !limitReached && (
