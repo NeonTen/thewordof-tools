@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import { Download, Loader2, Sparkles, Plus, Trash2, User, Layout, Image as ImageIcon, Crown, Star, AlignLeft, BarChart3 } from "lucide-react"
 import { ProGate } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
+import { LinkedInImportModal, type LinkedInImportResult } from "./linkedin-import-modal"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -33,11 +34,12 @@ const TEMPLATES = [
   { id: 'startup', name: 'startup', pro: true },
 ]
 
-export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
+export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boolean; isBusiness?: boolean }) {
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
   const [templateId, setTemplateId] = useState('modern')
   const [photo, setPhoto] = useState<string | null>(null)
   const [skillMode, setSkillMode] = useState<'text' | 'bars'>('text')
+  const [showLinkedInModal, setShowLinkedInModal] = useState(false)
 
   const [cv, setCv] = useState({
     name: "John Doe",
@@ -48,6 +50,39 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
     summary: "A passionate software engineer with experience in building scalable web applications.",
     skillsText: "React, Next.js, TypeScript, Node.js, PostgreSQL"
   })
+
+  const handleApplyLinkedInData = (data: LinkedInImportResult) => {
+    // Update main details
+    setCv(prev => ({
+      ...prev,
+      name: data.name || prev.name,
+      title: data.title || prev.title,
+      location: data.location || prev.location,
+      summary: data.summary || prev.summary,
+      skillsText: data.skillsText || prev.skillsText
+    }))
+
+    // Map experience
+    if (data.experience && data.experience.length > 0) {
+      setExperience(data.experience.map((exp, idx: number) => ({
+        id: Date.now() + idx,
+        company: exp.company || "",
+        role: exp.role || "",
+        period: exp.period || "",
+        desc: exp.desc || ""
+      })))
+    }
+
+    // Map education
+    if (data.education && data.education.length > 0) {
+      setEducation(data.education.map((edu, idx: number) => ({
+        id: Date.now() + idx,
+        school: edu.school || "",
+        degree: edu.degree || "",
+        period: edu.period || ""
+      })))
+    }
+  }
 
   const [skills, setSkills] = useState([
     { id: 1, name: "React", rating: 90 },
@@ -342,15 +377,28 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Personal Details</CardTitle>
-            <ProGate feature="User Photo" isPro={isPro}>
-              <div className="flex items-center gap-3">
-                {photo && <img src={photo} className="h-10 w-10 rounded-full object-cover border-2 border-primary shadow-sm" alt="Profile" />}
-                <label className="cursor-pointer bg-primary text-white hover:bg-primary/90 p-2.5 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center">
-                  <ImageIcon className="h-5 w-5" />
-                  <input type="file" className="hidden" accept="image/*" onChange={handlePhotoUpload} />
-                </label>
-              </div>
-            </ProGate>
+            <div className="flex items-center gap-3">
+              <ProGate feature="LinkedIn Import" isPro={isBusiness} tier="business">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={() => setShowLinkedInModal(true)} 
+                  className="font-bold border-purple-500/20 hover:bg-purple-500/5 text-purple-600 dark:text-purple-400 gap-1.5"
+                >
+                  <span className="h-2 w-2 rounded-full bg-purple-500 animate-pulse" />
+                  Import from LinkedIn
+                </Button>
+              </ProGate>
+              <ProGate feature="User Photo" isPro={isPro}>
+                <div className="flex items-center gap-3">
+                  {photo && <img src={photo} className="h-10 w-10 rounded-full object-cover border-2 border-primary shadow-sm" alt="Profile" />}
+                  <label className="cursor-pointer bg-primary text-white hover:bg-primary/90 p-2.5 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center">
+                    <ImageIcon className="h-5 w-5" />
+                    <input type="file" className="hidden" accept="image/*" onChange={handlePhotoUpload} />
+                  </label>
+                </div>
+              </ProGate>
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -725,5 +773,11 @@ export function CvBuilder({ isPro = false }: { isPro?: boolean }) {
         <p className="text-muted-foreground">Professional CVs are the key to landing high-paying jobs. Our AI helps you craft the perfect summary and experience descriptions tailored to your industry.</p>
       </section>
     </div>
+    {showLinkedInModal && (
+      <LinkedInImportModal
+        onApply={handleApplyLinkedInData}
+        onClose={() => setShowLinkedInModal(false)}
+      />
+    )}
   </>)
 }
