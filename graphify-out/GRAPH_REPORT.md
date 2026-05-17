@@ -1,16 +1,16 @@
 # Graph Report - thewordof-tools  (2026-05-17)
 
 ## Corpus Check
-- 185 files · ~93,904 words
+- 184 files · ~93,962 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1462 nodes · 2086 edges · 136 communities (111 shown, 25 thin omitted)
+- 1463 nodes · 2089 edges · 144 communities (121 shown, 23 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1728f74c`
+- Built from commit: `340c93cd`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -133,12 +133,19 @@
 - [[_COMMUNITY_Community 118|Community 118]]
 - [[_COMMUNITY_Community 127|Community 127]]
 - [[_COMMUNITY_Community 128|Community 128]]
+- [[_COMMUNITY_Community 129|Community 129]]
 - [[_COMMUNITY_Community 131|Community 131]]
 - [[_COMMUNITY_Community 132|Community 132]]
 - [[_COMMUNITY_Community 133|Community 133]]
 - [[_COMMUNITY_Community 134|Community 134]]
+- [[_COMMUNITY_Community 135|Community 135]]
 - [[_COMMUNITY_Community 136|Community 136]]
 - [[_COMMUNITY_Community 137|Community 137]]
+- [[_COMMUNITY_Community 138|Community 138]]
+- [[_COMMUNITY_Community 139|Community 139]]
+- [[_COMMUNITY_Community 141|Community 141]]
+- [[_COMMUNITY_Community 142|Community 142]]
+- [[_COMMUNITY_Community 143|Community 143]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 132 edges
@@ -155,32 +162,32 @@
 ## Surprising Connections (you probably didn't know these)
 - `cn()` --calls--> `clsx`  [INFERRED]
   src/lib/utils.ts → package.json
+- `DashboardPage()` --calls--> `cn()`  [EXTRACTED]
+  src/app/dashboard/page.tsx → src/lib/utils.ts
 - `SheetOverlay()` --calls--> `cn()`  [EXTRACTED]
   src/components/ui/sheet.tsx → src/lib/utils.ts
 - `SheetContent()` --calls--> `cn()`  [EXTRACTED]
   src/components/ui/sheet.tsx → src/lib/utils.ts
 - `SheetHeader()` --calls--> `cn()`  [EXTRACTED]
   src/components/ui/sheet.tsx → src/lib/utils.ts
-- `SheetFooter()` --calls--> `cn()`  [EXTRACTED]
-  src/components/ui/sheet.tsx → src/lib/utils.ts
 
-## Communities (136 total, 25 thin omitted)
+## Communities (144 total, 23 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.04
 Nodes (50): dependencies, ai, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/react, @auth/prisma-adapter, @base-ui/react, bcryptjs (+42 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.15
-Nodes (12): DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuGroup(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem(), DropdownMenuSeparator() (+4 more)
+Cohesion: 0.07
+Nodes (38): BillingPage(), cn(), Accordion(), AccordionContent(), AccordionItem(), AccordionTrigger(), Avatar(), AvatarBadge() (+30 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.05
 Nodes (43): 1. Explicit Negation in Rules, 2. Entry in Rationalization Table, 3. Red Flag Entry, 4. Update description, code:markdown (IMPORTANT: This is a real scenario. Choose and act.), code:yaml (description: Use when you wrote code before tests, when temp), code:markdown (your human partner: You read the skill and chose Option C an), code:markdown (Scenario: 200 lines done, forgot TDD, exhausted, dinner plan) (+35 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.1
-Nodes (24): BillingPage(), DashboardPage(), cn(), NativeToggle(), NativeToggle(), NativeToggle(), Accordion(), AccordionContent() (+16 more)
+Cohesion: 0.27
+Nodes (10): NativeToggle(), ProGate(), Table(), TableBody(), TableCaption(), TableCell(), TableFooter(), TableHead() (+2 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.05
@@ -195,8 +202,8 @@ Cohesion: 0.06
 Nodes (32): Anti-Pattern 1: Testing Mock Behavior, Anti-Pattern 2: Test-Only Methods in Production, Anti-Pattern 3: Mocking Without Understanding, Anti-Pattern 4: Incomplete Mocks, Anti-Pattern 5: Integration Tests as Afterthought, code:block1 (1. NEVER test mock behavior), code:block10 (BEFORE mocking any method:), code:typescript (// ❌ BAD: Partial mock - only fields you think you need) (+24 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.09
-Nodes (17): LogoutButton(), ThemeToggle(), DashboardNav(), navItems, DashboardShell(), Footer(), Header(), PageTransition() (+9 more)
+Cohesion: 0.16
+Nodes (10): LogoutButton(), ThemeToggle(), Footer(), Header(), metadata, metadata, metadata, Button() (+2 more)
 
 ### Community 8 - "Community 8"
 Cohesion: 0.06
@@ -215,19 +222,19 @@ Cohesion: 0.07
 Nodes (29): 1a. Native Worktree Tools (preferred), 1b. Git Worktree Fallback, Assuming directory location, code:bash (GIT_DIR=$(cd "$(git rev-parse --git-dir)" 2>/dev/null && pwd), code:bash (# If this returns a path, you're in a submodule, not a workt), code:bash (ls -d .worktrees 2>/dev/null     # Preferred (hidden)), code:bash (project=$(basename "$(git rev-parse --show-toplevel)")), code:bash (git check-ignore -q .worktrees 2>/dev/null || git check-igno) (+21 more)
 
 ### Community 12 - "Community 12"
-Cohesion: 0.05
-Nodes (84): syncPlanStatus(), metadata, metadata, DashboardSuccess(), metadata, PlanSection(), SettingsForm(), SettingsFormProps (+76 more)
+Cohesion: 0.23
+Nodes (15): getDailyUsage(), getMonthlyUsage(), incrementDailyUsage(), incrementMonthlyUsage(), isLimitReached(), UsageData, SCHEMA_TYPES, SeoResult (+7 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.29
-Nodes (6): Avatar(), AvatarBadge(), AvatarFallback(), AvatarGroup(), AvatarGroupCount(), AvatarImage()
+Cohesion: 0.23
+Nodes (10): metadata, metadata, TEMPLATES, COLORS, COLORS, Card(), CardContent(), CardHeader() (+2 more)
 
 ### Community 14 - "Community 14"
 Cohesion: 0.08
 Nodes (24): code:block1 (IMPORTANT: This is a real scenario. Choose and act.), code:block2 (IMPORTANT: This is a real scenario. Choose and act.), code:block3 (IMPORTANT: This is a real scenario. Choose and act.), code:block4 (IMPORTANT: This is a real scenario. Choose and act.), code:markdown (## Skills Library), code:markdown (## Skills Library), code:xml (<available_skills>), code:markdown (## Working with Skills) (+16 more)
 
 ### Community 15 - "Community 15"
-Cohesion: 0.08
+Cohesion: 0.07
 Nodes (3): metadata, metadata, { handlers, auth, signIn, signOut }
 
 ### Community 16 - "Community 16"
@@ -263,8 +270,12 @@ Cohesion: 0.1
 Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
 
 ### Community 24 - "Community 24"
-Cohesion: 0.22
+Cohesion: 0.23
 Nodes (10): FormData, loginSchema, registerSchema, UserAuthForm(), UserAuthFormProps, LoginPage(), metadata, metadata (+2 more)
+
+### Community 25 - "Community 25"
+Cohesion: 0.11
+Nodes (6): globalForPrisma, GET(), getDateStr(), getIdentifier(), POST(), PrismaModuleType
 
 ### Community 26 - "Community 26"
 Cohesion: 0.11
@@ -507,8 +518,16 @@ Cohesion: 0.11
 Nodes (17): API Error Codes, Architecture, code:ts (type LinkedInImportResult = {), code:block2 (User (Business) → clicks "Import from LinkedIn" in Personal ), Data Contracts, Decisions Made, Error Handling, LinkedIn Profile Import — Design Spec (+9 more)
 
 ### Community 88 - "Community 88"
-Cohesion: 0.8
-Nodes (4): GET(), getDateStr(), getIdentifier(), POST()
+Cohesion: 0.15
+Nodes (16): useUsageLimit(), formatBytes(), IMAGE_PRESETS, processImage(), ResizeOptions, CaptionGenerator(), CvBuilder(), ImageConverter() (+8 more)
+
+### Community 90 - "Community 90"
+Cohesion: 0.23
+Nodes (11): SupportModalProps, UpgradeButtonProps, Window, Dialog(), DialogContent(), DialogDescription(), DialogFooter(), DialogHeader() (+3 more)
+
+### Community 91 - "Community 91"
+Cohesion: 0.22
+Nodes (5): SettingsForm(), SettingsFormProps, Checkbox, Separator(), Switch
 
 ### Community 93 - "Community 93"
 Cohesion: 0.15
@@ -522,6 +541,10 @@ Nodes (3): Additional Copilot CLI tools, Async shell sessions, Copilot CLI Tool 
 Cohesion: 0.5
 Nodes (3): JWT, Session, User
 
+### Community 96 - "Community 96"
+Cohesion: 0.17
+Nodes (13): metadata, metadata, EmiCalculator(), SipCalculator(), NativeToggle(), SVGFile, TextDiff(), CardDescription() (+5 more)
+
 ### Community 97 - "Community 97"
 Cohesion: 0.5
 Nodes (4): GREEN: Write Minimal Skill, RED-GREEN-REFACTOR for Skills, RED: Write Failing Test (Baseline), REFACTOR: Close Loopholes
@@ -531,8 +554,8 @@ Cohesion: 0.5
 Nodes (4): Pattern, Reference, Skill Types, Technique
 
 ### Community 101 - "Community 101"
-Cohesion: 0.22
-Nodes (9): NavigationMenu(), NavigationMenuContent(), NavigationMenuIndicator(), NavigationMenuItem(), NavigationMenuLink(), NavigationMenuList(), NavigationMenuPositioner(), NavigationMenuTrigger() (+1 more)
+Cohesion: 0.26
+Nodes (7): syncPlanStatus(), DashboardSuccess(), DashboardPage(), metadata, PlanSection(), SupportModal(), SyncPlanButton()
 
 ### Community 106 - "Community 106"
 Cohesion: 0.67
@@ -554,33 +577,53 @@ Nodes (3): code:bash (./render-graphs.js ../some-skill           # Each diagram 
 Cohesion: 0.15
 Nodes (12): Architecture, code:typescript (type CVParserResult = {), Data Contracts, Decisions Made, File Changes, Global AI CV Parser — Design Spec, New API Route, Overview (+4 more)
 
+### Community 129 - "Community 129"
+Cohesion: 0.23
+Nodes (5): DashboardNav(), navItems, DashboardShell(), PageTransition(), ToolsNav()
+
 ### Community 133 - "Community 133"
 Cohesion: 0.22
 Nodes (8): name, private, scripts, build, dev, lint, start, version
 
 ### Community 134 - "Community 134"
+Cohesion: 0.38
+Nodes (5): AIParserModal(), AIParserModalProps, AIPreviewModal(), AIPreviewModalProps, CVParserResult
+
+### Community 135 - "Community 135"
 Cohesion: 0.22
-Nodes (8): optimizeSVG(), prettyPrintSVG(), SVGOptions, AIParserModal(), AIParserModalProps, AIPreviewModal(), AIPreviewModalProps, CVParserResult
+Nodes (7): NavGroup, navGroups, NavItem, allTools, metadata, ProBadge(), ProGateProps
+
+### Community 136 - "Community 136"
+Cohesion: 0.25
+Nodes (6): LinkedInImportModal(), LinkedInImportModalProps, LinkedInImportResult, LinkedInImportResult, LinkedInPreviewModal(), LinkedInPreviewModalProps
+
+### Community 138 - "Community 138"
+Cohesion: 0.67
+Nodes (3): optimizeSVG(), prettyPrintSVG(), SVGOptions
+
+### Community 139 - "Community 139"
+Cohesion: 0.5
+Nodes (3): PricingCards(), PricingCardsProps, UpgradeButton()
 
 ## Knowledge Gaps
-- **751 isolated node(s):** `version`, `source`, `sourceType`, `skillPath`, `computedHash` (+746 more)
+- **752 isolated node(s):** `version`, `source`, `sourceType`, `skillPath`, `computedHash` (+747 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **25 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 3` to `Community 0`, `Community 1`, `Community 131`, `Community 132`, `Community 101`, `Community 7`, `Community 10`, `Community 12`, `Community 13`, `Community 24`, `Community 91`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Community 1` to `Community 96`, `Community 129`, `Community 0`, `Community 3`, `Community 101`, `Community 135`, `Community 7`, `Community 10`, `Community 91`, `Community 12`, `Community 13`, `Community 139`, `Community 24`, `Community 90`, `Community 88`?**
+  _High betweenness centrality (0.063) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `Community 0` to `Community 133`?**
   _High betweenness centrality (0.031) - this node is a cross-community bridge._
-- **Why does `clsx` connect `Community 0` to `Community 3`?**
+- **Why does `clsx` connect `Community 0` to `Community 1`?**
   _High betweenness centrality (0.029) - this node is a cross-community bridge._
 - **What connects `version`, `source`, `sourceType` to the rest of the system?**
-  _751 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _752 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.04 - nodes in this community are weakly interconnected._
+- **Should `Community 1` be split into smaller, more focused modules?**
+  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
-- **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.1 - nodes in this community are weakly interconnected._

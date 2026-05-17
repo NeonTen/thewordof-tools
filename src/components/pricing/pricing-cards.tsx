@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 import { UpgradeButton } from "@/components/pricing/upgrade-button"
 
 interface PricingCardsProps {
-  session: any
+  session: import("next-auth").Session | null
   isPro: boolean
   isBusiness: boolean
   isAdmin: boolean
@@ -41,7 +41,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
         { label: "Unlimited batch processing", included: false },
         { label: "Bulk ZIP downloads", included: false },
         { label: "10 AI captions + all platforms", included: false },
-        { label: "Full CV Builder", included: false },
+        { label: "AI CV builder (8 Pro templates + Import with AI)", included: false },
         { label: "Unlimited invoices", included: false },
         { label: "Priority AI generation", included: false },
         { label: "No upgrade banners", included: false },
@@ -56,7 +56,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       monthlyUsd: "5.99",
       yearlyUsd: "59.99",
       plan: "PREMIUM",
-      description: "For power users and professionals who need zero limits.",
+      description: "For power users and professionals who need higher limits and premium tools.",
       cta: "Upgrade to Pro",
       highlight: true,
       badge: "Most Popular",
@@ -65,7 +65,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
         { label: "Up to 1,000 files per batch", included: true },
         { label: "Bulk ZIP downloads", included: true },
         { label: "10 AI captions + all platforms", included: true },
-        { label: "Full CV Builder", included: true },
+        { label: "AI CV builder (8 Pro templates)", included: true },
         { label: "Unlimited invoices + branding", included: true },
         { label: "Priority AI generation", included: true },
         { label: "No upgrade banners", included: true },
@@ -82,7 +82,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       monthlyUsd: "19.99",
       yearlyUsd: "199.99",
       plan: "BUSINESS",
-      description: "For teams and businesses needing API access and collaboration.",
+      description: "For power creators and businesses needing unlimited processing and priority support.",
       cta: "Upgrade to Business",
       highlight: false,
       features: [
@@ -90,7 +90,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
         { label: "100% Unlimited batch processing", included: true },
         { label: "Bulk ZIP downloads", included: true },
         { label: "Unlimited AI captions", included: true },
-        { label: "Full CV Builder", included: true },
+        { label: "AI CV builder (8 Pro templates + Import with AI)", included: true },
         { label: "Unlimited invoices + branding", included: true },
         { label: "Highest Priority AI queue", included: true },
         { label: "No upgrade banners", included: true },
