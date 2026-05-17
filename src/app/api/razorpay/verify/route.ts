@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
+import { sendPaymentSuccessEmail, sendPaymentFailedEmail } from "@/lib/email";
 
 export async function POST(req: Request) {
   try {
@@ -63,8 +64,35 @@ export async function POST(req: Request) {
         },
       });
 
+      // Send Success Email
+      if (session.user.email) {
+        // Send email asynchronously in background so we don't delay client response
+        sendPaymentSuccessEmail({
+          toEmail: session.user.email,
+          userName: session.user.name || "Customer",
+          planName: plan,
+          amount: parseFloat(amount),
+          currency: currency,
+          orderId: razorpay_order_id || razorpay_payment_id,
+          paymentProvider: "RAZORPAY"
+        }).catch(err => console.error("Verify success email trigger error:", err));
+      }
+
       return NextResponse.json({ success: true });
     } else {
+      // Send Failure Email
+      if (session.user.email) {
+        sendPaymentFailedEmail({
+          toEmail: session.user.email,
+          userName: session.user.name || "Customer",
+          planName: plan,
+          amount: parseFloat(amount),
+          currency: currency,
+          paymentProvider: "RAZORPAY",
+          errorMsg: "Signature verification failed. The payment signature could not be verified securely."
+        }).catch(err => console.error("Verify failure email trigger error:", err));
+      }
+
       return NextResponse.json({ error: "Verification failed" }, { status: 400 });
     }
   } catch (error: any) {

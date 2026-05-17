@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { capturePayPalOrder } from "@/lib/paypal";
+import { sendPaymentSuccessEmail, sendPaymentFailedEmail } from "@/lib/email";
 
 export async function POST(req: Request) {
   try {
@@ -52,8 +53,35 @@ export async function POST(req: Request) {
         },
       });
 
+      // Send Success Email
+      if (session.user.email) {
+        sendPaymentSuccessEmail({
+          toEmail: session.user.email,
+          userName: session.user.name || "Customer",
+          planName: plan,
+          amount: parseFloat(capture.amount.value),
+          currency: capture.amount.currency_code,
+          orderId: orderId,
+          paymentProvider: "PAYPAL"
+        }).catch(err => console.error("PayPal success email trigger error:", err));
+      }
+
       return NextResponse.json({ success: true, data: captureData });
     } else {
+      // Send Failure Email
+      if (session.user.email) {
+        const estimatedAmount = plan === "BUSINESS" ? (interval === "year" ? 9999 : 999) : (interval === "year" ? 4999 : 499);
+        sendPaymentFailedEmail({
+          toEmail: session.user.email,
+          userName: session.user.name || "Customer",
+          planName: plan,
+          amount: estimatedAmount,
+          currency: "INR",
+          paymentProvider: "PAYPAL",
+          errorMsg: `PayPal capture status: ${captureData.status}. The transaction was not completed by PayPal.`
+        }).catch(err => console.error("PayPal failure email trigger error:", err));
+      }
+
       return NextResponse.json({ error: "Payment not completed" }, { status: 400 });
     }
   } catch (error: any) {

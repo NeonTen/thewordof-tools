@@ -17,7 +17,22 @@ export const metadata = {
 
 export default async function DashboardPage() {
   const session = await auth()
-  const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
+  const userRole = session?.user?.role || "FREE"
+  const isPro = userRole === "PRO" || userRole === "BUSINESS" || userRole === "ADMIN"
+
+  const toolsDesc = userRole === "ADMIN" || userRole === "BUSINESS"
+    ? "Browse and use all business & premium tools."
+    : userRole === "PRO"
+    ? "Browse and use all premium tools."
+    : "Browse and use all free tools."
+
+  const billingDesc = userRole === "BUSINESS"
+    ? "Manage your Business subscription."
+    : userRole === "PRO"
+    ? "Manage your Pro subscription."
+    : userRole === "ADMIN"
+    ? "Administrative account billing override."
+    : "Upgrade your plan to unlock premium."
 
   return (
     <div className="flex flex-col gap-10 max-w-2xl">
@@ -33,8 +48,8 @@ export default async function DashboardPage() {
       {/* Quick links */}
       <div className="grid gap-4 sm:grid-cols-3">
         {[
-          { title: "All Tools",  desc: "Browse and use all free tools.",  icon: Wrench,     href: "/tools",              cta: "Open Tools" },
-          { title: "Billing",    desc: "Manage your Pro subscription.",    icon: CreditCard, href: "/dashboard/billing",  cta: "View Billing" },
+          { title: "All Tools",  desc: toolsDesc,   icon: Wrench,     href: "/tools",              cta: "Open Tools" },
+          { title: "Billing",    desc: billingDesc, icon: CreditCard, href: "/dashboard/billing",  cta: "View Billing" },
           { title: "Settings",   desc: "Update your profile and account.", icon: Settings,   href: "/dashboard/settings", cta: "Open Settings" },
         ].map((item) => {
           const Icon = item.icon
