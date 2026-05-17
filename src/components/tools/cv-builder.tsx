@@ -6,6 +6,7 @@ import { ProGate } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
 import { AIParserModal, type CVParserResult } from "./ai-parser-modal"
 import Link from "next/link"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -44,6 +45,11 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
   const [skillMode, setSkillMode] = useState<'text' | 'bars'>('text')
   const [showAIParserModal, setShowAIParserModal] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [upgradeModalType, setUpgradeModalType] = useState<"template" | "print">("template")
+
+  const { count: usedThisMonth, increment: incrementUsage } = useUsageLimit("cv-builder", "monthly")
+  const MAX_FREE_PRINTS = 3
+  const limitReached = !isPro && usedThisMonth >= MAX_FREE_PRINTS
 
   const [cv, setCv] = useState({
     name: "John Doe",
@@ -178,7 +184,17 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
     }
   }
 
-  const handlePrint = () => window.print()
+  const handlePrint = async () => {
+    if (limitReached) {
+      setUpgradeModalType("print")
+      setShowUpgradeModal(true)
+      return
+    }
+    window.print()
+    if (!isPro) {
+      await incrementUsage(1)
+    }
+  }
 
   // Rendering Helpers
   const getHeadingStyle = (title: string, accentColor: string) => {
@@ -555,6 +571,7 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
                 onValueChange={(val) => {
                   const selected = TEMPLATES.find(t => t.id === val)
                   if (selected?.pro && !isPro) {
+                    setUpgradeModalType("template")
                     setShowUpgradeModal(true)
                   } else {
                     setTemplateId(val || "modern")
@@ -571,7 +588,16 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
                 </SelectContent>
               </Select>
             </div>
-            <Button onClick={handlePrint} className="bg-primary shadow-lg shadow-primary/20"><Download className="mr-2 h-4 w-4" /> Export PDF</Button>
+            <div className="flex items-center gap-3">
+              {!isPro && (
+                <span className="text-xs font-bold text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
+                  {MAX_FREE_PRINTS - usedThisMonth} of {MAX_FREE_PRINTS} free exports left this month
+                </span>
+              )}
+              <Button onClick={handlePrint} className="bg-primary shadow-lg shadow-primary/20">
+                <Download className="mr-2 h-4 w-4" /> Export PDF
+              </Button>
+            </div>
           </div>
         </div>
         
@@ -825,9 +851,14 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
               <Crown className="h-8 w-8 text-amber-500" />
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl font-black tracking-tight">Premium Template</h3>
+              <h3 className="text-2xl font-black tracking-tight">
+                {upgradeModalType === "print" ? "Print Limit Reached" : "Premium Template"}
+              </h3>
               <p className="text-muted-foreground leading-relaxed text-xs">
-                This stunning layout is a premium feature. Upgrade to the <span className="font-bold text-foreground">Pro</span> or <span className="font-bold text-foreground">Business</span> tier to access all resume templates and premium tools.
+                {upgradeModalType === "print" 
+                  ? "You have reached your limit of 3 free resume exports this month. Upgrade to Pro or Business to print unlimited high-quality PDFs!"
+                  : "This stunning layout is a premium feature. Upgrade to the Pro or Business tier to access all resume templates and premium tools."
+                }
               </p>
             </div>
             <div className="grid gap-3 pt-2">
