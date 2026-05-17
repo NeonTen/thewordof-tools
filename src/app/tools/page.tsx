@@ -29,7 +29,7 @@ import { auth } from "@/auth"
 
 export default async function ToolsPage() {
   const session = await auth()
-  const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
+  const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
   return (
     <div className="flex flex-col gap-10">
@@ -63,7 +63,7 @@ export default async function ToolsPage() {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
                       <p className="font-bold text-sm leading-tight">{tool.title}</p>
-                      {tool.pro && <ProBadge />}
+                      {tool.pro && <ProBadge role={session?.user?.role} />}
                     </div>
                     <p className="text-xs text-muted-foreground leading-relaxed">{tool.desc}</p>
                   </div>

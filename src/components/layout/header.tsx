@@ -8,7 +8,7 @@ import { LogoutButton } from "@/components/auth/logout-button"
 
 export async function Header() {
   const session = await auth()
-  const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
+  const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -17,7 +17,7 @@ export async function Header() {
           <div className="font-black text-xl tracking-tight shrink-0">
             TheWordOf<span className="text-primary">Tools</span>
           </div>
-          {isPro && <ProBadge className="ml-2" />}
+          {isPro && <ProBadge className="ml-2" role={session?.user?.role} />}
         </Link>
         
         <nav className="hidden md:flex items-center space-x-8 text-sm font-medium print:hidden">

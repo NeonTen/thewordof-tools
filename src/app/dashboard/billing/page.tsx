@@ -27,8 +27,25 @@ export default async function BillingPage() {
   })
 
   const isPro = session.user.role === "PRO" || session.user.role === "ADMIN"
-  const planName = isPro ? "Premium Pro" : "Free Explorer"
-  const planPrice = isPro ? "₹499" : "₹0"
+  const isBusiness = session.user.role === "BUSINESS" || session.user.role === "ADMIN"
+  const hasPremium = isPro || isBusiness
+
+  let planName = "Free Explorer"
+  let planPrice = "₹0"
+  let intervalText = "month"
+
+  if (hasPremium) {
+    if (subscription?.plan === "BUSINESS" || session.user.role === "BUSINESS") {
+      planName = "Business"
+      planPrice = subscription?.amount ? `${subscription.currency === "USD" ? "$" : "₹"}${subscription.amount}` : "₹999"
+      intervalText = subscription?.interval || "month"
+    } else {
+      planName = "Premium Pro"
+      planPrice = subscription?.amount ? `${subscription.currency === "USD" ? "$" : "₹"}${subscription.amount}` : "₹499"
+      intervalText = subscription?.interval || "month"
+    }
+  }
+
   const billingStartDate = subscription?.createdAt || user?.createdAt || new Date()
   
   return (
@@ -47,9 +64,9 @@ export default async function BillingPage() {
         {/* Current Plan Summary */}
         <Card className={cn(
           "md:col-span-2 relative overflow-hidden border-2",
-          isPro ? "border-primary/50 bg-primary/5 shadow-xl shadow-primary/5" : "border-muted"
+          hasPremium ? "border-primary/50 bg-primary/5 shadow-xl shadow-primary/5" : "border-muted"
         )}>
-          {isPro && (
+          {hasPremium && (
             <div className="absolute top-0 right-0 bg-primary text-primary-foreground px-6 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-bl-2xl shadow-sm">
               Current Active Plan
             </div>
@@ -57,15 +74,15 @@ export default async function BillingPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-2xl font-black text-primary">{planName}</CardTitle>
             <CardDescription className="text-base">
-              {isPro 
-                ? "You have full access to all AI tools and premium features." 
+              {hasPremium 
+                ? `You have full access to ${isBusiness ? 'all API features and' : ''} premium AI tools.` 
                 : "You are currently on the limited free tier."}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-baseline gap-2 py-4">
               <span className="text-5xl font-black tracking-tighter">{planPrice}</span>
-              <span className="text-muted-foreground font-semibold">/ month</span>
+              <span className="text-muted-foreground font-semibold">/ {intervalText}</span>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
@@ -87,14 +104,14 @@ export default async function BillingPage() {
                 <div>
                   <p className="text-[10px] uppercase font-black text-muted-foreground tracking-wider">Status</p>
                   <div className="flex items-center gap-1.5 font-bold">
-                    <span className={cn("h-2 w-2 rounded-full", isPro ? "bg-green-500" : "bg-blue-500")} />
-                    {subscription?.status.toUpperCase() || (isPro ? "ACTIVE" : "FREE")}
+                    <span className={cn("h-2 w-2 rounded-full", hasPremium ? "bg-green-500" : "bg-blue-500")} />
+                    {subscription?.status.toUpperCase() || (hasPremium ? "ACTIVE" : "FREE")}
                   </div>
                 </div>
               </div>
             </div>
 
-            {!isPro && (
+            {!hasPremium && (
               <div className="pt-6 border-t border-foreground/5">
                 <Button className="w-full font-black shadow-lg shadow-primary/20" asChild>
                   <Link href="/pricing">Upgrade to Premium <ArrowRight className="ml-2 h-4 w-4" /></Link>
@@ -117,14 +134,14 @@ export default async function BillingPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Last Invoice</span>
-                  <span className="font-bold">{isPro ? "₹499.00" : "₹0.00"}</span>
+                  <span className="font-bold">{hasPremium ? planPrice : "₹0.00"}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">{isPro ? "Expires On" : "Next Billing Date"}</span>
+                  <span className="text-muted-foreground">{hasPremium ? "Expires On" : "Next Billing Date"}</span>
                   <span className="font-bold">
-                    {isPro && subscription?.currentPeriodEnd 
+                    {hasPremium && subscription?.currentPeriodEnd 
                       ? new Intl.DateTimeFormat('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(subscription.currentPeriodEnd))
-                      : (isPro ? "Automated" : "N/A")}
+                      : (hasPremium ? "Automated" : "N/A")}
                   </span>
                 </div>
               </div>
@@ -152,13 +169,20 @@ export default async function BillingPage() {
         </CardHeader>
         <CardContent>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {(isPro ? [
+            {(isBusiness ? [
+              "1-on-1 Onboarding",
+              "Priority Tool Requests",
+              "Highest priority AI generation",
+              "Unlimited processing & ZIPs",
+              "Custom invoice branding",
+              "24/7 Dedicated Support"
+            ] : isPro ? [
               "Unlimited AI tool usage",
               "Bulk processing & ZIP downloads",
               "High-priority AI generation",
               "Custom invoice branding",
               "Advanced SEO analysis",
-              "24/7 Priority support"
+              "Priority Email support"
             ] : [
               "Access to all 13 core tools",
               "Standard processing speeds",

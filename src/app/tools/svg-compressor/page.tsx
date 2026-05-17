@@ -8,7 +8,7 @@ export const metadata = {
 
 export default async function SVGCompressorPage() {
   const session = await auth()
-  const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
+  const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
   return (
     <div className="flex flex-col gap-8">
@@ -19,7 +19,7 @@ export default async function SVGCompressorPage() {
         </p>
       </div>
 
-      <SVGCompressor isPro={isPro} />
+      <SVGCompressor role={session?.user?.role || "USER"} />
     </div>
   )
 }

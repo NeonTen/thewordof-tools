@@ -70,7 +70,7 @@ import { useSession } from "next-auth/react"
 export function ToolsNav() {
   const path = usePathname()
   const { data: session } = useSession()
-  const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
+  const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
   return (
     <nav className="flex flex-col gap-0.5 py-5 px-3">
@@ -97,7 +97,7 @@ export function ToolsNav() {
                   <Icon className={cn("h-4 w-4 shrink-0", isActive ? "text-primary" : "group-hover:text-foreground")} />
                   <span>{item.title}</span>
                 </span>
-                {item.pro && <ProBadge />}
+                {item.pro && <ProBadge role={session?.user?.role} />}
               </Link>
             )
           })}

@@ -89,7 +89,10 @@ interface SVGFile {
 
 const MAX_FREE_FILES = 5
 
-export function SVGCompressor({ isPro = false }: { isPro?: boolean }) {
+export function SVGCompressor({ role = "USER" }: { role?: string }) {
+  const isPro = role === "PRO" || role === "ADMIN" || role === "BUSINESS"
+  const isBusiness = role === "BUSINESS" || role === "ADMIN"
+
   const [activeTab, setActiveTab] = useState<string>("upload")
   const [pastedCode, setPastedCode] = useState<string>("")
   const [svgFiles, setSvgFiles] = useState<SVGFile[]>([])
@@ -102,7 +105,11 @@ export function SVGCompressor({ isPro = false }: { isPro?: boolean }) {
     if (!isPro) setUsedToday(getDailyUsage("svg-compressor"))
   }, [isPro])
   
-  const currentMax = isPro ? 1000 : Math.max(0, MAX_FREE_FILES - usedToday)
+  const currentMax = isBusiness
+    ? 100000
+    : isPro
+      ? 1000
+      : Math.max(0, MAX_FREE_FILES - usedToday)
   
   // Optimization settings
   const [options, setOptions] = useState<SVGOptions>({
@@ -269,9 +276,11 @@ export function SVGCompressor({ isPro = false }: { isPro?: boolean }) {
                       </div>
                       <h3 className="text-xl font-black tracking-tight">Drop your SVG files</h3>
                       <p className="text-sm text-muted-foreground mt-2">
-                        {isPro 
-                          ? "Bulk process up to 1,000 SVGs at once." 
-                          : `Process up to 5 SVGs per day. You have ${currentMax} left for today.`}
+                        {isBusiness
+                          ? "Bulk process unlimited SVGs at once."
+                          : isPro 
+                            ? "Bulk process up to 1,000 SVGs at once." 
+                            : `Process up to 5 SVGs per day. You have ${currentMax} left for today.`}
                       </p>
 
                       {svgFiles.length >= currentMax && !isPro && (

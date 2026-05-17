@@ -1,12 +1,12 @@
 import { auth } from "@/auth"
 import Link from "next/link"
-import { Wrench, CreditCard, Settings, ArrowRight, Sparkles } from "lucide-react"
+import { Wrench, CreditCard, Settings, ArrowRight, Sparkles, LifeBuoy } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { SyncPlanButton } from "@/components/dashboard/sync-plan-button"
-import { DashboardSuccess } from "@/components/dashboard/dashboard-success"
 import { PlanSection } from "@/components/dashboard/plan-section"
+import { SupportModal } from "@/components/dashboard/support-modal"
 
 export const dynamic = "force-dynamic"
 
@@ -17,7 +17,7 @@ export const metadata = {
 
 export default async function DashboardPage() {
   const session = await auth()
-  const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
+  const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
   return (
     <div className="flex flex-col gap-10 max-w-2xl">
@@ -65,6 +65,53 @@ export default async function DashboardPage() {
       )}>
         <PlanSection />
       </Card>
+
+      {/* Support & Concierge */}
+      {isPro && (
+        <div className="flex flex-col gap-4">
+          {/* VIP Concierge Card (Only for Business / Admin) */}
+          {(session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN") && (
+            <Card className="border-border">
+              <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div>
+                  <h3 className="font-bold text-lg flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+                    VIP Concierge & Tool Requests
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-1 max-w-md">
+                    Need a specific tool built for your workflow? Submit a request directly to our engineering team.
+                  </p>
+                </div>
+                <SupportModal type="TOOL_REQUEST">
+                  <Button className="shrink-0 font-bold w-full sm:w-auto">
+                    Submit Tool Request
+                  </Button>
+                </SupportModal>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Priority Support Card (For Pro, Business, and Admin) */}
+          <Card className="border-border">
+            <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div>
+                <h3 className="font-bold text-lg flex items-center gap-2">
+                  <LifeBuoy className="h-5 w-5 text-primary" />
+                  Priority Support
+                </h3>
+                <p className="text-sm text-muted-foreground mt-1 max-w-md">
+                  Have an issue or question? Get priority email support directly from our core team.
+                </p>
+              </div>
+              <SupportModal type="SUPPORT">
+                <Button className="shrink-0 font-bold w-full sm:w-auto">
+                  Contact Support
+                </Button>
+              </SupportModal>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   )
 }

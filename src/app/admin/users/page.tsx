@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { 
   Search, 
   MoreVertical, 
@@ -11,7 +12,8 @@ import {
   CreditCard,
   CheckCircle2,
   AlertCircle,
-  Loader2
+  Loader2,
+  ArrowLeft
 } from "lucide-react"
 
 import {
@@ -136,7 +138,16 @@ export default function AdminUsersPage() {
   )
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      <div>
+        <Link 
+          href="/dashboard" 
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider mb-2"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" /> Back to Dashboard
+        </Link>
+      </div>
+
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-black tracking-tight leading-none mb-2">User Management</h1>
@@ -159,7 +170,9 @@ export default function AdminUsersPage() {
             <TableRow className="hover:bg-transparent border-none">
               <TableHead className="font-bold h-10 px-4">User</TableHead>
               <TableHead className="font-bold h-10 px-4">Role</TableHead>
-              <TableHead className="font-bold h-10 px-4">Plan</TableHead>
+              <TableHead className="font-bold h-10 px-4">Plan Details</TableHead>
+              <TableHead className="font-bold h-10 px-4">Payment Method</TableHead>
+              <TableHead className="font-bold h-10 px-4">Start / Expire</TableHead>
               <TableHead className="font-bold h-10 px-4">Joined</TableHead>
               <TableHead className="font-bold h-10 px-4">Actions</TableHead>
             </TableRow>
@@ -167,7 +180,7 @@ export default function AdminUsersPage() {
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={5} className="h-32 text-center">
+                <TableCell colSpan={7} className="h-32 text-center">
                   <div className="flex flex-col items-center gap-2">
                     <Loader2 className="h-6 w-6 animate-spin text-primary" />
                     <p className="text-xs text-muted-foreground">Loading users...</p>
@@ -176,17 +189,23 @@ export default function AdminUsersPage() {
               </TableRow>
             ) : filteredUsers.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="h-32 text-center text-muted-foreground text-sm">
+                <TableCell colSpan={7} className="h-32 text-center text-muted-foreground text-sm">
                   No users found matching your search.
                 </TableCell>
               </TableRow>
             ) : filteredUsers.map((user) => {
               const currentSub = user.subscriptions?.[0]
-              const hasPremium = user.role === 'PRO' || user.role === 'ADMIN' || currentSub?.plan === 'PREMIUM'
+              const hasPremium = user.role === 'PRO' || user.role === 'BUSINESS' || user.role === 'ADMIN' || currentSub?.plan === 'PREMIUM' || currentSub?.plan === 'BUSINESS'
+              const subStatus = currentSub?.status || (hasPremium ? "active" : "inactive")
+              
+              const formatDate = (dateString?: string | Date) => {
+                if (!dateString) return "—"
+                return new Intl.DateTimeFormat('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(dateString))
+              }
               
               return (
                 <TableRow key={user.id} className="hover:bg-muted/50 transition-colors border-border">
-                  <TableCell className="py-2 px-4">
+                  <TableCell className="py-3 px-4">
                     <div className="flex items-center gap-3">
                       <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
                         {user.name?.[0] || user.email?.[0]?.toUpperCase()}
@@ -197,9 +216,10 @@ export default function AdminUsersPage() {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className="py-2 px-4">
+                  <TableCell className="py-3 px-4">
                     <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider ${
                       user.role === 'ADMIN' ? 'bg-destructive/10 text-destructive' : 
+                      user.role === 'BUSINESS' ? 'bg-indigo-500/10 text-indigo-500' :
                       user.role === 'PRO' ? 'bg-primary/10 text-primary' : 
                       'bg-muted text-muted-foreground'
                     }`}>
@@ -207,16 +227,54 @@ export default function AdminUsersPage() {
                       {user.role}
                     </div>
                   </TableCell>
-                  <TableCell className="py-2 px-4">
-                    <div className="flex items-center gap-2">
-                      <span className={`h-1.5 w-1.5 rounded-full ${hasPremium ? 'bg-primary shadow-[0_0_8px_rgba(var(--primary),0.5)]' : 'bg-muted-foreground/50'}`} />
-                      <span className="text-xs font-bold">{hasPremium ? 'PREMIUM' : 'FREE'}</span>
+                  <TableCell className="py-3 px-4">
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className={`h-1.5 w-1.5 rounded-full ${
+                          subStatus === 'active' 
+                            ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' 
+                            : 'bg-muted-foreground/50'
+                        }`} />
+                        <span className="text-xs font-black uppercase">
+                          {currentSub?.plan || (hasPremium ? (user.role === 'BUSINESS' ? 'BUSINESS' : 'PREMIUM') : 'FREE')}
+                        </span>
+                      </div>
+                      {currentSub?.amount && (
+                        <span className="text-[10px] text-muted-foreground font-mono">
+                          {currentSub.currency === 'INR' ? '₹' : '$'}{currentSub.amount}/{currentSub.interval || 'month'}
+                        </span>
+                      )}
                     </div>
                   </TableCell>
-                  <TableCell className="text-[11px] text-muted-foreground py-2 px-4 font-medium">
-                    {new Intl.DateTimeFormat('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(user.createdAt))}
+                  <TableCell className="py-3 px-4">
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold uppercase">
+                        {currentSub?.paymentProvider || (hasPremium ? "MANUAL OVERRIDE" : "—")}
+                      </span>
+                      {currentSub?.subscriptionId && (
+                        <span className="text-[9px] text-muted-foreground font-mono truncate max-w-[120px]" title={currentSub.subscriptionId}>
+                          ID: {currentSub.subscriptionId}
+                        </span>
+                      )}
+                      {currentSub?.paymentId && !currentSub?.subscriptionId && (
+                        <span className="text-[9px] text-muted-foreground font-mono truncate max-w-[120px]" title={currentSub.paymentId}>
+                          Pay ID: {currentSub.paymentId}
+                        </span>
+                      )}
+                    </div>
                   </TableCell>
-                  <TableCell className="py-2 px-4">
+                  <TableCell className="py-3 px-4">
+                    <div className="flex flex-col text-xs font-medium">
+                      <span className="text-muted-foreground">Start: {currentSub ? formatDate(currentSub.createdAt) : "—"}</span>
+                      <span className="text-foreground font-bold mt-0.5">
+                        End: {currentSub?.currentPeriodEnd ? formatDate(currentSub.currentPeriodEnd) : "—"}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-[11px] text-muted-foreground py-3 px-4 font-medium">
+                    {formatDate(user.createdAt)}
+                  </TableCell>
+                  <TableCell className="py-3 px-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition-colors">
                         <MoreVertical className="h-4 w-4" />
@@ -287,7 +345,8 @@ export default function AdminUsersPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="USER">USER</SelectItem>
-                <SelectItem value="PRO">PRO (Auto-grants tools)</SelectItem>
+                <SelectItem value="PRO">PRO (Premium Access)</SelectItem>
+                <SelectItem value="BUSINESS">BUSINESS (Team Access)</SelectItem>
                 <SelectItem value="ADMIN">ADMIN (Super Access)</SelectItem>
               </SelectContent>
             </Select>
@@ -320,6 +379,7 @@ export default function AdminUsersPage() {
               <SelectContent>
                 <SelectItem value="FREE">FREE</SelectItem>
                 <SelectItem value="PREMIUM">PREMIUM (Paid Access)</SelectItem>
+                <SelectItem value="BUSINESS">BUSINESS (Team Access)</SelectItem>
               </SelectContent>
             </Select>
           </div>

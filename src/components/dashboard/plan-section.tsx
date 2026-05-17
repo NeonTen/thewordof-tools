@@ -13,6 +13,8 @@ import { DashboardSuccess } from "./dashboard-success"
 export function PlanSection() {
   const { data: session } = useSession()
   const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
+  const isBusiness = session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
+  const hasPremium = isPro || isBusiness
 
   return (
     <CardContent className="p-6">
@@ -22,21 +24,21 @@ export function PlanSection() {
             <p className="text-xs font-black uppercase tracking-widest text-primary">Current Plan</p>
             <SyncPlanButton />
           </div>
-          <p className="text-2xl font-black">{isPro ? "Pro" : "Free"}</p>
+          <p className="text-2xl font-black">{isBusiness ? "Business" : isPro ? "Pro" : "Free"}</p>
           <p className="text-sm text-muted-foreground mt-1">
-            {isPro 
+            {hasPremium 
               ? "You have full access to all premium tools and AI features." 
               : "Upgrade to Pro for unlimited access to all tools and AI features."}
           </p>
         </div>
-        {!isPro && (
+        {!hasPremium && (
           <Button className="shrink-0 font-bold" asChild>
             <Link href="/pricing" className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4" /> Upgrade to Pro
+              <Sparkles className="h-4 w-4" /> Upgrade to Premium
             </Link>
           </Button>
         )}
-        {isPro && (
+        {hasPremium && (
           <div className="h-10 w-10 rounded-full bg-green-500/20 flex items-center justify-center">
             <CheckCircle2 className="h-6 w-6 text-green-600" />
           </div>

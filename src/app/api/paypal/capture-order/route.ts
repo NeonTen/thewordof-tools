@@ -10,15 +10,27 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { orderId } = await req.json();
+    const { orderId, plan = "PREMIUM", interval = "month" } = await req.json();
 
     const captureData = await capturePayPalOrder(orderId);
 
     if (captureData.status === "COMPLETED") {
-      // Update user to PRO
+      const expiresAt = new Date();
+      if (interval === "year") {
+        expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+      } else {
+        expiresAt.setMonth(expiresAt.getMonth() + 1);
+      }
+
+      const newRole = plan === "BUSINESS" ? "BUSINESS" : "PRO";
+
+      // Update user to PRO/BUSINESS
       await prisma.user.update({
         where: { id: session.user.id },
-        data: { role: "PRO" },
+        data: { 
+          role: newRole,
+          proExpiresAt: expiresAt
+        },
       });
 
       const purchaseUnit = captureData.purchase_units[0];
@@ -28,13 +40,15 @@ export async function POST(req: Request) {
       await prisma.subscription.create({
         data: {
           userId: session.user.id,
-          plan: "PREMIUM",
+          plan: plan,
           status: "active",
           paymentProvider: "PAYPAL",
           orderId: orderId,
           paymentId: capture.id,
           amount: parseFloat(capture.amount.value),
           currency: capture.amount.currency_code,
+          interval: interval,
+          currentPeriodEnd: expiresAt,
         },
       });
 

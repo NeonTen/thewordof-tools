@@ -88,7 +88,10 @@ function NativeToggle({
   )
 }
 
-export function ImageConverter({ isPro = false }: { isPro?: boolean }) {
+export function ImageConverter({ role = "USER" }: { role?: string }) {
+  const isPro = role === "PRO" || role === "ADMIN" || role === "BUSINESS"
+  const isBusiness = role === "BUSINESS" || role === "ADMIN"
+
   const [images, setImages] = useState<ImageFile[]>([])
   const [format, setFormat] = useState<string>("image/webp")
   const [quality, setQuality] = useState<number>(80)
@@ -100,7 +103,11 @@ export function ImageConverter({ isPro = false }: { isPro?: boolean }) {
     if (!isPro) setUsedToday(getDailyUsage("image-converter"))
   }, [isPro])
   
-  const currentMax = isPro ? 1000 : Math.max(0, MAX_FREE_IMAGES - usedToday)
+  const currentMax = isBusiness
+    ? 100000
+    : isPro
+      ? 1000
+      : Math.max(0, MAX_FREE_IMAGES - usedToday)
   
   // Resize states
   const [resizeMode, setResizeMode] = useState<"original" | "manual" | "preset">("original")
@@ -273,9 +280,11 @@ export function ImageConverter({ isPro = false }: { isPro?: boolean }) {
               </div>
               <h3 className="font-black text-2xl tracking-tight">Drop your images here</h3>
               <p className="text-muted-foreground mt-2 max-w-sm">
-                {isPro 
-                  ? "Bulk process up to 1,000 images at once. Supports JPG, PNG, WEBP, AVIF." 
-                  : `Process up to 5 images per day. You have ${currentMax} left for today.`}
+                {isBusiness
+                  ? "Bulk process unlimited images at once. Supports JPG, PNG, WEBP, AVIF."
+                  : isPro 
+                    ? "Bulk process up to 1,000 images at once. Supports JPG, PNG, WEBP, AVIF." 
+                    : `Process up to 5 images per day. You have ${currentMax} left for today.`}
               </p>
               
               {images.length >= currentMax && !isPro && (
@@ -286,13 +295,13 @@ export function ImageConverter({ isPro = false }: { isPro?: boolean }) {
             </div>
           </CardContent>
         </Card>
-
+ 
         {/* Image Queue */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-bold flex items-center gap-2">
               <Layers className="h-5 w-5 text-primary" />
-              Conversion Queue ({images.length}/{currentMax})
+              Conversion Queue ({images.length}/{isBusiness ? "Unlimited" : currentMax})
             </h3>
             {images.length > 0 && (
               <Button variant="ghost" size="sm" onClick={() => setImages([])} className="text-destructive hover:bg-destructive/10">

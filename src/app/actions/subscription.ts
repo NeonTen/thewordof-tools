@@ -23,7 +23,7 @@ export async function syncPlanStatus() {
       }
     })
 
-    if (dbUser?.role === "PRO" || dbUser?.role === "ADMIN" || dbUser?.subscriptions?.[0]?.plan === "PREMIUM") {
+    if (dbUser?.role === "PRO" || dbUser?.role === "BUSINESS" || dbUser?.role === "ADMIN" || dbUser?.subscriptions?.[0]?.plan === "PREMIUM" || dbUser?.subscriptions?.[0]?.plan === "BUSINESS") {
       revalidatePath("/dashboard")
       return { 
         success: true, 

@@ -64,8 +64,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.proExpiresAt = user.proExpiresAt
       }
       
-      // Auto-expire PRO role if passed proExpiresAt
-      if (token.role === "PRO" && token.proExpiresAt) {
+      // Auto-expire PRO/BUSINESS role if passed proExpiresAt
+      if ((token.role === "PRO" || token.role === "BUSINESS") && token.proExpiresAt) {
         if (new Date(token.proExpiresAt as string | Date) < new Date()) {
           token.role = "USER"
           token.proExpiresAt = null

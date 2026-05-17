@@ -8,7 +8,7 @@ export const metadata = {
 
 export default async function InvoicesPage() {
   const session = await auth()
-  const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
+  const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
   return (
     <div className="flex flex-col gap-8">

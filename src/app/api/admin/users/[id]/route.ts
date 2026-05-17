@@ -36,19 +36,21 @@ export async function PATCH(
       })
 
       // If role is PRO or ADMIN, ensure they have a PREMIUM subscription
-      if (role === "PRO" || role === "ADMIN") {
+      // If role is PRO, BUSINESS or ADMIN, ensure they have the right subscription
+      if (role === "PRO" || role === "BUSINESS" || role === "ADMIN") {
         const existingSub = await prisma.subscription.findFirst({
           where: { userId: id }
         })
+        const planToAssign = role === "BUSINESS" ? "BUSINESS" : "PREMIUM"
 
         if (existingSub) {
           await prisma.subscription.update({
             where: { id: existingSub.id },
-            data: { plan: "PREMIUM", status: "active" }
+            data: { plan: planToAssign as any, status: "active" }
           })
         } else {
           await prisma.subscription.create({
-            data: { userId: id, plan: "PREMIUM", status: "active" }
+            data: { userId: id, plan: planToAssign as any, status: "active" }
           })
         }
       }
@@ -76,8 +78,16 @@ export async function PATCH(
         })
       }
 
-      // If plan is PREMIUM, ensure role is at least PRO
-      if (plan === "PREMIUM") {
+      // Sync role with updated plan
+      if (plan === "BUSINESS") {
+        const user = await prisma.user.findUnique({ where: { id } })
+        if (user && user.role !== "BUSINESS" && user.role !== "ADMIN") {
+          await prisma.user.update({
+            where: { id },
+            data: { role: "BUSINESS" }
+          })
+        }
+      } else if (plan === "PREMIUM") {
         const user = await prisma.user.findUnique({ where: { id } })
         if (user && user.role === "USER") {
           await prisma.user.update({
@@ -86,9 +96,8 @@ export async function PATCH(
           })
         }
       } else if (plan === "FREE") {
-        // Optional: downgrade PRO to USER if plan becomes FREE
         const user = await prisma.user.findUnique({ where: { id } })
-        if (user && user.role === "PRO") {
+        if (user && (user.role === "PRO" || user.role === "BUSINESS")) {
           await prisma.user.update({
             where: { id },
             data: { role: "USER" }

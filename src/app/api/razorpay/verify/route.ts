@@ -15,7 +15,9 @@ export async function POST(req: Request) {
       razorpay_payment_id, 
       razorpay_signature,
       amount,
-      currency
+      currency,
+      plan = "PREMIUM",
+      interval = "month"
     } = await req.json();
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -28,13 +30,19 @@ export async function POST(req: Request) {
 
     if (isAuthentic) {
       const expiresAt = new Date();
-      expiresAt.setMonth(expiresAt.getMonth() + 1);
+      if (interval === "year") {
+        expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+      } else {
+        expiresAt.setMonth(expiresAt.getMonth() + 1);
+      }
 
-      // Update user to PRO and set expiration
+      const newRole = plan === "BUSINESS" ? "BUSINESS" : "PRO";
+
+      // Update user to PRO/BUSINESS and set expiration
       await prisma.user.update({
         where: { id: session.user.id },
         data: { 
-          role: "PRO",
+          role: newRole,
           proExpiresAt: expiresAt 
         },
       });
@@ -43,13 +51,14 @@ export async function POST(req: Request) {
       await prisma.subscription.create({
         data: {
           userId: session.user.id,
-          plan: "PREMIUM",
+          plan: plan,
           status: "active",
           paymentProvider: "RAZORPAY",
           orderId: razorpay_order_id,
           paymentId: razorpay_payment_id,
           amount: parseFloat(amount),
           currency: currency,
+          interval: interval,
           currentPeriodEnd: expiresAt,
         },
       });

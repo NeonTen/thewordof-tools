@@ -102,13 +102,17 @@ export function ProGate({ children, feature, isPro = false, className }: ProGate
 }
 
 /** Small inline badge used in nav and cards */
-export function ProBadge({ className }: { className?: string }) {
+export function ProBadge({ className, role }: { className?: string; role?: string }) {
+  const isBusiness = role === "BUSINESS"
   return (
     <span className={cn(
-      "inline-flex items-center gap-0.5 text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/20",
+      "inline-flex items-center gap-0.5 text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full border",
+      isBusiness 
+        ? "bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-600 dark:text-purple-400 border-purple-500/20"
+        : "bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20",
       className
     )}>
-      <Sparkles className="h-2 w-2" /> Pro
+      <Sparkles className="h-2 w-2" /> {isBusiness ? "Business" : "Pro"}
     </span>
   )
 }

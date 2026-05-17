@@ -9,7 +9,7 @@ import { auth } from "@/auth"
 
 export default async function Home() {
   const session = await auth()
-  const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
+  const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -126,44 +126,48 @@ export default async function Home() {
         <section className="py-24 bg-muted/30 border-y">
           <div className="container mx-auto px-6 max-w-6xl">
             <div className="text-center mb-16 space-y-4">
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Free vs Pro</h2>
-              <p className="text-muted-foreground">{isPro ? "You are currently enjoying all Pro benefits." : "Core features are free forever. Upgrade for high-volume needs."}</p>
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Detailed Feature Comparison</h2>
+              <p className="text-muted-foreground">Everything you get with our Free, Pro, and Business plans.</p>
             </div>
             
-            <div className="max-w-4xl mx-auto overflow-x-auto -mx-6 px-6">
+            <div className="overflow-x-auto -mx-6 px-6 pb-4">
               <div className="inline-block min-w-full align-middle">
                 <div className="overflow-hidden rounded-2xl border bg-background shadow-2xl">
                   <table className="min-w-full divide-y divide-border text-sm">
                     <thead>
                       <tr className="bg-muted/50">
-                        <th scope="col" className="text-left py-6 px-8 font-black uppercase tracking-widest text-xs">Feature</th>
-                        <th scope="col" className="text-center py-6 px-8 font-black uppercase tracking-widest text-xs">Free</th>
-                        <th scope="col" className="text-center py-6 px-8 font-black uppercase tracking-widest text-xs text-primary">Pro</th>
+                        <th scope="col" className="py-4 px-6 text-left text-sm font-black uppercase tracking-widest text-foreground">Feature</th>
+                        <th scope="col" className="py-4 px-6 text-center text-sm font-black uppercase tracking-widest text-foreground">Free</th>
+                        <th scope="col" className="py-4 px-6 text-center text-sm font-black uppercase tracking-widest text-primary">Pro</th>
+                        <th scope="col" className="py-4 px-6 text-center text-sm font-black uppercase tracking-widest text-foreground">Business</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
                       {[
-                        ["Core Utility Tools", "Unlimited", "Unlimited"],
-                        ["Batch Image Processing", "5 / day", "Unlimited"],
-                        ["SVG Optimization", "5 / day", "Unlimited"],
-                        ["Bulk ZIP Exports", "5 / day", "Unlimited"],
-                        ["AI Caption Generator", "3 per gen", "10+ per gen"],
-                        ["AI CV Builder", "Basic Summary", "Full Pro CV + PDF"],
-                        ["Invoice Generator", "3 / month", "Unlimited + Branding"],
-                        ["AI SEO Generator", "3 / day", "Unlimited"],
-                        ["AI Prompt Optimizer", "3 / day", "Unlimited + History"],
-                        ["LLMS.txt Builder", "1 / day", "Unlimited"],
-                        ["Advanced SEO Schema", "Basic", "Advanced"],
-                        ["Priority AI Queue", "—", "✓ Instant"],
-                        ["Ad-Free Experience", "—", "✓"],
-                        ["History Tracking", "—", "✓"],
-                        ["Early Access", "—", "✓"],
-                        ["Priority Support", "—", "✓ Email"],
-                      ].map(([feature, free, pro], i) => (
+                        ["Core Utility Tools", "Unlimited", "Unlimited", "Unlimited"],
+                        ["Batch Image Processing", "5 / day", "Up to 1,000 / batch", "Unlimited"],
+                        ["SVG Optimization", "5 / day", "Up to 1,000 / batch", "Unlimited"],
+                        ["Bulk ZIP Exports", "5 / day", "Up to 1,000 / batch", "Unlimited"],
+                        ["AI Caption Generator", "3 per gen", "10+ per gen", "Unlimited"],
+                        ["AI CV Builder", "Basic Summary", "Full Pro CV + PDF", "Full Pro CV + PDF"],
+                        ["Invoice Generator", "3 / month", "Unlimited + Branding", "Unlimited + Branding"],
+                        ["AI SEO Generator", "3 / day", "Unlimited", "Unlimited"],
+                        ["AI Prompt Optimizer", "3 / day", "Unlimited + History", "Unlimited + History"],
+                        ["LLMS.txt Builder", "1 / day", "Unlimited", "Unlimited"],
+                        ["Advanced SEO Schema", "Basic", "Advanced", "Advanced"],
+                        ["Priority AI Queue", "—", "✓ Instant", "✓ Highest Priority"],
+                        ["Ad-Free Experience", "—", "✓", "✓"],
+                        ["History Tracking", "—", "✓", "✓"],
+                        ["1-on-1 Onboarding", "—", "—", "✓ Included"],
+                        ["Priority Tool Requests", "—", "—", "✓ Included"],
+                        ["Early Access", "—", "✓", "✓"],
+                        ["Priority Support", "—", "✓ Email", "✓ 24/7 Dedicated"],
+                      ].map(([feature, free, pro, business], i) => (
                         <tr key={i} className="hover:bg-muted/5 transition-colors">
                           <td className="py-4 px-8 font-bold whitespace-nowrap">{feature}</td>
                           <td className="py-4 px-8 text-center text-muted-foreground whitespace-nowrap">{free}</td>
                           <td className="py-4 px-8 text-center text-primary font-black whitespace-nowrap">{pro}</td>
+                          <td className="py-4 px-8 text-center text-foreground font-black whitespace-nowrap">{business}</td>
                         </tr>
                       ))}
                     </tbody>

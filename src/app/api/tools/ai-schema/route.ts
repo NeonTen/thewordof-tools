@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       include: { subscriptions: true }
     })
 
-    const isPro = user?.role === "PRO" || user?.role === "ADMIN" || user?.subscriptions?.[0]?.plan === "PREMIUM"
+    const isPro = user?.role === "PRO" || user?.role === "BUSINESS" || user?.role === "ADMIN" || user?.subscriptions?.[0]?.plan === "PREMIUM" || user?.subscriptions?.[0]?.plan === "BUSINESS"
 
     if (!isPro) {
       return new NextResponse("Pro subscription required", { status: 403 })

@@ -22,6 +22,7 @@ model User {
 
   subscriptions Subscription[]
   posts         Post[]
+  supportTickets SupportTicket[]
   proExpiresAt  DateTime?
 }
 
@@ -63,6 +64,7 @@ model VerificationToken {
 enum Role {
   USER
   PRO
+  BUSINESS
   ADMIN
 }
 
@@ -77,6 +79,7 @@ model Subscription {
   subscriptionId  String?  @unique
   amount          Float?
   currency        String?
+  interval        String?  // "month" or "year"
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   currentPeriodEnd DateTime?
@@ -86,6 +89,7 @@ model Subscription {
 enum Plan {
   FREE
   PREMIUM
+  BUSINESS
 }
 
 model Post {
@@ -108,4 +112,17 @@ model Category {
   name      String
   slug      String   @unique
   posts     Post[]
+}
+
+model SupportTicket {
+  id        String   @id @default(cuid())
+  userId    String
+  subject   String
+  message   String   @db.Text
+  type      String   @default("SUPPORT") // SUPPORT or TOOL_REQUEST
+  status    String   @default("OPEN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic"
 export async function POST(req: Request) {
   try {
     const session = await auth()
-    const isPro = session?.user?.role === "PRO" || session?.user?.role === "ADMIN"
+    const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
     const { keyword, audience, pageType, tone } = await req.json()
 
