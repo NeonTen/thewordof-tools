@@ -31,7 +31,7 @@ import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { processImage, IMAGE_PRESETS, formatBytes, ResizeOptions } from "@/lib/image-utils"
-import { getDailyUsage, incrementDailyUsage } from "@/lib/usage-limit"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 interface ImageFile {
   id: string
@@ -97,11 +97,7 @@ export function ImageConverter({ role = "USER" }: { role?: string }) {
   const [quality, setQuality] = useState<number>(80)
   const [isProcessing, setIsProcessing] = useState(false)
   const [globalProgress, setGlobalProgress] = useState(0)
-  const [usedToday, setUsedToday] = useState(0)
-  
-  React.useEffect(() => {
-    if (!isPro) setUsedToday(getDailyUsage("image-converter"))
-  }, [isPro])
+  const { count: usedToday, increment: incrementUsage } = useUsageLimit("image-converter", "daily")
   
   const currentMax = isBusiness
     ? 100000
@@ -209,8 +205,7 @@ export function ImageConverter({ role = "USER" }: { role?: string }) {
 
     setIsProcessing(false)
     if (!isPro) {
-      const newUsed = incrementDailyUsage("image-converter", done)
-      setUsedToday(newUsed)
+      await incrementUsage(done)
     }
   }
 
@@ -467,7 +462,7 @@ export function ImageConverter({ role = "USER" }: { role?: string }) {
                     variant={resizeMode === mode.id ? "default" : "outline"}
                     size="sm"
                     className="h-10 font-bold"
-                    onClick={() => setResizeMode(mode.id as any)}
+                    onClick={() => setResizeMode(mode.id as "original" | "manual" | "preset")}
                   >
                     {mode.label}
                   </Button>
