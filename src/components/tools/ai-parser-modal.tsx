@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { Loader2, X, AlertTriangle, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { AIPreviewModal, CVParserResult } from "./ai-preview-modal"
+import { AIPreviewModal, type CVParserResult } from "./ai-preview-modal"
+export type { CVParserResult }
 
 interface AIParserModalProps {
   onApply: (data: CVParserResult) => void
