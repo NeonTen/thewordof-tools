@@ -1,0 +1,44 @@
+<h2>LinkedIn Import — 3 Approaches</h2>
+<p class="subtitle">How should we fetch and parse the LinkedIn profile data?</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>✨ Direct Fetch + Gemini AI (Recommended)</h3>
+      <p>Your API route fetches the public LinkedIn URL using realistic browser headers, strips the HTML down to text, then sends it to Gemini to extract structured CV data (name, title, summary, experience, education, skills). Uses your existing Gemini integration — no new API keys or costs.</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Pros</h4><ul><li>Zero extra cost</li><li>Reuses existing Gemini setup</li><li>Works for most public profiles</li><li>AI handles varied profile structures gracefully</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>LinkedIn may block some server-side fetches</li><li>Quality varies if LinkedIn returns login wall</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>💰 Proxycurl API (Paid LinkedIn Scraper)</h3>
+      <p>Use <strong>Proxycurl</strong> — a third-party API purpose-built for LinkedIn data extraction. Returns clean, structured JSON: name, headline, experience array, education array, skills list. Extremely reliable, no HTML parsing needed.</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Pros</h4><ul><li>Most reliable, never blocked</li><li>Structured JSON — no AI parsing needed</li><li>LinkedIn-compliant scraping</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>~$0.01–$0.02 per profile lookup</li><li>New API key + billing to manage</li><li>External dependency</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>🔄 Hybrid — Fetch + AI + Graceful Fallback</h3>
+      <p>Try the direct fetch approach (Option A). If LinkedIn returns a login wall or blocks the request, detect it and show a friendly error with guidance ("Try making your profile public, or try again later"). No paid API, but honest about limitations.</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Pros</h4><ul><li>No extra cost</li><li>Transparent about failures</li><li>Same as A when it works</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>May fail for private/semi-private profiles</li><li>Less predictable success rate</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p style="margin-top:20px;font-size:13px;color:var(--text-muted)">💡 My recommendation: <strong>Option A/C</strong> — Direct Fetch + Gemini with graceful error handling. It costs nothing extra, leverages your existing Gemini API, and works for most public profiles. If LinkedIn blocks the request, we surface a helpful error. You can always upgrade to Proxycurl later if reliability becomes an issue.</p>

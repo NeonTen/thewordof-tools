@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn Import — UI Flow</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: #0f0f13; color: #f0f0f0; padding: 32px 24px; min-height: 100vh; }
+  h1 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 32px; }
+
+  .flow { display: flex; flex-direction: column; gap: 32px; }
+
+  /* Step labels */
+  .step-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: #a78bfa; margin-bottom: 12px;
+  }
+  .step-num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #a78bfa; color: #0f0f13;
+    font-size: 10px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Card wrapper */
+  .screen-card {
+    background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 16px;
+    overflow: hidden;
+  }
+  .screen-title {
+    background: #111118; border-bottom: 1px solid #2a2a3a;
+    padding: 10px 16px;
+    font-size: 12px; font-weight: 700; color: #666;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .screen-body { padding: 20px; }
+
+  /* === SCREEN 1: Editor panel button === */
+  .editor-card {
+    background: #1e1e2e; border: 1px solid #2e2e42; border-radius: 12px;
+    overflow: hidden; max-width: 500px;
+  }
+  .editor-header {
+    background: #16162a; border-bottom: 1px solid #2e2e42;
+    padding: 12px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .editor-title { font-size: 13px; font-weight: 700; color: #e0e0f0; }
+  .import-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: white; font-size: 11px; font-weight: 800;
+    padding: 6px 12px; border-radius: 8px; border: none; cursor: pointer;
+    letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(124,58,237,0.4);
+  }
+  .business-badge {
+    background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(79,70,229,0.25));
+    color: #a78bfa; border: 1px solid rgba(139,92,246,0.3);
+    font-size: 8px; font-weight: 900; padding: 2px 5px; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.8px;
+  }
+  .editor-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-size: 10px; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+  .field input {
+    background: #111; border: 1px solid #2e2e42; color: #888;
+    padding: 6px 10px; border-radius: 6px; font-size: 12px; font-family: inherit;
+    width: 100%;
+  }
+
+  /* === SCREEN 2: Import modal === */
+  .modal-backdrop {
+    background: rgba(15,15,19,0.85); border-radius: 12px;
+    padding: 20px; display: flex; align-items: center; justify-content: center;
+  }
+  .modal {
+    background: #1a1a28; border: 1px solid #2e2e45;
+    border-radius: 20px; padding: 28px; width: 360px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  }
+  .modal-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: linear-gradient(135deg, #0077b5, #0099d6);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px; font-size: 24px;
+  }
+  .modal h3 { font-size: 17px; font-weight: 800; color: #f0f0f0; margin-bottom: 6px; }
+  .modal p { font-size: 12px; color: #777; line-height: 1.5; margin-bottom: 18px; }
+  .url-input-wrap { position: relative; margin-bottom: 14px; }
+  .url-input {
+    width: 100%; background: #111; border: 1px solid #2e2e42; color: #ccc;
+    padding: 10px 14px; border-radius: 10px; font-size: 12px; font-family: inherit;
+  }
+  .url-input::placeholder { color: #444; }
+  .modal-actions { display: flex; flex-direction: column; gap: 8px; }
+  .btn-primary {
+    background: linear-gradient(135deg, #0077b5, #0099d6);
+    color: white; font-size: 13px; font-weight: 800;
+    padding: 10px; border-radius: 10px; border: none; cursor: pointer; text-align: center;
+    box-shadow: 0 4px 16px rgba(0,119,181,0.4);
+  }
+  .btn-ghost {
+    background: transparent; color: #555; font-size: 12px; font-weight: 700;
+    padding: 8px; border-radius: 10px; border: none; cursor: pointer; text-align: center;
+  }
+  .loading-state { display: flex; align-items: center; gap: 10px; padding: 10px 0; color: #666; font-size: 12px; }
+  .spinner {
+    width: 16px; height: 16px; border: 2px solid #2e2e45;
+    border-top-color: #0077b5; border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* === SCREEN 3: Preview modal === */
+  .preview-modal {
+    background: #1a1a28; border: 1px solid #2e2e45;
+    border-radius: 20px; width: 440px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  .preview-header {
+    background: linear-gradient(135deg, #0d1b2a, #0a2035);
+    border-bottom: 1px solid #1e3a52;
+    padding: 20px 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .li-logo { font-size: 28px; }
+  .preview-header-text h3 { font-size: 15px; font-weight: 800; color: #f0f0f0; }
+  .preview-header-text p { font-size: 11px; color: #0099d6; font-weight: 600; }
+  .preview-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; max-height: 340px; overflow-y: auto; }
+  .preview-section { border: 1px solid #2e2e45; border-radius: 10px; overflow: hidden; }
+  .preview-section-header {
+    background: #111; padding: 8px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .preview-section-title { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #666; }
+  .preview-check {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 9px;
+  }
+  .preview-section-body { padding: 10px 12px; }
+  .preview-field { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 6px; }
+  .preview-field:last-child { margin-bottom: 0; }
+  .preview-key { font-size: 10px; font-weight: 700; color: #555; width: 60px; flex-shrink: 0; padding-top: 1px; }
+  .preview-val { font-size: 12px; color: #ccc; line-height: 1.4; }
+  .preview-val.accent { color: #38bdf8; font-weight: 600; }
+  .preview-tag {
+    display: inline-flex; background: #1e2e3e; border: 1px solid #2e4050;
+    color: #7dd3fc; font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px; margin: 2px;
+  }
+  .preview-exp-item { padding: 6px 0; border-bottom: 1px solid #1e1e2e; }
+  .preview-exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .preview-exp-role { font-size: 12px; font-weight: 700; color: #e0e0f0; }
+  .preview-exp-company { font-size: 11px; color: #666; margin-bottom: 2px; }
+  .preview-exp-desc { font-size: 11px; color: #888; line-height: 1.4; }
+  .preview-footer {
+    border-top: 1px solid #2e2e45; padding: 16px 24px;
+    display: flex; gap: 10px;
+  }
+  .btn-apply {
+    flex: 1; background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: white; font-size: 13px; font-weight: 800;
+    padding: 10px; border-radius: 10px; border: none; cursor: pointer; text-align: center;
+    box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+  }
+  .btn-cancel-sm {
+    background: #111; color: #555; font-size: 12px; font-weight: 700;
+    padding: 10px 16px; border-radius: 10px; border: 1px solid #2e2e42; cursor: pointer;
+  }
+
+  /* Divider arrow */
+  .arrow-down { text-align: center; font-size: 20px; color: #333; padding: 4px 0; }
+</style>
+</head>
+<body>
+<h1>LinkedIn Import — UI Flow</h1>
+<p class="subtitle">3 screens: the trigger button → the URL entry modal → the preview & confirm modal</p>
+
+<div class="flow">
+
+  <!-- STEP 1 -->
+  <div>
+    <div class="step-label"><div class="step-num">1</div> Import button in the CV editor</div>
+    <div class="screen-card">
+      <div class="screen-title">
+        <div class="dot" style="background:#ff5f57"></div>
+        <div class="dot" style="background:#febc2e"></div>
+        <div class="dot" style="background:#28c840"></div>
+        CV Builder — Editor Panel (Personal Details card)
+      </div>
+      <div class="screen-body">
+        <div class="editor-card">
+          <div class="editor-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div class="editor-title">Personal Details</div>
+              <div class="business-badge">✦ Business</div>
+            </div>
+            <button class="import-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-7 3a4 4 0 110 8 4 4 0 010-8zm0 10c-2.67 0-8 1.34-8 4v1h16v-1c0-2.66-5.33-4-8-4z"/></svg>
+              Import from LinkedIn
+            </button>
+          </div>
+          <div class="editor-body">
+            <div class="field-row">
+              <div class="field"><label>Full Name</label><input value="John Doe" readonly></div>
+              <div class="field"><label>Professional Title</label><input value="Software Engineer" readonly></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Email</label><input value="john@example.com" readonly></div>
+              <div class="field"><label>Phone</label><input value="+1 234 567 890" readonly></div>
+            </div>
+            <div class="field"><label>Location</label><input value="San Francisco, CA" readonly></div>
+          </div>
+        </div>
+        <p style="font-size:11px;color:#444;margin-top:12px">⬆ The "Import from LinkedIn" button lives inside the Personal Details card header. It's only active for Business users — for others, clicking it triggers the existing ProGate upgrade modal.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-down">↓</div>
+
+  <!-- STEP 2 -->
+  <div>
+    <div class="step-label"><div class="step-num">2</div> URL entry modal (after clicking import)</div>
+    <div class="screen-card">
+      <div class="screen-title">
+        <div class="dot" style="background:#ff5f57"></div>
+        <div class="dot" style="background:#febc2e"></div>
+        <div class="dot" style="background:#28c840"></div>
+        LinkedIn Import Modal
+      </div>
+      <div class="screen-body">
+        <div class="modal-backdrop">
+          <div class="modal">
+            <div class="modal-icon">in</div>
+            <h3>Import from LinkedIn</h3>
+            <p>Paste your public LinkedIn profile URL below. We'll extract your information and let you preview it before applying to your CV.</p>
+            <div class="url-input-wrap">
+              <input class="url-input" value="https://linkedin.com/in/john-doe" readonly>
+            </div>
+            <p style="font-size:11px;color:#555;margin-bottom:14px">⚠ Make sure your LinkedIn profile is set to <strong style="color:#888">Public</strong> for best results.</p>
+            <div class="modal-actions">
+              <div class="btn-primary">Fetch & Preview →</div>
+              <div class="loading-state">
+                <div class="spinner"></div>
+                <span>Fetching profile... AI is extracting your data</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-down">↓</div>
+
+  <!-- STEP 3 -->
+  <div>
+    <div class="step-label"><div class="step-num">3</div> Preview & Confirm modal (before applying to CV)</div>
+    <div class="screen-card">
+      <div class="screen-title">
+        <div class="dot" style="background:#ff5f57"></div>
+        <div class="dot" style="background:#febc2e"></div>
+        <div class="dot" style="background:#28c840"></div>
+        Import Preview — Review & Apply
+      </div>
+      <div class="screen-body" style="display:flex;justify-content:center">
+        <div class="preview-modal">
+          <div class="preview-header">
+            <div class="li-logo">in</div>
+            <div class="preview-header-text">
+              <h3>LinkedIn Import Preview</h3>
+              <p>✓ Profile extracted successfully — review before applying</p>
+            </div>
+          </div>
+          <div class="preview-body">
+
+            <!-- Personal -->
+            <div class="preview-section">
+              <div class="preview-section-header">
+                <span class="preview-section-title">Personal Details</span>
+                <div class="preview-check">✓</div>
+              </div>
+              <div class="preview-section-body">
+                <div class="preview-field"><span class="preview-key">Name</span><span class="preview-val accent">Sajid Khan</span></div>
+                <div class="preview-field"><span class="preview-key">Title</span><span class="preview-val">Full Stack Developer</span></div>
+                <div class="preview-field"><span class="preview-key">Location</span><span class="preview-val">Mumbai, India</span></div>
+              </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="preview-section">
+              <div class="preview-section-header">
+                <span class="preview-section-title">Summary</span>
+                <div class="preview-check">✓</div>
+              </div>
+              <div class="preview-section-body">
+                <div class="preview-val" style="font-size:11px;color:#888;line-height:1.5">
+                  "Passionate full-stack developer with 4+ years building scalable web apps. Experienced in Next.js, TypeScript, and cloud infrastructure..."
+                </div>
+              </div>
+            </div>
+
+            <!-- Experience -->
+            <div class="preview-section">
+              <div class="preview-section-header">
+                <span class="preview-section-title">Experience (2 entries)</span>
+                <div class="preview-check">✓</div>
+              </div>
+              <div class="preview-section-body">
+                <div class="preview-exp-item">
+                  <div class="preview-exp-role">Senior Frontend Engineer</div>
+                  <div class="preview-exp-company">TechCorp · 2022 – Present</div>
+                  <div class="preview-exp-desc">Led UI architecture for the core product, reduced load time by 40%.</div>
+                </div>
+                <div class="preview-exp-item">
+                  <div class="preview-exp-role">Frontend Developer</div>
+                  <div class="preview-exp-company">Startup XYZ · 2020 – 2022</div>
+                  <div class="preview-exp-desc">Built customer-facing features using React and Node.js.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="preview-section">
+              <div class="preview-section-header">
+                <span class="preview-section-title">Skills</span>
+                <div class="preview-check">✓</div>
+              </div>
+              <div class="preview-section-body">
+                <span class="preview-tag">React</span>
+                <span class="preview-tag">Next.js</span>
+                <span class="preview-tag">TypeScript</span>
+                <span class="preview-tag">Node.js</span>
+                <span class="preview-tag">PostgreSQL</span>
+                <span class="preview-tag">Tailwind CSS</span>
+              </div>
+            </div>
+
+          </div>
+          <div class="preview-footer">
+            <button class="btn-cancel-sm">← Try Again</button>
+            <button class="btn-apply">Apply to CV ✓</button>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#444;margin-top:12px;padding:0 20px 16px">⬆ "Apply to CV" replaces all current CV fields with the extracted data. "Try Again" returns to the URL input modal.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
