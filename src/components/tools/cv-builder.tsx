@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Download, Loader2, Sparkles, Plus, Trash2, User, Layout, Image as ImageIcon, Crown, Star, AlignLeft, BarChart3, ArrowRight, X } from "lucide-react"
+import { Download, Loader2, Sparkles, Plus, Trash2, User, Layout, Image as ImageIcon, Crown, Star, AlignLeft, BarChart3, ArrowRight, X, Save, FolderOpen } from "lucide-react"
 import { ProGate } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
 import { AIParserModal, type CVParserResult } from "./ai-parser-modal"
@@ -46,6 +46,14 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
   const [showAIParserModal, setShowAIParserModal] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [upgradeModalType, setUpgradeModalType] = useState<"template" | "print">("template")
+
+  const [activeResumeId, setActiveResumeId] = useState<string | null>(null)
+  const [savedResumesList, setSavedResumesList] = useState<any[]>([])
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false)
+  const [isLoadModalOpen, setIsLoadModalOpen] = useState(false)
+  const [saveTitle, setSaveTitle] = useState("")
+  const [isSavingResume, setIsSavingResume] = useState(false)
+  const [isLoadingResumesList, setIsLoadingResumesList] = useState(false)
 
   const { count: usedThisMonth, increment: incrementUsage } = useUsageLimit("cv-builder", "monthly")
   const MAX_FREE_PRINTS = 3
@@ -193,6 +201,93 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
     window.print()
     if (!isPro) {
       await incrementUsage(1)
+    }
+  }
+  const handleFetchResumes = async () => {
+    setIsLoadingResumesList(true)
+    try {
+      const res = await fetch("/api/tools/cv-builder")
+      if (res.ok) {
+        const json = await res.json()
+        setSavedResumesList(json.list || [])
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsLoadingResumesList(false)
+    }
+  }
+
+  const handleSaveResume = async (titleToSave?: string) => {
+    const finalTitle = titleToSave || saveTitle
+    if (!finalTitle) return
+    setIsSavingResume(true)
+    try {
+      const res = await fetch("/api/tools/cv-builder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: activeResumeId,
+          title: finalTitle,
+          data: {
+            cv,
+            skills,
+            experience,
+            education,
+            projects,
+            templateId,
+            photo,
+            skillMode
+          }
+        })
+      })
+      if (res.ok) {
+        const json = await res.json()
+        setActiveResumeId(json.resume.id)
+        setIsSaveModalOpen(false)
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsSavingResume(false)
+    }
+  }
+
+  const handleDeleteResume = async (id: string) => {
+    try {
+      const res = await fetch(`/api/tools/cv-builder/${id}`, { method: "DELETE" })
+      if (res.ok) {
+        setSavedResumesList(prev => prev.filter(r => r.id !== id))
+        if (activeResumeId === id) setActiveResumeId(null)
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const handleLoadResume = async (id: string) => {
+    try {
+      const res = await fetch(`/api/tools/cv-builder/${id}`)
+      if (res.ok) {
+        const json = await res.json()
+        const resume = json.resume
+        if (resume && resume.data) {
+          const loadedData = resume.data as any
+          setCv(loadedData.cv || cv)
+          setSkills(loadedData.skills || [])
+          setExperience(loadedData.experience || [])
+          setEducation(loadedData.education || [])
+          setProjects(loadedData.projects || [])
+          setTemplateId(loadedData.templateId || "modern")
+          setPhoto(loadedData.photo || null)
+          setSkillMode(loadedData.skillMode || "text")
+          setActiveResumeId(resume.id)
+          setSaveTitle(resume.title)
+          setIsLoadModalOpen(false)
+        }
+      }
+    } catch (err) {
+      console.error(err)
     }
   }
 
@@ -594,7 +689,37 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
                   {MAX_FREE_PRINTS - usedThisMonth} of {MAX_FREE_PRINTS} free exports left this month
                 </span>
               )}
-              <Button onClick={handlePrint} className="bg-primary shadow-lg shadow-primary/20">
+              
+              <ProGate feature="Cloud Save" isPro={isPro}>
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    onClick={async () => {
+                      await handleFetchResumes()
+                      setIsLoadModalOpen(true)
+                    }}
+                    className="font-bold gap-1.5 h-10 px-4"
+                  >
+                    <FolderOpen className="h-4 w-4" /> Load
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      if (activeResumeId) {
+                        handleSaveResume(saveTitle)
+                      } else {
+                        setSaveTitle(cv.name ? `${cv.name} Resume` : "My Resume")
+                        setIsSaveModalOpen(true)
+                      }
+                    }}
+                    className="font-bold gap-1.5 h-10 px-4"
+                  >
+                    <Save className="h-4 w-4" /> {activeResumeId ? "Save" : "Save Cloud"}
+                  </Button>
+                </div>
+              </ProGate>
+
+              <Button onClick={handlePrint} className="bg-primary shadow-lg shadow-primary/20 h-10">
                 <Download className="mr-2 h-4 w-4" /> Export PDF
               </Button>
             </div>
@@ -875,6 +1000,98 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
                 Maybe later
               </Button>
             </div>
+          </div>
+        </div>
+      </div>
+    )}
+    {/* Save Modal */}
+    {isSaveModalOpen && (
+      <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+        <div 
+          className="absolute inset-0 bg-background/80 backdrop-blur-md animate-in fade-in duration-300" 
+          onClick={() => setIsSaveModalOpen(false)} 
+        />
+        <div className="relative w-full max-w-sm overflow-hidden rounded-3xl border bg-background p-6 shadow-2xl animate-in zoom-in-95 duration-300">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute top-4 right-4 h-8 w-8 rounded-full" 
+            onClick={() => setIsSaveModalOpen(false)}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Save className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-black">Save Resume Progress</h3>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-xs uppercase font-black text-muted-foreground">Resume Title</Label>
+              <Input 
+                value={saveTitle} 
+                onChange={e => setSaveTitle(e.target.value)}
+                placeholder="My Software Engineer Resume"
+                className="h-10 text-xs"
+              />
+            </div>
+            <Button 
+              onClick={() => handleSaveResume()} 
+              disabled={isSavingResume || !saveTitle}
+              className="w-full h-11 font-black"
+            >
+              {isSavingResume ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save to Cloud"}
+            </Button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Load Modal */}
+    {isLoadModalOpen && (
+      <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+        <div 
+          className="absolute inset-0 bg-background/80 backdrop-blur-md animate-in fade-in duration-300" 
+          onClick={() => setIsLoadModalOpen(false)} 
+        />
+        <div className="relative w-full max-w-md overflow-hidden rounded-3xl border bg-background p-6 shadow-2xl animate-in zoom-in-95 duration-300">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute top-4 right-4 h-8 w-8 rounded-full" 
+            onClick={() => setIsLoadModalOpen(false)}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <FolderOpen className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-black">My Saved Resumes</h3>
+            </div>
+            
+            {isLoadingResumesList ? (
+              <div className="py-8 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
+            ) : savedResumesList.length === 0 ? (
+              <p className="text-xs text-muted-foreground text-center py-6">No saved resumes found. Click Save to create one.</p>
+            ) : (
+              <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
+                {savedResumesList.map((r) => (
+                  <div key={r.id} className="flex items-center justify-between p-3 border rounded-xl hover:bg-muted/40 transition-all">
+                    <div className="truncate pr-4">
+                      <p className="text-xs font-black truncate">{r.title}</p>
+                      <p className="text-[10px] text-muted-foreground">{new Date(r.updatedAt).toLocaleDateString()}</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Button size="sm" variant="secondary" onClick={() => handleLoadResume(r.id)} className="h-8 text-[10px] font-bold">
+                        Load
+                      </Button>
+                      <Button size="sm" variant="ghost" onClick={() => handleDeleteResume(r.id)} className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10">
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

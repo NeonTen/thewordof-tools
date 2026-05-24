@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Plus, Trash2, Download, Printer } from "lucide-react"
+import { Plus, Trash2, Download, Printer, Save, FolderOpen } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -58,6 +58,14 @@ function NativeToggle({
 export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
   
   const { count: usedThisMonth, increment: incrementUsage } = useUsageLimit("invoice-generator", "monthly")
+  const [activeInvoiceId, setActiveInvoiceId] = useState<string | null>(null)
+  const [savedInvoicesList, setSavedInvoicesList] = useState<any[]>([])
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false)
+  const [isLoadModalOpen, setIsLoadModalOpen] = useState(false)
+  const [saveTitle, setSaveTitle] = useState("")
+  const [isSavingInvoice, setIsSavingInvoice] = useState(false)
+  const [isLoadingInvoicesList, setIsLoadingInvoicesList] = useState(false)
+  const [templateId, setTemplateId] = useState("default")
   const MAX_FREE_INVOICES = 3
 
   const limitReached = !isPro && usedThisMonth >= MAX_FREE_INVOICES
@@ -113,6 +121,83 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
 
   const handleItemChange = (id: number, field: string, value: string | number) => {
     setItems(items.map(item => item.id === id ? { ...item, [field]: value } : item))
+  }
+
+  const handleFetchInvoices = async () => {
+    setIsLoadingInvoicesList(true)
+    try {
+      const res = await fetch("/api/tools/invoice-generator")
+      if (res.ok) {
+        const json = await res.json()
+        setSavedInvoicesList(json.list || [])
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsLoadingInvoicesList(false)
+    }
+  }
+
+  const handleSaveInvoice = async (titleToSave?: string) => {
+    const finalTitle = titleToSave || saveTitle
+    if (!finalTitle) return
+    setIsSavingInvoice(true)
+    try {
+      const res = await fetch("/api/tools/invoice-generator", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: activeInvoiceId,
+          title: finalTitle,
+          data: {
+            invoice,
+            items,
+            templateId,
+          }
+        })
+      })
+      if (res.ok) {
+        const json = await res.json()
+        setActiveInvoiceId(json.invoice.id)
+        setIsSaveModalOpen(false)
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsSavingInvoice(false)
+    }
+  }
+
+  const handleDeleteInvoice = async (id: string) => {
+    try {
+      const res = await fetch(`/api/tools/invoice-generator/${id}`, { method: "DELETE" })
+      if (res.ok) {
+        setSavedInvoicesList(prev => prev.filter(r => r.id !== id))
+        if (activeInvoiceId === id) setActiveInvoiceId(null)
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const handleLoadInvoice = async (id: string) => {
+    try {
+      const res = await fetch(`/api/tools/invoice-generator/${id}`)
+      if (res.ok) {
+        const json = await res.json()
+        const invoiceObj = json.invoice
+        if (invoiceObj && invoiceObj.data) {
+          const loaded = invoiceObj.data as any
+          setInvoice(loaded.invoice || invoice)
+          setItems(loaded.items || items)
+          setActiveInvoiceId(invoiceObj.id)
+          setSaveTitle(invoiceObj.title)
+          setIsLoadModalOpen(false)
+        }
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const subtotal = items.reduce((sum, item) => sum + (item.quantity * item.price), 0)
@@ -269,7 +354,35 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
                 {MAX_FREE_INVOICES - usedThisMonth} of {MAX_FREE_INVOICES} free invoices left this month
               </span>
             )}
-            <Button 
+            <ProGate feature="Cloud Save" isPro={isPro}>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  onClick={async () => {
+                    await handleFetchInvoices()
+                    setIsLoadModalOpen(true)
+                  }}
+                  className="font-bold gap-1.5 h-10 px-4"
+                >
+                  <FolderOpen className="h-4 w-4" /> Load
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    if (activeInvoiceId) {
+                      handleSaveInvoice(saveTitle)
+                    } else {
+                      setSaveTitle(`Invoice ${new Date().toLocaleDateString()}`)
+                      setIsSaveModalOpen(true)
+                    }
+                  }}
+                  className="font-bold gap-1.5 h-10 px-4"
+                >
+                  <Save className="h-4 w-4" /> {activeInvoiceId ? "Save" : "Save Cloud"}
+                </Button>
+              </div>
+            </ProGate>
+            <Button
               onClick={async () => {
                 if (!isPro) {
                   try {
@@ -280,8 +393,8 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
                   }
                 }
                 window.print()
-              }} 
-              className="bg-primary"
+              }}
+              className="bg-primary h-10"
               disabled={limitReached}
             >
               <Printer className="mr-2 h-4 w-4" /> Print / Save as PDF
