@@ -111,6 +111,8 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
       setFetchedSchemas(data.schemas || [])
       if (data.schemas && data.schemas.length > 0) {
         setSelectedFetchedIndices(data.schemas.map((_: any, i: number) => i))
+      } else {
+        setFetchError("No schema markup found on this page.")
       }
     } catch (e: any) {
       setFetchError(e.message || "Could not retrieve schemas from that URL.")

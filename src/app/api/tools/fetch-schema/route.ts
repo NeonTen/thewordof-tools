@@ -48,14 +48,25 @@ export async function POST(req: Request) {
     while ((match = regex.exec(html)) !== null) {
       try {
         const parsed = JSON.parse(match[1].trim())
-        if (Array.isArray(parsed)) {
-          parsed.forEach(item => {
-            if (item && item["@type"]) {
-              schemas.push({ type: item["@type"], data: item })
-            }
-          })
-        } else if (parsed && parsed["@type"]) {
-          schemas.push({ type: parsed["@type"], data: parsed })
+        if (parsed) {
+          if (parsed["@graph"] && Array.isArray(parsed["@graph"])) {
+            parsed["@graph"].forEach(item => {
+              if (item && item["@type"]) {
+                const itemType = Array.isArray(item["@type"]) ? item["@type"][0] : item["@type"];
+                schemas.push({ type: itemType, data: item })
+              }
+            })
+          } else if (Array.isArray(parsed)) {
+            parsed.forEach(item => {
+              if (item && item["@type"]) {
+                const itemType = Array.isArray(item["@type"]) ? item["@type"][0] : item["@type"];
+                schemas.push({ type: itemType, data: item })
+              }
+            })
+          } else if (parsed["@type"]) {
+            const itemType = Array.isArray(parsed["@type"]) ? parsed["@type"][0] : parsed["@type"];
+            schemas.push({ type: itemType, data: parsed })
+          }
         }
       } catch (e) {
         console.warn("Failed to parse script tag JSON-LD block", e)
