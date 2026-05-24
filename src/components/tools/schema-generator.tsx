@@ -66,6 +66,13 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
   const [isAiLoading, setIsAiLoading] = useState(false)
   const [output, setOutput] = useState("")
 
+  // Fetcher states
+  const [fetchUrl, setFetchUrl] = useState("")
+  const [isFetchingUrl, setIsFetchingUrl] = useState(false)
+  const [fetchedSchemas, setFetchedSchemas] = useState<any[]>([])
+  const [selectedFetchedIndices, setSelectedFetchedIndices] = useState<number[]>([])
+  const [fetchError, setFetchError] = useState("")
+
   // Comprehensive Form States
   const [formData, setFormData] = useState<any>({
     article: { headline: "", author: "", image: "", datePublished: new Date().toISOString().split('T')[0] },
@@ -85,11 +92,166 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
     breadcrumb: [{ name: "Home", item: "https://example.com/" }, { name: "Category", item: "https://example.com/cat" }],
   })
 
+  const handleFetchUrl = async () => {
+    if (!fetchUrl) return
+    setIsFetchingUrl(true)
+    setFetchError("")
+    setFetchedSchemas([])
+    setSelectedFetchedIndices([])
+    try {
+      const res = await fetch("/api/tools/fetch-schema", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: fetchUrl })
+      })
+      if (!res.ok) {
+        throw new Error(await res.text() || "Failed to parse page")
+      }
+      const data = await res.json()
+      setFetchedSchemas(data.schemas || [])
+      if (data.schemas && data.schemas.length > 0) {
+        setSelectedFetchedIndices(data.schemas.map((_: any, i: number) => i))
+      }
+    } catch (e: any) {
+      setFetchError(e.message || "Could not retrieve schemas from that URL.")
+    } finally {
+      setIsFetchingUrl(false)
+    }
+  }
+
+  const handleImportToForm = (schemaObj: any) => {
+    const rawType = (schemaObj["@type"] || "").toLowerCase()
+    let type = ""
+    if (rawType.includes("article") || rawType.includes("blogposting")) type = "article"
+    else if (rawType === "faqpage") type = "faq"
+    else if (rawType === "product") type = "product"
+    else if (rawType.includes("localbusiness") || rawType === "restaurant" || rawType === "store") type = "local-business"
+    else if (rawType === "recipe") type = "recipe"
+    else if (rawType === "jobposting") type = "job-posting"
+    else if (rawType === "event") type = "event"
+    else if (rawType === "videoobject") type = "video"
+    else if (rawType === "howto") type = "how-to"
+    else if (rawType === "person") type = "person"
+    else if (rawType === "organization") type = "organization"
+    else if (rawType === "softwareapplication") type = "software"
+    else if (rawType === "course") type = "course"
+    else if (rawType === "review") type = "review"
+    else if (rawType === "breadcrumblist") type = "breadcrumb"
+
+    if (!type) return
+
+    const baseData = { ...formData[type] }
+    if (type === "article") {
+      baseData.headline = schemaObj.headline || schemaObj.name || ""
+      baseData.author = schemaObj.author?.name || schemaObj.author || ""
+      baseData.image = Array.isArray(schemaObj.image) ? schemaObj.image[0] : (schemaObj.image?.url || schemaObj.image || "")
+      baseData.datePublished = schemaObj.datePublished ? schemaObj.datePublished.split("T")[0] : new Date().toISOString().split("T")[0]
+    } else if (type === "faq") {
+      const items = schemaObj.mainEntity || []
+      const mapped = items.map((f: any) => ({
+        q: f.name || "",
+        a: f.acceptedAnswer?.text || ""
+      }))
+      setFormData({ ...formData, faq: mapped.length > 0 ? mapped : [{ q: "", a: "" }] })
+      setActiveType(type)
+      return
+    } else if (type === "product") {
+      baseData.name = schemaObj.name || ""
+      baseData.image = Array.isArray(schemaObj.image) ? schemaObj.image[0] : (schemaObj.image?.url || schemaObj.image || "")
+      baseData.description = schemaObj.description || ""
+      baseData.brand = schemaObj.brand?.name || schemaObj.brand || ""
+      baseData.sku = schemaObj.sku || ""
+      baseData.price = schemaObj.offers?.price || ""
+      baseData.currency = schemaObj.offers?.priceCurrency || "USD"
+      baseData.availability = schemaObj.offers?.availability?.replace("https://schema.org/", "") || "InStock"
+    } else if (type === "local-business") {
+      baseData.name = schemaObj.name || ""
+      baseData.image = Array.isArray(schemaObj.image) ? schemaObj.image[0] : (schemaObj.image?.url || schemaObj.image || "")
+      baseData.address = schemaObj.address?.streetAddress || schemaObj.address || ""
+      baseData.telephone = schemaObj.telephone || ""
+      baseData.url = schemaObj.url || ""
+      baseData.priceRange = schemaObj.priceRange || "$$"
+    } else if (type === "recipe") {
+      baseData.name = schemaObj.name || ""
+      baseData.image = Array.isArray(schemaObj.image) ? schemaObj.image[0] : (schemaObj.image?.url || schemaObj.image || "")
+      baseData.description = schemaObj.description || ""
+      baseData.cookTime = schemaObj.cookTime || "PT30M"
+      baseData.ingredients = Array.isArray(schemaObj.recipeIngredient) ? schemaObj.recipeIngredient.join("\n") : (schemaObj.recipeIngredient || "")
+      baseData.calories = schemaObj.nutrition?.calories || ""
+    } else if (type === "job-posting") {
+      baseData.title = schemaObj.title || ""
+      baseData.description = schemaObj.description || ""
+      baseData.company = schemaObj.hiringOrganization?.name || schemaObj.hiringOrganization || ""
+      baseData.location = schemaObj.jobLocation?.address?.streetAddress || schemaObj.jobLocation?.name || ""
+    } else if (type === "event") {
+      baseData.name = schemaObj.name || ""
+      baseData.startDate = schemaObj.startDate || ""
+      baseData.endDate = schemaObj.endDate || ""
+      baseData.location = schemaObj.location?.name || schemaObj.location || ""
+      baseData.description = schemaObj.description || ""
+      baseData.price = schemaObj.offers?.price || ""
+    } else if (type === "video") {
+      baseData.name = schemaObj.name || ""
+      baseData.description = schemaObj.description || ""
+      baseData.thumbnailUrl = Array.isArray(schemaObj.thumbnailUrl) ? schemaObj.thumbnailUrl[0] : (schemaObj.thumbnailUrl || "")
+      baseData.uploadDate = schemaObj.uploadDate || ""
+      baseData.duration = schemaObj.duration || "PT2M30S"
+    } else if (type === "how-to") {
+      baseData.name = schemaObj.name || ""
+      baseData.totalTime = schemaObj.totalTime || "PT1H"
+      const steps = schemaObj.step || []
+      baseData.steps = steps.map((s: any) => ({ text: s.text || s.name || "" }))
+      if (baseData.steps.length === 0) baseData.steps = [{ text: "" }]
+    } else if (type === "person") {
+      baseData.name = schemaObj.name || ""
+      baseData.jobTitle = schemaObj.jobTitle || ""
+      baseData.url = schemaObj.url || ""
+      baseData.sameAs = Array.isArray(schemaObj.sameAs) ? schemaObj.sameAs.join("\n") : (schemaObj.sameAs || "")
+    } else if (type === "organization") {
+      baseData.name = schemaObj.name || ""
+      baseData.url = schemaObj.url || ""
+      baseData.logo = schemaObj.logo?.url || schemaObj.logo || ""
+    } else if (type === "software") {
+      baseData.name = schemaObj.name || ""
+      baseData.operatingSystem = schemaObj.operatingSystem || "Windows, macOS"
+      baseData.applicationCategory = schemaObj.applicationCategory || "Utility"
+      baseData.price = schemaObj.offers?.price || "0"
+    } else if (type === "course") {
+      baseData.name = schemaObj.name || ""
+      baseData.description = schemaObj.description || ""
+      baseData.provider = schemaObj.provider?.name || schemaObj.provider || ""
+    } else if (type === "review") {
+      baseData.item = schemaObj.itemReviewed?.name || schemaObj.itemReviewed || ""
+      baseData.author = schemaObj.author?.name || schemaObj.author || ""
+      baseData.rating = schemaObj.reviewRating?.ratingValue || "5"
+      baseData.body = schemaObj.reviewBody || ""
+    } else if (type === "breadcrumb") {
+      const items = schemaObj.itemListElement || []
+      const mapped = items.map((b: any) => ({
+        name: b.name || "",
+        item: b.item || ""
+      }))
+      setFormData({ ...formData, breadcrumb: mapped.length > 0 ? mapped : [{ name: "Home", item: "https://example.com/" }] })
+      setActiveType(type)
+      return
+    }
+
+    setFormData({ ...formData, [type]: baseData })
+    setActiveType(type)
+  }
+
   useEffect(() => {
     generateSchema()
-  }, [formData, activeType])
+  }, [formData, activeType, fetchedSchemas, selectedFetchedIndices])
 
   const generateSchema = () => {
+    if (fetchedSchemas.length > 0 && selectedFetchedIndices.length > 0) {
+      const selected = fetchedSchemas.filter((_, i) => selectedFetchedIndices.includes(i)).map(s => s.data)
+      const content = selected.length === 1 ? selected[0] : selected
+      setOutput(`<script type="application/ld+json">\n${JSON.stringify(content, null, 2)}\n</script>`)
+      return
+    }
+
     let schema: any = { "@context": "https://schema.org" }
     const data = formData[activeType]
 
@@ -259,6 +421,71 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
     <div className="grid lg:grid-cols-[300px_1fr] gap-8 items-start">
       {/* Sidebar - Schema Selection */}
       <div className="space-y-4">
+        <ProGate feature="URL Schema Import" isPro={isPro}>
+          <Card className="border border-primary/10 overflow-hidden bg-muted/20">
+            <CardHeader className="p-4 bg-muted/30 border-b">
+              <div className="flex items-center gap-2">
+                <Globe className="h-4 w-4 text-primary" />
+                <CardTitle className="text-sm">Import from URL</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="p-4 space-y-3">
+              <div className="space-y-1">
+                <Label className="text-[10px] uppercase font-black text-muted-foreground">Page URL</Label>
+                <div className="flex gap-2">
+                  <Input 
+                    type="url" 
+                    placeholder="https://..." 
+                    value={fetchUrl} 
+                    onChange={e => setFetchUrl(e.target.value)}
+                    className="h-9 text-xs"
+                  />
+                  <Button 
+                    size="sm" 
+                    onClick={handleFetchUrl} 
+                    disabled={isFetchingUrl || !fetchUrl}
+                    className="h-9 px-3 text-xs"
+                  >
+                    {isFetchingUrl ? <Loader2 className="h-3 w-3 animate-spin" /> : "Fetch"}
+                  </Button>
+                </div>
+                {fetchError && <p className="text-[10px] text-red-500 font-bold mt-1">{fetchError}</p>}
+              </div>
+
+              {fetchedSchemas.length > 0 && (
+                <div className="space-y-2 pt-2 border-t border-primary/5 max-h-[160px] overflow-y-auto custom-scrollbar">
+                  <p className="text-[10px] uppercase font-black text-muted-foreground">Detected ({fetchedSchemas.length})</p>
+                  {fetchedSchemas.map((s, idx) => (
+                    <div key={idx} className="flex items-center justify-between text-xs p-1.5 hover:bg-muted/40 rounded-lg">
+                      <label className="flex items-center gap-2 cursor-pointer select-none truncate pr-2">
+                        <input 
+                          type="checkbox" 
+                          checked={selectedFetchedIndices.includes(idx)} 
+                          onChange={() => {
+                            if (selectedFetchedIndices.includes(idx)) {
+                              setSelectedFetchedIndices(selectedFetchedIndices.filter(i => i !== idx))
+                            } else {
+                              setSelectedFetchedIndices([...selectedFetchedIndices, idx])
+                            }
+                          }}
+                          className="h-3 w-3 rounded text-primary border-muted"
+                        />
+                        <span className="truncate font-black">{s.type}</span>
+                      </label>
+                      <button 
+                        onClick={() => handleImportToForm(s.data)}
+                        className="text-[10px] font-bold text-primary hover:underline hover:text-primary/80"
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </ProGate>
+
         <div className="hidden lg:block space-y-1">
           {SCHEMA_TYPES.map((type) => {
             const Icon = type.icon
