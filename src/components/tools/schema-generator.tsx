@@ -23,7 +23,8 @@ import {
   Calendar,
   GraduationCap,
   MessageSquare,
-  Package
+  Package,
+  X
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -72,6 +73,8 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
   const [fetchedSchemas, setFetchedSchemas] = useState<any[]>([])
   const [selectedFetchedIndices, setSelectedFetchedIndices] = useState<number[]>([])
   const [fetchError, setFetchError] = useState("")
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [importedSchemas, setImportedSchemas] = useState<any[]>([])
 
   // Comprehensive Form States
   const [formData, setFormData] = useState<any>({
@@ -242,14 +245,21 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
     setActiveType(type)
   }
 
+  const handleInsertSchemas = () => {
+    const selected = fetchedSchemas
+      .filter((_, i) => selectedFetchedIndices.includes(i))
+      .map(s => s.data)
+    setImportedSchemas(selected)
+    setIsModalOpen(false)
+  }
+
   useEffect(() => {
     generateSchema()
-  }, [formData, activeType, fetchedSchemas, selectedFetchedIndices])
+  }, [formData, activeType, importedSchemas])
 
   const generateSchema = () => {
-    if (fetchedSchemas.length > 0 && selectedFetchedIndices.length > 0) {
-      const selected = fetchedSchemas.filter((_, i) => selectedFetchedIndices.includes(i)).map(s => s.data)
-      const content = selected.length === 1 ? selected[0] : selected
+    if (importedSchemas.length > 0) {
+      const content = importedSchemas.length === 1 ? importedSchemas[0] : importedSchemas
       setOutput(`<script type="application/ld+json">\n${JSON.stringify(content, null, 2)}\n</script>`)
       return
     }
@@ -424,62 +434,13 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
       {/* Sidebar - Schema Selection */}
       <div className="space-y-4">
         <ProGate feature="URL Schema Import" isPro={isPro}>
-          <Card className="border border-primary/10 overflow-hidden bg-muted/20">
-            <CardHeader className="p-4 bg-muted/30 border-b">
-              <div className="flex items-center gap-2">
-                <Globe className="h-4 w-4 text-primary" />
-                <CardTitle className="text-sm">Import from URL</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="p-4 space-y-3">
-              <div className="space-y-1">
-                <Label className="text-[10px] uppercase font-black text-muted-foreground">Page URL</Label>
-                <div className="flex gap-2">
-                  <Input 
-                    type="url" 
-                    placeholder="https://..." 
-                    value={fetchUrl} 
-                    onChange={e => setFetchUrl(e.target.value)}
-                    className="h-9 text-xs"
-                  />
-                  <Button 
-                    size="sm" 
-                    onClick={handleFetchUrl} 
-                    disabled={isFetchingUrl || !fetchUrl}
-                    className="h-9 px-3 text-xs"
-                  >
-                    {isFetchingUrl ? <Loader2 className="h-3 w-3 animate-spin" /> : "Fetch"}
-                  </Button>
-                </div>
-                {fetchError && <p className="text-[10px] text-red-500 font-bold mt-1">{fetchError}</p>}
-              </div>
-
-              {fetchedSchemas.length > 0 && (
-                <div className="space-y-2 pt-2 border-t border-primary/5 max-h-[160px] overflow-y-auto custom-scrollbar">
-                  <p className="text-[10px] uppercase font-black text-muted-foreground">Detected ({fetchedSchemas.length})</p>
-                  {fetchedSchemas.map((s, idx) => (
-                    <div key={idx} className="flex items-center text-xs p-1.5 hover:bg-muted/40 rounded-lg">
-                      <label className="flex items-center gap-2 cursor-pointer select-none w-full truncate">
-                        <input 
-                          type="checkbox" 
-                          checked={selectedFetchedIndices.includes(idx)} 
-                          onChange={() => {
-                            if (selectedFetchedIndices.includes(idx)) {
-                              setSelectedFetchedIndices(selectedFetchedIndices.filter(i => i !== idx))
-                            } else {
-                              setSelectedFetchedIndices([...selectedFetchedIndices, idx])
-                            }
-                          }}
-                          className="h-3 w-3 rounded text-primary border-muted"
-                        />
-                        <span className="truncate font-black">{s.type}</span>
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <Button 
+            onClick={() => setIsModalOpen(true)}
+            className="w-full flex items-center justify-center gap-2 h-11 bg-muted hover:bg-muted/80 text-foreground font-black border border-primary/10 rounded-xl"
+          >
+            <Globe className="h-4 w-4 text-primary" />
+            Import from URL
+          </Button>
         </ProGate>
 
         <div className="hidden lg:block space-y-1">
@@ -939,6 +900,17 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
 
           {/* Preview Area */}
           <div className="space-y-4 sticky top-4">
+            {importedSchemas.length > 0 && (
+              <div className="p-3.5 bg-primary/10 border border-primary/20 rounded-2xl flex items-center justify-between text-xs animate-in slide-in-from-top-2 duration-300">
+                <span className="text-muted-foreground font-medium">Showing schemas imported from URL.</span>
+                <button 
+                  onClick={() => setImportedSchemas([])} 
+                  className="font-black text-primary hover:underline"
+                >
+                  Reset to Form Editor
+                </button>
+              </div>
+            )}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Code className="h-4 w-4 text-primary" />
@@ -993,6 +965,110 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
           </section>
         </div>
       </div>
+
+      {/* Import from URL Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-background/80 backdrop-blur-md animate-in fade-in duration-300"
+            onClick={() => setIsModalOpen(false)}
+          />
+          
+          {/* Modal Content */}
+          <div className="relative w-full max-w-md overflow-hidden rounded-3xl border bg-background p-6 shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="absolute top-4 right-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 rounded-full"
+                onClick={() => setIsModalOpen(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Globe className="h-5 w-5 text-primary" />
+                <h3 className="text-lg font-black">Import Schema from URL</h3>
+              </div>
+              
+              <div className="space-y-1">
+                <Label className="text-xs uppercase font-black text-muted-foreground">Page URL</Label>
+                <div className="flex gap-2">
+                  <Input 
+                    type="url" 
+                    placeholder="https://..." 
+                    value={fetchUrl} 
+                    onChange={e => setFetchUrl(e.target.value)}
+                    className="h-10 text-xs"
+                  />
+                  <Button 
+                    onClick={handleFetchUrl} 
+                    disabled={isFetchingUrl || !fetchUrl}
+                    className="h-10 px-4"
+                  >
+                    {isFetchingUrl ? <Loader2 className="h-4 w-4 animate-spin" /> : "Fetch"}
+                  </Button>
+                </div>
+                {fetchError && <p className="text-xs text-red-500 font-bold mt-1">{fetchError}</p>}
+              </div>
+
+              {fetchedSchemas.length > 0 && (
+                <div className="space-y-3 pt-3 border-t border-primary/5">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs uppercase font-black text-muted-foreground">Detected ({fetchedSchemas.length})</p>
+                    <button 
+                      onClick={() => {
+                        if (selectedFetchedIndices.length === fetchedSchemas.length) {
+                          setSelectedFetchedIndices([])
+                        } else {
+                          setSelectedFetchedIndices(fetchedSchemas.map((_, i) => i))
+                        }
+                      }}
+                      className="text-xs font-bold text-primary hover:underline"
+                    >
+                      {selectedFetchedIndices.length === fetchedSchemas.length ? "Deselect All" : "Select All"}
+                    </button>
+                  </div>
+                  <div className="space-y-1.5 max-h-[200px] overflow-y-auto custom-scrollbar">
+                    {fetchedSchemas.map((s, idx) => (
+                      <div key={idx} className="flex items-center text-xs p-2 hover:bg-muted/40 rounded-lg">
+                        <label className="flex items-center gap-3 cursor-pointer select-none w-full truncate">
+                          <input 
+                            type="checkbox" 
+                            checked={selectedFetchedIndices.includes(idx)} 
+                            onChange={() => {
+                              if (selectedFetchedIndices.includes(idx)) {
+                                setSelectedFetchedIndices(selectedFetchedIndices.filter(i => i !== idx))
+                              } else {
+                                setSelectedFetchedIndices([...selectedFetchedIndices, idx])
+                              }
+                            }}
+                            className="h-4 w-4 rounded text-primary border-muted"
+                          />
+                          <span className="truncate font-black">{s.type}</span>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="grid gap-2 pt-2">
+                    <Button 
+                      onClick={handleInsertSchemas} 
+                      disabled={selectedFetchedIndices.length === 0}
+                      className="h-11 font-black w-full"
+                    >
+                      Insert Selected ({selectedFetchedIndices.length})
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
