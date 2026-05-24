@@ -24,6 +24,8 @@ model User {
   posts         Post[]
   supportTickets SupportTicket[]
   proExpiresAt  DateTime?
+  savedResumes  SavedResume[]
+  savedInvoices SavedInvoice[]
 }
 
 model Account {
@@ -138,4 +140,26 @@ model ToolUsage {
   updatedAt  DateTime @updatedAt
 
   @@unique([toolKey, identifier, date, period])
+}
+
+model SavedResume {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SavedInvoice {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
