@@ -30,15 +30,24 @@ export async function POST(req: Request) {
       ? `Key Features:\n${featuresList.map(f => `- ${f}`).join('\n')}`
       : "No specific features provided."
 
-    let promptText = `You are an expert e-commerce copywriter. Generate a highly engaging, SEO-optimized product description.
+    let promptText = `You are a professional e-commerce copywriter who writes in a warm, natural, human tone. Avoid overly promotional jargon, fake excitement, and complex corporate buzzwords. Use clear, simple, and conversational language.
+
+Generate two versions of an e-commerce product description for:
 Product Title: ${title}
 ${featuresPrompt}
 
-Please return a beautiful, ready-to-use product description in markdown. It must contain:
-1. An engaging, benefit-driven product title/headline.
-2. A compelling introductory hook explaining why this product is must-have.
-3. An expanded bulleted list of key features (elaborate and explain the benefit of each feature mentioned).
-4. A concluding paragraph detailing who this is perfect for and a strong call-to-action.`
+Please format your response in clean Markdown as follows:
+
+### ⚡ Short Version (Punchy & Casual)
+- Write a 2-3 sentence overview that captures the product's main value and feel in a warm, easygoing tone.
+
+---
+
+### 📖 Standard Version
+- **Headline**: A brief, benefit-driven title.
+- **Overview**: 1-2 short paragraphs highlighting the product's main utility in a friendly, conversational tone.
+- **Key Highlights**: 3-4 bullet points elaborating on key features (explain them in very simple, benefit-driven terms).
+- Keep this version concise and highly readable (do not make it overly long).`
 
     let result;
     if (image) {
