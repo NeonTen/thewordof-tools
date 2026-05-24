@@ -28,12 +28,12 @@ export function useUsageLimit(toolKey: string, period: "daily" | "monthly" = "da
     fetchUsage()
   }, [fetchUsage])
 
-  const increment = useCallback(async (amount: number = 1) => {
+  const increment = useCallback(async (amount: number = 1, payload?: Record<string, unknown>) => {
     try {
       const res = await fetch(`/api/usage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ toolKey, period, amount }),
+        body: JSON.stringify({ toolKey, period, amount, payload }),
       })
       if (res.ok) {
         const data = await res.json()

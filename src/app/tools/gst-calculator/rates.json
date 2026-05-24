@@ -1,0 +1,5 @@
+[
+  { "region": "India", "rate": 0.18 },
+  { "region": "Australia", "rate": 0.10 },
+  { "region": "Canada", "rate": 0.05 }
+]

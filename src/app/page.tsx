@@ -151,6 +151,7 @@ export default async function Home() {
                         ["AI Caption Generator", "3 per gen", "10+ per gen", "Unlimited"],
                         ["AI CV Builder", "Basic Summary", "8 Pro Templates", "8 Pro Templates + Import with AI"],
                         ["Invoice Generator", "3 / month", "Unlimited + Branding", "Unlimited + Branding"],
+        ["Cloud progress saving", "—", "✅ Unlimited", "✅ Unlimited"],
                         ["AI SEO Generator", "3 / day", "Unlimited", "Unlimited"],
                         ["AI Prompt Optimizer", "3 / day", "Unlimited + History", "Unlimited + History"],
                         ["LLMS.txt Builder", "1 / day", "Unlimited", "Unlimited"],

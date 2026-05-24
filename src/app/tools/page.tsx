@@ -23,6 +23,11 @@ const allTools = [
   { title: "AI CV Builder",     desc: "ATS-optimised CV summaries written by AI in under 60 seconds.",       icon: PenLine,    href: "/tools/cv-builder",        pro: true },
   { title: "AI Prompt Gen",     desc: "Build expert-level prompts for ChatGPT, Claude, and Gemini.",         icon: Brain,      href: "/tools/prompt-generator",  pro: true },
   { title: "AI SEO Generator",  desc: "Generate optimised meta titles and descriptions that rank.",          icon: Search,     href: "/tools/seo-generator",     pro: true },
+  { title: "Product Description Generator", desc: "Create product titles, images and feature lists.", icon: FileText, href: "/tools/product-description", pro: false },
+  { title: "QR Code Generator", desc: "Generate QR codes with custom size and colors.", icon: Code, href: "/tools/qr-code", pro: false },
+  { title: "Word/Letter Counter", desc: "Live word, character and line counts.", icon: FileCode, href: "/tools/word-counter", pro: false },
+  { title: "GST Calculator", desc: "Calculate GST for multiple regions.", icon: Calculator, href: "/tools/gst-calculator", pro: false },
+  { title: "HEX/RGB/HSL Converter", desc: "Convert colors between HEX, RGB and HSL.", icon: Code, href: "/tools/color-converter", pro: false },
 ]
 
 import { auth } from "@/auth"

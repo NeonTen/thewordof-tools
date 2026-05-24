@@ -46,6 +46,12 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  
+  /* Brand additions */
+  --color-brand-primary: var(--primary);
+  --color-brand-accent: hsl(280 80% 60%);
+  --spacing-128: 32rem;
+  --spacing-144: 36rem;
 }
 
 :root {
@@ -111,6 +117,16 @@
   html {
     @apply font-sans;
   }
+}
+
+/* Global glassmorphism style */
+.glassmorphism {
+  @apply bg-white/70 dark:bg-black/40 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-xl shadow-lg;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glassmorphism:hover {
+  @apply bg-white/80 dark:bg-black/50 shadow-xl border-white/30 dark:border-white/20;
 }
 
 @media print {

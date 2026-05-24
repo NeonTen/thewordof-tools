@@ -17,6 +17,10 @@ import {
   Brain,
   MessageSquare,
   LayoutGrid,
+  QrCode,
+  Palette,
+  Type,
+  Percent,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ProBadge } from "@/components/ui/pro-gate"
@@ -36,20 +40,24 @@ const navGroups: NavGroup[] = [
     items: [
       { title: "Image Converter",  href: "/tools/image-converter",  icon: ImageIcon },
       { title: "SVG Compressor",   href: "/tools/svg-compressor",   icon: Zap },
+      { title: "QR Code Gen",      href: "/tools/qr-code",          icon: QrCode },
       { title: "Code Minifier",    href: "/tools/code-minifier",    icon: FileCode },
       { title: "Text Difference",  href: "/tools/text-diff",        icon: Split },
     ],
   },
   {
-    label: "Finance",
+    label: "Calculators",
     items: [
-      { title: "Calculators",      href: "/tools/calculators",      icon: Calculator },
-      { title: "Invoice Generator",href: "/tools/invoice-generator",icon: FileText },
+      { title: "All Calculators",  href: "/tools/calculators",      icon: Calculator },
+      { title: "Word Counter",     href: "/tools/word-counter",     icon: Type },
+      { title: "GST Calculator",   href: "/tools/gst-calculator",   icon: Percent },
+      { title: "Color Converter",  href: "/tools/color-converter",  icon: Palette },
     ],
   },
   {
-    label: "SEO & Dev",
+    label: "Finance & Dev",
     items: [
+      { title: "Invoice Generator",href: "/tools/invoice-generator",icon: FileText },
       { title: "Schema Generator", href: "/tools/schema-generator", icon: Code },
       { title: "LLMS.TXT Gen",     href: "/tools/llms-txt",         icon: Cpu },
     ],
@@ -57,6 +65,7 @@ const navGroups: NavGroup[] = [
   {
     label: "AI Tools",
     items: [
+      { title: "Product Desc Gen", href: "/tools/product-description", icon: Sparkles },
       { title: "Caption Gen",      href: "/tools/caption-generator",icon: Sparkles,      pro: true },
       { title: "Prompt Gen",       href: "/tools/prompt-generator", icon: Brain,         pro: true },
       { title: "CV Builder",       href: "/tools/cv-builder",       icon: PenLine,       pro: true },

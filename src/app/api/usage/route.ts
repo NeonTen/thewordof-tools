@@ -74,10 +74,14 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { toolKey, period = "daily", amount = 1 } = body
+    const { toolKey, period = "daily", amount = 1, payload } = body
 
     if (!toolKey) {
       return NextResponse.json({ error: "Missing toolKey in body" }, { status: 400 })
+    }
+
+    if (payload) {
+      console.log(`[Analytics] Tool Used: ${toolKey}, Payload:`, JSON.stringify(payload))
     }
 
     const identifier = await getIdentifier(req)
