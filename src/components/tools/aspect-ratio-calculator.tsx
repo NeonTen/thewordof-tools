@@ -80,7 +80,12 @@ export function AspectRatioCalculator() {
           <div className="flex gap-4 p-4 bg-muted/30 rounded-2xl border border-primary/5 justify-around text-center">
             <div>
               <p className="text-xs text-muted-foreground">Detected Ratio</p>
-              <p className="text-2xl font-black text-primary mt-1">{ratioString}</p>
+              <div className="flex flex-col items-center mt-1">
+                <p className="text-2xl font-black text-primary leading-tight">{ratioString}</p>
+                {gcd > 0 && h > 0 && (
+                  <p className="text-xs text-muted-foreground mt-0.5">({parseFloat((w / h).toFixed(2))}:1)</p>
+                )}
+              </div>
             </div>
             <div>
               <p className="text-xs text-muted-foreground">Target Size</p>
