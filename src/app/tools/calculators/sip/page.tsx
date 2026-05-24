@@ -1,0 +1,28 @@
+import { SipCalculator } from "@/components/tools/sip-calculator"
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
+
+export const metadata = {
+  title: "SIP & Mutual Fund Return Calculator | TheWordOf Tools",
+  description: "Project future returns of your Systematic Investment Plan (SIP) investments.",
+}
+
+export default function SipPage() {
+  return (
+    <div className="space-y-6">
+      <Link 
+        href="/tools/calculators" 
+        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
+      >
+        <ArrowLeft className="h-4 w-4" /> Back to Calculators
+      </Link>
+      <div>
+        <h1 className="text-3xl font-black tracking-tight">SIP Calculator</h1>
+        <p className="text-muted-foreground mt-2">
+          Determine compound growth returns for regular mutual fund investments.
+        </p>
+      </div>
+      <SipCalculator />
+    </div>
+  )
+}
