@@ -19,6 +19,8 @@ jobs:
           key: ${{ secrets.ORACLE_SSH_KEY }}
 
           script: |
+            set -e
+
             cd ~/thewordof-tools
 
             git pull
