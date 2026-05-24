@@ -3,11 +3,18 @@ import { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://thewordof.com'
   
-  // All public pages on the site
   const routes = [
     '',
     '/tools',
     '/tools/calculators',
+    '/tools/calculators/emi',
+    '/tools/calculators/sip',
+    '/tools/calculators/bmi',
+    '/tools/calculators/aspect-ratio',
+    '/tools/calculators/line-height',
+    '/tools/calculators/px-to-rem',
+    '/tools/calculators/compound-interest',
+    '/tools/calculators/salary-to-hourly',
     '/tools/caption-generator',
     '/tools/code-minifier',
     '/tools/cv-builder',
@@ -33,4 +40,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...routes]
 }
-
