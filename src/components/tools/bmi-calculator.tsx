@@ -64,7 +64,7 @@ export function BmiCalculator() {
               min={isMetric ? 30 : 66}
               max={isMetric ? 200 : 440}
               step={1}
-              onValueChange={(val: any) => setWeight(val[0])}
+              onValueChange={(val: any) => setWeight(Array.isArray(val) ? val[0] : val)}
             />
           </div>
 
@@ -80,7 +80,7 @@ export function BmiCalculator() {
               min={isMetric ? 100 : 39}
               max={isMetric ? 220 : 86}
               step={1}
-              onValueChange={(val: any) => setHeight(val[0])}
+              onValueChange={(val: any) => setHeight(Array.isArray(val) ? val[0] : val)}
             />
           </div>
         </CardContent>

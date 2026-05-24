@@ -56,7 +56,7 @@ export function CompoundInterestCalculator() {
               min={1000}
               max={1000000}
               step={5000}
-              onValueChange={(val: any) => setPrincipal(val[0])}
+              onValueChange={(val: any) => setPrincipal(Array.isArray(val) ? val[0] : val)}
             />
           </div>
 
@@ -70,7 +70,7 @@ export function CompoundInterestCalculator() {
               min={0}
               max={50000}
               step={100}
-              onValueChange={(val: any) => setContrib(val[0])}
+              onValueChange={(val: any) => setContrib(Array.isArray(val) ? val[0] : val)}
             />
           </div>
 
@@ -84,7 +84,7 @@ export function CompoundInterestCalculator() {
               min={1}
               max={25}
               step={0.1}
-              onValueChange={(val: any) => setRate(val[0])}
+              onValueChange={(val: any) => setRate(Array.isArray(val) ? val[0] : val)}
             />
           </div>
 
@@ -98,7 +98,7 @@ export function CompoundInterestCalculator() {
               min={0}
               max={15}
               step={0.5}
-              onValueChange={(val: any) => setInflation(val[0])}
+              onValueChange={(val: any) => setInflation(Array.isArray(val) ? val[0] : val)}
             />
           </div>
 
@@ -112,7 +112,7 @@ export function CompoundInterestCalculator() {
               min={1}
               max={40}
               step={1}
-              onValueChange={(val: any) => setTenure(val[0])}
+              onValueChange={(val: any) => setTenure(Array.isArray(val) ? val[0] : val)}
             />
           </div>
         </CardContent>
