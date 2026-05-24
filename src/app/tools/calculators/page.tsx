@@ -8,7 +8,8 @@ import {
   Type, 
   FileCode, 
   TrendingUp, 
-  Briefcase 
+  Briefcase,
+  Palette
 } from "lucide-react"
 
 export const metadata = {
@@ -71,6 +72,27 @@ const calculators = [
     description: "Convert pixels to REM units bidirectionally with a Tailwind CSS utility lookup sheet.",
     href: "/tools/calculators/px-to-rem",
     icon: FileCode,
+    category: "Developer",
+  },
+  {
+    title: "GST Calculator",
+    description: "Calculate regional Goods and Services Tax (GST) for baseline or gross sums.",
+    href: "/tools/gst-calculator",
+    icon: Percent,
+    category: "Finance",
+  },
+  {
+    title: "Word Counter",
+    description: "Get real-time statistics including word, character, and line counts with reading time.",
+    href: "/tools/word-counter",
+    icon: Type,
+    category: "Developer",
+  },
+  {
+    title: "HEX/RGB/HSL Converter",
+    description: "Convert colors between different spaces with interactive sliders and a visual picker.",
+    href: "/tools/color-converter",
+    icon: Palette,
     category: "Developer",
   },
 ]

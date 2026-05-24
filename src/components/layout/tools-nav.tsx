@@ -15,12 +15,8 @@ import {
   PenLine,
   Search,
   Brain,
-  MessageSquare,
   LayoutGrid,
   QrCode,
-  Palette,
-  Type,
-  Percent,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ProBadge } from "@/components/ui/pro-gate"
@@ -49,9 +45,6 @@ const navGroups: NavGroup[] = [
     label: "Calculators",
     items: [
       { title: "All Calculators",  href: "/tools/calculators",      icon: Calculator },
-      { title: "Word Counter",     href: "/tools/word-counter",     icon: Type },
-      { title: "GST Calculator",   href: "/tools/gst-calculator",   icon: Percent },
-      { title: "Color Converter",  href: "/tools/color-converter",  icon: Palette },
     ],
   },
   {

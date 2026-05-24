@@ -2635,7 +2635,7 @@
       "label": "metadata",
       "file_type": "code",
       "source_file": "src/app/tools/calculators/page.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "calculators_page_metadata",
       "community": 12,
       "norm_label": "metadata"
@@ -2644,7 +2644,7 @@
       "label": "calculators",
       "file_type": "code",
       "source_file": "src/app/tools/calculators/page.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "id": "calculators_page_calculators",
       "community": 12,
       "norm_label": "calculators"
@@ -2653,7 +2653,7 @@
       "label": "CalculatorsPage()",
       "file_type": "code",
       "source_file": "src/app/tools/calculators/page.tsx",
-      "source_location": "L78",
+      "source_location": "L100",
       "id": "calculators_page_calculatorspage",
       "community": 12,
       "norm_label": "calculatorspage()"
@@ -5920,7 +5920,7 @@
       "label": "NavItem",
       "file_type": "code",
       "source_file": "src/components/layout/tools-nav.tsx",
-      "source_location": "L28",
+      "source_location": "L24",
       "id": "layout_tools_nav_navitem",
       "community": 7,
       "norm_label": "navitem"
@@ -5929,7 +5929,7 @@
       "label": "NavGroup",
       "file_type": "code",
       "source_file": "src/components/layout/tools-nav.tsx",
-      "source_location": "L29",
+      "source_location": "L25",
       "id": "layout_tools_nav_navgroup",
       "community": 7,
       "norm_label": "navgroup"
@@ -5938,7 +5938,7 @@
       "label": "navGroups",
       "file_type": "code",
       "source_file": "src/components/layout/tools-nav.tsx",
-      "source_location": "L31",
+      "source_location": "L27",
       "id": "layout_tools_nav_navgroups",
       "community": 7,
       "norm_label": "navgroups"
@@ -5947,7 +5947,7 @@
       "label": "ToolsNav()",
       "file_type": "code",
       "source_file": "src/components/layout/tools-nav.tsx",
-      "source_location": "L79",
+      "source_location": "L72",
       "id": "layout_tools_nav_toolsnav",
       "community": 7,
       "norm_label": "toolsnav()"
@@ -16941,9 +16941,9 @@
       "source_file": "src/app/api/tools/generate-description/route.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_api_tools_generate_description_route_ts",
-      "target": "src_auth_ts",
-      "confidence_score": 1.0
+      "target": "src_auth_ts"
     },
     {
       "relation": "imports_from",
@@ -20180,9 +20180,9 @@
       "source_file": "src/app/api/tools/generate-description/route.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_api_tools_generate_description_route_ts",
-      "target": "generate_description_route_post",
-      "confidence_score": 1.0
+      "target": "generate_description_route_post"
     },
     {
       "relation": "imports_from",
@@ -39604,5 +39604,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "cec21fc03ef9a80e2e4781041fc6c4d8032fa3de"
+  "built_at_commit": "6f4e0c0c3750475df341a41c6241eae148bc6da9"
 }
