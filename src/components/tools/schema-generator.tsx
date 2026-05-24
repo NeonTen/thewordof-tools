@@ -458,8 +458,8 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
                 <div className="space-y-2 pt-2 border-t border-primary/5 max-h-[160px] overflow-y-auto custom-scrollbar">
                   <p className="text-[10px] uppercase font-black text-muted-foreground">Detected ({fetchedSchemas.length})</p>
                   {fetchedSchemas.map((s, idx) => (
-                    <div key={idx} className="flex items-center justify-between text-xs p-1.5 hover:bg-muted/40 rounded-lg">
-                      <label className="flex items-center gap-2 cursor-pointer select-none truncate pr-2">
+                    <div key={idx} className="flex items-center text-xs p-1.5 hover:bg-muted/40 rounded-lg">
+                      <label className="flex items-center gap-2 cursor-pointer select-none w-full truncate">
                         <input 
                           type="checkbox" 
                           checked={selectedFetchedIndices.includes(idx)} 
@@ -474,12 +474,6 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
                         />
                         <span className="truncate font-black">{s.type}</span>
                       </label>
-                      <button 
-                        onClick={() => handleImportToForm(s.data)}
-                        className="text-[10px] font-bold text-primary hover:underline hover:text-primary/80"
-                      >
-                        Edit
-                      </button>
                     </div>
                   ))}
                 </div>
