@@ -30,7 +30,7 @@ export function CompoundInterestCalculator() {
     inflationRate: inflation,
   })
 
-  return (
+  return (<>
     <div className="grid lg:grid-cols-2 gap-8">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
@@ -169,5 +169,37 @@ export function CompoundInterestCalculator() {
         </Card>
       </div>
     </div>
-  )
+
+    {/* SEO Section */}
+    <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-20">
+      <section>
+        <h2 className="text-2xl font-black tracking-tight mb-4">The Power of Compound Interest & Inflation</h2>
+        <p className="text-muted-foreground leading-relaxed">
+          Compound interest is the interest earned on your initial principal amount plus the interest accumulated over previous periods. Widely regarded as the "eighth wonder of the world," compounding accelerates wealth growth because your returns generate their own returns, compounding exponentially over longer investment horizons.
+        </p>
+        <p className="text-muted-foreground mt-4 leading-relaxed">
+          However, inflation naturally erodes the purchasing power of your money. A nominal return of ₹1,00,000 in 20 years will not buy the same amount of goods as it does today. Our calculator accounts for this by computing the "Real Future Value" (inflation-adjusted), letting you see the true buying power of your wealth in today's currency value.
+        </p>
+      </section>
+      <section className="bg-muted/30 p-8 rounded-3xl border border-primary/5">
+        <h3 className="text-xl font-black tracking-tight mb-6">How to Use the Compound Interest Calculator</h3>
+        <ul className="space-y-4 list-none p-0">
+          {[
+            { title: "Enter Initial Investment", desc: "Set the start principal amount you have available to invest immediately." },
+            { title: "Add Monthly Contributions", desc: "Specify any recurring monthly savings you will add to the portfolio to speed up growth." },
+            { title: "Define Interest Rate & Horizon", desc: "Select the annual interest rate (nominal yield) and the total number of years you want the investment to compound." },
+            { title: "Adjust the Inflation Rate", desc: "Input an average expected annual inflation rate (typically 3–7%) to see the real, deflated value of your future capital." },
+          ].map((item, i) => (
+            <li key={i} className="flex gap-4">
+              <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-black text-primary">{i + 1}</div>
+              <div>
+                <h4 className="font-bold text-foreground leading-none mb-1">{item.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </>)
 }

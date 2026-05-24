@@ -23,7 +23,7 @@ export function SalaryHourlyCalculator() {
     { label: "Annual", value: breakdown.annual, key: "annual" },
   ]
 
-  return (
+  return (<>
     <div className="grid lg:grid-cols-2 gap-8">
       <Card>
         <CardHeader>
@@ -94,5 +94,37 @@ export function SalaryHourlyCalculator() {
         </CardContent>
       </Card>
     </div>
-  )
+
+    {/* SEO Section */}
+    <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-20">
+      <section>
+        <h2 className="text-2xl font-black tracking-tight mb-4">Why Calculate Salary to Hourly Rates?</h2>
+        <p className="text-muted-foreground leading-relaxed">
+          Converting an annual salary into an hourly wage (and vice-versa) is highly valuable when comparing job offers, negotiating contract positions, or determining freelance rates. Knowing your exact hourly earnings lets you measure the true financial value of your time and evaluate if a salary matches your work-life expectations.
+        </p>
+        <p className="text-muted-foreground mt-4 leading-relaxed">
+          A standard full-time position consists of a 40-hour work week over 52 weeks a year, totaling 2,080 working hours. However, your actual hours and paid vacation weeks may vary. This calculator takes those factors into account to deliver an exact, personalized breakdown of your daily, weekly, bi-weekly, monthly, and yearly earnings.
+        </p>
+      </section>
+      <section className="bg-muted/30 p-8 rounded-3xl border border-primary/5">
+        <h3 className="text-xl font-black tracking-tight mb-6">How to Convert Compensation Rates</h3>
+        <ul className="space-y-4 list-none p-0">
+          {[
+            { title: "Input Base Pay Amount", desc: "Type in your starting wage amount (e.g. ₹6,00,000 for annual or ₹50,000 for monthly)." },
+            { title: "Select Compensation Period", desc: "Select the frequency matching your pay amount: yearly, monthly, weekly, or hourly." },
+            { title: "Configure Weekly Work Hours", desc: "Specify the number of hours you work each week (typically 35, 40, or 45 hours) to ensure precise division." },
+            { title: "Set Annual Working Weeks", desc: "Enter the number of working weeks per year (default is 52). You can subtract unpaid weeks off if applicable." },
+          ].map((item, i) => (
+            <li key={i} className="flex gap-4">
+              <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-black text-primary">{i + 1}</div>
+              <div>
+                <h4 className="font-bold text-foreground leading-none mb-1">{item.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </>)
 }

@@ -28,7 +28,7 @@ export function PxToRemCalculator() {
     setRem(pxToRem(px, val))
   }
 
-  return (
+  return (<>
     <div className="grid lg:grid-cols-2 gap-8">
       <div className="space-y-6">
         <Card>
@@ -102,5 +102,37 @@ export function PxToRemCalculator() {
         </CardContent>
       </Card>
     </div>
-  )
+
+    {/* SEO Section */}
+    <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-20">
+      <section>
+        <h2 className="text-2xl font-black tracking-tight mb-4">Why Convert PX to REM?</h2>
+        <p className="text-muted-foreground leading-relaxed">
+          Pixel (PX) is an absolute sizing unit, meaning it represents a fixed physical dot on a screen. REM (Root EM) is a relative sizing unit whose value is calculated relative to the HTML document's root font-size. By default, most modern web browsers define the base font-size as 16px.
+        </p>
+        <p className="text-muted-foreground mt-4 leading-relaxed">
+          Converting pixel dimensions to REM units is an industry-standard best practice for building accessible, responsive web designs. If a user increases their browser's default font size (e.g. for accessibility or visual impairment), REM-based typography, margins, and padding scale proportionally, preventing content overlaps and broken layouts.
+        </p>
+      </section>
+      <section className="bg-muted/30 p-8 rounded-3xl border border-primary/5">
+        <h3 className="text-xl font-black tracking-tight mb-6">How to Use the PX to REM Converter</h3>
+        <ul className="space-y-4 list-none p-0">
+          {[
+            { title: "Define the Root Base Size", desc: "Set the base font-size (default is 16px). This value represents what 1rem evaluates to in pixels." },
+            { title: "Enter Absolute Pixels", desc: "Type in any pixel dimension (e.g., 24px) to instantly see its relative REM equivalent (e.g., 1.5rem)." },
+            { title: "Convert REMs Back to Pixels", desc: "Type in a REM value to calculate its corresponding pixel size based on the set base value." },
+            { title: "Use Tailwind Sizing Mapping", desc: "Reference the interactive conversion chart to quickly copy Tailwind utility class names (like w-4, p-8) into your code." },
+          ].map((item, i) => (
+            <li key={i} className="flex gap-4">
+              <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-black text-primary">{i + 1}</div>
+              <div>
+                <h4 className="font-bold text-foreground leading-none mb-1">{item.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </>)
 }

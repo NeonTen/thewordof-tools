@@ -13,7 +13,7 @@ export function LineHeightCalculator() {
 
   const relative = calculateLineHeight(baseSize, value, unit)
 
-  return (
+  return (<>
     <div className="grid lg:grid-cols-2 gap-8">
       <Card>
         <CardHeader>
@@ -84,5 +84,37 @@ export function LineHeightCalculator() {
         </CardContent>
       </Card>
     </div>
-  )
+
+    {/* SEO Section */}
+    <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-20">
+      <section>
+        <h2 className="text-2xl font-black tracking-tight mb-4">What is Line-height and Why Does it Matter?</h2>
+        <p className="text-muted-foreground leading-relaxed">
+          Line-height (also known as leading) is a CSS property that controls the vertical space between lines of text in web typography. Setting the correct line-height is fundamental to improving readability and visual aesthetic. Too little line-height crowds text and strains the eyes, while too much line-height breaks the reader's flow.
+        </p>
+        <p className="text-muted-foreground mt-4 leading-relaxed">
+          In professional web development, it is recommended to use unitless, relative line-height values (e.g. `1.5` instead of `24px`). A unitless value is inherited dynamically relative to the font-size of elements, preventing layout overflow issues when users resize text.
+        </p>
+      </section>
+      <section className="bg-muted/30 p-8 rounded-3xl border border-primary/5">
+        <h3 className="text-xl font-black tracking-tight mb-6">How to Convert Line-height Formats</h3>
+        <ul className="space-y-4 list-none p-0">
+          {[
+            { title: "Define the Base Font Size", desc: "Input the current font-size of your text in pixels (e.g. 16px). This establishes the scale for conversions." },
+            { title: "Input Current Line-height", desc: "Enter your styling value and select its format (absolute PX, relative REM, or percentage)." },
+            { title: "Generate Relative Multipliers", desc: "Read the converted relative line-height output (e.g., 1.5) to configure dynamic sizing stylesheets." },
+            { title: "Review typography Layout", desc: "Observe the typography preview box to evaluate the visual vertical rhythm and text density in real time." },
+          ].map((item, i) => (
+            <li key={i} className="flex gap-4">
+              <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-black text-primary">{i + 1}</div>
+              <div>
+                <h4 className="font-bold text-foreground leading-none mb-1">{item.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </>)
 }

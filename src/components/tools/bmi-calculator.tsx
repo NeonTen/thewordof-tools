@@ -33,7 +33,7 @@ export function BmiCalculator() {
 
   const pointerPos = Math.min(Math.max(((score - 15) / (35 - 15)) * 100, 0), 100)
 
-  return (
+  return (<>
     <div className="grid lg:grid-cols-2 gap-8">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
@@ -116,5 +116,37 @@ export function BmiCalculator() {
         </CardContent>
       </Card>
     </div>
-  )
+
+    {/* SEO Section */}
+    <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-20">
+      <section>
+        <h2 className="text-2xl font-black tracking-tight mb-4">What is Body Mass Index (BMI)?</h2>
+        <p className="text-muted-foreground leading-relaxed">
+          Body Mass Index (BMI) is a widely recognized medical metric used to estimate a person's body fat based on their height and weight. Calculated by dividing weight in kilograms by the square of height in meters ($BMI = kg/m^2$), it offers a quick way to screen for potential weight-related health conditions.
+        </p>
+        <p className="text-muted-foreground mt-4 leading-relaxed">
+          While BMI does not measure body composition (fat vs. muscle) directly, it is highly useful for classifying weight status into general categories: Underweight (BMI &lt; 18.5), Normal weight (18.5–24.9), Overweight (25–29.9), and Obese (30 or higher). This classification helps health professionals identify individuals who may benefit from weight management support.
+        </p>
+      </section>
+      <section className="bg-muted/30 p-8 rounded-3xl border border-primary/5">
+        <h3 className="text-xl font-black tracking-tight mb-6">How to Use & Interpret BMI Results</h3>
+        <ul className="space-y-4 list-none p-0">
+          {[
+            { title: "Select Unit System", desc: "Toggle between Metric (kilograms and centimeters) or Imperial (pounds and feet/inches) input styles." },
+            { title: "Input Weight & Height", desc: "Drag the sliders or enter your numbers directly. Accurate height and weight are critical for an exact BMI score." },
+            { title: "Check the Classification Index", desc: "View where your indicator line settles on the colored range: blue is underweight, green is normal, orange is overweight, and red is obese." },
+            { title: "Understand the Limitations", desc: "Keep in mind that BMI can overestimate body fat in athletes with high muscle mass and underestimate fat in elderly individuals who have lost muscle." },
+          ].map((item, i) => (
+            <li key={i} className="flex gap-4">
+              <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-black text-primary">{i + 1}</div>
+              <div>
+                <h4 className="font-bold text-foreground leading-none mb-1">{item.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </>)
 }
