@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/tools/page.tsx": {
-    "mtime": 1779608749.8113985,
-    "ast_hash": "c4acd8357371bd34a76f3a5f16bee12d",
+    "mtime": 1779682052.596492,
+    "ast_hash": "84cb16e426f9eb684d43dc97b280ecb6",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/tools/caption-generator/page.tsx": {
@@ -247,6 +247,11 @@
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/tools/product-description/page.tsx": {
     "mtime": 1779610536.039567,
     "ast_hash": "15b614bb38e5c063e9b84ce78bcbfdba",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/tools/report/page.tsx": {
+    "mtime": 1779682016.8061903,
+    "ast_hash": "76159077844ec5cc94c70af75983130b",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/tools/llms-txt/page.tsx": {
@@ -699,6 +704,11 @@
     "ast_hash": "952020cd34fb504f817c6aa4cc0c2e7e",
     "semantic_hash": ""
   },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/work-report.tsx": {
+    "mtime": 1779683047.6624904,
+    "ast_hash": "c9d4931be89c403bd4e7cf9c430fcce1",
+    "semantic_hash": ""
+  },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/seo-generator.tsx": {
     "mtime": 1779028409.0577178,
     "ast_hash": "86eccd1f02c0ea65715263037173ac2e",
@@ -755,8 +765,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/layout/tools-nav.tsx": {
-    "mtime": 1779616795.6507905,
-    "ast_hash": "4061d8fcc178fc58feb870bbf23e1a5e",
+    "mtime": 1779682041.0525541,
+    "ast_hash": "b732d06502420350ce2c2dc78c0d5f9b",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/layout/header.tsx": {
@@ -1097,6 +1107,11 @@
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/plans/2026-05-17-linkedin-import.md": {
     "mtime": 1779021842.8044147,
     "ast_hash": "dbf1a079a1881ec399f052825b3a26d9",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-25-work-report-generator-design.md": {
+    "mtime": 1779681952.2082524,
+    "ast_hash": "c1cf3b8a25e6133ac9b0a7f40b6aad53",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-17-linkedin-import-design.md": {

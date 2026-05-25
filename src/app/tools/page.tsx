@@ -19,6 +19,7 @@ const allTools = [
   { title: "Schema Generator",  desc: "Build JSON-LD structured data for SEO rich results in Google.",       icon: Code,       href: "/tools/schema-generator",  pro: false },
   { title: "LLMS.TXT Generator",desc: "Generate AI-readable site descriptions for LLM crawlers.",            icon: Cpu,        href: "/tools/llms-txt",          pro: false },
   { title: "Invoice Generator", desc: "Create professional PDF invoices in seconds.",                         icon: FileText,   href: "/tools/invoice-generator", pro: false },
+  { title: "Work Report Generator", desc: "Compile daily task trackers and print matching standard A4 PDFs.", icon: FileText,   href: "/tools/report",            pro: false },
   { title: "AI Caption Gen",    desc: "Platform-optimised social media captions powered by Gemini.",         icon: Sparkles,   href: "/tools/caption-generator", pro: true },
   { title: "AI CV Builder",     desc: "ATS-optimised CV summaries written by AI in under 60 seconds.",       icon: PenLine,    href: "/tools/cv-builder",        pro: true },
   { title: "AI Prompt Gen",     desc: "Build expert-level prompts for ChatGPT, Claude, and Gemini.",         icon: Brain,      href: "/tools/prompt-generator",  pro: true },

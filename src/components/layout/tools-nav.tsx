@@ -51,6 +51,7 @@ const navGroups: NavGroup[] = [
     label: "Finance & Dev",
     items: [
       { title: "Invoice Generator",href: "/tools/invoice-generator",icon: FileText },
+      { title: "Work Report",      href: "/tools/report",           icon: FileText },
       { title: "Schema Generator", href: "/tools/schema-generator", icon: Code },
       { title: "LLMS.TXT Gen",     href: "/tools/llms-txt",         icon: Cpu },
     ],
