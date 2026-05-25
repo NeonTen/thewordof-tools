@@ -23,9 +23,11 @@ jobs:
 
             cd ~/thewordof-tools
 
-            git pull
+            git fetch origin
 
-            npm install
+            git reset --hard origin/main
+
+            npm ci
 
             npx prisma generate
 
