@@ -1,10 +1,21 @@
 "use client"
+/* eslint-disable @next/next/no-img-element */
 
-import React, { useState, useEffect } from "react"
-import { Plus, Trash2, Printer } from "lucide-react"
+import React, { useState, useEffect, useRef } from "react"
+import { 
+  Plus, 
+  Trash2, 
+  Printer, 
+  Bold as BoldIcon, 
+  Italic as ItalicIcon, 
+  Underline as UnderlineIcon, 
+  Link as LinkIcon, 
+  List as ListIcon, 
+  ListOrdered, 
+  Eraser 
+} from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 
 interface TaskRow {
@@ -14,6 +25,149 @@ interface TaskRow {
   projectedDate: string
   durationVal: string
 }
+
+interface RichTextEditorProps {
+  value: string
+  onChange: (val: string) => void
+  placeholder?: string
+}
+
+function RichTextEditor({ value, onChange, placeholder }: RichTextEditorProps) {
+  const editorRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (editorRef.current && editorRef.current.innerHTML !== value) {
+      editorRef.current.innerHTML = value || ""
+    }
+  }, [value])
+
+  const handleInput = () => {
+    if (editorRef.current) {
+      onChange(editorRef.current.innerHTML)
+    }
+  }
+
+  const execCommand = (command: string, arg = "") => {
+    document.execCommand("defaultParagraphSeparator", false, "p")
+    document.execCommand(command, false, arg)
+    handleInput()
+  }
+
+  const clearFormat = () => {
+    document.execCommand("removeFormat", false)
+    const selection = window.getSelection()
+    if (selection && selection.rangeCount > 0) {
+      let node = selection.anchorNode
+      let isInList = false
+      while (node && node.nodeName !== "DIV" && node.nodeName !== "BODY") {
+        if (node.nodeName === "LI" || node.nodeName === "UL" || node.nodeName === "OL") {
+          isInList = true
+          break
+        }
+        node = node.parentNode
+      }
+      if (isInList) {
+        document.execCommand("insertUnorderedList", false)
+      }
+    }
+    handleInput()
+  }
+
+  const addLink = () => {
+    const url = prompt("Enter URL:", "https://")
+    if (url) {
+      execCommand("createLink", url)
+      const selection = window.getSelection()
+      if (selection && selection.rangeCount > 0) {
+        let parent = selection.anchorNode?.parentElement
+        while (parent && parent.tagName !== "A" && parent.tagName !== "DIV") {
+          parent = parent.parentElement
+        }
+        if (parent && parent.tagName === "A") {
+          parent.setAttribute("style", "color:#1d4ed8;text-decoration:underline;")
+          parent.setAttribute("target", "_blank")
+        }
+      }
+      handleInput()
+    }
+  }
+
+  return (
+    <div className="border border-border rounded-lg bg-background/50 overflow-hidden flex flex-col focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary/50 transition-all">
+      {/* Toolbar */}
+      <div className="flex flex-wrap items-center gap-1 p-1 bg-muted/40 border-b border-border/40 text-muted-foreground select-none">
+        <button
+          type="button"
+          onClick={() => execCommand("bold")}
+          className="p-1.5 rounded hover:bg-muted hover:text-foreground transition-colors"
+          title="Bold"
+        >
+          <BoldIcon className="h-3.5 w-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => execCommand("italic")}
+          className="p-1.5 rounded hover:bg-muted hover:text-foreground transition-colors"
+          title="Italic"
+        >
+          <ItalicIcon className="h-3.5 w-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => execCommand("underline")}
+          className="p-1.5 rounded hover:bg-muted hover:text-foreground transition-colors"
+          title="Underline"
+        >
+          <UnderlineIcon className="h-3.5 w-3.5" />
+        </button>
+        <div className="w-px h-4 bg-border/50 mx-1" />
+        <button
+          type="button"
+          onClick={addLink}
+          className="p-1.5 rounded hover:bg-muted hover:text-foreground transition-colors text-primary"
+          title="Insert Link"
+        >
+          <LinkIcon className="h-3.5 w-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => execCommand("insertUnorderedList")}
+          className="p-1.5 rounded hover:bg-muted hover:text-foreground transition-colors"
+          title="Bullet List"
+        >
+          <ListIcon className="h-3.5 w-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => execCommand("insertOrderedList")}
+          className="p-1.5 rounded hover:bg-muted hover:text-foreground transition-colors"
+          title="Numbered List"
+        >
+          <ListOrdered className="h-3.5 w-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={clearFormat}
+          className="p-1.5 rounded hover:bg-muted hover:text-foreground transition-colors text-destructive/80"
+          title="Clear Format"
+        >
+          <Eraser className="h-3.5 w-3.5" />
+        </button>
+      </div>
+      {/* Editable Content */}
+      <div
+        ref={editorRef}
+        contentEditable
+        onInput={handleInput}
+        onBlur={handleInput}
+        className="p-2 min-h-[60px] max-h-[150px] overflow-y-auto outline-none text-xs leading-relaxed font-sans empty:before:content-[attr(placeholder)] empty:before:text-muted-foreground/40 before:pointer-events-none [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {...({ placeholder } as any)}
+      />
+    </div>
+  )
+}
+
 
 interface WorkReportProps {
   isPro?: boolean
@@ -30,7 +184,7 @@ const DURATION_PRESETS = [
   "All Day"
 ]
 
-export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
+export function WorkReport({}: WorkReportProps) {
   const [name, setName] = useState("")
   const [date, setDate] = useState("")
   const [scheduledHours, setScheduledHours] = useState("8")
@@ -38,8 +192,12 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
     { id: "1", taskName: "Phone Calls", updateText: "Total addressed: <b>40</b><br />Reviewed callbacks", projectedDate: "", durationVal: "2 hours" },
     { id: "2", taskName: "Chats", updateText: "Attended support chats and checked <a href='https://google.com' target='_blank' style='color:#1d4ed8;text-decoration:underline;'>Google portal</a>", projectedDate: "", durationVal: "1 hour" }
   ])
-  const [extraTitle, setExtraTitle] = useState("Additional Notes")
-  const [extraContent, setExtraContent] = useState("<b>Next Steps:</b><br />- Verify payment portal updates<br />- Launch testing suite")
+  const [extraTitle, setExtraTitle] = useState("")
+  const [extraContent, setExtraContent] = useState("")
+  const [extraImage, setExtraImage] = useState("")
+  const [extraTitle2, setExtraTitle2] = useState("")
+  const [extraContent2, setExtraContent2] = useState("")
+  const [extraImage2, setExtraImage2] = useState("")
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
 
@@ -56,6 +214,10 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
         if (parsed.tasks && Array.isArray(parsed.tasks)) setTasks(parsed.tasks)
         if (parsed.extraTitle !== undefined) setExtraTitle(parsed.extraTitle)
         if (parsed.extraContent !== undefined) setExtraContent(parsed.extraContent)
+        if (parsed.extraImage !== undefined) setExtraImage(parsed.extraImage)
+        if (parsed.extraTitle2 !== undefined) setExtraTitle2(parsed.extraTitle2)
+        if (parsed.extraContent2 !== undefined) setExtraContent2(parsed.extraContent2)
+        if (parsed.extraImage2 !== undefined) setExtraImage2(parsed.extraImage2)
         /* eslint-enable react-hooks/set-state-in-effect */
       } catch (e) {
         console.error("Failed to parse saved state", e)
@@ -68,9 +230,9 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
 
   // Sync to localstorage
   useEffect(() => {
-    const state = { name, date, scheduledHours, tasks, extraTitle, extraContent }
+    const state = { name, date, scheduledHours, tasks, extraTitle, extraContent, extraImage, extraTitle2, extraContent2, extraImage2 }
     localStorage.setItem("thewordof-work-report", JSON.stringify(state))
-  }, [name, date, scheduledHours, tasks, extraTitle, extraContent])
+  }, [name, date, scheduledHours, tasks, extraTitle, extraContent, extraImage, extraTitle2, extraContent2, extraImage2])
 
   // Totals calculation
   const calculateTotals = () => {
@@ -152,13 +314,39 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
   // Render HTML strings natively
   const renderHtmlText = (text: string) => {
     if (!text) return "—"
-    // Replace newlines with <br /> to preserve formatting, unless already formatted
-    const formatted = text.replace(/\n/g, "<br />")
-    return <div dangerouslySetInnerHTML={{ __html: formatted }} />
+    
+    // Clean up empty paragraphs, divs, or lists that only contain <br> or empty whitespace
+    const cleaned = text
+      .replace(/<p>\s*(<br\s*\/?>)?\s*<\/p>/gi, "")
+      .replace(/<div>\s*(<br\s*\/?>)?\s*<\/div>/gi, "")
+      .replace(/<li>\s*(<br\s*\/?>)?\s*<\/li>/gi, "")
+      .replace(/<ul>\s*(<br\s*\/?>)?\s*<\/ul>/gi, "")
+      .replace(/<ol>\s*(<br\s*\/?>)?\s*<\/ol>/gi, "")
+      .trim()
+      
+    if (cleaned === "" || cleaned === "<br>" || cleaned === "<br/>" || cleaned === "<br />") {
+      return "—"
+    }
+
+    const formatted = cleaned.replace(/\n/g, "<br />")
+    return <div className="[&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_a]:text-blue-600 [&_a]:underline [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0" dangerouslySetInnerHTML={{ __html: formatted }} />
   }
 
   return (
-    <div className="w-full space-y-6 max-w-5xl mx-auto print:block print:p-0">
+    <div className="w-full space-y-6 print:block print:p-0">
+      {/* Main Header with Export to PDF button */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print:hidden pb-4 border-b border-border/50">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Work Report Generator</h1>
+          <p className="text-muted-foreground mt-1 text-sm">
+            Build custom daily task sheets, calculate total hours worked, and print to PDF.
+          </p>
+        </div>
+        <Button onClick={() => setIsPreviewOpen(true)} className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-lg shadow-primary/20 shrink-0">
+          Export to PDF
+        </Button>
+      </div>
+
       {/* Editor Form Panel */}
       <div className="space-y-6 print:hidden">
         <Card className="glassmorphism p-6">
@@ -167,7 +355,7 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
             <CardDescription>Configure task rows, dates, and names below.</CardDescription>
           </CardHeader>
           <CardContent className="px-0 pb-0 space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">Name</label>
                 <Input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Sajid Khan" />
@@ -176,11 +364,10 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
                 <label className="text-sm font-medium text-muted-foreground">Date</label>
                 <Input type="date" value={date} onChange={e => setDate(e.target.value)} />
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Scheduled Hours Today</label>
-              <Input type="number" value={scheduledHours} onChange={e => setScheduledHours(e.target.value)} placeholder="e.g. 8" />
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Scheduled Hours Today</label>
+                <Input type="number" value={scheduledHours} onChange={e => setScheduledHours(e.target.value)} placeholder="e.g. 8" />
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -273,12 +460,10 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
                       >
                         <td></td>
                         <td colSpan={4} className="py-1 px-1.5 pb-2">
-                          <Textarea
+                          <RichTextEditor
                             value={task.updateText}
-                            onChange={(e) => updateRow(idx, "updateText", e.target.value)}
-                            placeholder="Work Update (Supports HTML e.g. <b>Total: 40</b>, links, bullet tags)"
-                            rows={2}
-                            className="min-h-[50px] text-xs font-mono py-1 w-full"
+                            onChange={(val) => updateRow(idx, "updateText", val)}
+                            placeholder="Work Update (Use toolbar to format bold, links, lists)"
                           />
                         </td>
                       </tr>
@@ -305,7 +490,11 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-muted-foreground">Work Update</label>
-                    <Textarea value={task.updateText} onChange={(e) => updateRow(idx, "updateText", e.target.value)} placeholder="Completed 30 tickets..." rows={3} />
+                    <RichTextEditor
+                      value={task.updateText}
+                      onChange={(val) => updateRow(idx, "updateText", val)}
+                      placeholder="Completed tasks..."
+                    />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -322,12 +511,9 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Button onClick={addTask} className="flex-1" variant="secondary">
+            <div className="flex pt-2">
+              <Button onClick={addTask} className="w-full" variant="secondary">
                 <Plus className="mr-2 h-4 w-4" /> Add Task
-              </Button>
-              <Button onClick={() => setIsPreviewOpen(true)} className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-lg shadow-primary/20">
-                Export to PDF
               </Button>
             </div>
           </CardContent>
@@ -336,23 +522,102 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
         {/* Custom Additional Section Card */}
         <Card className="glassmorphism p-6 print:hidden">
           <CardHeader className="px-0 pt-0">
-            <CardTitle>Additional Section</CardTitle>
-            <CardDescription>Add custom text or notes to append below the task table (supports HTML tags).</CardDescription>
+            <CardTitle>Additional Sections</CardTitle>
+            <CardDescription>Configure custom notes, reminders, or achievements to print beneath the sheet.</CardDescription>
           </CardHeader>
-          <CardContent className="px-0 pb-0 space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Section Title</label>
-              <Input value={extraTitle} onChange={e => setExtraTitle(e.target.value)} placeholder="e.g. Additional Notes / Next Steps" />
+          <CardContent className="px-0 pb-0 space-y-6">
+            {/* Section 1 */}
+            <div className="space-y-3 pb-4 border-b border-border/40">
+              <h4 className="text-sm font-bold text-foreground">Section 1</h4>
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-muted-foreground">Section Title</label>
+                <Input value={extraTitle} onChange={e => setExtraTitle(e.target.value)} placeholder="e.g. Additional Notes / Next Steps" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-muted-foreground">Section Content</label>
+                <RichTextEditor
+                  value={extraContent}
+                  onChange={setExtraContent}
+                  placeholder=""
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-muted-foreground">Attach Image (Optional)</label>
+                <div className="flex items-center gap-4">
+                  {extraImage && (
+                    <div className="relative w-16 h-16 border rounded bg-muted flex items-center justify-center overflow-hidden">
+                      <img src={extraImage} alt="Preview" className="max-w-full max-h-full object-contain" />
+                      <button 
+                        type="button"
+                        onClick={() => setExtraImage("")}
+                        className="absolute top-0 right-0 bg-destructive text-white p-0.5 rounded-bl"
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </button>
+                    </div>
+                  )}
+                  <Input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) {
+                        const reader = new FileReader()
+                        reader.onloadend = () => setExtraImage(reader.result as string)
+                        reader.readAsDataURL(file)
+                      }
+                    }}
+                    className="text-xs h-9 cursor-pointer"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Section Content (HTML Supported)</label>
-              <Textarea
-                value={extraContent}
-                onChange={e => setExtraContent(e.target.value)}
-                placeholder="e.g. <b>Focus for tomorrow:</b><br />- Testing pricing integration"
-                rows={4}
-                className="w-full text-xs font-mono"
-              />
+
+            {/* Section 2 */}
+            <div className="space-y-3">
+              <h4 className="text-sm font-bold text-foreground">Section 2</h4>
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-muted-foreground">Section Title</label>
+                <Input value={extraTitle2} onChange={e => setExtraTitle2(e.target.value)} placeholder="e.g. Key Achievements" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-muted-foreground">Section Content</label>
+                <RichTextEditor
+                  value={extraContent2}
+                  onChange={setExtraContent2}
+                  placeholder=""
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-muted-foreground">Attach Image (Optional)</label>
+                <div className="flex items-center gap-4">
+                  {extraImage2 && (
+                    <div className="relative w-16 h-16 border rounded bg-muted flex items-center justify-center overflow-hidden">
+                      <img src={extraImage2} alt="Preview" className="max-w-full max-h-full object-contain" />
+                      <button 
+                        type="button"
+                        onClick={() => setExtraImage2("")}
+                        className="absolute top-0 right-0 bg-destructive text-white p-0.5 rounded-bl"
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </button>
+                    </div>
+                  )}
+                  <Input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) {
+                        const reader = new FileReader()
+                        reader.onloadend = () => setExtraImage2(reader.result as string)
+                        reader.readAsDataURL(file)
+                      }
+                    }}
+                    className="text-xs h-9 cursor-pointer"
+                  />
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -381,22 +646,22 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
             <div className="flex-1 overflow-y-auto p-8 bg-muted/10 flex justify-center print:p-0 print:bg-white print:overflow-visible">
               {/* printable A4 paper container */}
               <div 
-                className="w-full max-w-[210mm] border border-black rounded-sm bg-white text-black p-10 shadow-sm print:shadow-none print:border-none print:p-0 font-sans min-h-[297mm] flex flex-col justify-between"
-                style={{ fontSize: "11pt" }}
+                className="w-full max-w-[210mm] border border-black rounded-sm bg-white text-black p-10 shadow-sm print:shadow-none print:border-none print:p-10 font-sans min-h-[297mm] flex flex-col justify-between"
+                style={{ fontSize: "11pt", lineHeight: "1.3" }}
               >
                 <div className="space-y-6">
                   {/* Header Row */}
-                  <div className="text-center space-y-3 pb-4 border-b border-black">
+                  <div className="text-center space-y-1">
                     <h2 className="font-bold text-black tracking-tight" style={{ fontSize: "14pt" }}>
                       Daily Task Tracker
                     </h2>
                     
-                    <div className="flex justify-between px-2" style={{ fontSize: "11pt" }}>
+                    <div className="flex justify-between" style={{ fontSize: "11pt" }}>
                       <span>Name: {name || "—"}</span>
                       <span>Date: {date || "—"}</span>
                     </div>
 
-                    <div className="text-left px-2" style={{ fontSize: "11pt" }}>
+                    <div className="text-left" style={{ fontSize: "11pt" }}>
                       Scheduled hours today: {scheduledHours || "—"}
                     </div>
                   </div>
@@ -406,10 +671,10 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
                     <table className="w-full text-left border-collapse" style={{ fontSize: "11pt" }}>
                       <thead>
                         <tr className="bg-gray-100 text-gray-800 font-bold border-b border-black">
-                          <th className="py-1.5 px-2 border-r border-black w-1/4">Task Name</th>
-                          <th className="py-1.5 px-2 border-r border-black w-2/5">Update</th>
-                          <th className="py-1.5 px-2 border-r border-black w-1/5">Projected Comp.</th>
-                          <th className="py-1.5 px-2 w-1/5">Time Spent</th>
+                          <th className="py-1.5 px-2 border-r border-black w-[18%]">Task Name</th>
+                          <th className="py-1.5 px-2 border-r border-black w-[55%]">Update</th>
+                          <th className="py-1.5 px-2 border-r border-black w-[12%]">Projected Comp.</th>
+                          <th className="py-1.5 px-2 w-[15%]">Time Spent</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -442,25 +707,43 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
                     </table>
                   </div>
 
-                  {/* Additional Notes Custom Section */}
-                  {(extraTitle || extraContent) && (
-                    <div className="mt-6 border border-black rounded-sm p-4 text-left break-inside-avoid" style={{ fontSize: "11pt" }}>
+                  {/* Additional Notes Custom Section 1 */}
+                  {(extraTitle || extraContent || extraImage) && (
+                    <div className="text-left break-inside-avoid" style={{ fontSize: "11pt" }}>
                       {extraTitle && (
-                        <h3 className="font-bold border-b border-black pb-1 mb-2 uppercase text-xs">
+                        <h3 className="font-bold mb-1.5 uppercase text-xs">
                           {extraTitle}
                         </h3>
                       )}
                       <div className="text-gray-800 leading-relaxed">
                         {renderHtmlText(extraContent)}
                       </div>
+                      {extraImage && (
+                        <div className="mt-2.5">
+                          <img src={extraImage} alt="Attachment" className="max-w-full max-h-64 object-contain rounded-sm border border-gray-100" />
+                        </div>
+                      )}
                     </div>
                   )}
-                </div>
 
-                {/* Printable footer stamp */}
-                <div className="border-t border-gray-200 pt-4 text-[10px] text-gray-400 flex justify-between items-center mt-8">
-                  <span>TheWordOf Tools | Daily Task Tracker</span>
-                  <span>Generated on {new Date().toLocaleString()}</span>
+                  {/* Additional Custom Section 2 */}
+                  {(extraTitle2 || extraContent2 || extraImage2) && (
+                    <div className="text-left break-inside-avoid" style={{ fontSize: "11pt" }}>
+                      {extraTitle2 && (
+                        <h3 className="font-bold mb-1.5 uppercase text-xs">
+                          {extraTitle2}
+                        </h3>
+                      )}
+                      <div className="text-gray-800 leading-relaxed">
+                        {renderHtmlText(extraContent2)}
+                      </div>
+                      {extraImage2 && (
+                        <div className="mt-2.5">
+                          <img src={extraImage2} alt="Attachment" className="max-w-full max-h-64 object-contain rounded-sm border border-gray-100" />
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

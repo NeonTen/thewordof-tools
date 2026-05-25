@@ -14,14 +14,8 @@ export default async function WorkReportPage() {
 
   return (
     <div className="flex flex-col gap-8 print:block print:p-0">
-      <div className="print:hidden">
-        <h1 className="text-3xl font-bold tracking-tight">Work Report Generator</h1>
-        <p className="text-muted-foreground mt-2">
-          Build custom daily task sheets, calculate total hours worked, and print to PDF.
-        </p>
-      </div>
-
       <WorkReport isPro={isPro} />
     </div>
   )
 }
+

@@ -1,16 +1,16 @@
 # Graph Report - thewordof-tools  (2026-05-25)
 
 ## Corpus Check
-- 224 files · ~134,195 words
+- 224 files · ~135,084 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1615 nodes · 2447 edges · 137 communities (114 shown, 23 thin omitted)
+- 1617 nodes · 2449 edges · 136 communities (114 shown, 22 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f17e996d`
+- Built from commit: `8770f6ec`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -134,7 +134,6 @@
 - [[_COMMUNITY_Community 128|Community 128]]
 - [[_COMMUNITY_Community 129|Community 129]]
 - [[_COMMUNITY_Community 131|Community 131]]
-- [[_COMMUNITY_Community 132|Community 132]]
 - [[_COMMUNITY_Community 133|Community 133]]
 - [[_COMMUNITY_Community 134|Community 134]]
 - [[_COMMUNITY_Community 138|Community 138]]
@@ -155,16 +154,16 @@
 ## Surprising Connections (you probably didn't know these)
 - `cn()` --calls--> `clsx`  [INFERRED]
   src/lib/utils.ts → package.json
+- `DashboardPage()` --calls--> `cn()`  [EXTRACTED]
+  src/app/dashboard/page.tsx → src/lib/utils.ts
 - `SheetOverlay()` --calls--> `cn()`  [EXTRACTED]
   src/components/ui/sheet.tsx → src/lib/utils.ts
 - `SheetContent()` --calls--> `cn()`  [EXTRACTED]
   src/components/ui/sheet.tsx → src/lib/utils.ts
 - `SheetHeader()` --calls--> `cn()`  [EXTRACTED]
   src/components/ui/sheet.tsx → src/lib/utils.ts
-- `SheetFooter()` --calls--> `cn()`  [EXTRACTED]
-  src/components/ui/sheet.tsx → src/lib/utils.ts
 
-## Communities (137 total, 23 thin omitted)
+## Communities (136 total, 22 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.04
@@ -191,8 +190,8 @@ Cohesion: 0.06
 Nodes (32): Anti-Pattern 1: Testing Mock Behavior, Anti-Pattern 2: Test-Only Methods in Production, Anti-Pattern 3: Mocking Without Understanding, Anti-Pattern 4: Incomplete Mocks, Anti-Pattern 5: Integration Tests as Afterthought, code:block1 (1. NEVER test mock behavior), code:block10 (BEFORE mocking any method:), code:typescript (// ❌ BAD: Partial mock - only fields you think you need) (+24 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.17
-Nodes (8): DashboardNav(), navItems, DashboardShell(), PageTransition(), NavGroup, navGroups, NavItem, ToolsNav()
+Cohesion: 0.23
+Nodes (5): DashboardNav(), navItems, DashboardShell(), PageTransition(), ToolsNav()
 
 ### Community 8 - "Community 8"
 Cohesion: 0.06
@@ -212,7 +211,7 @@ Nodes (29): 1a. Native Worktree Tools (preferred), 1b. Git Worktree Fallback, As
 
 ### Community 12 - "Community 12"
 Cohesion: 0.05
-Nodes (84): metadata, calculators, metadata, DashboardSuccess(), metadata, PlanSection(), SettingsForm(), SettingsFormProps (+76 more)
+Nodes (81): metadata, calculators, metadata, SettingsForm(), SettingsFormProps, metadata, useUsageLimit(), metadata (+73 more)
 
 ### Community 13 - "Community 13"
 Cohesion: 0.12
@@ -224,7 +223,7 @@ Nodes (24): code:block1 (IMPORTANT: This is a real scenario. Choose and act.), c
 
 ### Community 15 - "Community 15"
 Cohesion: 0.06
-Nodes (6): metadata, metadata, metadata, metadata, { handlers, auth, signIn, signOut }, SchemaGenerator()
+Nodes (6): metadata, metadata, metadata, { handlers, auth, signIn, signOut }, metadata, SVGCompressor()
 
 ### Community 16 - "Community 16"
 Cohesion: 0.08
@@ -262,6 +261,10 @@ Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModu
 Cohesion: 0.2
 Nodes (9): 1. General & UI Verification, 2. Tool-Specific Verification, 3. SEO & Analytics Verification, GST Calculator (`/tools/gst-calculator`), HEX / RGB / HSL Converter (`/tools/color-converter`), Product Description Generator (`/tools/product-description`), QA Checklist - Full Tool Suite Release (v0.2.0), QR Code Generator (`/tools/qr-code`) (+1 more)
 
+### Community 25 - "Community 25"
+Cohesion: 0.07
+Nodes (6): globalForPrisma, GET(), getDateStr(), getIdentifier(), POST(), PrismaModuleType
+
 ### Community 26 - "Community 26"
 Cohesion: 0.11
 Nodes (18): code:block1 (NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE), code:block2 (BEFORE claiming any status or expressing satisfaction:), code:block3 (✅ [Run test command] [See: 34/34 pass] "All tests pass"), code:block4 (✅ Write → Run (pass) → Revert fix → Run (MUST FAIL) → Restor), code:block5 (✅ [Run build] [See: exit 0] "Build passes"), code:block6 (✅ Re-read plan → Create checklist → Verify each → Report gap), code:block7 (✅ Agent reports success → Check VCS diff → Verify changes → ), Common Failures (+10 more)
@@ -287,8 +290,8 @@ Cohesion: 0.14
 Nodes (12): code:dot (digraph when_to_use {), code:typescript (// ❌ BEFORE: Guessing at timing), code:typescript (// Tool ticks every 100ms - need 2 ticks to verify partial o), Common Mistakes, Condition-Based Waiting, Core Pattern, Implementation, Overview (+4 more)
 
 ### Community 32 - "Community 32"
-Cohesion: 0.15
-Nodes (13): code:block52, code:block53, code:block56 (bigquery-skill/), code:markdown (Use the BigQuery:bigquery_schema tool to retrieve table sche), Create verifiable intermediate outputs, MCP tool references, Next steps, Package dependencies (+5 more)
+Cohesion: 0.12
+Nodes (16): Avoid assuming tools are installed, code:block52, code:block53, code:`markdown (## Form layout analysis), code:block55, code:block56 (bigquery-skill/), code:markdown (Use the BigQuery:bigquery_schema tool to retrieve table sche), code:`markdown (**Bad example: Assumes installation**:) (+8 more)
 
 ### Community 33 - "Community 33"
 Cohesion: 0.33
@@ -340,7 +343,7 @@ Nodes (4): [0.2.0] - 2026-05-24, Added, Changed, Changelog
 
 ### Community 45 - "Community 45"
 Cohesion: 0.08
-Nodes (34): BillingPage(), DashboardPage(), cn(), NativeToggle(), NativeToggle(), NativeToggle(), NativeToggle(), Accordion() (+26 more)
+Nodes (33): BillingPage(), cn(), NativeToggle(), NativeToggle(), NativeToggle(), NativeToggle(), Accordion(), AccordionContent() (+25 more)
 
 ### Community 46 - "Community 46"
 Cohesion: 0.2
@@ -371,8 +374,8 @@ Cohesion: 0.33
 Nodes (6): [Analysis Title], code:block34, code:`markdown (## Report structure), Executive summary, Key findings, Recommendations
 
 ### Community 54 - "Community 54"
-Cohesion: 0.2
-Nodes (13): SupportModal(), SupportModalProps, UpgradeButton(), UpgradeButtonProps, Window, Dialog(), DialogContent(), DialogDescription() (+5 more)
+Cohesion: 0.21
+Nodes (12): SupportModalProps, UpgradeButton(), UpgradeButtonProps, Window, Dialog(), DialogContent(), DialogDescription(), DialogFooter() (+4 more)
 
 ### Community 55 - "Community 55"
 Cohesion: 0.22
@@ -499,12 +502,16 @@ Cohesion: 0.11
 Nodes (17): API Error Codes, Architecture, code:ts (type LinkedInImportResult = {), code:block2 (User (Business) → clicks "Import from LinkedIn" in Personal ), Data Contracts, Decisions Made, Error Handling, LinkedIn Profile Import — Design Spec (+9 more)
 
 ### Community 89 - "Community 89"
-Cohesion: 0.2
+Cohesion: 0.21
 Nodes (11): metadata, InvoiceGenerator(), NativeToggle(), Table(), TableBody(), TableCaption(), TableCell(), TableFooter() (+3 more)
 
 ### Community 90 - "Community 90"
-Cohesion: 0.16
+Cohesion: 0.14
 Nodes (13): ThemeToggle(), DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuGroup(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem() (+5 more)
+
+### Community 91 - "Community 91"
+Cohesion: 0.26
+Nodes (7): syncPlanStatus(), DashboardSuccess(), DashboardPage(), metadata, PlanSection(), SupportModal(), SyncPlanButton()
 
 ### Community 93 - "Community 93"
 Cohesion: 0.15
@@ -535,12 +542,8 @@ Cohesion: 0.25
 Nodes (7): A4 Print Formatting (`@media print`), Auto-Totaling Formula, code:typescript (interface TaskRow {), Data Persistence & State Schema, File Structure & Routing, Overview, Work Report / Daily Task Tracker Design Spec
 
 ### Community 107 - "Community 107"
-Cohesion: 0.29
-Nodes (5): allTools, metadata, ProBadge(), ProGate(), ProGateProps
-
-### Community 108 - "Community 108"
-Cohesion: 0.6
-Nodes (5): GET(), getDateStr(), getIdentifier(), POST(), PrismaModuleType
+Cohesion: 0.2
+Nodes (8): NavGroup, navGroups, NavItem, allTools, metadata, ProBadge(), ProGate(), ProGateProps
 
 ### Community 109 - "Community 109"
 Cohesion: 0.67
@@ -552,11 +555,7 @@ Nodes (12): Architecture, code:typescript (type CVParserResult = {), Data Contra
 
 ### Community 131 - "Community 131"
 Cohesion: 0.67
-Nodes (3): Avoid assuming tools are installed, code:`markdown (**Bad example: Assumes installation**:), code:"
-
-### Community 132 - "Community 132"
-Cohesion: 0.67
-Nodes (3): code:`markdown (## Form layout analysis), code:block55, Use visual analysis
+Nodes (3): Technical notes, Token budgets, YAML frontmatter requirements
 
 ### Community 133 - "Community 133"
 Cohesion: 0.2
@@ -571,21 +570,21 @@ Cohesion: 0.67
 Nodes (3): optimizeSVG(), prettyPrintSVG(), SVGOptions
 
 ## Knowledge Gaps
-- **804 isolated node(s):** `version`, `source`, `sourceType`, `skillPath`, `computedHash` (+799 more)
+- **805 isolated node(s):** `version`, `source`, `sourceType`, `skillPath`, `computedHash` (+800 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **22 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 45` to `Community 0`, `Community 1`, `Community 7`, `Community 10`, `Community 107`, `Community 12`, `Community 83`, `Community 54`, `Community 55`, `Community 89`, `Community 90`, `Community 91`?**
-  _High betweenness centrality (0.056) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Community 45` to `Community 0`, `Community 1`, `Community 7`, `Community 10`, `Community 107`, `Community 12`, `Community 15`, `Community 83`, `Community 54`, `Community 55`, `Community 89`, `Community 90`, `Community 91`?**
+  _High betweenness centrality (0.057) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `Community 0` to `Community 133`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+  _High betweenness centrality (0.028) - this node is a cross-community bridge._
 - **Why does `clsx` connect `Community 0` to `Community 45`?**
   _High betweenness centrality (0.026) - this node is a cross-community bridge._
 - **What connects `version`, `source`, `sourceType` to the rest of the system?**
-  _804 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _805 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.04 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
