@@ -35,9 +35,11 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
   const [date, setDate] = useState("")
   const [scheduledHours, setScheduledHours] = useState("8")
   const [tasks, setTasks] = useState<TaskRow[]>([
-    { id: "1", taskName: "Phone Calls", updateText: "- Total addressed: 40\n- Reviewed callbacks", projectedDate: "", durationVal: "2 hours" },
-    { id: "2", taskName: "Chats", updateText: "- Attended support chats\n- Completed follow-ups", projectedDate: "", durationVal: "1 hour" }
+    { id: "1", taskName: "Phone Calls", updateText: "Total addressed: <b>40</b><br />Reviewed callbacks", projectedDate: "", durationVal: "2 hours" },
+    { id: "2", taskName: "Chats", updateText: "Attended support chats and checked <a href='https://google.com' target='_blank' style='color:#1d4ed8;text-decoration:underline;'>Google portal</a>", projectedDate: "", durationVal: "1 hour" }
   ])
+  const [extraTitle, setExtraTitle] = useState("Additional Notes")
+  const [extraContent, setExtraContent] = useState("<b>Next Steps:</b><br />- Verify payment portal updates<br />- Launch testing suite")
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
 
@@ -52,6 +54,8 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
         if (parsed.date) setDate(parsed.date)
         if (parsed.scheduledHours) setScheduledHours(parsed.scheduledHours)
         if (parsed.tasks && Array.isArray(parsed.tasks)) setTasks(parsed.tasks)
+        if (parsed.extraTitle !== undefined) setExtraTitle(parsed.extraTitle)
+        if (parsed.extraContent !== undefined) setExtraContent(parsed.extraContent)
         /* eslint-enable react-hooks/set-state-in-effect */
       } catch (e) {
         console.error("Failed to parse saved state", e)
@@ -64,9 +68,9 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
 
   // Sync to localstorage
   useEffect(() => {
-    const state = { name, date, scheduledHours, tasks }
+    const state = { name, date, scheduledHours, tasks, extraTitle, extraContent }
     localStorage.setItem("thewordof-work-report", JSON.stringify(state))
-  }, [name, date, scheduledHours, tasks])
+  }, [name, date, scheduledHours, tasks, extraTitle, extraContent])
 
   // Totals calculation
   const calculateTotals = () => {
@@ -145,48 +149,12 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
     window.print()
   }
 
-  // Parse lines starting with '-' or '*' into HTML list tags
-  const renderUpdateText = (text: string) => {
+  // Render HTML strings natively
+  const renderHtmlText = (text: string) => {
     if (!text) return "—"
-    const lines = text.split("\n")
-    const result: React.ReactNode[] = []
-    let currentListItems: React.ReactNode[] = []
-
-    lines.forEach((line, index) => {
-      const trimmed = line.trim()
-      if (trimmed.startsWith("-") || trimmed.startsWith("*")) {
-        const content = trimmed.substring(1).trim()
-        currentListItems.push(
-          <li key={`li-${index}`} className="ml-4 list-disc">
-            {content}
-          </li>
-        )
-      } else {
-        if (currentListItems.length > 0) {
-          result.push(
-            <ul key={`ul-${index}`} className="space-y-0.5 my-1">
-              {currentListItems}
-            </ul>
-          )
-          currentListItems = []
-        }
-        result.push(
-          <div key={`text-${index}`} className="min-h-[1.2em]">
-            {line}
-          </div>
-        )
-      }
-    })
-
-    if (currentListItems.length > 0) {
-      result.push(
-        <ul key="ul-final" className="space-y-0.5 my-1">
-          {currentListItems}
-        </ul>
-      )
-    }
-
-    return <div className="space-y-0.5">{result}</div>
+    // Replace newlines with <br /> to preserve formatting, unless already formatted
+    const formatted = text.replace(/\n/g, "<br />")
+    return <div dangerouslySetInnerHTML={{ __html: formatted }} />
   }
 
   return (
@@ -308,9 +276,9 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
                           <Textarea
                             value={task.updateText}
                             onChange={(e) => updateRow(idx, "updateText", e.target.value)}
-                            placeholder="Work Update (Use - at the start of a line for bullet lists, e.g. - Checked callbacks)"
+                            placeholder="Work Update (Supports HTML e.g. <b>Total: 40</b>, links, bullet tags)"
                             rows={2}
-                            className="min-h-[50px] text-xs py-1 w-full"
+                            className="min-h-[50px] text-xs font-mono py-1 w-full"
                           />
                         </td>
                       </tr>
@@ -361,6 +329,30 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
               <Button onClick={() => setIsPreviewOpen(true)} className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-lg shadow-primary/20">
                 Export to PDF
               </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Custom Additional Section Card */}
+        <Card className="glassmorphism p-6 print:hidden">
+          <CardHeader className="px-0 pt-0">
+            <CardTitle>Additional Section</CardTitle>
+            <CardDescription>Add custom text or notes to append below the task table (supports HTML tags).</CardDescription>
+          </CardHeader>
+          <CardContent className="px-0 pb-0 space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-muted-foreground">Section Title</label>
+              <Input value={extraTitle} onChange={e => setExtraTitle(e.target.value)} placeholder="e.g. Additional Notes / Next Steps" />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-muted-foreground">Section Content (HTML Supported)</label>
+              <Textarea
+                value={extraContent}
+                onChange={e => setExtraContent(e.target.value)}
+                placeholder="e.g. <b>Focus for tomorrow:</b><br />- Testing pricing integration"
+                rows={4}
+                className="w-full text-xs font-mono"
+              />
             </div>
           </CardContent>
         </Card>
@@ -427,7 +419,7 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
                               {task.taskName || "—"}
                             </td>
                             <td className="py-1 px-2 border-r border-black text-gray-700 whitespace-pre-wrap leading-relaxed">
-                              {renderUpdateText(task.updateText)}
+                              {renderHtmlText(task.updateText)}
                             </td>
                             <td className="py-1 px-2 border-r border-black text-gray-600">
                               {task.projectedDate || "—"}
@@ -449,6 +441,20 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
                       </tbody>
                     </table>
                   </div>
+
+                  {/* Additional Notes Custom Section */}
+                  {(extraTitle || extraContent) && (
+                    <div className="mt-6 border border-black rounded-sm p-4 text-left break-inside-avoid" style={{ fontSize: "11pt" }}>
+                      {extraTitle && (
+                        <h3 className="font-bold border-b border-black pb-1 mb-2 uppercase text-xs">
+                          {extraTitle}
+                        </h3>
+                      )}
+                      <div className="text-gray-800 leading-relaxed">
+                        {renderHtmlText(extraContent)}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Printable footer stamp */}
