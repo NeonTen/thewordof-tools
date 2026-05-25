@@ -35,8 +35,8 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
   const [date, setDate] = useState("")
   const [scheduledHours, setScheduledHours] = useState("8")
   const [tasks, setTasks] = useState<TaskRow[]>([
-    { id: "1", taskName: "Phone Calls", updateText: "Total addressed: 40\nReviewed callbacks", projectedDate: "", durationVal: "2 hours" },
-    { id: "2", taskName: "Chats", updateText: "Attended support chats", projectedDate: "", durationVal: "1 hour" }
+    { id: "1", taskName: "Phone Calls", updateText: "- Total addressed: 40\n- Reviewed callbacks", projectedDate: "", durationVal: "2 hours" },
+    { id: "2", taskName: "Chats", updateText: "- Attended support chats\n- Completed follow-ups", projectedDate: "", durationVal: "1 hour" }
   ])
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -145,6 +145,50 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
     window.print()
   }
 
+  // Parse lines starting with '-' or '*' into HTML list tags
+  const renderUpdateText = (text: string) => {
+    if (!text) return "—"
+    const lines = text.split("\n")
+    const result: React.ReactNode[] = []
+    let currentListItems: React.ReactNode[] = []
+
+    lines.forEach((line, index) => {
+      const trimmed = line.trim()
+      if (trimmed.startsWith("-") || trimmed.startsWith("*")) {
+        const content = trimmed.substring(1).trim()
+        currentListItems.push(
+          <li key={`li-${index}`} className="ml-4 list-disc">
+            {content}
+          </li>
+        )
+      } else {
+        if (currentListItems.length > 0) {
+          result.push(
+            <ul key={`ul-${index}`} className="space-y-0.5 my-1">
+              {currentListItems}
+            </ul>
+          )
+          currentListItems = []
+        }
+        result.push(
+          <div key={`text-${index}`} className="min-h-[1.2em]">
+            {line}
+          </div>
+        )
+      }
+    })
+
+    if (currentListItems.length > 0) {
+      result.push(
+        <ul key="ul-final" className="space-y-0.5 my-1">
+          {currentListItems}
+        </ul>
+      )
+    }
+
+    return <div className="space-y-0.5">{result}</div>
+  }
+
   return (
     <div className="w-full space-y-6 max-w-5xl mx-auto print:block print:p-0">
       {/* Editor Form Panel */}
@@ -177,7 +221,7 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
         <Card className="glassmorphism p-6">
           <CardHeader className="px-0 pt-0">
             <CardTitle>Task Sheet</CardTitle>
-            <CardDescription>Enter task logs. Drag handles to reorder tasks.</CardDescription>
+            <CardDescription>Enter task logs. Drag handles (⋮⋮) to reorder tasks.</CardDescription>
           </CardHeader>
           <CardContent className="px-0 pb-0 space-y-4">
             {/* Desktop view table */}
@@ -185,82 +229,92 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border/50 text-muted-foreground">
-                    <th className="py-2 text-left w-6"></th>
-                    <th className="py-2 text-left px-2">Task Name</th>
-                    <th className="py-2 text-left px-2">Work Update</th>
-                    <th className="py-2 text-left px-2 w-32">Projected Comp.</th>
-                    <th className="py-2 text-left px-2 w-32">Time Spent</th>
-                    <th className="py-2 text-right w-16">Actions</th>
+                    <th className="py-1 text-left w-6"></th>
+                    <th className="py-1 text-left px-1.5">Task Name / Work Update</th>
+                    <th className="py-1 text-left px-1.5 w-32">Projected Comp.</th>
+                    <th className="py-1 text-left px-1.5 w-36">Time Spent</th>
+                    <th className="py-1 text-right w-12">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {tasks.map((task, idx) => (
-                    <tr
-                      key={task.id}
-                      draggable
-                      onDragStart={() => handleDragStart(idx)}
-                      onDragOver={handleDragOver}
-                      onDrop={() => handleDrop(idx)}
-                      className={`border-b border-border/30 group ${
-                        draggedIndex === idx ? "opacity-40" : ""
-                      } hover:bg-muted/10 transition-colors`}
-                    >
-                      <td className="py-3 cursor-grab active:cursor-grabbing text-muted-foreground/40 hover:text-foreground">
-                        ⋮⋮
-                      </td>
-                      <td className="py-3 px-2">
-                        <Input
-                          value={task.taskName}
-                          onChange={(e) => updateRow(idx, "taskName", e.target.value)}
-                          placeholder="e.g. Follow Ups"
-                          className="h-9"
-                        />
-                      </td>
-                      <td className="py-3 px-2">
-                        <Textarea
-                          value={task.updateText}
-                          onChange={(e) => updateRow(idx, "updateText", e.target.value)}
-                          placeholder="Bullet list or comments..."
-                          rows={2}
-                          className="min-h-[60px] text-xs py-1.5"
-                        />
-                      </td>
-                      <td className="py-3 px-2">
-                        <Input
-                          type="date"
-                          value={task.projectedDate}
-                          onChange={(e) => updateRow(idx, "projectedDate", e.target.value)}
-                          className="h-9 text-xs"
-                        />
-                      </td>
-                      <td className="py-3 px-2">
-                        <div className="space-y-1">
+                    <React.Fragment key={task.id}>
+                      {/* Main parameters row */}
+                      <tr
+                        draggable
+                        onDragStart={() => handleDragStart(idx)}
+                        onDragOver={handleDragOver}
+                        onDrop={() => handleDrop(idx)}
+                        className={`border-b-0 border-t border-border/20 group ${
+                          draggedIndex === idx ? "opacity-40" : ""
+                        } hover:bg-muted/5 transition-colors`}
+                      >
+                        <td className="py-1 cursor-grab active:cursor-grabbing text-muted-foreground/40 hover:text-foreground w-6">
+                          ⋮⋮
+                        </td>
+                        <td className="py-1 px-1.5">
                           <Input
-                            value={task.durationVal}
-                            onChange={(e) => updateRow(idx, "durationVal", e.target.value)}
-                            placeholder="e.g. 1 hour"
-                            className="h-9 text-xs"
+                            value={task.taskName}
+                            onChange={(e) => updateRow(idx, "taskName", e.target.value)}
+                            placeholder="Task Name (e.g. Follow Ups)"
+                            className="h-8 text-xs"
                           />
-                          <select
-                            value={DURATION_PRESETS.includes(task.durationVal) ? task.durationVal : ""}
-                            onChange={(e) => updateRow(idx, "durationVal", e.target.value)}
-                            className="w-full text-[10px] rounded border bg-background text-muted-foreground h-6 px-1"
-                          >
-                            <option value="">-- Choose --</option>
-                            {DURATION_PRESETS.map(p => (
-                              <option key={p} value={p}>{p}</option>
-                            ))}
-                          </select>
-                        </div>
-                      </td>
-                      <td className="py-3 text-right">
-                        <div className="flex items-center justify-end">
-                          <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive/60 hover:text-destructive hover:bg-destructive/10" onClick={() => deleteRow(idx)} disabled={tasks.length === 1}>
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
+                        </td>
+                        <td className="py-1 px-1.5 w-32">
+                          <Input
+                            type="date"
+                            value={task.projectedDate}
+                            onChange={(e) => updateRow(idx, "projectedDate", e.target.value)}
+                            className="h-8 text-xs"
+                          />
+                        </td>
+                        <td className="py-1 px-1.5 w-36">
+                          <div className="flex gap-1 items-center">
+                            <Input
+                              value={task.durationVal}
+                              onChange={(e) => updateRow(idx, "durationVal", e.target.value)}
+                              placeholder="e.g. 1 hour"
+                              className="h-8 text-xs"
+                            />
+                            <select
+                              value={DURATION_PRESETS.includes(task.durationVal) ? task.durationVal : ""}
+                              onChange={(e) => updateRow(idx, "durationVal", e.target.value)}
+                              className="text-[10px] rounded border bg-background text-muted-foreground h-8 px-1 w-24 shrink-0"
+                            >
+                              <option value="">Presets</option>
+                              {DURATION_PRESETS.map(p => (
+                                <option key={p} value={p}>{p}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </td>
+                        <td className="py-1 text-right w-12">
+                          <div className="flex items-center justify-end">
+                            <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive/60 hover:text-destructive hover:bg-destructive/10" onClick={() => deleteRow(idx)} disabled={tasks.length === 1}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      {/* Work Update sub-row */}
+                      <tr
+                        className={`border-b border-border/20 group ${
+                          draggedIndex === idx ? "opacity-40" : ""
+                        } hover:bg-muted/5 transition-colors`}
+                      >
+                        <td></td>
+                        <td colSpan={4} className="py-1 px-1.5 pb-2">
+                          <Textarea
+                            value={task.updateText}
+                            onChange={(e) => updateRow(idx, "updateText", e.target.value)}
+                            placeholder="Work Update (Use - at the start of a line for bullet lists, e.g. - Checked callbacks)"
+                            rows={2}
+                            className="min-h-[50px] text-xs py-1 w-full"
+                          />
+                        </td>
+                      </tr>
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>
@@ -335,7 +389,7 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
             <div className="flex-1 overflow-y-auto p-8 bg-muted/10 flex justify-center print:p-0 print:bg-white print:overflow-visible">
               {/* printable A4 paper container */}
               <div 
-                className="w-full max-w-[210mm] border border-border/80 rounded-sm bg-white text-black p-10 shadow-sm print:shadow-none print:border-none print:p-0 font-sans min-h-[297mm] flex flex-col justify-between"
+                className="w-full max-w-[210mm] border border-black rounded-sm bg-white text-black p-10 shadow-sm print:shadow-none print:border-none print:p-0 font-sans min-h-[297mm] flex flex-col justify-between"
                 style={{ fontSize: "11pt" }}
               >
                 <div className="space-y-6">
@@ -360,35 +414,35 @@ export function WorkReport({ isPro: _isPro = false }: WorkReportProps) {
                     <table className="w-full text-left border-collapse" style={{ fontSize: "11pt" }}>
                       <thead>
                         <tr className="bg-gray-100 text-gray-800 font-bold border-b border-black">
-                          <th className="py-2.5 px-3 border-r border-black w-1/4">Task Name</th>
-                          <th className="py-2.5 px-3 border-r border-black w-2/5">Update</th>
-                          <th className="py-2.5 px-3 border-r border-black w-1/5">Projected Comp.</th>
-                          <th className="py-2.5 px-3 w-1/5">Time Spent</th>
+                          <th className="py-1.5 px-2 border-r border-black w-1/4">Task Name</th>
+                          <th className="py-1.5 px-2 border-r border-black w-2/5">Update</th>
+                          <th className="py-1.5 px-2 border-r border-black w-1/5">Projected Comp.</th>
+                          <th className="py-1.5 px-2 w-1/5">Time Spent</th>
                         </tr>
                       </thead>
                       <tbody>
                         {tasks.map((task) => (
                           <tr key={task.id} className="border-b border-black last:border-b-0 break-inside-avoid">
-                            <td className="py-2 px-3 border-r border-black font-semibold text-gray-900 vertical-align-top">
+                            <td className="py-1 px-2 border-r border-black font-semibold text-gray-900 vertical-align-top">
                               {task.taskName || "—"}
                             </td>
-                            <td className="py-2 px-3 border-r border-black text-gray-700 whitespace-pre-wrap leading-relaxed">
-                              {task.updateText || "—"}
+                            <td className="py-1 px-2 border-r border-black text-gray-700 whitespace-pre-wrap leading-relaxed">
+                              {renderUpdateText(task.updateText)}
                             </td>
-                            <td className="py-2 px-3 border-r border-black text-gray-600">
+                            <td className="py-1 px-2 border-r border-black text-gray-600">
                               {task.projectedDate || "—"}
                             </td>
-                            <td className="py-2 px-3 text-gray-900 font-medium">
+                            <td className="py-1 px-2 text-gray-900 font-medium">
                               {task.durationVal || "—"}
                             </td>
                           </tr>
                         ))}
                         {/* Highlighted Total Row */}
                         <tr className="bg-[#fefce8] text-black border-t border-black font-bold" style={{ fontSize: "11pt" }}>
-                          <td colSpan={3} className="py-2.5 px-3 text-left">
+                          <td colSpan={3} className="py-1.5 px-2 text-left">
                             Total
                           </td>
-                          <td className="py-2.5 px-3 font-extrabold text-black">
+                          <td className="py-1.5 px-2 font-extrabold text-black">
                             {calculateTotals()}
                           </td>
                         </tr>
