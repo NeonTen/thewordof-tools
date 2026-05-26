@@ -242,19 +242,19 @@ export function WorkReport({}: WorkReportProps) {
       if (val === "all day") {
         totalMins += 8 * 60
       } else if (val.includes("hour") || val.includes("hr")) {
-        const hours = parseInt(val)
-        if (!isNaN(hours)) totalMins += hours * 60
+        const hours = parseFloat(val)
+        if (!isNaN(hours)) totalMins += Math.round(hours * 60)
       } else if (val.includes("min")) {
-        const mins = parseInt(val)
-        if (!isNaN(mins)) totalMins += mins
+        const mins = parseFloat(val)
+        if (!isNaN(mins)) totalMins += Math.round(mins)
       } else {
         const valNum = parseFloat(val)
-        if (!isNaN(valNum)) totalMins += valNum * 60 // fallback to hours
+        if (!isNaN(valNum)) totalMins += Math.round(valNum * 60) // fallback to hours
       }
     })
 
     const finalHours = Math.floor(totalMins / 60)
-    const finalMins = totalMins % 60
+    const finalMins = Math.round(totalMins % 60)
     
     if (finalHours > 0 && finalMins > 0) {
       return `${finalHours} hour${finalHours > 1 ? "s" : ""} ${finalMins} minute${finalMins > 1 ? "s" : ""}`
@@ -329,7 +329,7 @@ export function WorkReport({}: WorkReportProps) {
     }
 
     const formatted = cleaned.replace(/\n/g, "<br />")
-    return <div className="[&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_a]:text-blue-600 [&_a]:underline [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0" dangerouslySetInnerHTML={{ __html: formatted }} />
+    return <div className="[&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_a]:text-blue-600 [&_a]:underline [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0 break-words [word-break:break-word]" dangerouslySetInnerHTML={{ __html: formatted }} />
   }
 
   return (
@@ -387,7 +387,7 @@ export function WorkReport({}: WorkReportProps) {
                     <th className="py-1 text-left w-6"></th>
                     <th className="py-1 text-left px-1.5">Task Name / Work Update</th>
                     <th className="py-1 text-left px-1.5 w-32">Projected Comp.</th>
-                    <th className="py-1 text-left px-1.5 w-36">Time Spent</th>
+                    <th className="py-1 text-left px-1.5 w-52">Time Spent</th>
                     <th className="py-1 text-right w-12">Actions</th>
                   </tr>
                 </thead>
@@ -423,7 +423,7 @@ export function WorkReport({}: WorkReportProps) {
                             className="h-8 text-xs"
                           />
                         </td>
-                        <td className="py-1 px-1.5 w-36">
+                        <td className="py-1 px-1.5 w-52">
                           <div className="flex gap-1 items-center">
                             <Input
                               value={task.durationVal}
@@ -667,29 +667,29 @@ export function WorkReport({}: WorkReportProps) {
                   </div>
 
                   {/* Printable Table */}
-                  <div className="border border-black rounded-sm overflow-hidden">
-                    <table className="w-full text-left border-collapse" style={{ fontSize: "11pt" }}>
+                  <div className="border border-black overflow-hidden">
+                    <table className="w-full text-left border-collapse table-fixed" style={{ fontSize: "11pt" }}>
                       <thead>
                         <tr className="bg-gray-100 text-gray-800 font-bold border-b border-black">
-                          <th className="py-1.5 px-2 border-r border-black w-[18%]">Task Name</th>
-                          <th className="py-1.5 px-2 border-r border-black w-[55%]">Update</th>
-                          <th className="py-1.5 px-2 border-r border-black w-[12%]">Projected Comp.</th>
-                          <th className="py-1.5 px-2 w-[15%]">Time Spent</th>
+                          <th className="py-1.5 px-2 border-r border-black w-[15%] break-words">Task Name</th>
+                          <th className="py-1.5 px-2 border-r border-black w-[55%] break-words">Update</th>
+                          <th className="py-1.5 px-2 border-r border-black w-[15%] break-words">Projected Comp.</th>
+                          <th className="py-1.5 px-2 w-[15%] break-words">Time Spent</th>
                         </tr>
                       </thead>
                       <tbody>
                         {tasks.map((task) => (
                           <tr key={task.id} className="border-b border-black last:border-b-0 break-inside-avoid">
-                            <td className="py-1 px-2 border-r border-black font-semibold text-gray-900 vertical-align-top">
+                            <td className="py-1 px-2 border-r border-black font-semibold text-gray-900 vertical-align-top break-words [word-break:break-word]">
                               {task.taskName || "—"}
                             </td>
-                            <td className="py-1 px-2 border-r border-black text-gray-700 whitespace-pre-wrap leading-relaxed">
+                            <td className="py-1 px-2 border-r border-black text-gray-700 whitespace-pre-wrap leading-relaxed break-words [word-break:break-word]">
                               {renderHtmlText(task.updateText)}
                             </td>
-                            <td className="py-1 px-2 border-r border-black text-gray-600">
+                            <td className="py-1 px-2 border-r border-black text-gray-600 break-words [word-break:break-word]">
                               {task.projectedDate || "—"}
                             </td>
-                            <td className="py-1 px-2 text-gray-900 font-medium">
+                            <td className="py-1 px-2 text-gray-900 font-medium break-words [word-break:break-word]">
                               {task.durationVal || "—"}
                             </td>
                           </tr>

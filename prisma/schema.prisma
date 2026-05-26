@@ -26,6 +26,7 @@ model User {
   proExpiresAt  DateTime?
   savedResumes  SavedResume[]
   savedInvoices SavedInvoice[]
+  qrCodes       QrCode[]
 }
 
 model Account {
@@ -162,4 +163,30 @@ model SavedInvoice {
   updatedAt DateTime @updatedAt
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model QrCode {
+  id          String   @id @default(cuid())
+  userId      String
+  targetUrl   String
+  fgColor     String   @default("#000000")
+  bgColor     String   @default("#ffffff")
+  size        Int      @default(256)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scans       QrScan[]
+}
+
+model QrScan {
+  id         String   @id @default(cuid())
+  qrCodeId   String
+  device     String   // "Mobile", "Tablet", "Desktop"
+  os         String   // "iOS", "Android", "Windows", "macOS", "Linux", "Unknown"
+  browser    String   // "Chrome", "Safari", "Firefox", "Edge", "Unknown"
+  isUnique   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  qrCode     QrCode   @relation(fields: [qrCodeId], references: [id], onDelete: Cascade)
 }

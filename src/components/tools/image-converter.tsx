@@ -326,9 +326,9 @@ export function ImageConverter({ role = "USER" }: { role?: string }) {
                       </div>
                       
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <p className="text-sm font-bold truncate pr-4">{img.file.name}</p>
-                          <p className="text-[10px] font-black uppercase text-muted-foreground bg-muted px-2 py-0.5 rounded">
+                        <div className="flex items-start justify-between gap-2 mb-1">
+                          <p className="text-sm font-bold break-all pr-4">{img.file.name}</p>
+                          <p className="text-[10px] font-black uppercase text-muted-foreground bg-muted px-2 py-0.5 rounded shrink-0">
                             {formatBytes(img.originalSize)}
                           </p>
                         </div>
@@ -359,7 +359,7 @@ export function ImageConverter({ role = "USER" }: { role?: string }) {
                         )}
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 shrink-0">
                         {img.status === "completed" ? (
                           <a 
                             href={img.resultUrl} 
