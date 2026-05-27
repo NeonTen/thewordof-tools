@@ -13,6 +13,7 @@ export async function POST(req: Request) {
 
     const { 
       razorpay_order_id, 
+      razorpay_subscription_id,
       razorpay_payment_id, 
       razorpay_signature,
       amount,
@@ -21,7 +22,10 @@ export async function POST(req: Request) {
       interval = "month"
     } = await req.json();
 
-    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    const body = razorpay_subscription_id 
+      ? razorpay_payment_id + "|" + razorpay_subscription_id
+      : razorpay_order_id + "|" + razorpay_payment_id;
+
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
       .update(body.toString())
@@ -55,7 +59,8 @@ export async function POST(req: Request) {
           plan: plan,
           status: "active",
           paymentProvider: "RAZORPAY",
-          orderId: razorpay_order_id,
+          orderId: razorpay_order_id || null,
+          subscriptionId: razorpay_subscription_id || null,
           paymentId: razorpay_payment_id,
           amount: parseFloat(amount),
           currency: currency,

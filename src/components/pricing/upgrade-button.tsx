@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Zap, Loader2, CreditCard } from "lucide-react"
+import { Zap, CreditCard } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js"
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog"
 
 interface UpgradeButtonProps {
-  user: any
+  user: { name?: string | null; email?: string | null; id?: string | null } | null | undefined
   className?: string
   children: React.ReactNode
   amount?: number
@@ -27,6 +27,7 @@ interface UpgradeButtonProps {
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Razorpay: any;
   }
 }
@@ -36,7 +37,7 @@ export function UpgradeButton({
   className, 
   children,
   amount = 499,
-  usdAmount = "5.99",
+  usdAmount: _usdAmount = "5.99",
   plan = "PREMIUM",
   interval = "month"
 }: UpgradeButtonProps) {
@@ -63,31 +64,32 @@ export function UpgradeButton({
 
     try {
       setLoading(true)
-      // 1. Create Order
-      const res = await fetch("/api/razorpay/order", {
+      // 1. Create Subscription
+      const res = await fetch("/api/razorpay/create-subscription", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount, currency: "INR" })
+        body: JSON.stringify({ plan, interval })
       })
       
       const data = await res.json()
       
       if (!res.ok) {
-        alert(data.error || "Failed to create Razorpay order")
+        alert(data.error || "Failed to create Razorpay subscription")
         return
       }
 
-      const order = data
+      const subscription = data
 
-      // 2. Open Razorpay Checkout
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        amount: order.amount,
-        currency: order.currency,
+        subscription_id: (subscription as { id: string }).id,
         name: "TheWordOf Tools",
         description: `${plan} Subscription - ${interval}`,
-        order_id: order.id,
-        handler: async function (response: any) {
+        handler: async function (response: {
+          razorpay_payment_id: string;
+          razorpay_subscription_id: string;
+          razorpay_signature: string;
+        }) {
           // 3. Verify Payment
           const verifyRes = await fetch("/api/razorpay/verify", {
             method: "POST",
@@ -104,12 +106,12 @@ export function UpgradeButton({
           if (verifyData.success) {
             router.push("/dashboard?status=success")
           } else {
-            alert(verifyData.error || "Payment verification failed")
+            alert(verifyData.error || "Subscription verification failed")
           }
         },
         prefill: {
-          name: user.name,
-          email: user.email,
+          name: user ? user.name : "",
+          email: user ? user.email : "",
         },
         theme: {
           color: "#3b82f6",
@@ -118,8 +120,9 @@ export function UpgradeButton({
 
       const rzp = new window.Razorpay(options)
       rzp.open()
-    } catch (error: any) {
-      console.error("RAZORPAY_ERROR", error)
+    } catch (error) {
+      const err = error as Error;
+      console.error("RAZORPAY_ERROR", err)
       alert("An unexpected error occurred. Please try again.")
     } finally {
       setLoading(false)
@@ -173,34 +176,23 @@ export function UpgradeButton({
           {/* PayPal Integration */}
           <PayPalScriptProvider options={{ 
             clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "test",
-            currency: "USD"
+            currency: "USD",
+            vault: true
           }}>
             <PayPalButtons 
               style={{ layout: "vertical", shape: "rect", label: "paypal" }}
               disabled={!user}
-              createOrder={async () => {
-                const res = await fetch("/api/paypal/create-order", {
+              createSubscription={async () => {
+                const res = await fetch("/api/paypal/create-subscription", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ amount: usdAmount, currency: "USD" })
+                  body: JSON.stringify({ plan, interval })
                 })
-                const order = await res.json()
-                return order.id
+                const sub = await res.json()
+                return sub.id
               }}
-              onApprove={async (data) => {
-                const res = await fetch("/api/paypal/capture-order", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ 
-                    orderId: data.orderID,
-                    plan,
-                    interval
-                  })
-                })
-                const captureData = await res.json()
-                if (captureData.success) {
-                  router.push("/dashboard?status=success")
-                }
+              onApprove={async () => {
+                router.push("/dashboard?status=success")
               }}
             />
           </PayPalScriptProvider>

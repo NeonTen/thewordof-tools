@@ -59,3 +59,49 @@ export async function capturePayPalOrder(orderId: string) {
 
   return await response.json();
 }
+
+export async function createPayPalSubscription(planId: string, userId: string, emailAddress?: string) {
+  const accessToken = await getAccessToken();
+  const response = await fetch(`${PAYPAL_API_URL}/v1/billing/subscriptions`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      plan_id: planId,
+      custom_id: userId,
+      subscriber: emailAddress ? {
+        email_address: emailAddress
+      } : undefined,
+      application_context: {
+        brand_name: "TheWordOf Tools",
+        user_action: "SUBSCRIBE_NOW",
+        return_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/billing?status=success`,
+        cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing?status=cancel`,
+      }
+    }),
+  });
+
+  return await response.json();
+}
+
+export async function cancelPayPalSubscription(subscriptionId: string, reason: string = "User requested cancellation") {
+  const accessToken = await getAccessToken();
+  const response = await fetch(`${PAYPAL_API_URL}/v1/billing/subscriptions/${subscriptionId}/cancel`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      reason: reason
+    }),
+  });
+
+  if (response.status === 204) {
+    return { success: true };
+  }
+  return await response.json();
+}

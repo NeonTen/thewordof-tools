@@ -2430,7 +2430,7 @@
       "source_file": "src/app/tools/image-converter/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_image_converter_page_tsx",
-      "community": 12,
+      "community": 15,
       "norm_label": "page.tsx"
     },
     {
@@ -2439,7 +2439,7 @@
       "source_file": "src/app/tools/image-converter/page.tsx",
       "source_location": "L4",
       "id": "image_converter_page_metadata",
-      "community": 12,
+      "community": 15,
       "norm_label": "metadata"
     },
     {
@@ -2448,7 +2448,7 @@
       "source_file": "src/app/tools/image-converter/page.tsx",
       "source_location": "L9",
       "id": "image_converter_page_imageconverterpage",
-      "community": 12,
+      "community": 15,
       "norm_label": "imageconverterpage()"
     },
     {
@@ -2535,6 +2535,24 @@
     {
       "label": "page.tsx",
       "file_type": "code",
+      "source_file": "src/app/tools/qr-code/expired/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_tools_qr_code_expired_page_tsx",
+      "community": 137,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "QrCodeExpiredPage()",
+      "file_type": "code",
+      "source_file": "src/app/tools/qr-code/expired/page.tsx",
+      "source_location": "L6",
+      "id": "expired_page_qrcodeexpiredpage",
+      "community": 137,
+      "norm_label": "qrcodeexpiredpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
       "source_file": "src/app/tools/color-converter/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_color_converter_page_tsx",
@@ -2592,7 +2610,7 @@
       "source_file": "src/app/tools/gst-calculator/rates.json",
       "source_location": "L1",
       "id": "src_app_tools_gst_calculator_rates_json",
-      "community": 12,
+      "community": 54,
       "norm_label": "rates.json"
     },
     {
@@ -2628,7 +2646,7 @@
       "source_file": "src/app/tools/calculators/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_page_tsx",
-      "community": 12,
+      "community": 131,
       "norm_label": "page.tsx"
     },
     {
@@ -2637,7 +2655,7 @@
       "source_file": "src/app/tools/calculators/page.tsx",
       "source_location": "L15",
       "id": "calculators_page_metadata",
-      "community": 12,
+      "community": 131,
       "norm_label": "metadata"
     },
     {
@@ -2646,7 +2664,7 @@
       "source_file": "src/app/tools/calculators/page.tsx",
       "source_location": "L20",
       "id": "calculators_page_calculators",
-      "community": 12,
+      "community": 131,
       "norm_label": "calculators"
     },
     {
@@ -2655,7 +2673,7 @@
       "source_file": "src/app/tools/calculators/page.tsx",
       "source_location": "L100",
       "id": "calculators_page_calculatorspage",
-      "community": 12,
+      "community": 131,
       "norm_label": "calculatorspage()"
     },
     {
@@ -2691,7 +2709,7 @@
       "source_file": "src/app/tools/calculators/emi/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_emi_page_tsx",
-      "community": 12,
+      "community": 139,
       "norm_label": "page.tsx"
     },
     {
@@ -2700,7 +2718,7 @@
       "source_file": "src/app/tools/calculators/emi/page.tsx",
       "source_location": "L5",
       "id": "emi_page_metadata",
-      "community": 12,
+      "community": 139,
       "norm_label": "metadata"
     },
     {
@@ -2709,7 +2727,7 @@
       "source_file": "src/app/tools/calculators/emi/page.tsx",
       "source_location": "L10",
       "id": "emi_page_emipage",
-      "community": 12,
+      "community": 139,
       "norm_label": "emipage()"
     },
     {
@@ -2826,7 +2844,7 @@
       "source_file": "src/app/tools/calculators/sip/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_sip_page_tsx",
-      "community": 12,
+      "community": 141,
       "norm_label": "page.tsx"
     },
     {
@@ -2835,7 +2853,7 @@
       "source_file": "src/app/tools/calculators/sip/page.tsx",
       "source_location": "L5",
       "id": "sip_page_metadata",
-      "community": 12,
+      "community": 141,
       "norm_label": "metadata"
     },
     {
@@ -2844,7 +2862,7 @@
       "source_file": "src/app/tools/calculators/sip/page.tsx",
       "source_location": "L10",
       "id": "sip_page_sippage",
-      "community": 12,
+      "community": 141,
       "norm_label": "sippage()"
     },
     {
@@ -2988,7 +3006,7 @@
       "source_file": "src/app/tools/prompt-generator/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_prompt_generator_page_tsx",
-      "community": 15,
+      "community": 144,
       "norm_label": "page.tsx"
     },
     {
@@ -2997,7 +3015,7 @@
       "source_file": "src/app/tools/prompt-generator/page.tsx",
       "source_location": "L4",
       "id": "prompt_generator_page_metadata",
-      "community": 15,
+      "community": 144,
       "norm_label": "metadata"
     },
     {
@@ -3006,7 +3024,7 @@
       "source_file": "src/app/tools/prompt-generator/page.tsx",
       "source_location": "L9",
       "id": "prompt_generator_page_promptgeneratorpage",
-      "community": 15,
+      "community": 144,
       "norm_label": "promptgeneratorpage()"
     },
     {
@@ -3195,7 +3213,7 @@
       "source_file": "src/app/admin/users/page.tsx",
       "source_location": "L1",
       "id": "src_app_admin_users_page_tsx",
-      "community": 89,
+      "community": 90,
       "norm_label": "page.tsx"
     },
     {
@@ -3204,7 +3222,7 @@
       "source_file": "src/app/admin/users/page.tsx",
       "source_location": "L56",
       "id": "users_page_adminuserspage",
-      "community": 89,
+      "community": 90,
       "norm_label": "adminuserspage()"
     },
     {
@@ -3285,16 +3303,16 @@
       "source_file": "src/app/dashboard/billing/page.tsx",
       "source_location": "L1",
       "id": "src_app_dashboard_billing_page_tsx",
-      "community": 12,
+      "community": 137,
       "norm_label": "page.tsx"
     },
     {
       "label": "BillingPage()",
       "file_type": "code",
       "source_file": "src/app/dashboard/billing/page.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "id": "billing_page_billingpage",
-      "community": 45,
+      "community": 137,
       "norm_label": "billingpage()"
     },
     {
@@ -3384,7 +3402,7 @@
       "source_file": "src/app/api/tools/invoice-generator/route.ts",
       "source_location": "L1",
       "id": "src_app_api_tools_invoice_generator_route_ts",
-      "community": 25,
+      "community": 143,
       "norm_label": "route.ts"
     },
     {
@@ -3393,7 +3411,7 @@
       "source_file": "src/app/api/tools/invoice-generator/route.ts",
       "source_location": "L5",
       "id": "invoice_generator_route_get",
-      "community": 25,
+      "community": 143,
       "norm_label": "get()"
     },
     {
@@ -3402,7 +3420,7 @@
       "source_file": "src/app/api/tools/invoice-generator/route.ts",
       "source_location": "L30",
       "id": "invoice_generator_route_post",
-      "community": 25,
+      "community": 143,
       "norm_label": "post()"
     },
     {
@@ -3417,8 +3435,8 @@
     {
       "label": "GET()",
       "file_type": "code",
-      "source_file": "src/app/api/tools/cv-builder/[id]/route.ts",
-      "source_location": "L5",
+      "source_file": "src/app/q/[id]/route.ts",
+      "source_location": "L4",
       "id": "id_route_get",
       "community": 140,
       "norm_label": "get()"
@@ -3431,6 +3449,78 @@
       "id": "id_route_delete",
       "community": 140,
       "norm_label": "delete()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/tools/qr-code/user-qrs/route.ts",
+      "source_location": "L1",
+      "id": "src_app_api_tools_qr_code_user_qrs_route_ts",
+      "community": 25,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src/app/api/tools/qr-code/user-qrs/route.ts",
+      "source_location": "L5",
+      "id": "user_qrs_route_get",
+      "community": 25,
+      "norm_label": "get()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/tools/qr-code/delete/route.ts",
+      "source_location": "L1",
+      "id": "src_app_api_tools_qr_code_delete_route_ts",
+      "community": 25,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "DELETE()",
+      "file_type": "code",
+      "source_file": "src/app/api/tools/qr-code/delete/route.ts",
+      "source_location": "L5",
+      "id": "delete_route_delete",
+      "community": 25,
+      "norm_label": "delete()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/tools/qr-code/create/route.ts",
+      "source_location": "L1",
+      "id": "src_app_api_tools_qr_code_create_route_ts",
+      "community": 25,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/tools/qr-code/create/route.ts",
+      "source_location": "L5",
+      "id": "create_route_post",
+      "community": 25,
+      "norm_label": "post()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/tools/qr-code/stats/route.ts",
+      "source_location": "L1",
+      "id": "src_app_api_tools_qr_code_stats_route_ts",
+      "community": 25,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src/app/api/tools/qr-code/stats/route.ts",
+      "source_location": "L5",
+      "id": "stats_route_get",
+      "community": 25,
+      "norm_label": "get()"
     },
     {
       "label": "route.ts",
@@ -3624,6 +3714,24 @@
     {
       "label": "route.ts",
       "file_type": "code",
+      "source_file": "src/app/api/subscription/cancel/route.ts",
+      "source_location": "L1",
+      "id": "src_app_api_subscription_cancel_route_ts",
+      "community": 92,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/subscription/cancel/route.ts",
+      "source_location": "L7",
+      "id": "cancel_route_post",
+      "community": 92,
+      "norm_label": "post()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
       "source_file": "src/app/api/register/route.ts",
       "source_location": "L1",
       "id": "src_app_api_register_route_ts",
@@ -3645,7 +3753,7 @@
       "source_file": "src/app/api/support/route.ts",
       "source_location": "L1",
       "id": "src_app_api_support_route_ts",
-      "community": 25,
+      "community": 15,
       "norm_label": "route.ts"
     },
     {
@@ -3654,7 +3762,7 @@
       "source_file": "src/app/api/support/route.ts",
       "source_location": "L6",
       "id": "support_route_post",
-      "community": 25,
+      "community": 15,
       "norm_label": "post()"
     },
     {
@@ -3768,6 +3876,24 @@
     {
       "label": "route.ts",
       "file_type": "code",
+      "source_file": "src/app/api/paypal/create-subscription/route.ts",
+      "source_location": "L1",
+      "id": "src_app_api_paypal_create_subscription_route_ts",
+      "community": 132,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/razorpay/create-subscription/route.ts",
+      "source_location": "L6",
+      "id": "create_subscription_route_post",
+      "community": 132,
+      "norm_label": "post()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
       "source_file": "src/app/api/paypal/capture-order/route.ts",
       "source_location": "L1",
       "id": "src_app_api_paypal_capture_order_route_ts",
@@ -3789,7 +3915,7 @@
       "source_file": "src/app/api/paypal/create-order/route.ts",
       "source_location": "L1",
       "id": "src_app_api_paypal_create_order_route_ts",
-      "community": 33,
+      "community": 92,
       "norm_label": "route.ts"
     },
     {
@@ -3798,7 +3924,7 @@
       "source_file": "src/app/api/paypal/create-order/route.ts",
       "source_location": "L5",
       "id": "create_order_route_post",
-      "community": 33,
+      "community": 92,
       "norm_label": "post()"
     },
     {
@@ -3840,19 +3966,37 @@
     {
       "label": "route.ts",
       "file_type": "code",
+      "source_file": "src/app/api/razorpay/create-subscription/route.ts",
+      "source_location": "L1",
+      "id": "src_app_api_razorpay_create_subscription_route_ts",
+      "community": 132,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
       "source_file": "src/app/api/webhooks/paypal/route.ts",
       "source_location": "L1",
       "id": "src_app_api_webhooks_paypal_route_ts",
-      "community": 25,
+      "community": 132,
       "norm_label": "route.ts"
+    },
+    {
+      "label": "getPlanDetailsByPlanId()",
+      "file_type": "code",
+      "source_file": "src/app/api/webhooks/paypal/route.ts",
+      "source_location": "L5",
+      "id": "paypal_route_getplandetailsbyplanid",
+      "community": 132,
+      "norm_label": "getplandetailsbyplanid()"
     },
     {
       "label": "POST()",
       "file_type": "code",
       "source_file": "src/app/api/webhooks/paypal/route.ts",
-      "source_location": "L7",
+      "source_location": "L14",
       "id": "paypal_route_post",
-      "community": 25,
+      "community": 132,
       "norm_label": "post()"
     },
     {
@@ -3861,16 +4005,25 @@
       "source_file": "src/app/api/webhooks/razorpay/route.ts",
       "source_location": "L1",
       "id": "src_app_api_webhooks_razorpay_route_ts",
-      "community": 25,
+      "community": 132,
       "norm_label": "route.ts"
+    },
+    {
+      "label": "getRazorpayPlanDetails()",
+      "file_type": "code",
+      "source_file": "src/app/api/webhooks/razorpay/route.ts",
+      "source_location": "L6",
+      "id": "razorpay_route_getrazorpayplandetails",
+      "community": 132,
+      "norm_label": "getrazorpayplandetails()"
     },
     {
       "label": "POST()",
       "file_type": "code",
       "source_file": "src/app/api/webhooks/razorpay/route.ts",
-      "source_location": "L5",
+      "source_location": "L15",
       "id": "razorpay_route_post",
-      "community": 25,
+      "community": 132,
       "norm_label": "post()"
     },
     {
@@ -3955,6 +4108,33 @@
       "norm_label": "pricingpage()"
     },
     {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/q/[id]/route.ts",
+      "source_location": "L1",
+      "id": "src_app_q_id_route_ts",
+      "community": 140,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "subscriptions.ts",
+      "file_type": "code",
+      "source_file": "src/config/subscriptions.ts",
+      "source_location": "L1",
+      "id": "src_config_subscriptions_ts",
+      "community": 132,
+      "norm_label": "subscriptions.ts"
+    },
+    {
+      "label": "SUBSCRIPTION_PLANS",
+      "file_type": "code",
+      "source_file": "src/config/subscriptions.ts",
+      "source_location": "L1",
+      "id": "config_subscriptions_subscription_plans",
+      "community": 132,
+      "norm_label": "subscription_plans"
+    },
+    {
       "label": "theme-provider.tsx",
       "file_type": "code",
       "source_file": "src/components/theme-provider.tsx",
@@ -4014,7 +4194,7 @@
       "source_file": "src/components/ui/tabs.tsx",
       "source_location": "L1",
       "id": "src_components_ui_tabs_tsx",
-      "community": 12,
+      "community": 131,
       "norm_label": "tabs.tsx"
     },
     {
@@ -4023,7 +4203,7 @@
       "source_file": "src/components/ui/tabs.tsx",
       "source_location": "L8",
       "id": "ui_tabs_tabs",
-      "community": 12,
+      "community": 131,
       "norm_label": "tabs()"
     },
     {
@@ -4032,7 +4212,7 @@
       "source_file": "src/components/ui/tabs.tsx",
       "source_location": "L26",
       "id": "ui_tabs_tabslistvariants",
-      "community": 12,
+      "community": 131,
       "norm_label": "tabslistvariants"
     },
     {
@@ -4041,7 +4221,7 @@
       "source_file": "src/components/ui/tabs.tsx",
       "source_location": "L41",
       "id": "ui_tabs_tabslist",
-      "community": 12,
+      "community": 131,
       "norm_label": "tabslist()"
     },
     {
@@ -4050,7 +4230,7 @@
       "source_file": "src/components/ui/tabs.tsx",
       "source_location": "L56",
       "id": "ui_tabs_tabstrigger",
-      "community": 12,
+      "community": 131,
       "norm_label": "tabstrigger()"
     },
     {
@@ -4059,7 +4239,7 @@
       "source_file": "src/components/ui/tabs.tsx",
       "source_location": "L72",
       "id": "ui_tabs_tabscontent",
-      "community": 12,
+      "community": 131,
       "norm_label": "tabscontent()"
     },
     {
@@ -4158,7 +4338,7 @@
       "source_file": "src/components/ui/progress.tsx",
       "source_location": "L1",
       "id": "src_components_ui_progress_tsx",
-      "community": 12,
+      "community": 131,
       "norm_label": "progress.tsx"
     },
     {
@@ -4167,7 +4347,7 @@
       "source_file": "src/components/ui/progress.tsx",
       "source_location": "L8",
       "id": "ui_progress_progress",
-      "community": 12,
+      "community": 131,
       "norm_label": "progress()"
     },
     {
@@ -4293,7 +4473,7 @@
       "source_file": "src/components/ui/pro-gate.tsx",
       "source_location": "L25",
       "id": "ui_pro_gate_progate",
-      "community": 107,
+      "community": 45,
       "norm_label": "progate()"
     },
     {
@@ -4464,7 +4644,7 @@
       "source_file": "src/components/ui/switch.tsx",
       "source_location": "L1",
       "id": "src_components_ui_switch_tsx",
-      "community": 12,
+      "community": 131,
       "norm_label": "switch.tsx"
     },
     {
@@ -4473,7 +4653,7 @@
       "source_file": "src/components/ui/switch.tsx",
       "source_location": "L8",
       "id": "ui_switch_switch",
-      "community": 12,
+      "community": 131,
       "norm_label": "switch"
     },
     {
@@ -4545,7 +4725,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L1",
       "id": "src_components_ui_dialog_tsx",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialog.tsx"
     },
     {
@@ -4554,7 +4734,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L10",
       "id": "ui_dialog_dialog",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialog()"
     },
     {
@@ -4563,7 +4743,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L14",
       "id": "ui_dialog_dialogtrigger",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialogtrigger()"
     },
     {
@@ -4572,7 +4752,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L18",
       "id": "ui_dialog_dialogportal",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialogportal()"
     },
     {
@@ -4581,7 +4761,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L22",
       "id": "ui_dialog_dialogclose",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialogclose()"
     },
     {
@@ -4590,7 +4770,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L26",
       "id": "ui_dialog_dialogoverlay",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialogoverlay()"
     },
     {
@@ -4599,7 +4779,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L42",
       "id": "ui_dialog_dialogcontent",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialogcontent()"
     },
     {
@@ -4608,7 +4788,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L83",
       "id": "ui_dialog_dialogheader",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialogheader()"
     },
     {
@@ -4617,7 +4797,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L93",
       "id": "ui_dialog_dialogfooter",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialogfooter()"
     },
     {
@@ -4626,7 +4806,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L120",
       "id": "ui_dialog_dialogtitle",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialogtitle()"
     },
     {
@@ -4635,7 +4815,7 @@
       "source_file": "src/components/ui/dialog.tsx",
       "source_location": "L133",
       "id": "ui_dialog_dialogdescription",
-      "community": 54,
+      "community": 90,
       "norm_label": "dialogdescription()"
     },
     {
@@ -4671,7 +4851,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L1",
       "id": "src_components_ui_table_tsx",
-      "community": 89,
+      "community": 45,
       "norm_label": "table.tsx"
     },
     {
@@ -4680,7 +4860,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L7",
       "id": "ui_table_table",
-      "community": 89,
+      "community": 45,
       "norm_label": "table()"
     },
     {
@@ -4689,7 +4869,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L22",
       "id": "ui_table_tableheader",
-      "community": 89,
+      "community": 45,
       "norm_label": "tableheader()"
     },
     {
@@ -4698,7 +4878,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L32",
       "id": "ui_table_tablebody",
-      "community": 89,
+      "community": 45,
       "norm_label": "tablebody()"
     },
     {
@@ -4707,7 +4887,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L42",
       "id": "ui_table_tablefooter",
-      "community": 89,
+      "community": 45,
       "norm_label": "tablefooter()"
     },
     {
@@ -4716,7 +4896,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L55",
       "id": "ui_table_tablerow",
-      "community": 89,
+      "community": 45,
       "norm_label": "tablerow()"
     },
     {
@@ -4725,7 +4905,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L68",
       "id": "ui_table_tablehead",
-      "community": 89,
+      "community": 45,
       "norm_label": "tablehead()"
     },
     {
@@ -4734,7 +4914,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L81",
       "id": "ui_table_tablecell",
-      "community": 89,
+      "community": 45,
       "norm_label": "tablecell()"
     },
     {
@@ -4743,7 +4923,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L94",
       "id": "ui_table_tablecaption",
-      "community": 89,
+      "community": 45,
       "norm_label": "tablecaption()"
     },
     {
@@ -4752,7 +4932,7 @@
       "source_file": "src/components/ui/separator.tsx",
       "source_location": "L1",
       "id": "src_components_ui_separator_tsx",
-      "community": 12,
+      "community": 45,
       "norm_label": "separator.tsx"
     },
     {
@@ -4761,7 +4941,7 @@
       "source_file": "src/components/ui/separator.tsx",
       "source_location": "L6",
       "id": "ui_separator_separator",
-      "community": 12,
+      "community": 45,
       "norm_label": "separator()"
     },
     {
@@ -4770,7 +4950,7 @@
       "source_file": "src/components/ui/button.tsx",
       "source_location": "L1",
       "id": "src_components_ui_button_tsx",
-      "community": 12,
+      "community": 55,
       "norm_label": "button.tsx"
     },
     {
@@ -4788,7 +4968,7 @@
       "source_file": "src/components/ui/button.tsx",
       "source_location": "L44",
       "id": "ui_button_button",
-      "community": 12,
+      "community": 137,
       "norm_label": "button()"
     },
     {
@@ -4797,7 +4977,7 @@
       "source_file": "src/components/ui/checkbox.tsx",
       "source_location": "L1",
       "id": "src_components_ui_checkbox_tsx",
-      "community": 45,
+      "community": 131,
       "norm_label": "checkbox.tsx"
     },
     {
@@ -4806,7 +4986,7 @@
       "source_file": "src/components/ui/checkbox.tsx",
       "source_location": "L9",
       "id": "ui_checkbox_checkbox",
-      "community": 45,
+      "community": 131,
       "norm_label": "checkbox"
     },
     {
@@ -4959,7 +5139,7 @@
       "source_file": "src/components/ui/select.tsx",
       "source_location": "L1",
       "id": "src_components_ui_select_tsx",
-      "community": 12,
+      "community": 54,
       "norm_label": "select.tsx"
     },
     {
@@ -4968,7 +5148,7 @@
       "source_file": "src/components/ui/select.tsx",
       "source_location": "L11",
       "id": "ui_select_selectgroup",
-      "community": 45,
+      "community": 54,
       "norm_label": "selectgroup()"
     },
     {
@@ -4977,7 +5157,7 @@
       "source_file": "src/components/ui/select.tsx",
       "source_location": "L21",
       "id": "ui_select_selectvalue",
-      "community": 12,
+      "community": 54,
       "norm_label": "selectvalue()"
     },
     {
@@ -4986,7 +5166,7 @@
       "source_file": "src/components/ui/select.tsx",
       "source_location": "L31",
       "id": "ui_select_selecttrigger",
-      "community": 12,
+      "community": 54,
       "norm_label": "selecttrigger()"
     },
     {
@@ -4995,7 +5175,7 @@
       "source_file": "src/components/ui/select.tsx",
       "source_location": "L59",
       "id": "ui_select_selectcontent",
-      "community": 12,
+      "community": 54,
       "norm_label": "selectcontent()"
     },
     {
@@ -5004,7 +5184,7 @@
       "source_file": "src/components/ui/select.tsx",
       "source_location": "L98",
       "id": "ui_select_selectlabel",
-      "community": 45,
+      "community": 54,
       "norm_label": "selectlabel()"
     },
     {
@@ -5013,7 +5193,7 @@
       "source_file": "src/components/ui/select.tsx",
       "source_location": "L111",
       "id": "ui_select_selectitem",
-      "community": 12,
+      "community": 54,
       "norm_label": "selectitem()"
     },
     {
@@ -5022,7 +5202,7 @@
       "source_file": "src/components/ui/select.tsx",
       "source_location": "L139",
       "id": "ui_select_selectseparator",
-      "community": 45,
+      "community": 54,
       "norm_label": "selectseparator()"
     },
     {
@@ -5031,7 +5211,7 @@
       "source_file": "src/components/ui/select.tsx",
       "source_location": "L152",
       "id": "ui_select_selectscrollupbutton",
-      "community": 45,
+      "community": 54,
       "norm_label": "selectscrollupbutton()"
     },
     {
@@ -5040,7 +5220,7 @@
       "source_file": "src/components/ui/select.tsx",
       "source_location": "L171",
       "id": "ui_select_selectscrolldownbutton",
-      "community": 45,
+      "community": 54,
       "norm_label": "selectscrolldownbutton()"
     },
     {
@@ -5049,7 +5229,7 @@
       "source_file": "src/components/ui/textarea.tsx",
       "source_location": "L1",
       "id": "src_components_ui_textarea_tsx",
-      "community": 12,
+      "community": 131,
       "norm_label": "textarea.tsx"
     },
     {
@@ -5058,7 +5238,7 @@
       "source_file": "src/components/ui/textarea.tsx",
       "source_location": "L5",
       "id": "ui_textarea_textarea",
-      "community": 12,
+      "community": 131,
       "norm_label": "textarea()"
     },
     {
@@ -5092,16 +5272,43 @@
       "label": "QRCodeProps",
       "file_type": "code",
       "source_file": "src/components/tools/qr-code.tsx",
-      "source_location": "L13",
+      "source_location": "L43",
       "id": "tools_qr_code_qrcodeprops",
       "community": 12,
       "norm_label": "qrcodeprops"
     },
     {
+      "label": "QrItem",
+      "file_type": "code",
+      "source_file": "src/components/tools/qr-code.tsx",
+      "source_location": "L47",
+      "id": "tools_qr_code_qritem",
+      "community": 12,
+      "norm_label": "qritem"
+    },
+    {
+      "label": "QrStats",
+      "file_type": "code",
+      "source_file": "src/components/tools/qr-code.tsx",
+      "source_location": "L59",
+      "id": "tools_qr_code_qrstats",
+      "community": 12,
+      "norm_label": "qrstats"
+    },
+    {
+      "label": "COLORS",
+      "file_type": "code",
+      "source_file": "src/components/tools/qr-code.tsx",
+      "source_location": "L68",
+      "id": "tools_qr_code_colors",
+      "community": 12,
+      "norm_label": "colors"
+    },
+    {
       "label": "QRCodeGenerator()",
       "file_type": "code",
       "source_file": "src/components/tools/qr-code.tsx",
-      "source_location": "L17",
+      "source_location": "L70",
       "id": "tools_qr_code_qrcodegenerator",
       "community": 12,
       "norm_label": "qrcodegenerator()"
@@ -5130,7 +5337,7 @@
       "source_file": "src/components/tools/text-diff.tsx",
       "source_location": "L1",
       "id": "src_components_tools_text_diff_tsx",
-      "community": 12,
+      "community": 131,
       "norm_label": "text-diff.tsx"
     },
     {
@@ -5148,7 +5355,7 @@
       "source_file": "src/components/tools/code-minifier.tsx",
       "source_location": "L1",
       "id": "src_components_tools_code_minifier_tsx",
-      "community": 12,
+      "community": 142,
       "norm_label": "code-minifier.tsx"
     },
     {
@@ -5157,7 +5364,7 @@
       "source_file": "src/components/tools/code-minifier.tsx",
       "source_location": "L15",
       "id": "tools_code_minifier_minifycss",
-      "community": 12,
+      "community": 142,
       "norm_label": "minifycss()"
     },
     {
@@ -5166,7 +5373,7 @@
       "source_file": "src/components/tools/code-minifier.tsx",
       "source_location": "L16",
       "id": "tools_code_minifier_minifyhtml",
-      "community": 12,
+      "community": 142,
       "norm_label": "minifyhtml()"
     },
     {
@@ -5175,7 +5382,7 @@
       "source_file": "src/components/tools/code-minifier.tsx",
       "source_location": "L17",
       "id": "tools_code_minifier_minifyjs",
-      "community": 12,
+      "community": 142,
       "norm_label": "minifyjs()"
     },
     {
@@ -5211,7 +5418,7 @@
       "source_file": "src/components/tools/product-description.tsx",
       "source_location": "L16",
       "id": "tools_product_description_productdescription",
-      "community": 12,
+      "community": 54,
       "norm_label": "productdescription()"
     },
     {
@@ -5220,7 +5427,7 @@
       "source_file": "src/components/tools/invoice-generator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_invoice_generator_tsx",
-      "community": 89,
+      "community": 45,
       "norm_label": "invoice-generator.tsx"
     },
     {
@@ -5229,7 +5436,7 @@
       "source_file": "src/components/tools/invoice-generator.tsx",
       "source_location": "L18",
       "id": "tools_invoice_generator_nativetoggle",
-      "community": 89,
+      "community": 45,
       "norm_label": "nativetoggle()"
     },
     {
@@ -5247,7 +5454,7 @@
       "source_file": "src/components/tools/caption-generator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_caption_generator_tsx",
-      "community": 12,
+      "community": 54,
       "norm_label": "caption-generator.tsx"
     },
     {
@@ -5256,7 +5463,7 @@
       "source_file": "src/components/tools/caption-generator.tsx",
       "source_location": "L17",
       "id": "tools_caption_generator_captiongenerator",
-      "community": 12,
+      "community": 54,
       "norm_label": "captiongenerator()"
     },
     {
@@ -5292,7 +5499,7 @@
       "source_file": "src/components/tools/cv-builder.tsx",
       "source_location": "L1",
       "id": "src_components_tools_cv_builder_tsx",
-      "community": 12,
+      "community": 131,
       "norm_label": "cv-builder.tsx"
     },
     {
@@ -5301,7 +5508,7 @@
       "source_file": "src/components/tools/cv-builder.tsx",
       "source_location": "L26",
       "id": "tools_cv_builder_templates",
-      "community": 12,
+      "community": 131,
       "norm_label": "templates"
     },
     {
@@ -5310,7 +5517,7 @@
       "source_file": "src/components/tools/cv-builder.tsx",
       "source_location": "L39",
       "id": "tools_cv_builder_generateuniqueid",
-      "community": 12,
+      "community": 131,
       "norm_label": "generateuniqueid()"
     },
     {
@@ -5319,7 +5526,7 @@
       "source_file": "src/components/tools/cv-builder.tsx",
       "source_location": "L41",
       "id": "tools_cv_builder_cvbuilder",
-      "community": 12,
+      "community": 54,
       "norm_label": "cvbuilder()"
     },
     {
@@ -5337,7 +5544,7 @@
       "source_file": "src/components/tools/llms-txt-generator.tsx",
       "source_location": "L14",
       "id": "tools_llms_txt_generator_llmstxtgenerator",
-      "community": 1,
+      "community": 54,
       "norm_label": "llmstxtgenerator()"
     },
     {
@@ -5346,7 +5553,7 @@
       "source_file": "src/components/tools/prompt-generator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_prompt_generator_tsx",
-      "community": 12,
+      "community": 54,
       "norm_label": "prompt-generator.tsx"
     },
     {
@@ -5355,7 +5562,7 @@
       "source_file": "src/components/tools/prompt-generator.tsx",
       "source_location": "L16",
       "id": "tools_prompt_generator_promptgenerator",
-      "community": 12,
+      "community": 54,
       "norm_label": "promptgenerator()"
     },
     {
@@ -5382,7 +5589,7 @@
       "source_file": "src/components/tools/emi-calculator.tsx",
       "source_location": "L11",
       "id": "tools_emi_calculator_emicalculator",
-      "community": 12,
+      "community": 139,
       "norm_label": "emicalculator()"
     },
     {
@@ -5409,7 +5616,7 @@
       "source_file": "src/components/tools/svg-compressor.tsx",
       "source_location": "L1",
       "id": "src_components_tools_svg_compressor_tsx",
-      "community": 12,
+      "community": 131,
       "norm_label": "svg-compressor.tsx"
     },
     {
@@ -5427,7 +5634,7 @@
       "source_file": "src/components/tools/svg-compressor.tsx",
       "source_location": "L80",
       "id": "tools_svg_compressor_svgfile",
-      "community": 12,
+      "community": 131,
       "norm_label": "svgfile"
     },
     {
@@ -5436,7 +5643,7 @@
       "source_file": "src/components/tools/svg-compressor.tsx",
       "source_location": "L92",
       "id": "tools_svg_compressor_svgcompressor",
-      "community": 15,
+      "community": 54,
       "norm_label": "svgcompressor()"
     },
     {
@@ -5490,7 +5697,7 @@
       "source_file": "src/components/tools/word-counter.tsx",
       "source_location": "L1",
       "id": "src_components_tools_word_counter_tsx",
-      "community": 12,
+      "community": 131,
       "norm_label": "word-counter.tsx"
     },
     {
@@ -5499,7 +5706,7 @@
       "source_file": "src/components/tools/word-counter.tsx",
       "source_location": "L10",
       "id": "tools_word_counter_nativetoggle",
-      "community": 45,
+      "community": 131,
       "norm_label": "nativetoggle()"
     },
     {
@@ -5508,7 +5715,7 @@
       "source_file": "src/components/tools/word-counter.tsx",
       "source_location": "L48",
       "id": "tools_word_counter_wordcounter",
-      "community": 12,
+      "community": 131,
       "norm_label": "wordcounter()"
     },
     {
@@ -5517,7 +5724,7 @@
       "source_file": "src/components/tools/image-converter.tsx",
       "source_location": "L1",
       "id": "src_components_tools_image_converter_tsx",
-      "community": 12,
+      "community": 54,
       "norm_label": "image-converter.tsx"
     },
     {
@@ -5526,7 +5733,7 @@
       "source_file": "src/components/tools/image-converter.tsx",
       "source_location": "L36",
       "id": "tools_image_converter_imagefile",
-      "community": 12,
+      "community": 54,
       "norm_label": "imagefile"
     },
     {
@@ -5535,7 +5742,7 @@
       "source_file": "src/components/tools/image-converter.tsx",
       "source_location": "L53",
       "id": "tools_image_converter_nativetoggle",
-      "community": 45,
+      "community": 54,
       "norm_label": "nativetoggle()"
     },
     {
@@ -5544,7 +5751,7 @@
       "source_file": "src/components/tools/image-converter.tsx",
       "source_location": "L91",
       "id": "tools_image_converter_imageconverter",
-      "community": 12,
+      "community": 54,
       "norm_label": "imageconverter()"
     },
     {
@@ -5553,7 +5760,7 @@
       "source_file": "src/components/tools/gst-calculator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_gst_calculator_tsx",
-      "community": 12,
+      "community": 54,
       "norm_label": "gst-calculator.tsx"
     },
     {
@@ -5562,7 +5769,7 @@
       "source_file": "src/components/tools/gst-calculator.tsx",
       "source_location": "L12",
       "id": "tools_gst_calculator_rate",
-      "community": 12,
+      "community": 54,
       "norm_label": "rate"
     },
     {
@@ -5571,7 +5778,7 @@
       "source_file": "src/components/tools/gst-calculator.tsx",
       "source_location": "L17",
       "id": "tools_gst_calculator_gstcalculatorprops",
-      "community": 12,
+      "community": 54,
       "norm_label": "gstcalculatorprops"
     },
     {
@@ -5580,7 +5787,7 @@
       "source_file": "src/components/tools/gst-calculator.tsx",
       "source_location": "L21",
       "id": "tools_gst_calculator_nativetoggle",
-      "community": 45,
+      "community": 54,
       "norm_label": "nativetoggle()"
     },
     {
@@ -5589,7 +5796,7 @@
       "source_file": "src/components/tools/gst-calculator.tsx",
       "source_location": "L59",
       "id": "tools_gst_calculator_gstcalculator",
-      "community": 12,
+      "community": 54,
       "norm_label": "gstcalculator()"
     },
     {
@@ -5661,7 +5868,7 @@
       "source_file": "src/components/tools/seo-generator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_seo_generator_tsx",
-      "community": 12,
+      "community": 54,
       "norm_label": "seo-generator.tsx"
     },
     {
@@ -5670,7 +5877,7 @@
       "source_file": "src/components/tools/seo-generator.tsx",
       "source_location": "L14",
       "id": "tools_seo_generator_seoresult",
-      "community": 12,
+      "community": 54,
       "norm_label": "seoresult"
     },
     {
@@ -5679,7 +5886,7 @@
       "source_file": "src/components/tools/seo-generator.tsx",
       "source_location": "L20",
       "id": "tools_seo_generator_seogenerator",
-      "community": 12,
+      "community": 54,
       "norm_label": "seogenerator()"
     },
     {
@@ -5877,7 +6084,7 @@
       "source_file": "src/components/tools/sip-calculator.tsx",
       "source_location": "L11",
       "id": "tools_sip_calculator_sipcalculator",
-      "community": 12,
+      "community": 141,
       "norm_label": "sipcalculator()"
     },
     {
@@ -6165,7 +6372,7 @@
       "source_file": "src/components/dashboard/support-modal.tsx",
       "source_location": "L1",
       "id": "src_components_dashboard_support_modal_tsx",
-      "community": 54,
+      "community": 90,
       "norm_label": "support-modal.tsx"
     },
     {
@@ -6174,7 +6381,7 @@
       "source_file": "src/components/dashboard/support-modal.tsx",
       "source_location": "L11",
       "id": "dashboard_support_modal_supportmodalprops",
-      "community": 54,
+      "community": 90,
       "norm_label": "supportmodalprops"
     },
     {
@@ -6205,12 +6412,30 @@
       "norm_label": "plansection()"
     },
     {
+      "label": "cancel-button.tsx",
+      "file_type": "code",
+      "source_file": "src/components/pricing/cancel-button.tsx",
+      "source_location": "L1",
+      "id": "src_components_pricing_cancel_button_tsx",
+      "community": 137,
+      "norm_label": "cancel-button.tsx"
+    },
+    {
+      "label": "CancelButton()",
+      "file_type": "code",
+      "source_file": "src/components/pricing/cancel-button.tsx",
+      "source_location": "L8",
+      "id": "pricing_cancel_button_cancelbutton",
+      "community": 137,
+      "norm_label": "cancelbutton()"
+    },
+    {
       "label": "upgrade-button.tsx",
       "file_type": "code",
       "source_file": "src/components/pricing/upgrade-button.tsx",
       "source_location": "L1",
       "id": "src_components_pricing_upgrade_button_tsx",
-      "community": 54,
+      "community": 90,
       "norm_label": "upgrade-button.tsx"
     },
     {
@@ -6219,7 +6444,7 @@
       "source_file": "src/components/pricing/upgrade-button.tsx",
       "source_location": "L18",
       "id": "pricing_upgrade_button_upgradebuttonprops",
-      "community": 54,
+      "community": 90,
       "norm_label": "upgradebuttonprops"
     },
     {
@@ -6228,16 +6453,16 @@
       "source_file": "src/components/pricing/upgrade-button.tsx",
       "source_location": "L29",
       "id": "pricing_upgrade_button_window",
-      "community": 54,
+      "community": 90,
       "norm_label": "window"
     },
     {
       "label": "UpgradeButton()",
       "file_type": "code",
       "source_file": "src/components/pricing/upgrade-button.tsx",
-      "source_location": "L34",
+      "source_location": "L35",
       "id": "pricing_upgrade_button_upgradebutton",
-      "community": 54,
+      "community": 83,
       "norm_label": "upgradebutton()"
     },
     {
@@ -6246,7 +6471,7 @@
       "source_file": "src/components/pricing/pricing-cards.tsx",
       "source_location": "L1",
       "id": "src_components_pricing_pricing_cards_tsx",
-      "community": 12,
+      "community": 83,
       "norm_label": "pricing-cards.tsx"
     },
     {
@@ -6255,7 +6480,7 @@
       "source_file": "src/components/pricing/pricing-cards.tsx",
       "source_location": "L11",
       "id": "pricing_pricing_cards_pricingcardsprops",
-      "community": 12,
+      "community": 83,
       "norm_label": "pricingcardsprops"
     },
     {
@@ -6273,7 +6498,7 @@
       "source_file": "src/hooks/use-usage-limit.ts",
       "source_location": "L1",
       "id": "src_hooks_use_usage_limit_ts",
-      "community": 12,
+      "community": 54,
       "norm_label": "use-usage-limit.ts"
     },
     {
@@ -6282,7 +6507,7 @@
       "source_file": "src/hooks/use-usage-limit.ts",
       "source_location": "L4",
       "id": "hooks_use_usage_limit_useusagelimit",
-      "community": 12,
+      "community": 54,
       "norm_label": "useusagelimit()"
     },
     {
@@ -6345,7 +6570,7 @@
       "source_file": "src/lib/utils.ts",
       "source_location": "L1",
       "id": "src_lib_utils_ts",
-      "community": 12,
+      "community": 131,
       "norm_label": "utils.ts"
     },
     {
@@ -6363,7 +6588,7 @@
       "source_file": "src/lib/image-utils.ts",
       "source_location": "L1",
       "id": "src_lib_image_utils_ts",
-      "community": 12,
+      "community": 54,
       "norm_label": "image-utils.ts"
     },
     {
@@ -6372,7 +6597,7 @@
       "source_file": "src/lib/image-utils.ts",
       "source_location": "L5",
       "id": "lib_image_utils_resizeoptions",
-      "community": 12,
+      "community": 54,
       "norm_label": "resizeoptions"
     },
     {
@@ -6381,7 +6606,7 @@
       "source_file": "src/lib/image-utils.ts",
       "source_location": "L13",
       "id": "lib_image_utils_image_presets",
-      "community": 12,
+      "community": 54,
       "norm_label": "image_presets"
     },
     {
@@ -6390,7 +6615,7 @@
       "source_file": "src/lib/image-utils.ts",
       "source_location": "L23",
       "id": "lib_image_utils_processimage",
-      "community": 12,
+      "community": 54,
       "norm_label": "processimage()"
     },
     {
@@ -6399,7 +6624,7 @@
       "source_file": "src/lib/image-utils.ts",
       "source_location": "L87",
       "id": "lib_image_utils_formatbytes",
-      "community": 12,
+      "community": 54,
       "norm_label": "formatbytes()"
     },
     {
@@ -6579,7 +6804,7 @@
       "source_file": "src/lib/paypal.ts",
       "source_location": "L1",
       "id": "src_lib_paypal_ts",
-      "community": 33,
+      "community": 92,
       "norm_label": "paypal.ts"
     },
     {
@@ -6588,7 +6813,7 @@
       "source_file": "src/lib/paypal.ts",
       "source_location": "L7",
       "id": "lib_paypal_getaccesstoken",
-      "community": 33,
+      "community": 92,
       "norm_label": "getaccesstoken()"
     },
     {
@@ -6597,7 +6822,7 @@
       "source_file": "src/lib/paypal.ts",
       "source_location": "L26",
       "id": "lib_paypal_createpaypalorder",
-      "community": 33,
+      "community": 92,
       "norm_label": "createpaypalorder()"
     },
     {
@@ -6606,8 +6831,26 @@
       "source_file": "src/lib/paypal.ts",
       "source_location": "L50",
       "id": "lib_paypal_capturepaypalorder",
-      "community": 33,
+      "community": 92,
       "norm_label": "capturepaypalorder()"
+    },
+    {
+      "label": "createPayPalSubscription()",
+      "file_type": "code",
+      "source_file": "src/lib/paypal.ts",
+      "source_location": "L63",
+      "id": "lib_paypal_createpaypalsubscription",
+      "community": 132,
+      "norm_label": "createpaypalsubscription()"
+    },
+    {
+      "label": "cancelPayPalSubscription()",
+      "file_type": "code",
+      "source_file": "src/lib/paypal.ts",
+      "source_location": "L90",
+      "id": "lib_paypal_cancelpaypalsubscription",
+      "community": 92,
+      "norm_label": "cancelpaypalsubscription()"
     },
     {
       "label": "usage-limit.ts",
@@ -6615,7 +6858,7 @@
       "source_file": "src/lib/usage-limit.ts",
       "source_location": "L1",
       "id": "src_lib_usage_limit_ts",
-      "community": 12,
+      "community": 54,
       "norm_label": "usage-limit.ts"
     },
     {
@@ -6624,7 +6867,7 @@
       "source_file": "src/lib/usage-limit.ts",
       "source_location": "L5",
       "id": "lib_usage_limit_usagedata",
-      "community": 12,
+      "community": 54,
       "norm_label": "usagedata"
     },
     {
@@ -6633,7 +6876,7 @@
       "source_file": "src/lib/usage-limit.ts",
       "source_location": "L14",
       "id": "lib_usage_limit_getdailyusage",
-      "community": 12,
+      "community": 54,
       "norm_label": "getdailyusage()"
     },
     {
@@ -6642,7 +6885,7 @@
       "source_file": "src/lib/usage-limit.ts",
       "source_location": "L39",
       "id": "lib_usage_limit_incrementdailyusage",
-      "community": 12,
+      "community": 54,
       "norm_label": "incrementdailyusage()"
     },
     {
@@ -6651,7 +6894,7 @@
       "source_file": "src/lib/usage-limit.ts",
       "source_location": "L60",
       "id": "lib_usage_limit_getmonthlyusage",
-      "community": 12,
+      "community": 54,
       "norm_label": "getmonthlyusage()"
     },
     {
@@ -6660,7 +6903,7 @@
       "source_file": "src/lib/usage-limit.ts",
       "source_location": "L84",
       "id": "lib_usage_limit_incrementmonthlyusage",
-      "community": 12,
+      "community": 54,
       "norm_label": "incrementmonthlyusage()"
     },
     {
@@ -6669,7 +6912,7 @@
       "source_file": "src/lib/usage-limit.ts",
       "source_location": "L104",
       "id": "lib_usage_limit_islimitreached",
-      "community": 12,
+      "community": 54,
       "norm_label": "islimitreached()"
     },
     {
@@ -11916,7 +12159,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L963",
       "id": "writing_skills_anthropic_best_practices_use_visual_analysis",
-      "community": 32,
+      "community": 146,
       "norm_label": "use visual analysis"
     },
     {
@@ -11925,7 +12168,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L967",
       "id": "writing_skills_anthropic_best_practices_codeblock_54",
-      "community": 32,
+      "community": 146,
       "norm_label": "code:`markdown (## form layout analysis)"
     },
     {
@@ -11934,7 +12177,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L973",
       "id": "writing_skills_anthropic_best_practices_codeblock_55",
-      "community": 32,
+      "community": 146,
       "norm_label": "code:block55"
     },
     {
@@ -11997,7 +12240,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1073",
       "id": "writing_skills_anthropic_best_practices_avoid_assuming_tools_are_installed",
-      "community": 32,
+      "community": 145,
       "norm_label": "avoid assuming tools are installed"
     },
     {
@@ -12006,7 +12249,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1077",
       "id": "writing_skills_anthropic_best_practices_codeblock_58",
-      "community": 32,
+      "community": 145,
       "norm_label": "code:`markdown (**bad example: assumes installation**:)"
     },
     {
@@ -12015,7 +12258,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1088",
       "id": "writing_skills_anthropic_best_practices_codeblock_59",
-      "community": 32,
+      "community": 145,
       "norm_label": "code:\""
     },
     {
@@ -12024,7 +12267,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1091",
       "id": "writing_skills_anthropic_best_practices_technical_notes",
-      "community": 131,
+      "community": 32,
       "norm_label": "technical notes"
     },
     {
@@ -12033,7 +12276,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1093",
       "id": "writing_skills_anthropic_best_practices_yaml_frontmatter_requirements",
-      "community": 131,
+      "community": 32,
       "norm_label": "yaml frontmatter requirements"
     },
     {
@@ -12042,7 +12285,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1097",
       "id": "writing_skills_anthropic_best_practices_token_budgets",
-      "community": 131,
+      "community": 32,
       "norm_label": "token budgets"
     },
     {
@@ -13612,6 +13855,105 @@
       "norm_label": "3. seo & analytics verification"
     },
     {
+      "label": "2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L1",
+      "id": "docs_superpowers_plans_2026_05_27_paypal_razorpay_subscriptions_plan_md",
+      "community": 135,
+      "norm_label": "2026-05-27-paypal-razorpay-subscriptions-plan.md"
+    },
+    {
+      "label": "PayPal & Razorpay Subscriptions Integration Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L1",
+      "id": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_paypal_razorpay_subscriptions_integration_plan",
+      "community": 135,
+      "norm_label": "paypal & razorpay subscriptions integration plan"
+    },
+    {
+      "label": "\ud83d\udee0\ufe0f Tasks",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L13",
+      "id": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_tasks",
+      "community": 135,
+      "norm_label": "\ud83d\udee0\ufe0f tasks"
+    },
+    {
+      "label": "Task 1: Environment Plan Configurations",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L15",
+      "id": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_1_environment_plan_configurations",
+      "community": 135,
+      "norm_label": "task 1: environment plan configurations"
+    },
+    {
+      "label": "code:typescript (export const SUBSCRIPTION_PLANS = {)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L23",
+      "id": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_codeblock_1",
+      "community": 135,
+      "norm_label": "code:typescript (export const subscription_plans = {)"
+    },
+    {
+      "label": "Task 2: PayPal Subscriptions backend functions & routes",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L47",
+      "id": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_2_paypal_subscriptions_backend_functions_routes",
+      "community": 135,
+      "norm_label": "task 2: paypal subscriptions backend functions & routes"
+    },
+    {
+      "label": "Task 3: Razorpay Subscriptions backend SDK setup & routes",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L63",
+      "id": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_3_razorpay_subscriptions_backend_sdk_setup_routes",
+      "community": 135,
+      "norm_label": "task 3: razorpay subscriptions backend sdk setup & routes"
+    },
+    {
+      "label": "Task 4: Webhook Handler for PayPal Subscriptions",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L76",
+      "id": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_4_webhook_handler_for_paypal_subscriptions",
+      "community": 135,
+      "norm_label": "task 4: webhook handler for paypal subscriptions"
+    },
+    {
+      "label": "Task 5: Webhook Handler for Razorpay Subscriptions",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L92",
+      "id": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_5_webhook_handler_for_razorpay_subscriptions",
+      "community": 135,
+      "norm_label": "task 5: webhook handler for razorpay subscriptions"
+    },
+    {
+      "label": "Task 6: Update Pricing Upgrade UI Button",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L107",
+      "id": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_6_update_pricing_upgrade_ui_button",
+      "community": 135,
+      "norm_label": "task 6: update pricing upgrade ui button"
+    },
+    {
+      "label": "Task 7: Update Billing Portal Dashboard",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L122",
+      "id": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_7_update_billing_portal_dashboard",
+      "community": 135,
+      "norm_label": "task 7: update billing portal dashboard"
+    },
+    {
       "label": "2026-05-17-linkedin-import-fix.md",
       "file_type": "document",
       "source_file": "docs/superpowers/plans/2026-05-17-linkedin-import-fix.md",
@@ -14480,7 +14822,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-import-modal.tsx",
       "source_location": "L1",
-      "community": 12,
+      "community": 136,
       "norm_label": "linkedin-import-modal.tsx",
       "id": "src_components_tools_linkedin_import_modal_tsx"
     },
@@ -14489,7 +14831,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-import-modal.tsx",
       "source_location": "L9",
-      "community": 12,
+      "community": 136,
       "norm_label": "linkedinicon()",
       "id": "tools_linkedin_import_modal_linkedinicon"
     },
@@ -14498,7 +14840,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-import-modal.tsx",
       "source_location": "L21",
-      "community": 12,
+      "community": 136,
       "norm_label": "linkedinimportresult",
       "id": "tools_linkedin_import_modal_linkedinimportresult"
     },
@@ -14507,7 +14849,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-import-modal.tsx",
       "source_location": "L40",
-      "community": 12,
+      "community": 136,
       "norm_label": "linkedinimportmodalprops",
       "id": "tools_linkedin_import_modal_linkedinimportmodalprops"
     },
@@ -14516,7 +14858,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-import-modal.tsx",
       "source_location": "L45",
-      "community": 12,
+      "community": 136,
       "norm_label": "linkedinimportmodal()",
       "id": "tools_linkedin_import_modal_linkedinimportmodal"
     },
@@ -14525,7 +14867,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-preview-modal.tsx",
       "source_location": "L1",
-      "community": 12,
+      "community": 136,
       "norm_label": "linkedin-preview-modal.tsx",
       "id": "src_components_tools_linkedin_preview_modal_tsx"
     },
@@ -14534,7 +14876,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-preview-modal.tsx",
       "source_location": "L6",
-      "community": 12,
+      "community": 136,
       "norm_label": "linkedinimportresult",
       "id": "tools_linkedin_preview_modal_linkedinimportresult"
     },
@@ -14543,7 +14885,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-preview-modal.tsx",
       "source_location": "L25",
-      "community": 12,
+      "community": 136,
       "norm_label": "linkedinpreviewmodalprops",
       "id": "tools_linkedin_preview_modal_linkedinpreviewmodalprops"
     },
@@ -14552,7 +14894,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-preview-modal.tsx",
       "source_location": "L32",
-      "community": 12,
+      "community": 136,
       "norm_label": "linkedinpreviewmodal()",
       "id": "tools_linkedin_preview_modal_linkedinpreviewmodal"
     }
@@ -17144,6 +17486,50 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/user-qrs/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_user_qrs_route_ts",
+      "target": "src_auth_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/delete/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_delete_route_ts",
+      "target": "src_auth_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/create/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_create_route_ts",
+      "target": "src_auth_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/stats/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_stats_route_ts",
+      "target": "src_auth_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/tools/fetch-schema/route.ts",
       "source_location": "L1",
       "weight": 1.0,
@@ -17243,6 +17629,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/api/subscription/cancel/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_app_api_subscription_cancel_route_ts",
+      "target": "src_auth_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/support/route.ts",
       "source_location": "L1",
       "weight": 1.0,
@@ -17320,6 +17717,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/api/paypal/create-subscription/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_app_api_paypal_create_subscription_route_ts",
+      "target": "src_auth_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/paypal/capture-order/route.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -17359,6 +17767,17 @@
       "confidence_score": 1.0,
       "source": "src_app_api_razorpay_verify_route_ts",
       "target": "src_auth_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/razorpay/create-subscription/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_app_api_razorpay_create_subscription_route_ts",
+      "target": "src_auth_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -18093,6 +18512,38 @@
       "confidence_score": 1.0,
       "source": "src_app_tools_qr_code_page_tsx",
       "target": "qr_code_page_qrcodegeneratorpage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/tools/qr-code/expired/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_tools_qr_code_expired_page_tsx",
+      "target": "src_components_ui_button_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/tools/qr-code/expired/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_tools_qr_code_expired_page_tsx",
+      "target": "ui_button_button",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/tools/qr-code/expired/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_tools_qr_code_expired_page_tsx",
+      "target": "expired_page_qrcodeexpiredpage",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -20318,6 +20769,28 @@
       "target": "lib_utils_cn"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/dashboard/billing/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_app_dashboard_billing_page_tsx",
+      "target": "src_components_pricing_cancel_button_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/dashboard/billing/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_app_dashboard_billing_page_tsx",
+      "target": "pricing_cancel_button_cancelbutton",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/dashboard/billing/page.tsx",
@@ -20496,6 +20969,16 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/q/[id]/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_q_id_route_ts",
+      "target": "id_route_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/tools/cv-builder/[id]/route.ts",
       "source_location": "L25",
       "weight": 1.0,
@@ -20512,6 +20995,90 @@
       "confidence_score": 1.0,
       "source": "src_app_api_admin_users_id_route_ts",
       "target": "id_route_delete"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/user-qrs/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_user_qrs_route_ts",
+      "target": "src_lib_prisma_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/user-qrs/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_user_qrs_route_ts",
+      "target": "user_qrs_route_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/delete/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_delete_route_ts",
+      "target": "src_lib_prisma_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/delete/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_delete_route_ts",
+      "target": "delete_route_delete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/create/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_create_route_ts",
+      "target": "src_lib_prisma_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/create/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_create_route_ts",
+      "target": "create_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/stats/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_stats_route_ts",
+      "target": "src_lib_prisma_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/tools/qr-code/stats/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_tools_qr_code_stats_route_ts",
+      "target": "stats_route_get",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -20789,6 +21356,82 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/api/subscription/cancel/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_subscription_cancel_route_ts",
+      "target": "src_lib_prisma_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/subscription/cancel/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_subscription_cancel_route_ts",
+      "target": "src_lib_paypal_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/subscription/cancel/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_subscription_cancel_route_ts",
+      "target": "lib_paypal_cancelpaypalsubscription",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/subscription/cancel/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_subscription_cancel_route_ts",
+      "target": "src_lib_razorpay_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/subscription/cancel/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_subscription_cancel_route_ts",
+      "target": "lib_razorpay_razorpay",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/subscription/cancel/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_subscription_cancel_route_ts",
+      "target": "cancel_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/api/subscription/cancel/route.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "cancel_route_post",
+      "target": "lib_paypal_cancelpaypalsubscription"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/register/route.ts",
       "source_location": "L3",
       "weight": 1.0,
@@ -20886,6 +21529,81 @@
       "confidence_score": 1.0,
       "source": "src_app_api_ai_cv_parser_route_ts",
       "target": "cv_parser_route_post"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/paypal/create-subscription/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_paypal_create_subscription_route_ts",
+      "target": "src_lib_paypal_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/paypal/create-subscription/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_paypal_create_subscription_route_ts",
+      "target": "lib_paypal_createpaypalsubscription",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/paypal/create-subscription/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_paypal_create_subscription_route_ts",
+      "target": "src_config_subscriptions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/paypal/create-subscription/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_paypal_create_subscription_route_ts",
+      "target": "config_subscriptions_subscription_plans",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/paypal/create-subscription/route.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_api_paypal_create_subscription_route_ts",
+      "target": "create_subscription_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/razorpay/create-subscription/route.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_api_razorpay_create_subscription_route_ts",
+      "target": "create_subscription_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/app/api/paypal/create-subscription/route.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "create_subscription_route_post",
+      "target": "lib_paypal_createpaypalsubscription"
     },
     {
       "relation": "imports_from",
@@ -21151,12 +21869,88 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/api/razorpay/create-subscription/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_razorpay_create_subscription_route_ts",
+      "target": "src_lib_razorpay_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/razorpay/create-subscription/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_razorpay_create_subscription_route_ts",
+      "target": "lib_razorpay_razorpay",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/razorpay/create-subscription/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_razorpay_create_subscription_route_ts",
+      "target": "src_config_subscriptions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/razorpay/create-subscription/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_razorpay_create_subscription_route_ts",
+      "target": "config_subscriptions_subscription_plans",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/webhooks/paypal/route.ts",
       "source_location": "L2",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_app_api_webhooks_paypal_route_ts",
       "target": "src_lib_prisma_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/paypal/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_paypal_route_ts",
+      "target": "src_config_subscriptions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/paypal/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_paypal_route_ts",
+      "target": "config_subscriptions_subscription_plans",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/paypal/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_paypal_route_ts",
+      "target": "paypal_route_getplandetailsbyplanid",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -21167,6 +21961,17 @@
       "confidence_score": 1.0,
       "source": "src_app_api_webhooks_paypal_route_ts",
       "target": "paypal_route_post"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/paypal/route.ts",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "paypal_route_post",
+      "target": "paypal_route_getplandetailsbyplanid",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -21180,6 +21985,38 @@
       "target": "src_lib_prisma_ts"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/razorpay/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_razorpay_route_ts",
+      "target": "src_config_subscriptions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/razorpay/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_razorpay_route_ts",
+      "target": "config_subscriptions_subscription_plans",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/razorpay/route.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_razorpay_route_ts",
+      "target": "razorpay_route_getrazorpayplandetails",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/api/webhooks/razorpay/route.ts",
@@ -21188,6 +22025,17 @@
       "confidence_score": 1.0,
       "source": "src_app_api_webhooks_razorpay_route_ts",
       "target": "razorpay_route_post"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/razorpay/route.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "razorpay_route_post",
+      "target": "razorpay_route_getrazorpayplandetails",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -21578,6 +22426,27 @@
       "confidence_score": 1.0,
       "source": "src_app_pricing_page_tsx",
       "target": "pricing_page_pricingpage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/q/[id]/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_app_q_id_route_ts",
+      "target": "src_lib_prisma_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/config/subscriptions.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_config_subscriptions_ts",
+      "target": "config_subscriptions_subscription_plans",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -26690,6 +27559,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/pricing/cancel-button.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_pricing_cancel_button_tsx",
+      "target": "src_components_ui_button_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/components/pricing/upgrade-button.tsx",
       "source_location": "L6",
       "weight": 1.0,
@@ -27004,6 +27884,17 @@
       "confidence_score": 1.0,
       "source": "src_components_dashboard_plan_section_tsx",
       "target": "ui_button_button"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/pricing/cancel-button.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_pricing_cancel_button_tsx",
+      "target": "ui_button_button",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -28857,6 +29748,36 @@
       "confidence_score": 1.0,
       "source": "src_components_tools_qr_code_tsx",
       "target": "tools_qr_code_qrcodeprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/tools/qr-code.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "src_components_tools_qr_code_tsx",
+      "target": "tools_qr_code_qritem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/tools/qr-code.tsx",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "src_components_tools_qr_code_tsx",
+      "target": "tools_qr_code_qrstats",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/tools/qr-code.tsx",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "src_components_tools_qr_code_tsx",
+      "target": "tools_qr_code_colors",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -31261,6 +32182,16 @@
       "target": "dashboard_plan_section_plansection"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/pricing/cancel-button.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_components_pricing_cancel_button_tsx",
+      "target": "pricing_cancel_button_cancelbutton",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -31755,6 +32686,26 @@
       "target": "lib_paypal_capturepaypalorder"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/paypal.ts",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "src_lib_paypal_ts",
+      "target": "lib_paypal_createpaypalsubscription",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/paypal.ts",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "src_lib_paypal_ts",
+      "target": "lib_paypal_cancelpaypalsubscription",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -31775,6 +32726,28 @@
       "confidence_score": 1.0,
       "source": "lib_paypal_capturepaypalorder",
       "target": "lib_paypal_getaccesstoken"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/paypal.ts",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "lib_paypal_createpaypalsubscription",
+      "target": "lib_paypal_getaccesstoken",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/paypal.ts",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "lib_paypal_cancelpaypalsubscription",
+      "target": "lib_paypal_getaccesstoken",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -39172,6 +40145,106 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_05_27_paypal_razorpay_subscriptions_plan_md",
+      "target": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_paypal_razorpay_subscriptions_integration_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_paypal_razorpay_subscriptions_integration_plan",
+      "target": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_tasks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_tasks",
+      "target": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_1_environment_plan_configurations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_tasks",
+      "target": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_2_paypal_subscriptions_backend_functions_routes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_tasks",
+      "target": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_3_razorpay_subscriptions_backend_sdk_setup_routes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_tasks",
+      "target": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_4_webhook_handler_for_paypal_subscriptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_tasks",
+      "target": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_5_webhook_handler_for_razorpay_subscriptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L107",
+      "weight": 1.0,
+      "source": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_tasks",
+      "target": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_6_update_pricing_upgrade_ui_button",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L122",
+      "weight": 1.0,
+      "source": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_tasks",
+      "target": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_7_update_billing_portal_dashboard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-05-27-paypal-razorpay-subscriptions-plan.md",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_task_1_environment_plan_configurations",
+      "target": "plans_2026_05_27_paypal_razorpay_subscriptions_plan_codeblock_1",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/superpowers/plans/2026-05-17-linkedin-import-fix.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -40103,5 +41176,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8770f6eca00e6af43dfc18bd46a1063b67073625"
+  "built_at_commit": "eacc2c1a6703bee06acbe5af4950266eb040ab5c"
 }

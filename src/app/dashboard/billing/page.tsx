@@ -3,9 +3,10 @@ import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { CreditCard, CheckCircle2, ArrowRight, ShieldCheck, Calendar, Clock, History } from "lucide-react"
+import { CreditCard, CheckCircle2, ArrowRight, Calendar, Clock, History } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { CancelButton } from "@/components/pricing/cancel-button"
 
 export default async function BillingPage() {
   const session = await auth()
@@ -116,6 +117,12 @@ export default async function BillingPage() {
                 <Button className="w-full font-black shadow-lg shadow-primary/20" asChild>
                   <Link href="/pricing">Upgrade to Premium <ArrowRight className="ml-2 h-4 w-4" /></Link>
                 </Button>
+              </div>
+            )}
+
+            {hasPremium && subscription?.status === "active" && (
+              <div className="pt-6 border-t border-foreground/5 flex justify-end">
+                <CancelButton />
               </div>
             )}
           </CardContent>

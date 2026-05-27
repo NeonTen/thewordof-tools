@@ -1,17 +1,24 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { SUBSCRIPTION_PLANS } from "@/config/subscriptions";
 
-// To properly verify PayPal webhooks, you usually need to call the PayPal API 
-// to verify the signature. This is a simplified version.
+function getPlanDetailsByPlanId(planId: string) {
+  const paypalPlans = SUBSCRIPTION_PLANS.paypal;
+  if (planId === paypalPlans.PRO_MONTHLY) return { plan: "PREMIUM" as const, interval: "month", role: "PRO" as const };
+  if (planId === paypalPlans.PRO_YEARLY) return { plan: "PREMIUM" as const, interval: "year", role: "PRO" as const };
+  if (planId === paypalPlans.BUSINESS_MONTHLY) return { plan: "BUSINESS" as const, interval: "month", role: "BUSINESS" as const };
+  if (planId === paypalPlans.BUSINESS_YEARLY) return { plan: "BUSINESS" as const, interval: "year", role: "BUSINESS" as const };
+  return { plan: "PREMIUM" as const, interval: "month", role: "PRO" as const };
+}
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const eventType = body.event_type;
+    const resource = body.resource;
 
     if (eventType === "PAYMENT.CAPTURE.COMPLETED") {
-      const resource = body.resource;
-      const orderId = resource.supplementary_data?.related_ids?.order_id || resource.parent_payment;
+      // One-time checkouts
       const email = resource.payer?.email_address;
 
       if (email) {
@@ -39,6 +46,123 @@ export async function POST(req: Request) {
             },
           });
         }
+      }
+    } 
+    else if (eventType === "BILLING.SUBSCRIPTION.CREATED" || eventType === "BILLING.SUBSCRIPTION.ACTIVATED") {
+      const subscriptionId = resource.id;
+      const userId = resource.custom_id;
+      const planId = resource.plan_id;
+
+      if (userId) {
+        const user = await prisma.user.findUnique({
+          where: { id: userId },
+        });
+
+        if (user) {
+          const details = getPlanDetailsByPlanId(planId);
+          const expiresAt = new Date();
+          if (details.interval === "year") {
+            expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+          } else {
+            expiresAt.setMonth(expiresAt.getMonth() + 1);
+          }
+
+          // Update user role
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { 
+              role: details.role,
+              proExpiresAt: expiresAt
+            },
+          });
+
+          // Create or update subscription record
+          await prisma.subscription.upsert({
+            where: { subscriptionId },
+            update: {
+              status: "active",
+              currentPeriodEnd: expiresAt,
+            },
+            create: {
+              userId: user.id,
+              plan: details.plan,
+              status: "active",
+              paymentProvider: "PAYPAL",
+              subscriptionId: subscriptionId,
+              interval: details.interval,
+              currentPeriodEnd: expiresAt,
+            },
+          });
+        }
+      }
+    } 
+    else if (eventType === "PAYMENT.SALE.COMPLETED") {
+      // Recurring subscription charge success
+      const subscriptionId = resource.billing_agreement_id;
+
+      if (subscriptionId) {
+        const sub = await prisma.subscription.findUnique({
+          where: { subscriptionId },
+        });
+
+        if (sub) {
+          const expiresAt = new Date();
+          if (sub.interval === "year") {
+            expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+          } else {
+            expiresAt.setMonth(expiresAt.getMonth() + 1);
+          }
+
+          const newRole = sub.plan === "BUSINESS" ? "BUSINESS" : "PRO";
+
+          await prisma.user.update({
+            where: { id: sub.userId },
+            data: {
+              role: newRole,
+              proExpiresAt: expiresAt,
+            },
+          });
+
+          await prisma.subscription.update({
+            where: { subscriptionId },
+            data: {
+              status: "active",
+              currentPeriodEnd: expiresAt,
+              paymentId: resource.id, // Update latest transaction ID
+              amount: parseFloat(resource.amount.total),
+              currency: resource.amount.currency,
+            },
+          });
+        }
+      }
+    } 
+    else if (eventType === "BILLING.SUBSCRIPTION.CANCELLED") {
+      const subscriptionId = resource.id;
+
+      if (subscriptionId) {
+        await prisma.subscription.update({
+          where: { subscriptionId },
+          data: { status: "cancelled" },
+        });
+      }
+    } 
+    else if (eventType === "BILLING.SUBSCRIPTION.EXPIRED" || eventType === "BILLING.SUBSCRIPTION.PAYMENT.FAILED") {
+      const subscriptionId = resource.id;
+
+      if (subscriptionId) {
+        const sub = await prisma.subscription.update({
+          where: { subscriptionId },
+          data: { status: "expired" },
+        });
+
+        // Revoke active permissions
+        await prisma.user.update({
+          where: { id: sub.userId },
+          data: {
+            role: "USER",
+            proExpiresAt: null,
+          },
+        });
       }
     }
 
