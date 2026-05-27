@@ -1,16 +1,16 @@
 # Graph Report - thewordof-tools  (2026-05-27)
 
 ## Corpus Check
-- 236 files · ~140,934 words
+- 236 files · ~141,140 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1655 nodes · 2518 edges · 147 communities (122 shown, 25 thin omitted)
+- 1657 nodes · 2520 edges · 141 communities (120 shown, 21 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `eacc2c1a`
+- Built from commit: `5809e7ce`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -132,7 +132,6 @@
 - [[_COMMUNITY_Community 118|Community 118]]
 - [[_COMMUNITY_Community 127|Community 127]]
 - [[_COMMUNITY_Community 128|Community 128]]
-- [[_COMMUNITY_Community 129|Community 129]]
 - [[_COMMUNITY_Community 131|Community 131]]
 - [[_COMMUNITY_Community 132|Community 132]]
 - [[_COMMUNITY_Community 133|Community 133]]
@@ -140,10 +139,6 @@
 - [[_COMMUNITY_Community 135|Community 135]]
 - [[_COMMUNITY_Community 136|Community 136]]
 - [[_COMMUNITY_Community 137|Community 137]]
-- [[_COMMUNITY_Community 138|Community 138]]
-- [[_COMMUNITY_Community 139|Community 139]]
-- [[_COMMUNITY_Community 140|Community 140]]
-- [[_COMMUNITY_Community 141|Community 141]]
 - [[_COMMUNITY_Community 144|Community 144]]
 - [[_COMMUNITY_Community 145|Community 145]]
 - [[_COMMUNITY_Community 146|Community 146]]
@@ -165,18 +160,22 @@
   src/lib/utils.ts → package.json
 - `DashboardPage()` --calls--> `cn()`  [EXTRACTED]
   src/app/dashboard/page.tsx → src/lib/utils.ts
-- `BillingPage()` --calls--> `cn()`  [EXTRACTED]
-  src/app/dashboard/billing/page.tsx → src/lib/utils.ts
 - `SheetOverlay()` --calls--> `cn()`  [EXTRACTED]
   src/components/ui/sheet.tsx → src/lib/utils.ts
 - `SheetContent()` --calls--> `cn()`  [EXTRACTED]
   src/components/ui/sheet.tsx → src/lib/utils.ts
+- `SheetHeader()` --calls--> `cn()`  [EXTRACTED]
+  src/components/ui/sheet.tsx → src/lib/utils.ts
 
-## Communities (147 total, 25 thin omitted)
+## Communities (141 total, 21 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.04
 Nodes (51): dependencies, ai, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/react, @auth/prisma-adapter, @base-ui/react, bcryptjs (+43 more)
+
+### Community 1 - "Community 1"
+Cohesion: 0.23
+Nodes (11): SupportModalProps, UpgradeButtonProps, Window, Dialog(), DialogContent(), DialogDescription(), DialogFooter(), DialogHeader() (+3 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.05
@@ -199,8 +198,8 @@ Cohesion: 0.06
 Nodes (32): Anti-Pattern 1: Testing Mock Behavior, Anti-Pattern 2: Test-Only Methods in Production, Anti-Pattern 3: Mocking Without Understanding, Anti-Pattern 4: Incomplete Mocks, Anti-Pattern 5: Integration Tests as Afterthought, code:block1 (1. NEVER test mock behavior), code:block10 (BEFORE mocking any method:), code:typescript (// ❌ BAD: Partial mock - only fields you think you need) (+24 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.23
-Nodes (5): DashboardNav(), navItems, DashboardShell(), PageTransition(), ToolsNav()
+Cohesion: 0.25
+Nodes (4): DashboardNav(), navItems, DashboardShell(), PageTransition()
 
 ### Community 8 - "Community 8"
 Cohesion: 0.06
@@ -219,8 +218,8 @@ Cohesion: 0.07
 Nodes (29): 1a. Native Worktree Tools (preferred), 1b. Git Worktree Fallback, Assuming directory location, code:bash (GIT_DIR=$(cd "$(git rev-parse --git-dir)" 2>/dev/null && pwd), code:bash (# If this returns a path, you're in a submodule, not a workt), code:bash (ls -d .worktrees 2>/dev/null     # Preferred (hidden)), code:bash (project=$(basename "$(git rev-parse --show-toplevel)")), code:bash (git check-ignore -q .worktrees 2>/dev/null || git check-igno) (+21 more)
 
 ### Community 12 - "Community 12"
-Cohesion: 0.11
-Nodes (31): metadata, SettingsForm(), SettingsFormProps, metadata, PRESETS, ColorConverter(), ColorConverterProps, COLORS (+23 more)
+Cohesion: 0.05
+Nodes (82): metadata, calculators, metadata, SettingsForm(), SettingsFormProps, metadata, useUsageLimit(), formatBytes() (+74 more)
 
 ### Community 13 - "Community 13"
 Cohesion: 0.12
@@ -232,7 +231,7 @@ Nodes (24): code:block1 (IMPORTANT: This is a real scenario. Choose and act.), c
 
 ### Community 15 - "Community 15"
 Cohesion: 0.06
-Nodes (5): metadata, metadata, metadata, { handlers, auth, signIn, signOut }, metadata
+Nodes (6): metadata, metadata, metadata, metadata, metadata, { handlers, auth, signIn, signOut }
 
 ### Community 16 - "Community 16"
 Cohesion: 0.08
@@ -271,8 +270,8 @@ Cohesion: 0.2
 Nodes (9): 1. General & UI Verification, 2. Tool-Specific Verification, 3. SEO & Analytics Verification, GST Calculator (`/tools/gst-calculator`), HEX / RGB / HSL Converter (`/tools/color-converter`), Product Description Generator (`/tools/product-description`), QA Checklist - Full Tool Suite Release (v0.2.0), QR Code Generator (`/tools/qr-code`) (+1 more)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.07
-Nodes (6): globalForPrisma, GET(), getDateStr(), getIdentifier(), POST(), PrismaModuleType
+Cohesion: 0.06
+Nodes (3): DELETE(), GET(), globalForPrisma
 
 ### Community 26 - "Community 26"
 Cohesion: 0.11
@@ -351,8 +350,8 @@ Cohesion: 0.4
 Nodes (4): [0.2.0] - 2026-05-24, Added, Changed, Changelog
 
 ### Community 45 - "Community 45"
-Cohesion: 0.1
-Nodes (34): cn(), NativeToggle(), NativeToggle(), Accordion(), AccordionContent(), AccordionItem(), AccordionTrigger(), Avatar() (+26 more)
+Cohesion: 0.08
+Nodes (34): BillingPage(), cn(), NativeToggle(), NativeToggle(), NativeToggle(), NativeToggle(), NativeToggle(), Accordion() (+26 more)
 
 ### Community 46 - "Community 46"
 Cohesion: 0.2
@@ -383,11 +382,11 @@ Cohesion: 0.33
 Nodes (6): [Analysis Title], code:block34, code:`markdown (## Report structure), Executive summary, Key findings, Recommendations
 
 ### Community 54 - "Community 54"
-Cohesion: 0.1
-Nodes (35): useUsageLimit(), formatBytes(), IMAGE_PRESETS, processImage(), ResizeOptions, getDailyUsage(), getMonthlyUsage(), incrementDailyUsage() (+27 more)
+Cohesion: 0.6
+Nodes (5): GET(), getDateStr(), getIdentifier(), POST(), PrismaModuleType
 
 ### Community 55 - "Community 55"
-Cohesion: 0.23
+Cohesion: 0.22
 Nodes (10): FormData, loginSchema, registerSchema, UserAuthForm(), UserAuthFormProps, LoginPage(), metadata, metadata (+2 more)
 
 ### Community 56 - "Community 56"
@@ -499,8 +498,8 @@ Cohesion: 0.5
 Nodes (3): main(), prisma, { PrismaClient }
 
 ### Community 83 - "Community 83"
-Cohesion: 0.16
-Nodes (9): LogoutButton(), Footer(), Header(), metadata, PricingCards(), PricingCardsProps, UpgradeButton(), metadata (+1 more)
+Cohesion: 0.24
+Nodes (5): Footer(), Header(), metadata, metadata, metadata
 
 ### Community 84 - "Community 84"
 Cohesion: 0.4
@@ -510,9 +509,13 @@ Nodes (5): Discipline-Enforcing Skills (rules/requirements), Pattern Skills (men
 Cohesion: 0.11
 Nodes (17): API Error Codes, Architecture, code:ts (type LinkedInImportResult = {), code:block2 (User (Business) → clicks "Import from LinkedIn" in Personal ), Data Contracts, Decisions Made, Error Handling, LinkedIn Profile Import — Design Spec (+9 more)
 
+### Community 89 - "Community 89"
+Cohesion: 0.5
+Nodes (3): PricingCards(), PricingCardsProps, UpgradeButton()
+
 ### Community 90 - "Community 90"
-Cohesion: 0.1
-Nodes (24): ThemeToggle(), SupportModalProps, UpgradeButtonProps, Window, Dialog(), DialogContent(), DialogDescription(), DialogFooter() (+16 more)
+Cohesion: 0.11
+Nodes (21): ThemeToggle(), DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuGroup(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem() (+13 more)
 
 ### Community 91 - "Community 91"
 Cohesion: 0.26
@@ -551,8 +554,8 @@ Cohesion: 0.25
 Nodes (7): A4 Print Formatting (`@media print`), Auto-Totaling Formula, code:typescript (interface TaskRow {), Data Persistence & State Schema, File Structure & Routing, Overview, Work Report / Daily Task Tracker Design Spec
 
 ### Community 107 - "Community 107"
-Cohesion: 0.22
-Nodes (7): NavGroup, navGroups, NavItem, allTools, metadata, ProBadge(), ProGateProps
+Cohesion: 0.2
+Nodes (8): NavGroup, navGroups, NavItem, ToolsNav(), allTools, metadata, ProBadge(), ProGateProps
 
 ### Community 109 - "Community 109"
 Cohesion: 0.67
@@ -561,10 +564,6 @@ Nodes (3): code:bash (./render-graphs.js ../some-skill           # Each diagram 
 ### Community 128 - "Community 128"
 Cohesion: 0.15
 Nodes (12): Architecture, code:typescript (type CVParserResult = {), Data Contracts, Decisions Made, File Changes, Global AI CV Parser — Design Spec, New API Route, Overview (+4 more)
-
-### Community 131 - "Community 131"
-Cohesion: 0.15
-Nodes (15): calculators, metadata, TEMPLATES, SVGFile, NativeToggle(), WordCounter(), Checkbox, Progress() (+7 more)
 
 ### Community 132 - "Community 132"
 Cohesion: 0.29
@@ -575,8 +574,8 @@ Cohesion: 0.2
 Nodes (9): name, private, scripts, build, dev, lint, qa, start (+1 more)
 
 ### Community 134 - "Community 134"
-Cohesion: 0.38
-Nodes (5): AIParserModal(), AIParserModalProps, AIPreviewModal(), AIPreviewModalProps, CVParserResult
+Cohesion: 0.22
+Nodes (8): LogoutButton(), CancelButton(), AIParserModal(), AIParserModalProps, AIPreviewModal(), AIPreviewModalProps, CVParserResult, Button()
 
 ### Community 135 - "Community 135"
 Cohesion: 0.18
@@ -585,14 +584,6 @@ Nodes (10): code:typescript (export const SUBSCRIPTION_PLANS = {), PayPal & Razo
 ### Community 136 - "Community 136"
 Cohesion: 0.25
 Nodes (6): LinkedInImportModal(), LinkedInImportModalProps, LinkedInImportResult, LinkedInImportResult, LinkedInPreviewModal(), LinkedInPreviewModalProps
-
-### Community 137 - "Community 137"
-Cohesion: 0.38
-Nodes (3): BillingPage(), CancelButton(), Button()
-
-### Community 138 - "Community 138"
-Cohesion: 0.67
-Nodes (3): optimizeSVG(), prettyPrintSVG(), SVGOptions
 
 ### Community 145 - "Community 145"
 Cohesion: 0.67
@@ -605,15 +596,15 @@ Nodes (3): code:`markdown (## Form layout analysis), code:block55, Use visual an
 ## Knowledge Gaps
 - **815 isolated node(s):** `version`, `source`, `sourceType`, `skillPath`, `computedHash` (+810 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **25 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **21 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 45` to `Community 0`, `Community 131`, `Community 7`, `Community 137`, `Community 10`, `Community 107`, `Community 12`, `Community 142`, `Community 83`, `Community 54`, `Community 55`, `Community 90`, `Community 91`?**
+- **Why does `cn()` connect `Community 45` to `Community 0`, `Community 1`, `Community 134`, `Community 7`, `Community 10`, `Community 107`, `Community 12`, `Community 83`, `Community 55`, `Community 89`, `Community 90`, `Community 91`?**
   _High betweenness centrality (0.066) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `Community 0` to `Community 133`?**
-  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
 - **Why does `clsx` connect `Community 0` to `Community 45`?**
   _High betweenness centrality (0.028) - this node is a cross-community bridge._
 - **What connects `version`, `source`, `sourceType` to the rest of the system?**

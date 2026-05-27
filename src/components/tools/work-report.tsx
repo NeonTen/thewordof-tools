@@ -23,7 +23,8 @@ interface TaskRow {
   taskName: string
   updateText: string
   projectedDate: string
-  durationVal: string
+  hours: number
+  minutes: number
 }
 
 interface RichTextEditorProps {
@@ -173,24 +174,47 @@ interface WorkReportProps {
   isPro?: boolean
 }
 
-const DURATION_PRESETS = [
-  "15 mins",
-  "30 mins",
-  "45 mins",
-  "1 hour",
-  "2 hours",
-  "3 hours",
-  "4 hours",
-  "All Day"
-]
+const parseDurationVal = (val: string) => {
+  let hours = 0
+  let minutes = 0
+  const normalized = val.toLowerCase().trim()
+  if (normalized === "all day") {
+    hours = 8
+  } else if (normalized.includes("hour") || normalized.includes("hr")) {
+    const parsedHours = parseFloat(normalized)
+    if (!isNaN(parsedHours)) {
+      hours = Math.floor(parsedHours)
+      minutes = Math.round((parsedHours - hours) * 60)
+    }
+  } else if (normalized.includes("min")) {
+    const parsedMins = parseFloat(normalized)
+    if (!isNaN(parsedMins)) {
+      minutes = Math.round(parsedMins)
+    }
+  } else {
+    const parsedHours = parseFloat(normalized)
+    if (!isNaN(parsedHours)) {
+      hours = Math.floor(parsedHours)
+      minutes = Math.round((parsedHours - hours) * 60)
+    }
+  }
+  return { hours, minutes }
+}
+
+const formatDuration = (hours: number, minutes: number) => {
+  if (!hours && !minutes) return "—"
+  const hText = hours > 0 ? `${hours} hr${hours > 1 ? "s" : ""}` : ""
+  const mText = minutes > 0 ? `${minutes} min${minutes > 1 ? "s" : ""}` : ""
+  return [hText, mText].filter(Boolean).join(" ")
+}
 
 export function WorkReport({}: WorkReportProps) {
   const [name, setName] = useState("")
   const [date, setDate] = useState("")
   const [scheduledHours, setScheduledHours] = useState("8")
   const [tasks, setTasks] = useState<TaskRow[]>([
-    { id: "1", taskName: "Phone Calls", updateText: "Total addressed: <b>40</b><br />Reviewed callbacks", projectedDate: "", durationVal: "2 hours" },
-    { id: "2", taskName: "Chats", updateText: "Attended support chats and checked <a href='https://google.com' target='_blank' style='color:#1d4ed8;text-decoration:underline;'>Google portal</a>", projectedDate: "", durationVal: "1 hour" }
+    { id: "1", taskName: "Phone Calls", updateText: "Total addressed: <b>40</b><br />Reviewed callbacks", projectedDate: "", hours: 2, minutes: 0 },
+    { id: "2", taskName: "Chats", updateText: "Attended support chats and checked <a href='https://google.com' target='_blank' style='color:#1d4ed8;text-decoration:underline;'>Google portal</a>", projectedDate: "", hours: 1, minutes: 0 }
   ])
   const [extraTitle, setExtraTitle] = useState("")
   const [extraContent, setExtraContent] = useState("")
@@ -211,7 +235,26 @@ export function WorkReport({}: WorkReportProps) {
         if (parsed.name) setName(parsed.name)
         if (parsed.date) setDate(parsed.date)
         if (parsed.scheduledHours) setScheduledHours(parsed.scheduledHours)
-        if (parsed.tasks && Array.isArray(parsed.tasks)) setTasks(parsed.tasks)
+        if (parsed.tasks && Array.isArray(parsed.tasks)) {
+          const migratedTasks = parsed.tasks.map((t: any) => {
+            const hrs = typeof t.hours === "number" ? t.hours : 0
+            const mins = typeof t.minutes === "number" ? t.minutes : 0
+            if (t.hours === undefined && t.minutes === undefined && t.durationVal) {
+              const parsedTime = parseDurationVal(t.durationVal)
+              return {
+                ...t,
+                hours: parsedTime.hours,
+                minutes: parsedTime.minutes
+              }
+            }
+            return {
+              ...t,
+              hours: hrs,
+              minutes: mins
+            }
+          })
+          setTasks(migratedTasks)
+        }
         if (parsed.extraTitle !== undefined) setExtraTitle(parsed.extraTitle)
         if (parsed.extraContent !== undefined) setExtraContent(parsed.extraContent)
         if (parsed.extraImage !== undefined) setExtraImage(parsed.extraImage)
@@ -238,19 +281,7 @@ export function WorkReport({}: WorkReportProps) {
   const calculateTotals = () => {
     let totalMins = 0
     tasks.forEach(t => {
-      const val = t.durationVal.toLowerCase().trim()
-      if (val === "all day") {
-        totalMins += 8 * 60
-      } else if (val.includes("hour") || val.includes("hr")) {
-        const hours = parseFloat(val)
-        if (!isNaN(hours)) totalMins += Math.round(hours * 60)
-      } else if (val.includes("min")) {
-        const mins = parseFloat(val)
-        if (!isNaN(mins)) totalMins += Math.round(mins)
-      } else {
-        const valNum = parseFloat(val)
-        if (!isNaN(valNum)) totalMins += Math.round(valNum * 60) // fallback to hours
-      }
+      totalMins += (t.hours || 0) * 60 + (t.minutes || 0)
     })
 
     const finalHours = Math.floor(totalMins / 60)
@@ -273,7 +304,8 @@ export function WorkReport({}: WorkReportProps) {
         taskName: "",
         updateText: "",
         projectedDate: "",
-        durationVal: "30 mins"
+        hours: 0,
+        minutes: 30
       }
     ])
   }
@@ -283,9 +315,9 @@ export function WorkReport({}: WorkReportProps) {
     setTasks(tasks.filter((_, i) => i !== index))
   }
 
-  const updateRow = (index: number, field: keyof TaskRow, value: string) => {
+  const updateRow = (index: number, field: keyof TaskRow, value: string | number) => {
     const newTasks = [...tasks]
-    newTasks[index] = { ...newTasks[index], [field]: value }
+    newTasks[index] = { ...newTasks[index], [field]: value } as TaskRow
     setTasks(newTasks)
   }
 
@@ -441,23 +473,30 @@ export function WorkReport({}: WorkReportProps) {
                           />
                         </td>
                         <td className="py-1 px-1.5 w-52">
-                          <div className="flex gap-1 items-center">
-                            <Input
-                              value={task.durationVal}
-                              onChange={(e) => updateRow(idx, "durationVal", e.target.value)}
-                              placeholder="e.g. 1 hour"
-                              className="h-8 text-xs"
-                            />
-                            <select
-                              value={DURATION_PRESETS.includes(task.durationVal) ? task.durationVal : ""}
-                              onChange={(e) => updateRow(idx, "durationVal", e.target.value)}
-                              className="text-[10px] rounded border bg-background text-muted-foreground h-8 px-1 w-24 shrink-0"
-                            >
-                              <option value="">Presets</option>
-                              {DURATION_PRESETS.map(p => (
-                                <option key={p} value={p}>{p}</option>
-                              ))}
-                            </select>
+                          <div className="flex gap-1.5 items-center w-full">
+                            <div className="flex items-center gap-1">
+                              <Input
+                                type="number"
+                                min={0}
+                                step={1}
+                                value={task.hours}
+                                onChange={(e) => updateRow(idx, "hours", parseInt(e.target.value) || 0)}
+                                className="h-8 w-16 text-xs text-center"
+                              />
+                              <span className="text-[10px] text-muted-foreground">hrs</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Input
+                                type="number"
+                                min={0}
+                                max={45}
+                                step={15}
+                                value={task.minutes}
+                                onChange={(e) => updateRow(idx, "minutes", parseInt(e.target.value) || 0)}
+                                className="h-8 w-16 text-xs text-center"
+                              />
+                              <span className="text-[10px] text-muted-foreground">mins</span>
+                            </div>
                           </div>
                         </td>
                         <td className="py-1 text-right w-12">
@@ -520,8 +559,32 @@ export function WorkReport({}: WorkReportProps) {
                       <Input type="date" value={task.projectedDate} onChange={(e) => updateRow(idx, "projectedDate", e.target.value)} className="text-xs" />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold text-muted-foreground">Duration</label>
-                      <Input value={task.durationVal} onChange={(e) => updateRow(idx, "durationVal", e.target.value)} className="text-xs" />
+                      <label className="text-xs font-semibold text-muted-foreground">Time Spent</label>
+                      <div className="flex gap-1.5 items-center w-full">
+                        <div className="flex items-center gap-1 flex-1">
+                          <Input
+                            type="number"
+                            min={0}
+                            step={1}
+                            value={task.hours}
+                            onChange={(e) => updateRow(idx, "hours", parseInt(e.target.value) || 0)}
+                            className="h-8 text-xs text-center flex-1"
+                          />
+                          <span className="text-[10px] text-muted-foreground">hrs</span>
+                        </div>
+                        <div className="flex items-center gap-1 flex-1">
+                          <Input
+                            type="number"
+                            min={0}
+                            max={45}
+                            step={15}
+                            value={task.minutes}
+                            onChange={(e) => updateRow(idx, "minutes", parseInt(e.target.value) || 0)}
+                            className="h-8 text-xs text-center flex-1"
+                          />
+                          <span className="text-[10px] text-muted-foreground">mins</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -707,7 +770,7 @@ export function WorkReport({}: WorkReportProps) {
                               {task.projectedDate || "—"}
                             </td>
                             <td className="py-1 px-2 text-gray-900 font-medium break-words [word-break:break-word]">
-                              {task.durationVal || "—"}
+                              {formatDuration(task.hours, task.minutes)}
                             </td>
                           </tr>
                         ))}
