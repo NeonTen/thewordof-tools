@@ -14,7 +14,7 @@ export function generateSeoMetadata({
   const baseKeywords = ["online tools", "free utility", "productivity tools", "developer tools"]
   
   return {
-    title: `${title} | TheWordOf Tools`,
+    title: title,
     description,
     keywords: [...baseKeywords, ...keywords],
     openGraph: {

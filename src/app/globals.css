@@ -131,7 +131,6 @@
 
 @media print {
   @page { 
-    margin: 0; 
     size: auto;
   }
   body { 

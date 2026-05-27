@@ -308,7 +308,10 @@ export function WorkReport({}: WorkReportProps) {
   }
 
   const printPdf = () => {
+    const originalTitle = document.title
+    document.title = "Daily Task Tracker & Work Report Generator | TheWordOf Tools"
     window.print()
+    document.title = originalTitle
   }
 
   // Render HTML strings natively
@@ -334,6 +337,20 @@ export function WorkReport({}: WorkReportProps) {
 
   return (
     <div className="w-full space-y-6 print:block print:p-0">
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media print {
+          @page { 
+            margin: 15mm 20mm;
+            size: A4 portrait;
+          }
+          body { 
+            margin: 0 !important; 
+            padding: 0 !important;
+            -webkit-print-color-adjust: exact !important; 
+            print-color-adjust: exact !important;
+          }
+        }
+      `}} />
       {/* Main Header with Export to PDF button */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print:hidden pb-4 border-b border-border/50">
         <div>
@@ -625,10 +642,10 @@ export function WorkReport({}: WorkReportProps) {
 
       {/* PDF / Print Preview Modal Dialog */}
       {isPreviewOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto print:absolute print:inset-0 print:bg-white print:p-0 print:block print:z-0 print:overflow-visible">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto print:static print:block print:w-full print:h-auto print:bg-white print:p-0 print:z-0 print:overflow-visible">
           <div className="absolute inset-0 print:hidden bg-transparent" onClick={() => setIsPreviewOpen(false)} />
           
-          <div className="relative w-full max-w-4xl bg-card rounded-2xl border shadow-2xl flex flex-col max-h-[90vh] overflow-hidden print:static print:max-w-full print:border-none print:shadow-none print:bg-white print:h-auto print:max-h-none print:overflow-visible">
+          <div className="relative w-full max-w-4xl bg-card rounded-2xl border shadow-2xl flex flex-col max-h-[90vh] overflow-hidden print:static print:block print:max-w-full print:border-none print:shadow-none print:bg-white print:h-auto print:max-h-none print:overflow-visible">
             {/* Modal Header Actions */}
             <div className="p-4 border-b flex items-center justify-between bg-muted/20 print:hidden">
               <h3 className="text-sm font-bold">Document Print Preview</h3>
@@ -643,32 +660,32 @@ export function WorkReport({}: WorkReportProps) {
             </div>
 
             {/* Modal Preview Area */}
-            <div className="flex-1 overflow-y-auto p-8 bg-muted/10 flex justify-center print:p-0 print:bg-white print:overflow-visible">
-              {/* printable A4 paper container */}
-              <div 
-                className="w-full max-w-[210mm] border border-black rounded-sm bg-white text-black p-10 shadow-sm print:shadow-none print:border-none print:p-10 font-sans min-h-[297mm] flex flex-col justify-between"
-                style={{ fontSize: "11pt", lineHeight: "1.3" }}
-              >
-                <div className="space-y-6">
-                  {/* Header Row */}
-                  <div className="text-center space-y-1">
-                    <h2 className="font-bold text-black tracking-tight" style={{ fontSize: "14pt" }}>
-                      Daily Task Tracker
-                    </h2>
-                    
-                    <div className="flex justify-between" style={{ fontSize: "11pt" }}>
-                      <span>Name: {name || "—"}</span>
-                      <span>Date: {date || "—"}</span>
+            <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-muted/10 print:block print:p-0 print:bg-white print:overflow-visible">
+              <div className="min-w-fit flex justify-center w-full print:block">
+                {/* printable A4 paper container */}
+                <div 
+                  className="w-full max-w-[210mm] border border-black bg-white text-black p-10 shadow-sm print:shadow-none print:border-none print:p-0 font-sans min-h-[297mm] print:min-h-0 print:block flex flex-col justify-start"
+                  style={{ fontSize: "11pt", lineHeight: "1.3" }}
+                >
+                  <div className="space-y-6">
+                    {/* Header Row */}
+                    <div className="text-center space-y-1">
+                      <h2 className="font-bold text-black tracking-tight" style={{ fontSize: "14pt" }}>
+                        Daily Task Tracker
+                      </h2>
+                      
+                      <div className="flex justify-between" style={{ fontSize: "11pt" }}>
+                        <span>Name: {name || "—"}</span>
+                        <span>Date: {date || "—"}</span>
+                      </div>
+
+                      <div className="text-left" style={{ fontSize: "11pt" }}>
+                        Scheduled hours today: {scheduledHours || "—"}
+                      </div>
                     </div>
 
-                    <div className="text-left" style={{ fontSize: "11pt" }}>
-                      Scheduled hours today: {scheduledHours || "—"}
-                    </div>
-                  </div>
-
-                  {/* Printable Table */}
-                  <div className="border border-black overflow-hidden">
-                    <table className="w-full text-left border-collapse table-fixed" style={{ fontSize: "11pt" }}>
+                    {/* Printable Table */}
+                    <table className="w-full text-left border-collapse table-fixed border border-black" style={{ fontSize: "11pt" }}>
                       <thead>
                         <tr className="bg-gray-100 text-gray-800 font-bold border-b border-black">
                           <th className="py-1.5 px-2 border-r border-black w-[15%] break-words">Task Name</th>
@@ -705,45 +722,45 @@ export function WorkReport({}: WorkReportProps) {
                         </tr>
                       </tbody>
                     </table>
+
+                    {/* Additional Notes Custom Section 1 */}
+                    {(extraTitle || extraContent || extraImage) && (
+                      <div className="text-left break-inside-avoid" style={{ fontSize: "11pt" }}>
+                        {extraTitle && (
+                          <h3 className="font-bold mb-1.5 uppercase text-xs">
+                            {extraTitle}
+                          </h3>
+                        )}
+                        <div className="text-gray-800 leading-relaxed">
+                          {renderHtmlText(extraContent)}
+                        </div>
+                        {extraImage && (
+                          <div className="mt-2.5">
+                            <img src={extraImage} alt="Attachment" className="max-w-full max-h-64 object-contain rounded-sm border border-gray-100" />
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Additional Custom Section 2 */}
+                    {(extraTitle2 || extraContent2 || extraImage2) && (
+                      <div className="text-left break-inside-avoid" style={{ fontSize: "11pt" }}>
+                        {extraTitle2 && (
+                          <h3 className="font-bold mb-1.5 uppercase text-xs">
+                            {extraTitle2}
+                          </h3>
+                        )}
+                        <div className="text-gray-800 leading-relaxed">
+                          {renderHtmlText(extraContent2)}
+                        </div>
+                        {extraImage2 && (
+                          <div className="mt-2.5">
+                            <img src={extraImage2} alt="Attachment" className="max-w-full max-h-64 object-contain rounded-sm border border-gray-100" />
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-
-                  {/* Additional Notes Custom Section 1 */}
-                  {(extraTitle || extraContent || extraImage) && (
-                    <div className="text-left break-inside-avoid" style={{ fontSize: "11pt" }}>
-                      {extraTitle && (
-                        <h3 className="font-bold mb-1.5 uppercase text-xs">
-                          {extraTitle}
-                        </h3>
-                      )}
-                      <div className="text-gray-800 leading-relaxed">
-                        {renderHtmlText(extraContent)}
-                      </div>
-                      {extraImage && (
-                        <div className="mt-2.5">
-                          <img src={extraImage} alt="Attachment" className="max-w-full max-h-64 object-contain rounded-sm border border-gray-100" />
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Additional Custom Section 2 */}
-                  {(extraTitle2 || extraContent2 || extraImage2) && (
-                    <div className="text-left break-inside-avoid" style={{ fontSize: "11pt" }}>
-                      {extraTitle2 && (
-                        <h3 className="font-bold mb-1.5 uppercase text-xs">
-                          {extraTitle2}
-                        </h3>
-                      )}
-                      <div className="text-gray-800 leading-relaxed">
-                        {renderHtmlText(extraContent2)}
-                      </div>
-                      {extraImage2 && (
-                        <div className="mt-2.5">
-                          <img src={extraImage2} alt="Attachment" className="max-w-full max-h-64 object-contain rounded-sm border border-gray-100" />
-                        </div>
-                      )}
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
