@@ -43,6 +43,20 @@ export async function GET(request: NextRequest) {
       return acc
     }, {})
 
+    const countries = qrCode.scans.reduce((acc: Record<string, number>, s) => {
+      if (s.country) {
+        acc[s.country] = (acc[s.country] || 0) + 1
+      }
+      return acc
+    }, {})
+
+    const cities = qrCode.scans.reduce((acc: Record<string, number>, s) => {
+      if (s.city) {
+        acc[s.city] = (acc[s.city] || 0) + 1
+      }
+      return acc
+    }, {})
+
     const scansList = qrCode.scans.map(s => ({
       createdAt: s.createdAt,
       isUnique: s.isUnique,
@@ -54,6 +68,8 @@ export async function GET(request: NextRequest) {
       devices,
       os: osList,
       browsers,
+      countries,
+      cities,
       scans: scansList,
     })
   } catch (error) {
