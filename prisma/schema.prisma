@@ -185,6 +185,8 @@ model QrScan {
   device     String   // "Mobile", "Tablet", "Desktop"
   os         String   // "iOS", "Android", "Windows", "macOS", "Linux", "Unknown"
   browser    String   // "Chrome", "Safari", "Firefox", "Edge", "Unknown"
+  country    String?  // e.g. "IN", "US"
+  city       String?  // e.g. "Mumbai", "New York"
   isUnique   Boolean  @default(true)
   createdAt  DateTime @default(now())
 
