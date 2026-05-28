@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
+import geoip from "geoip-lite"
 
 export async function GET(
   request: NextRequest,
@@ -45,6 +46,27 @@ export async function GET(
     else if (/firefox|fxios/i.test(uaString)) browser = "Firefox"
     else if (/edge|edg/i.test(uaString)) browser = "Edge"
 
+    // Resolve IP for Geolocation
+    let ip = request.headers.get("x-forwarded-for")?.split(",")[0].trim() || 
+             request.headers.get("x-real-ip") || 
+             "8.8.8.8"
+
+    if (ip === "::1" || ip === "127.0.0.1" || ip.startsWith("192.168.")) {
+      ip = "8.8.8.8" // Mock public IP for local testing
+    }
+
+    let country = null
+    let city = null
+    try {
+      const geo = geoip.lookup(ip)
+      if (geo) {
+        country = geo.country || null
+        city = geo.city || null
+      }
+    } catch (e) {
+      console.error("GeoIP lookup failed:", e)
+    }
+
     // Unique vs Repeat check via cookie
     const cookieName = `qr_scanned_${id}`
     const hasCookie = request.cookies.has(cookieName)
@@ -57,6 +79,8 @@ export async function GET(
         device,
         os,
         browser,
+        country,
+        city,
         isUnique,
       },
     })
