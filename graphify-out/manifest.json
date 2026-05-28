@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/package.json": {
-    "mtime": 1779610613.3680828,
-    "ast_hash": "7b8c8c845912d54885934b38116e7b24",
+    "mtime": 1779942259.5690594,
+    "ast_hash": "6d79e8af8a3c7f3ae7365f20fd944423",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/test-prisma.ts": {
@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/next.config.ts": {
-    "mtime": 1777865052.172502,
-    "ast_hash": "9b77af189a21a7a64e4bd7a426f64176",
+    "mtime": 1779942364.593741,
+    "ast_hash": "97ca3f51124c99be6dc1505a12d5dd11",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/.agents/skills/systematic-debugging/condition-based-waiting-example.ts": {
@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/tools/qr-code/page.tsx": {
-    "mtime": 1779610539.827002,
-    "ast_hash": "37928f1572342cc69fa17251bd69552d",
+    "mtime": 1779942312.6295552,
+    "ast_hash": "93595fdcad608fb81c86352b9ef60bb9",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/tools/qr-code/expired/page.tsx": {
@@ -375,13 +375,13 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/tools/qr-code/create/route.ts": {
-    "mtime": 1779799471.4361563,
-    "ast_hash": "800f71489810182ee35c3644630b2537",
+    "mtime": 1779942804.982512,
+    "ast_hash": "1225b2b9e4639930ec0b9423b80cc8a1",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/tools/qr-code/stats/route.ts": {
-    "mtime": 1779799468.4462807,
-    "ast_hash": "3321673d78be622d8129e88c8a561aad",
+    "mtime": 1779942301.5328329,
+    "ast_hash": "06567457850dfb78f2c02cb525fcaff7",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/tools/fetch-schema/route.ts": {
@@ -530,8 +530,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/q/[id]/route.ts": {
-    "mtime": 1779799465.3640833,
-    "ast_hash": "8a542ac8feafe04e087d2d6746f993f1",
+    "mtime": 1779942278.834642,
+    "ast_hash": "c48b8077a2c6e9f4c3eeacd4115066b1",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/config/subscriptions.ts": {
@@ -660,8 +660,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/qr-code.tsx": {
-    "mtime": 1779800677.6567576,
-    "ast_hash": "8bd65e6c88e9e5265b1823d321653e7a",
+    "mtime": 1779942832.6071005,
+    "ast_hash": "5534d5b5f29d14df4a1410ab5a7299c0",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/compound-interest-calculator.tsx": {
@@ -755,8 +755,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/work-report.tsx": {
-    "mtime": 1779859722.465356,
-    "ast_hash": "777e44ddea0d147fc2b436c3ceed5701",
+    "mtime": 1779942405.9494824,
+    "ast_hash": "211abffed8db66cc9f9292d3883f7fd0",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/seo-generator.tsx": {
@@ -1177,6 +1177,11 @@
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-17-linkedin-import-design.md": {
     "mtime": 1779028409.0440555,
     "ast_hash": "fcae923285dd878c8c08c81d6cbccb83",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-28-qr-code-geographic-analytics-design.md": {
+    "mtime": 1779942161.4125776,
+    "ast_hash": "f83d072e73020ab2238e35dd4e972bd9",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-17-ai-cv-parser-design.md": {
