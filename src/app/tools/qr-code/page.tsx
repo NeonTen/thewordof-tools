@@ -11,6 +11,7 @@ export const metadata = generateSeoMetadata({
 export default async function QRCodeGeneratorPage() {
   const session = await auth()
   const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
+  const isBusiness = session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
   return (
     <div className="flex flex-col gap-8">
@@ -21,7 +22,7 @@ export default async function QRCodeGeneratorPage() {
         </p>
       </div>
 
-      <QRCodeGenerator isPro={isPro} />
+      <QRCodeGenerator isPro={isPro} isBusiness={isBusiness} />
     </div>
   )
 }

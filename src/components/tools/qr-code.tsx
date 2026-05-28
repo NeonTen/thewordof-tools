@@ -42,6 +42,7 @@ import {
 
 interface QRCodeProps {
   isPro?: boolean
+  isBusiness?: boolean
 }
 
 interface QrItem {
@@ -62,12 +63,14 @@ interface QrStats {
   devices: Record<string, number>
   os: Record<string, number>
   browsers: Record<string, number>
+  countries: Record<string, number>
+  cities: Record<string, number>
   scans: Array<{ createdAt: string; isUnique: boolean }>
 }
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"]
 
-export function QRCodeGenerator({ isPro = false }: QRCodeProps) {
+export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodeProps) {
   const { data: session } = useSession()
   const isLoggedIn = !!session?.user
 
