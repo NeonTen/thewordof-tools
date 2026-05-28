@@ -52,6 +52,7 @@ interface QrItem {
   fgColor: string
   bgColor: string
   size: number
+  logoUrl?: string | null
   createdAt: string
   _count: {
     scans: number
@@ -165,7 +166,12 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
       })
       if (res.ok) {
         const data = await res.json()
-        setSelectedQrDataUrl(data.dataUrl)
+        if (qr.logoUrl) {
+          const combined = await addLogoToQrCode(data.dataUrl, qr.logoUrl, qr.size, qr.bgColor)
+          setSelectedQrDataUrl(combined)
+        } else {
+          setSelectedQrDataUrl(data.dataUrl)
+        }
       }
     } catch (e) {
       console.error(e)
@@ -243,7 +249,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
         const createRes = await fetch("/api/tools/qr-code/create", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ targetUrl: text, fgColor, bgColor, size }),
+          body: JSON.stringify({ targetUrl: text, fgColor, bgColor, size, logoUrl }),
         })
         if (!createRes.ok) {
           throw new Error("Failed to register dynamic redirect")
@@ -431,7 +437,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
             {/* Logo Upload Option */}
             <div className="space-y-2 pt-2 border-t border-border/40">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium text-muted-foreground">Center Logo (Pro/Business)</label>
+                <label className="text-sm font-medium text-muted-foreground">Center Logo</label>
                 {!isPro && (
                   <span className="text-[9px] bg-primary/10 text-primary font-black uppercase px-2 py-0.5 rounded flex items-center gap-1">
                     Pro Feature

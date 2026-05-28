@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { targetUrl, fgColor, bgColor, size } = await request.json()
+    const { targetUrl, fgColor, bgColor, size, logoUrl } = await request.json()
     if (!targetUrl) {
       return new NextResponse("Missing URL", { status: 400 })
     }
@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
         fgColor: fgColor || "#000000",
         bgColor: bgColor || "#ffffff",
         size: size || 256,
+        logoUrl: logoUrl || null,
       },
     })
 
