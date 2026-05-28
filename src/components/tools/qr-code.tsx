@@ -74,6 +74,7 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"]
 export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodeProps) {
   const { data: session } = useSession()
   const isLoggedIn = !!session?.user
+  const [now] = useState(() => Date.now())
 
   const qrType = "dynamic"
   const [text, setText] = useState("")
@@ -154,7 +155,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
     }
   }, [selectedQr])
 
-  const generateSelectedQrImage = async (qr: QrItem) => {
+  async function generateSelectedQrImage(qr: QrItem) {
     try {
       const qrText = `${window.location.origin}/q/${qr.id}`
       const res = await fetch("/api/tools/generate-qr", {
@@ -190,7 +191,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
     }
   }
 
-  const fetchUserQrs = async () => {
+  async function fetchUserQrs() {
     try {
       const res = await fetch("/api/tools/qr-code/user-qrs")
       if (res.ok) {
@@ -202,7 +203,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
     }
   }
 
-  const fetchQrStats = async (id: string) => {
+  async function fetchQrStats(id: string) {
     setStatsLoading(true)
     try {
       const res = await fetch(`/api/tools/qr-code/stats?id=${id}`)
@@ -553,7 +554,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
             {/* List */}
             <div className="space-y-3 md:col-span-1 border-r pr-6 max-h-[500px] overflow-y-auto">
               {userQrs.map((qr) => {
-                const ageDays = (Date.now() - new Date(qr.createdAt).getTime()) / (1000 * 60 * 60 * 24)
+                const ageDays = (now - new Date(qr.createdAt).getTime()) / (1000 * 60 * 60 * 24)
                 const expired = isFreeTier && ageDays > 15
                 return (
                   <div 
@@ -851,7 +852,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
             Unlike static QR codes which encode the destination URL directly into the pixel pattern, a dynamic QR code points to a secure short link on our server. When someone scans it, our system logs the scan details in real-time before instantly redirecting them to your target website.
           </p>
           <p className="text-muted-foreground mt-4 leading-relaxed">
-            This design allows you to change the destination URL at any time without ever having to print a new physical QR code. It also opens up powerful tracking capabilities, allowing you to monitor and measure your campaign's performance instantly.
+            This design allows you to change the destination URL at any time without ever having to print a new physical QR code. It also opens up powerful tracking capabilities, allowing you to monitor and measure your campaign&apos;s performance instantly.
           </p>
           <h3 className="text-lg font-bold mt-8 mb-3">Key Capabilities</h3>
           <div className="grid grid-cols-2 gap-3">

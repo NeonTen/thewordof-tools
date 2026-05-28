@@ -236,7 +236,7 @@ export function WorkReport({}: WorkReportProps) {
         if (parsed.date) setDate(parsed.date)
         if (parsed.scheduledHours) setScheduledHours(parsed.scheduledHours)
         if (parsed.tasks && Array.isArray(parsed.tasks)) {
-          const migratedTasks = parsed.tasks.map((t: any) => {
+          const migratedTasks = parsed.tasks.map((t: { hours?: number; minutes?: number; durationVal?: string }) => {
             const hrs = typeof t.hours === "number" ? t.hours : 0
             const mins = typeof t.minutes === "number" ? t.minutes : 0
             if (t.hours === undefined && t.minutes === undefined && t.durationVal) {
