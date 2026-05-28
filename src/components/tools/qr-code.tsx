@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 import { Slider } from "@/components/ui/slider"
 import { 
   Loader2, 
@@ -348,6 +349,14 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
   const getBarData = (field: "os" | "browsers") => {
     if (!stats || !stats[field]) return []
     return Object.entries(stats[field]).map(([name, count]) => ({ name, count }))
+  }
+
+  const getGeoData = (field: "countries" | "cities") => {
+    if (!stats || !stats[field]) return []
+    return Object.entries(stats[field])
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5) // top 5
   }
 
   return (
@@ -764,6 +773,65 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                       </div>
                     </Card>
                   </div>
+
+                  {/* Geographic Scan Analytics Card */}
+                  <Card className="p-5 border relative overflow-hidden mt-6">
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4">Geographic Distribution</p>
+                    
+                    <div className={cn("grid md:grid-cols-2 gap-8 min-h-[180px] items-center", !isBusiness && "filter blur-sm pointer-events-none select-none")}>
+                      {/* Country Bar Chart */}
+                      <div className="h-44">
+                        <p className="text-[11px] font-semibold text-muted-foreground mb-2">Top Countries</p>
+                        {getGeoData("countries").length === 0 ? (
+                          <div className="h-full flex items-center justify-center text-xs text-muted-foreground">No geo data recorded</div>
+                        ) : (
+                          <ResponsiveContainer width="100%" height="90%">
+                            <RechartsBarChart data={getGeoData("countries")} layout="vertical">
+                              <XAxis type="number" stroke="#888888" fontSize={9} />
+                              <YAxis dataKey="name" type="category" stroke="#888888" fontSize={9} width={50} />
+                              <Tooltip />
+                              <Bar dataKey="count" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+                            </RechartsBarChart>
+                          </ResponsiveContainer>
+                        )}
+                      </div>
+
+                      {/* City Bar Chart / List */}
+                      <div className="h-44">
+                        <p className="text-[11px] font-semibold text-muted-foreground mb-2">Top Cities</p>
+                        {getGeoData("cities").length === 0 ? (
+                          <div className="h-full flex items-center justify-center text-xs text-muted-foreground">No city data recorded</div>
+                        ) : (
+                          <ResponsiveContainer width="100%" height="90%">
+                            <RechartsBarChart data={getGeoData("cities")} layout="vertical">
+                              <XAxis type="number" stroke="#888888" fontSize={9} />
+                              <YAxis dataKey="name" type="category" stroke="#888888" fontSize={9} width={80} />
+                              <Tooltip />
+                              <Bar dataKey="count" fill="#10b981" radius={[0, 4, 4, 0]} />
+                            </RechartsBarChart>
+                          </ResponsiveContainer>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Locked Overlay if not Business */}
+                    {!isBusiness && (
+                      <div className="absolute inset-0 bg-background/40 flex flex-col items-center justify-center text-center p-6 z-10">
+                        <div className="bg-primary/10 text-primary p-3 rounded-full mb-3 shadow-inner">
+                          <Layers className="h-6 w-6" />
+                        </div>
+                        <h4 className="font-bold text-sm text-foreground">Business Feature Locked</h4>
+                        <p className="text-xs text-muted-foreground max-w-sm mt-1 mb-4 leading-normal">
+                          Geographic Scan Tracking is exclusive to the Business Plan. Upgrade to access real-time location metrics.
+                        </p>
+                        <Link href="/pricing">
+                          <Button size="sm" className="font-black text-xs px-5 shadow-lg shadow-primary/20">
+                            Upgrade to Business
+                          </Button>
+                        </Link>
+                      </div>
+                    )}
+                  </Card>
                 </div>
               ) : (
                 <div className="h-full min-h-[300px] flex items-center justify-center text-xs text-muted-foreground">
