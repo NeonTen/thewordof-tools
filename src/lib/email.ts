@@ -33,6 +33,7 @@ export async function sendPaymentSuccessEmail({
 
   const brandColor = isBusiness ? "#6366f1" : "#f59e0b"; // Indigo for Business, Amber for Pro
   const badgeText = isBusiness ? "Business" : "Pro";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://thewordof.com";
 
   const html = `
     <!DOCTYPE html>
@@ -93,12 +94,41 @@ export async function sendPaymentSuccessEmail({
             Your daily limits have been successfully lifted. Try building high-fidelity SEO schemas, generating unlimited image conversions, minifying CSS blocks, or creating viral social captions right away!
           </p>
 
-          <a href="https://tools.thewordof.com/dashboard" class="cta-button">Go to Dashboard</a>
+          <a href="${baseUrl}/dashboard" class="cta-button">Go to Dashboard</a>
         </div>
         <div class="footer">
           &copy; ${new Date().getFullYear()} TheWordOf Tools. All rights reserved.<br />
           Need help? Reach out directly to <a href="mailto:support@thewordof.com" style="color: #4b5563;">support@thewordof.com</a>
         </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  const adminHtml = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>New Pro/Business Upgrade Notification</title>
+      <style>
+        body { font-family: sans-serif; padding: 20px; line-height: 1.5; color: #333; }
+        .receipt { border: 1px solid #ccc; padding: 15px; border-radius: 8px; max-width: 500px; background: #fafafa; }
+        .receipt-row { margin-bottom: 8px; }
+        .receipt-label { font-weight: bold; }
+      </style>
+    </head>
+    <body>
+      <h2>🎉 New Subscription Upgrade!</h2>
+      <p>A user has successfully upgraded to TheWordOf Tools <strong>${badgeText}</strong>.</p>
+      <div class="receipt">
+        <div class="receipt-row"><span class="receipt-label">User Name:</span> ${userName || "N/A"}</div>
+        <div class="receipt-row"><span class="receipt-label">User Email:</span> ${toEmail}</div>
+        <div class="receipt-row"><span class="receipt-label">Plan Name:</span> ${planName}</div>
+        <div class="receipt-row"><span class="receipt-label">Payment Provider:</span> ${paymentProvider}</div>
+        <div class="receipt-row"><span class="receipt-label">Reference ID:</span> ${orderId}</div>
+        <div class="receipt-row"><span class="receipt-label">Total Paid:</span> ${formattedAmount}</div>
+        <div class="receipt-row"><span class="receipt-label">Date/Time:</span> ${new Date().toISOString()}</div>
       </div>
     </body>
     </html>
@@ -113,6 +143,17 @@ export async function sendPaymentSuccessEmail({
     });
   } catch (err) {
     console.error("Failed to deliver success email to user:", err);
+  }
+
+  try {
+    await resend.emails.send({
+      from: "TheWordOf Tools Notifications <noreply@thewordof.com>",
+      to: "info@thewordof.com",
+      subject: `[Admin Notification] New Subscription Activated — ${badgeText}`,
+      html: adminHtml
+    });
+  } catch (err) {
+    console.error("Failed to deliver success email notification to admin:", err);
   }
 }
 
