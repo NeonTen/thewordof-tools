@@ -1,5 +1,26 @@
 import Link from "next/link"
-import { Image as ImageIcon, Zap, FileCode, Split, Calculator, Code, Cpu, FileText, Sparkles, PenLine, Search, Brain } from "lucide-react"
+import { 
+  Image as ImageIcon, 
+  Zap, 
+  FileCode, 
+  Split, 
+  Calculator, 
+  Code, 
+  Cpu, 
+  FileText, 
+  Sparkles, 
+  PenLine, 
+  Search, 
+  Brain,
+  Percent,
+  Coins,
+  Scale,
+  Monitor,
+  Type,
+  TrendingUp,
+  Briefcase,
+  Palette
+} from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { ProBadge } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
@@ -44,7 +65,17 @@ const categories = [
   {
     title: "Calculators",
     tools: [
-      { title: "Calculators Suite", desc: "EMI, SIP, GST, and developer calculators for smarter planning.",             icon: Calculator, href: "/tools/calculators",       pro: false },
+      { title: "EMI Calculator",            desc: "Calculate your monthly EMI payments for home, car, or personal loans.",            icon: Percent,        href: "/tools/calculators/emi",             pro: false },
+      { title: "SIP / Mutual Fund",         desc: "Project future returns of your Systematic Investment Plan (SIP) investments.",       icon: Coins,          href: "/tools/calculators/sip",             pro: false },
+      { title: "Compound Interest",         desc: "Calculate compound interest returns with annual inflation adjustments.",            icon: TrendingUp,     href: "/tools/calculators/compound-interest", pro: false },
+      { title: "Salary to Hourly Converter",desc: "Convert annual/monthly salary to hourly rates, daily rates, and vice-versa.",       icon: Briefcase,      href: "/tools/calculators/salary-to-hourly",  pro: false },
+      { title: "GST Calculator",            desc: "Calculate Goods and Services Tax (GST) for baseline or gross sums.",                icon: Percent,        href: "/tools/gst-calculator",              pro: false },
+      { title: "BMI Calculator",            desc: "Calculate your Body Mass Index (BMI) using metric or imperial units.",               icon: Scale,          href: "/tools/calculators/bmi",             pro: false },
+      { title: "Aspect Ratio Calculator",   desc: "Compute dimension resizes and aspect ratios for layouts and images.",                icon: Monitor,        href: "/tools/calculators/aspect-ratio",    pro: false },
+      { title: "Line-height Converter",     desc: "Convert line-height pixels, rems, or percentages into relative CSS values.",        icon: Type,           href: "/tools/calculators/line-height",       pro: false },
+      { title: "PX to REM Converter",       desc: "Convert pixels to REM units bidirectionally with lookup sheets.",                    icon: FileCode,       href: "/tools/calculators/px-to-rem",       pro: false },
+      { title: "Word Counter",              desc: "Get real-time statistics including word, character, and line counts.",               icon: Type,           href: "/tools/word-counter",                pro: false },
+      { title: "HEX/RGB/HSL Converter",     desc: "Convert colors between spaces with sliders and a visual picker.",                    icon: Palette,        href: "/tools/color-converter",             pro: false }
     ]
   }
 ]
