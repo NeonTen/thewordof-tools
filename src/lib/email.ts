@@ -184,6 +184,7 @@ export async function sendPaymentFailedEmail({
     style: 'currency',
     currency: currency === 'INR' ? 'INR' : 'USD'
   }).format(amount);
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://thewordof.com";
 
   const html = `
     <!DOCTYPE html>
@@ -245,12 +246,41 @@ export async function sendPaymentFailedEmail({
             Please double-check your payment credentials or try an alternative method. If you believe this is an error or are having trouble completing the transaction, reach out to our team at any time!
           </p>
 
-          <a href="https://tools.thewordof.com/pricing" class="cta-button">Try Again</a>
+          <a href="${baseUrl}/pricing" class="cta-button">Try Again</a>
         </div>
         <div class="footer">
           &copy; ${new Date().getFullYear()} TheWordOf Tools. All rights reserved.<br />
           Need support? Contact <a href="mailto:support@thewordof.com" style="color: #4b5563;">support@thewordof.com</a>
         </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  const adminHtml = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Payment Attempt Failed Alert</title>
+      <style>
+        body { font-family: sans-serif; padding: 20px; line-height: 1.5; color: #333; }
+        .details { border: 1px solid #ccc; padding: 15px; border-radius: 8px; max-width: 500px; background: #fafafa; }
+        .details-row { margin-bottom: 8px; }
+        .details-label { font-weight: bold; }
+      </style>
+    </head>
+    <body>
+      <h2>⚠️ Payment Attempt Failed</h2>
+      <p>A checkout attempt has failed on the site.</p>
+      <div class="details">
+        <div class="details-row"><span class="details-label">User Name:</span> ${userName || "N/A"}</div>
+        <div class="details-row"><span class="details-label">User Email:</span> ${toEmail}</div>
+        <div class="details-row"><span class="details-label">Intended Plan:</span> ${planName}</div>
+        <div class="details-row"><span class="details-label">Payment Provider:</span> ${paymentProvider}</div>
+        <div class="details-row"><span class="details-label">Amount:</span> ${formattedAmount}</div>
+        <div class="details-row"><span class="details-label">Error/Reason:</span> ${errorMsg || "None specified"}</div>
+        <div class="details-row"><span class="details-label">Date/Time:</span> ${new Date().toISOString()}</div>
       </div>
     </body>
     </html>
@@ -265,5 +295,16 @@ export async function sendPaymentFailedEmail({
     });
   } catch (err) {
     console.error("Failed to deliver failure email to user:", err);
+  }
+
+  try {
+    await resend.emails.send({
+      from: "TheWordOf Tools Notifications <noreply@thewordof.com>",
+      to: "info@thewordof.com",
+      subject: `[Admin Notification] Payment Failed — ${planName}`,
+      html: adminHtml
+    });
+  } catch (err) {
+    console.error("Failed to deliver failure email notification to admin:", err);
   }
 }
