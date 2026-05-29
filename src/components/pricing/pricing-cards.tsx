@@ -21,8 +21,11 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
 
   useEffect(() => {
     try {
-      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-      setCurrency(tz === "Asia/Kolkata" ? "INR" : "USD")
+      // Use UTC offset to detect India (+5:30 = +330 minutes).
+      // This is more robust than matching the timezone string, which can be
+      // "Asia/Kolkata" or the deprecated alias "Asia/Calcutta" depending on the OS.
+      const offsetMinutes = -new Date().getTimezoneOffset() // negative because getTimezoneOffset() is inverted
+      setCurrency(offsetMinutes === 330 ? "INR" : "USD")
     } catch {
       // fallback: keep "INR" default
     }
