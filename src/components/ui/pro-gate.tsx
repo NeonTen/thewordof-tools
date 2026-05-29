@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Lock, Sparkles, X, ArrowRight } from "lucide-react"
+import { Lock, Sparkles, X, ArrowRight, Crown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -41,10 +41,20 @@ export function ProGate({ children, feature, isPro = false, className, tier = 'p
         }}
       />
       
-      {/* Visual Indicator: Dimmed + Lock Icon */}
+      {/* Visual Indicator: Dimmed + Crown Icon */}
       <div className="pointer-events-none opacity-40 select-none grayscale-[0.8] transition-all group-hover:grayscale-0 group-hover:opacity-60">
-        <div className="absolute top-1 right-1 z-[5] bg-primary/10 backdrop-blur-md p-1 rounded-md border border-primary/20 shadow-sm">
-          <Lock className="h-2.5 w-2.5 text-primary" />
+        <div className={cn(
+          "absolute top-1 right-1 z-[5] backdrop-blur-md p-1.5 rounded-md border shadow-sm",
+          isBusinessTier
+            ? "bg-purple-500/10 border-purple-500/20"
+            : "bg-amber-500/10 border-amber-500/20"
+        )}>
+          <Crown className={cn(
+            "h-2.5 w-2.5",
+            isBusinessTier
+              ? "text-purple-600 dark:text-purple-400 fill-purple-600 dark:fill-purple-400"
+              : "text-amber-500 fill-amber-500"
+          )} />
         </div>
         {children}
       </div>
@@ -72,8 +82,14 @@ export function ProGate({ children, feature, isPro = false, className, tier = 'p
             </div>
 
             <div className="text-center space-y-6">
-              <div className="mx-auto w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center rotate-3 group-hover:rotate-0 transition-transform">
-                <Sparkles className="h-8 w-8 text-primary" />
+              <div className={cn(
+                "mx-auto w-16 h-16 rounded-2xl flex items-center justify-center rotate-3 group-hover:rotate-0 transition-transform",
+                isBusinessTier ? "bg-purple-500/10" : "bg-amber-500/10"
+              )}>
+                <Crown className={cn(
+                  "h-8 w-8",
+                  isBusinessTier ? "text-purple-600 dark:text-purple-400 fill-purple-600 dark:fill-purple-400" : "text-amber-500 fill-amber-500"
+                )} />
               </div>
               
               <div className="space-y-2">
@@ -118,7 +134,7 @@ export function ProBadge({ className, role }: { className?: string; role?: strin
         : "bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20",
       className
     )}>
-      <Sparkles className="h-2 w-2" /> {isBusiness ? "Business" : "Pro"}
+      <Crown className="h-2 w-2 fill-current" /> {isBusiness ? "Business" : "Pro"}
     </span>
   )
 }
