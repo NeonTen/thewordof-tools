@@ -207,15 +207,30 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
   const total = taxableAmount + taxAmount
 
   return (<>
-    <div className="grid lg:grid-cols-2 gap-8 print:block print:w-full">
-      {/* Editor Panel */}
+    <div className="flex flex-col gap-8 print:block print:w-full">
+      <div className="print:hidden flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-6 mb-2">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Invoice Generator</h1>
+          <p className="text-muted-foreground mt-2">
+            Fill in the details below to generate a beautiful, print-ready PDF invoice.
+          </p>
+        </div>
+        {!isPro && (
+          <span className="text-xs font-bold text-muted-foreground bg-muted px-4 py-2 rounded-full shrink-0 self-start md:self-center">
+            {MAX_FREE_INVOICES - usedThisMonth} of {MAX_FREE_INVOICES} free invoices left this month
+          </span>
+        )}
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-8 print:block print:w-full">
+        {/* Editor Panel */}
       <div className="space-y-6 print:hidden">
         <Card>
           <CardHeader>
             <CardTitle>Invoice Details</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Invoice Number</Label>
                 <Input name="invoiceNumber" value={invoice.invoiceNumber} onChange={handleInvoiceChange} />
@@ -234,7 +249,7 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
               </div>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t">
               <div className="space-y-4">
                 <h3 className="font-semibold text-sm">From</h3>
                 <Input placeholder="Your Company Name" name="fromName" value={invoice.fromName} onChange={handleInvoiceChange} />
@@ -274,7 +289,7 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
               </div>
             ))}
 
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t">
               <div className="space-y-2">
                 <Label>Tax Rate (%)</Label>
                 <Input type="number" name="taxRate" value={invoice.taxRate} onChange={handleInvoiceChange} />
@@ -348,12 +363,7 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
       {/* Preview Panel */}
       <div className="space-y-4 print:space-y-0">
         <div className="relative">
-          <div className="flex flex-col sm:flex-row items-center justify-end gap-4 mb-4 print:hidden">
-            {!isPro && (
-              <span className="text-xs font-bold text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
-                {MAX_FREE_INVOICES - usedThisMonth} of {MAX_FREE_INVOICES} free invoices left this month
-              </span>
-            )}
+          <div className="flex flex-wrap items-center justify-start sm:justify-end gap-3 mb-4 print:hidden">
             <ProGate feature="Cloud Save" isPro={isPro}>
               <div className="flex gap-2">
                 <Button
@@ -406,99 +416,102 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
               <Link href="/pricing" className="text-xs font-black text-primary hover:underline mt-1 block uppercase">View Pricing →</Link>
             </div>
           )}
-          <div className="border rounded-lg bg-white text-black p-8 shadow-sm print:shadow-none print:border-none print:px-16 print:py-12 overflow-hidden relative">
-            {/* Watermark */}
-            {invoice.showWatermark && (
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-45 opacity-[0.03] pointer-events-none select-none z-0">
-                <p className="text-8xl font-black whitespace-nowrap uppercase tracking-tighter">
-                  TheWordOf Tools
-                </p>
-              </div>
-            )}
+          <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+            <div className="border rounded-lg bg-white text-black p-8 shadow-sm print:shadow-none print:border-none print:px-16 print:py-12 overflow-hidden relative">
+              {/* Watermark */}
+              {invoice.showWatermark && (
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-45 opacity-[0.03] pointer-events-none select-none z-0">
+                  <p className="text-8xl font-black whitespace-nowrap uppercase tracking-tighter">
+                    TheWordOf Tools
+                  </p>
+                </div>
+              )}
 
-            <div className="flex justify-between items-start mb-8 border-b pb-8 relative z-10">
-              <div>
-                {invoice.logo && (
-                  <div className="mb-4">
-                    <img src={invoice.logo} alt="Logo" className="max-h-16 object-contain" />
-                  </div>
-                )}
-                <h1 className="text-4xl font-black text-gray-900 tracking-tight">INVOICE</h1>
-                <p className="text-gray-500 print:text-gray-600 mt-1 font-medium">#{invoice.invoiceNumber}</p>
+              <div className="flex justify-between items-start mb-8 border-b pb-8 relative z-10">
+                <div>
+                  {invoice.logo && (
+                    <div className="mb-4">
+                      <img src={invoice.logo} alt="Logo" className="max-h-16 object-contain" />
+                    </div>
+                  )}
+                  <h1 className="text-4xl font-black text-gray-900 tracking-tight">INVOICE</h1>
+                  <p className="text-gray-500 print:text-gray-600 mt-1 font-medium">#{invoice.invoiceNumber}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-bold">{invoice.fromName}</p>
+                  <p className="text-sm text-gray-500 print:text-gray-800">{invoice.fromEmail}</p>
+                  <p className="text-sm text-gray-500 print:text-gray-800">{invoice.fromAddress}</p>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="font-bold">{invoice.fromName}</p>
-                <p className="text-sm text-gray-500 print:text-gray-800">{invoice.fromEmail}</p>
-                <p className="text-sm text-gray-500 print:text-gray-800">{invoice.fromAddress}</p>
-              </div>
-            </div>
 
-            <div className="flex justify-between mb-8 relative z-10">
-              <div>
-                <p className="text-sm text-gray-500 print:text-gray-800 uppercase tracking-wider mb-1">Bill To</p>
-                <p className="font-bold">{invoice.toName || "Client Name"}</p>
-                <p className="text-sm text-gray-500 print:text-gray-800">{invoice.toEmail}</p>
-                <p className="text-sm text-gray-500 print:text-gray-800">{invoice.toAddress}</p>
+              <div className="flex justify-between mb-8 relative z-10">
+                <div>
+                  <p className="text-sm text-gray-500 print:text-gray-800 uppercase tracking-wider mb-1">Bill To</p>
+                  <p className="font-bold">{invoice.toName || "Client Name"}</p>
+                  <p className="text-sm text-gray-500 print:text-gray-800">{invoice.toEmail}</p>
+                  <p className="text-sm text-gray-500 print:text-gray-800">{invoice.toAddress}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm"><span className="text-gray-500 print:text-gray-800 mr-2">Date:</span> {invoice.date}</p>
+                  <p className="text-sm"><span className="text-gray-500 print:text-gray-800 mr-2">Due Date:</span> {invoice.dueDate}</p>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="text-sm"><span className="text-gray-500 print:text-gray-800 mr-2">Date:</span> {invoice.date}</p>
-                <p className="text-sm"><span className="text-gray-500 print:text-gray-800 mr-2">Due Date:</span> {invoice.dueDate}</p>
-              </div>
-            </div>
 
-            <Table className="mb-8 relative z-10">
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[50%]">Description</TableHead>
-                  <TableHead className="text-right">Qty</TableHead>
-                  <TableHead className="text-right">Price</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {items.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>{item.description || "Item description"}</TableCell>
-                    <TableCell className="text-right">{item.quantity}</TableCell>
-                    <TableCell className="text-right">{invoice.currency}{item.price.toFixed(2)}</TableCell>
-                    <TableCell className="text-right">{invoice.currency}{(item.quantity * item.price).toFixed(2)}</TableCell>
+              <Table className="mb-8 relative z-10">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[50%]">Description</TableHead>
+                    <TableHead className="text-right">Qty</TableHead>
+                    <TableHead className="text-right">Price</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {items.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>{item.description || "Item description"}</TableCell>
+                      <TableCell className="text-right">{item.quantity}</TableCell>
+                      <TableCell className="text-right">{invoice.currency}{item.price.toFixed(2)}</TableCell>
+                      <TableCell className="text-right">{invoice.currency}{(item.quantity * item.price).toFixed(2)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
 
-            <div className="flex justify-end mb-8 relative z-10">
-              <div className="w-64 space-y-2 text-sm">
-                <div className="flex justify-between text-gray-500 print:text-gray-800">
-                  <span>Subtotal</span>
-                  <span>{invoice.currency}{subtotal.toFixed(2)}</span>
-                </div>
-                {invoice.discountRate > 0 && (
-                  <div className="flex justify-between text-red-500">
-                    <span>Discount ({invoice.discountRate}%)</span>
-                    <span>-{invoice.currency}{discountAmount.toFixed(2)}</span>
-                  </div>
-                )}
-                {invoice.taxRate > 0 && (
+              <div className="flex justify-end mb-8 relative z-10">
+                <div className="w-64 space-y-2 text-sm">
                   <div className="flex justify-between text-gray-500 print:text-gray-800">
-                    <span>Tax ({invoice.taxRate}%)</span>
-                    <span>{invoice.currency}{taxAmount.toFixed(2)}</span>
+                    <span>Subtotal</span>
+                    <span>{invoice.currency}{subtotal.toFixed(2)}</span>
                   </div>
-                )}
-                <div className="flex justify-between font-bold text-lg pt-2 border-t">
-                  <span>Total</span>
-                  <span>{invoice.currency}{total.toFixed(2)}</span>
+                  {invoice.discountRate > 0 && (
+                    <div className="flex justify-between text-red-500">
+                      <span>Discount ({invoice.discountRate}%)</span>
+                      <span>-{invoice.currency}{discountAmount.toFixed(2)}</span>
+                    </div>
+                  )}
+                  {invoice.taxRate > 0 && (
+                    <div className="flex justify-between text-gray-500 print:text-gray-800">
+                      <span>Tax ({invoice.taxRate}%)</span>
+                      <span>{invoice.currency}{taxAmount.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between font-bold text-lg pt-2 border-t">
+                    <span>Total</span>
+                    <span>{invoice.currency}{total.toFixed(2)}</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="border-t pt-4 text-sm text-gray-500 print:text-gray-800 relative z-10">
-              <p className="font-bold text-gray-700">Notes</p>
-              <p>{invoice.notes}</p>
+              <div className="border-t pt-4 text-sm text-gray-500 print:text-gray-800 relative z-10">
+                <p className="font-bold text-gray-700">Notes</p>
+                <p>{invoice.notes}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
     </div>
 
     {/* SEO Section */}

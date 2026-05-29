@@ -498,9 +498,24 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
       }
     `}} />
 
-    <div className="grid lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_600px] gap-8 print:block print:w-full">
-      {/* Editor Panel */}
-      <div className="space-y-6 print:hidden">
+    <div className="flex flex-col gap-8 print:block print:w-full">
+      <div className="print:hidden flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">AI CV Builder</h1>
+          <p className="text-muted-foreground mt-2">
+            Create a professional, ATS-optimized CV with AI.
+          </p>
+        </div>
+        {!isPro && (
+          <span className="text-xs font-bold text-muted-foreground bg-muted px-4 py-2 rounded-full shrink-0 self-start md:self-center">
+            {MAX_FREE_PRINTS - usedThisMonth} of {MAX_FREE_PRINTS} free exports left this month
+          </span>
+        )}
+      </div>
+
+      <div className="grid lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_600px] gap-8 print:block print:w-full">
+        {/* Editor Panel */}
+        <div className="space-y-6 print:hidden">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Personal Details</CardTitle>
@@ -659,7 +674,7 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
       {/* Preview Panel */}
       <div className="space-y-4 relative print:m-0 print:p-0">
         <div className="sticky top-24 print:hidden">
-          <div className="flex justify-between items-center bg-card p-4 rounded-2xl border shadow-sm mb-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-center justify-between bg-card p-4 rounded-2xl border shadow-sm mb-4">
             <div className="flex items-center gap-3">
               <Select 
                 value={templateId} 
@@ -683,12 +698,7 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center gap-3">
-              {!isPro && (
-                <span className="text-xs font-bold text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
-                  {MAX_FREE_PRINTS - usedThisMonth} of {MAX_FREE_PRINTS} free exports left this month
-                </span>
-              )}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               
               <ProGate feature="Cloud Save" isPro={isPro}>
                 <div className="flex gap-2">
@@ -726,8 +736,9 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
           </div>
         </div>
         
-        <div className="bg-white text-black shadow-2xl print:shadow-none print:m-0 overflow-hidden relative mx-auto print-full-width"
-          style={{ width: '100%', maxWidth: '210mm', minHeight: '297mm', backgroundColor: '#ffffff', color: '#000000', fontFamily: (templateId === 'elegant' || templateId === 'classic') ? 'serif' : 'Inter, sans-serif' }}>
+        <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+          <div className="bg-white text-black shadow-2xl print:shadow-none print:m-0 overflow-hidden relative mx-auto print-full-width"
+            style={{ width: '100%', maxWidth: '210mm', minHeight: '297mm', backgroundColor: '#ffffff', color: '#000000', fontFamily: (templateId === 'elegant' || templateId === 'classic') ? 'serif' : 'Inter, sans-serif' }}>
           
           {/* Modern Template */}
           {templateId === 'modern' && (
@@ -941,6 +952,8 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
           )}
         </div>
       </div>
+    </div>
+    </div>
     </div>
 
     {/* SEO Section */}

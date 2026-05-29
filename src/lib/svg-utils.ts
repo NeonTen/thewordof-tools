@@ -86,3 +86,89 @@ function prettyPrintSVG(svg: string): string {
 
   return lines.filter(l => l.trim()).join('\n');
 }
+
+export function toPascalCase(str: string): string {
+  const clean = str.replace(/\.svg$/i, '').replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+  return clean.charAt(0).toUpperCase() + clean.slice(1);
+}
+
+export function convertSvgToReact(svgCode: string, isTsx: boolean = false, componentName: string = "Icon"): string {
+  let jsx = svgCode;
+  const attributeReplacements: Record<string, string> = {
+    "class": "className",
+    "stroke-width": "strokeWidth",
+    "stroke-linecap": "strokeLinecap",
+    "stroke-linejoin": "strokeLinejoin",
+    "stroke-miterlimit": "strokeMiterlimit",
+    "stroke-dasharray": "strokeDasharray",
+    "stroke-dashoffset": "strokeDashoffset",
+    "fill-rule": "fillRule",
+    "clip-rule": "clipRule",
+    "stop-color": "stopColor",
+    "stop-opacity": "stopOpacity",
+    "flood-color": "floodColor",
+    "flood-opacity": "floodOpacity",
+    "font-family": "fontFamily",
+    "font-size": "fontSize",
+    "xml:space": "xmlSpace",
+    "fill-opacity": "fillOpacity",
+    "stroke-opacity": "strokeOpacity",
+  };
+
+  for (const [key, value] of Object.entries(attributeReplacements)) {
+    const regex = new RegExp(`\\b${key}=`, 'g');
+    jsx = jsx.replace(regex, `${value}=`);
+  }
+
+  jsx = jsx.replace(/\bstyle="([^"]*)"/g, (match, styleStr) => {
+    const rules = styleStr.split(';').filter((r: string) => r.trim());
+    const reactStyle = rules.map((r: string) => {
+      const parts = r.split(':');
+      if (parts.length < 2) return '';
+      const name = parts[0].trim().replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+      const val = parts.slice(1).join(':').trim().replace(/'/g, "\\'");
+      return `"${name}": "${val}"`;
+    }).filter(Boolean).join(', ');
+    return `style={{${reactStyle}}}`;
+  });
+
+  jsx = jsx.replace(/(<svg\b[^>]*)(>)/i, '$1 {...props}$2');
+
+  if (isTsx) {
+    return `import React, { SVGProps } from "react";
+
+export function ${componentName}(props: SVGProps<SVGSVGElement>) {
+  return (
+    ${jsx.split('\n').map(line => '    ' + line).join('\n').trim()}
+  );
+}
+`;
+  }
+
+  return `import React from "react";
+
+export function ${componentName}(props) {
+  return (
+    ${jsx.split('\n').map(line => '    ' + line).join('\n').trim()}
+  );
+}
+`;
+}
+
+export function convertSvgToVue(svgCode: string): string {
+  return `<template>
+  ${svgCode.split('\n').map(line => '  ' + line).join('\n').trim()}
+</template>
+
+<script>
+export default {
+  name: 'SvgIcon'
+}
+</script>
+`;
+}
+
+export function convertSvgToSvelte(svgCode: string): string {
+  let svelte = svgCode.replace(/(<svg\b[^>]*)(>)/i, '$1 {...$$$props}$2');
+  return `${svelte}`;
+}

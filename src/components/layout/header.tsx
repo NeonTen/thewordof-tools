@@ -3,8 +3,8 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import { auth } from "@/auth"
 import { ProBadge } from "@/components/ui/pro-gate"
-
 import { LogoutButton } from "@/components/auth/logout-button"
+import { MobileNav } from "@/components/layout/mobile-nav"
 
 export async function Header() {
   const session = await auth()
@@ -46,7 +46,7 @@ export async function Header() {
         <div className="flex items-center space-x-4">
           <nav className="flex items-center space-x-2">
             {session ? (
-              <div className="flex items-center space-x-2 print:hidden">
+              <div className="hidden md:flex items-center space-x-2 print:hidden">
                 <Link href="/dashboard/settings">
                   <Button variant="ghost" className="h-9 px-4 font-bold text-muted-foreground hover:text-foreground">
                     {session.user?.name || "Account"}
@@ -55,7 +55,7 @@ export async function Header() {
                 <LogoutButton />
               </div>
             ) : (
-              <div className="flex items-center space-x-2 print:hidden">
+              <div className="hidden md:flex items-center space-x-2 print:hidden">
                 <Link href="/login" className="hidden sm:block">
                   <Button variant="ghost" className="h-9 px-4 font-bold text-muted-foreground hover:text-foreground">Login</Button>
                 </Link>
@@ -64,8 +64,9 @@ export async function Header() {
                 </Link>
               </div>
             )}
-            <div className="print:hidden">
+            <div className="print:hidden flex items-center space-x-2">
               <ThemeToggle />
+              <MobileNav session={session} />
             </div>
           </nav>
         </div>

@@ -33,8 +33,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
-import { optimizeSVG, SVGOptions } from "@/lib/svg-utils"
+import { optimizeSVG, SVGOptions, toPascalCase, convertSvgToReact, convertSvgToVue, convertSvgToSvelte } from "@/lib/svg-utils"
 import { useUsageLimit } from "@/hooks/use-usage-limit"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import { Crown } from "lucide-react"
 
 // Pure native toggle — no Base UI dependency, always reliable
 function NativeToggle({
@@ -99,6 +101,11 @@ export function SVGCompressor({ role = "USER" }: { role?: string }) {
   const [isOptimizing, setIsOptimizing] = useState(false)
   const [copied, setCopied] = useState(false)
   
+  const [exportFile, setExportFile] = useState<SVGFile | null>(null)
+  const [exportFramework, setExportFramework] = useState<"jsx" | "tsx" | "vue" | "svelte">("tsx")
+  const [isBulkDialogOpen, setIsBulkDialogOpen] = useState(false)
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+
   const { count: usedToday, increment: incrementUsage } = useUsageLimit("svg-compressor", "daily")
   
   const currentMax = isBusiness
@@ -212,6 +219,38 @@ export function SVGCompressor({ role = "USER" }: { role?: string }) {
     link.href = URL.createObjectURL(content)
     link.download = "optimized-svgs.zip"
     link.click()
+  }
+
+  const downloadBatch = async (format: "svg" | "jsx" | "tsx" | "vue" | "svelte") => {
+    if (format !== "svg" && !isPro) {
+      setShowUpgradeModal(true)
+      return
+    }
+
+    const zip = new JSZip()
+    svgFiles.forEach(file => {
+      if (!file.optimizedCode) return
+      
+      const componentName = toPascalCase(file.name)
+      if (format === "svg") {
+        zip.file(file.name, file.optimizedCode)
+      } else if (format === "jsx") {
+        zip.file(`${componentName}.jsx`, convertSvgToReact(file.optimizedCode, false, componentName))
+      } else if (format === "tsx") {
+        zip.file(`${componentName}.tsx`, convertSvgToReact(file.optimizedCode, true, componentName))
+      } else if (format === "vue") {
+        zip.file(`${componentName}.vue`, convertSvgToVue(file.optimizedCode))
+      } else if (format === "svelte") {
+        zip.file(`${componentName}.svelte`, convertSvgToSvelte(file.optimizedCode))
+      }
+    })
+
+    const content = await zip.generateAsync({ type: "blob" })
+    const link = document.createElement("a")
+    link.href = URL.createObjectURL(content)
+    link.download = `optimized-svgs-${format}.zip`
+    link.click()
+    setIsBulkDialogOpen(false)
   }
 
   const totalSaved = svgFiles.reduce((acc, file) => acc + (file.originalSize - file.optimizedSize), 0)
@@ -367,6 +406,21 @@ export function SVGCompressor({ role = "USER" }: { role?: string }) {
                               <Download className="h-3 w-3" />
                               Download
                             </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              className="h-8 font-bold gap-1.5 text-primary hover:text-primary" 
+                              onClick={() => {
+                                if (!isPro) {
+                                  setShowUpgradeModal(true)
+                                } else {
+                                  setExportFile(file)
+                                }
+                              }}
+                            >
+                              <CodeIcon className="h-3 w-3" />
+                              Export Component
+                            </Button>
                           </div>
                         </div>
                       </div>
@@ -448,8 +502,8 @@ export function SVGCompressor({ role = "USER" }: { role?: string }) {
                     </p>
                   </div>
                 </div>
-                <Button className="w-full bg-green-600 hover:bg-green-700 h-10 font-bold gap-2" onClick={downloadAllAsZip}>
-                  <FileArchive className="h-4 w-4" /> Download All ZIP
+                <Button className="w-full bg-green-600 hover:bg-green-700 h-10 font-bold gap-2" onClick={() => setIsBulkDialogOpen(true)}>
+                  <FileArchive className="h-4 w-4" /> Download Batch...
                 </Button>
               </CardContent>
             </Card>
@@ -505,6 +559,168 @@ export function SVGCompressor({ role = "USER" }: { role?: string }) {
           </ul>
         </section>
       </div>
+
+      {/* Single Exporter Dialog */}
+      <Dialog open={!!exportFile} onOpenChange={(open) => !open && setExportFile(null)}>
+        <DialogContent className="sm:max-w-2xl bg-card border">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CodeIcon className="h-5 w-5 text-primary" />
+              Export {exportFile?.name} Component
+            </DialogTitle>
+            <DialogDescription>
+              Copy or download this optimized SVG converted into your framework component.
+            </DialogDescription>
+          </DialogHeader>
+
+          {exportFile && (
+            <Tabs value={exportFramework} onValueChange={(val) => setExportFramework(val as any)} className="w-full mt-4">
+              <TabsList className="grid grid-cols-4 bg-muted/50 border">
+                <TabsTrigger value="tsx" className="font-bold">React TSX</TabsTrigger>
+                <TabsTrigger value="jsx" className="font-bold">React JSX</TabsTrigger>
+                <TabsTrigger value="vue" className="font-bold">Vue 3</TabsTrigger>
+                <TabsTrigger value="svelte" className="font-bold">Svelte</TabsTrigger>
+              </TabsList>
+
+              <div className="mt-4 relative">
+                <Textarea
+                  readOnly
+                  className="min-h-[300px] font-mono text-xs bg-background/50 focus:ring-0 p-4 resize-none"
+                  value={
+                    exportFramework === "tsx"
+                      ? convertSvgToReact(exportFile.optimizedCode || exportFile.originalCode, true, toPascalCase(exportFile.name))
+                      : exportFramework === "jsx"
+                        ? convertSvgToReact(exportFile.optimizedCode || exportFile.originalCode, false, toPascalCase(exportFile.name))
+                        : exportFramework === "vue"
+                          ? convertSvgToVue(exportFile.optimizedCode || exportFile.originalCode)
+                          : convertSvgToSvelte(exportFile.optimizedCode || exportFile.originalCode)
+                  }
+                />
+                <div className="absolute top-4 right-4 flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="font-bold"
+                    onClick={() => {
+                      const code = exportFramework === "tsx"
+                        ? convertSvgToReact(exportFile.optimizedCode || exportFile.originalCode, true, toPascalCase(exportFile.name))
+                        : exportFramework === "jsx"
+                          ? convertSvgToReact(exportFile.optimizedCode || exportFile.originalCode, false, toPascalCase(exportFile.name))
+                          : exportFramework === "vue"
+                            ? convertSvgToVue(exportFile.optimizedCode || exportFile.originalCode)
+                            : convertSvgToSvelte(exportFile.optimizedCode || exportFile.originalCode);
+                      copyToClipboard(code);
+                    }}
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5 mr-1" /> : <Copy className="h-3.5 w-3.5 mr-1" />}
+                    Copy
+                  </Button>
+                </div>
+              </div>
+            </Tabs>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Bulk Exporter Dialog */}
+      <Dialog open={isBulkDialogOpen} onOpenChange={setIsBulkDialogOpen}>
+        <DialogContent className="sm:max-w-md bg-card border">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <FileArchive className="h-5 w-5 text-primary" />
+              Download Batch Components
+            </DialogTitle>
+            <DialogDescription>
+              Select your preferred format to export all {svgFiles.length} optimized SVGs.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-3 py-4">
+            <Button
+              variant="outline"
+              className="justify-between h-12 font-bold hover:bg-muted/50"
+              onClick={() => downloadBatch("svg")}
+            >
+              <span>Raw SVG Files (ZIP)</span>
+              <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest bg-muted px-2 py-0.5 rounded">Free</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-between h-12 font-bold border-amber-500/20 hover:bg-amber-500/5 hover:border-amber-500/30"
+              onClick={() => downloadBatch("tsx")}
+            >
+              <span className="flex items-center gap-2">
+                React TSX Components (ZIP)
+                <Crown className="h-3 w-3 text-amber-500" />
+              </span>
+              <span className="text-[10px] text-amber-600 dark:text-amber-400 uppercase font-black tracking-widest bg-amber-500/10 px-2 py-0.5 rounded">Pro</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-between h-12 font-bold border-amber-500/20 hover:bg-amber-500/5 hover:border-amber-500/30"
+              onClick={() => downloadBatch("jsx")}
+            >
+              <span className="flex items-center gap-2">
+                React JSX Components (ZIP)
+                <Crown className="h-3 w-3 text-amber-500" />
+              </span>
+              <span className="text-[10px] text-amber-600 dark:text-amber-400 uppercase font-black tracking-widest bg-amber-500/10 px-2 py-0.5 rounded">Pro</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-between h-12 font-bold border-amber-500/20 hover:bg-amber-500/5 hover:border-amber-500/30"
+              onClick={() => downloadBatch("vue")}
+            >
+              <span className="flex items-center gap-2">
+                Vue 3 Components (ZIP)
+                <Crown className="h-3 w-3 text-amber-500" />
+              </span>
+              <span className="text-[10px] text-amber-600 dark:text-amber-400 uppercase font-black tracking-widest bg-amber-500/10 px-2 py-0.5 rounded">Pro</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-between h-12 font-bold border-amber-500/20 hover:bg-amber-500/5 hover:border-amber-500/30"
+              onClick={() => downloadBatch("svelte")}
+            >
+              <span className="flex items-center gap-2">
+                Svelte Components (ZIP)
+                <Crown className="h-3 w-3 text-amber-500" />
+              </span>
+              <span className="text-[10px] text-amber-600 dark:text-amber-400 uppercase font-black tracking-widest bg-amber-500/10 px-2 py-0.5 rounded">Pro</span>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Pro Upgrade Prompt Modal */}
+      {showUpgradeModal && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-background/80 backdrop-blur-md animate-in fade-in duration-300" 
+            onClick={() => setShowUpgradeModal(false)} 
+          />
+          <div className="relative w-full max-w-sm overflow-hidden rounded-3xl border bg-background p-8 shadow-2xl animate-in zoom-in-95 duration-300">
+            <button 
+              className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground hover:bg-accent hover:text-foreground" 
+              onClick={() => setShowUpgradeModal(false)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div className="text-center space-y-4">
+              <div className="h-12 w-12 rounded-full bg-amber-500/10 flex items-center justify-center mx-auto text-amber-500">
+                <Crown className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-black tracking-tight">Upgrade to Pro</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Exporting SVGs directly to React JSX/TSX, Vue, and Svelte component frameworks is a premium developer feature.
+              </p>
+              <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-black h-10" asChild>
+                <Link href="/pricing">View Pricing</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

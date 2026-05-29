@@ -13,15 +13,6 @@ export default async function CvBuilderPage() {
   const isBusiness = role === "BUSINESS" || role === "ADMIN"
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="print:hidden">
-        <h1 className="text-3xl font-bold tracking-tight">AI CV Builder</h1>
-        <p className="text-muted-foreground mt-2">
-          Create a professional, ATS-optimized CV with AI.
-        </p>
-      </div>
-
-      <CvBuilder isPro={isPro} isBusiness={isBusiness} />
-    </div>
+    <CvBuilder isPro={isPro} isBusiness={isBusiness} />
   )
 }
