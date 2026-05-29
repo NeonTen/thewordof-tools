@@ -23,6 +23,7 @@ interface UpgradeButtonProps {
   usdAmount?: string
   plan?: string
   interval?: string
+  currency?: "INR" | "USD"
 }
 
 declare global {
@@ -37,9 +38,10 @@ export function UpgradeButton({
   className, 
   children,
   amount = 499,
-  usdAmount: _usdAmount = "5.99",
+  usdAmount = "5.99",
   plan = "PREMIUM",
-  interval = "month"
+  interval = "month",
+  currency = "INR"
 }: UpgradeButtonProps) {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
@@ -141,39 +143,46 @@ export function UpgradeButton({
         <DialogHeader>
           <DialogTitle>Choose Payment Method</DialogTitle>
           <DialogDescription>
-            Select your preferred way to pay for TheWordOf Tools {plan}.
+            {currency === "USD"
+              ? "Pay securely with PayPal — accepted in 200+ countries."
+              : `Select your preferred way to pay for TheWordOf Tools ${plan}.`}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
-          {/* Razorpay Button */}
-          <Button 
-            variant="outline" 
-            className="w-full h-16 text-lg font-bold flex items-center justify-between px-6 border-2 hover:border-primary hover:bg-primary/5 transition-all"
-            onClick={handleRazorpay}
-            disabled={loading}
-          >
-            <div className="flex items-center gap-3">
-              <div className="bg-blue-500/10 p-2 rounded-lg">
-                <CreditCard className="h-6 w-6 text-blue-600" />
+          {/* Razorpay — INR only */}
+          {currency === "INR" && (
+            <Button 
+              variant="outline" 
+              className="w-full h-16 text-lg font-bold flex items-center justify-between px-6 border-2 hover:border-primary hover:bg-primary/5 transition-all"
+              onClick={handleRazorpay}
+              disabled={loading}
+            >
+              <div className="flex items-center gap-3">
+                <div className="bg-blue-500/10 p-2 rounded-lg">
+                  <CreditCard className="h-6 w-6 text-blue-600" />
+                </div>
+                <div className="text-left">
+                  <p>Razorpay</p>
+                  <p className="text-[10px] text-muted-foreground font-normal">UPI, Cards, Netbanking (India)</p>
+                </div>
               </div>
-              <div className="text-left">
-                <p>Razorpay</p>
-                <p className="text-[10px] text-muted-foreground font-normal">UPI, Cards, Netbanking (India)</p>
+              <span className="text-primary">₹{amount}</span>
+            </Button>
+          )}
+
+          {/* Divider — only when both options visible */}
+          {currency === "INR" && (
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or pay with</span>
               </div>
             </div>
-            <span className="text-primary">₹{amount}</span>
-          </Button>
+          )}
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">Or pay with</span>
-            </div>
-          </div>
-
-          {/* PayPal Integration */}
+          {/* PayPal — always shown */}
           <PayPalScriptProvider options={{ 
             clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "test",
             currency: "USD",
@@ -197,6 +206,13 @@ export function UpgradeButton({
             />
           </PayPalScriptProvider>
           
+          {/* USD security note */}
+          {currency === "USD" && (
+            <p className="text-[10px] text-center text-muted-foreground">
+              🔒 Secured by PayPal — ${usdAmount}/{interval}
+            </p>
+          )}
+
           {!user && (
             <p className="text-[10px] text-center text-destructive font-bold">
               Please login to proceed with payment.

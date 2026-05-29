@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Check, X, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -17,6 +17,16 @@ interface PricingCardsProps {
 
 export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCardsProps) {
   const [isYearly, setIsYearly] = useState(false)
+  const [currency, setCurrency] = useState<"INR" | "USD">("INR")
+
+  useEffect(() => {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+      setCurrency(tz === "Asia/Kolkata" ? "INR" : "USD")
+    } catch {
+      // fallback: keep "INR" default
+    }
+  }, [])
 
   const plans = [
     {
@@ -112,20 +122,52 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
 
   return (
     <div className="space-y-8">
-      {/* Toggle */}
-      <div className="flex justify-center items-center gap-3">
-        <span className={cn("text-sm font-bold", !isYearly ? "text-foreground" : "text-muted-foreground")}>Monthly</span>
-        <button
-          onClick={() => setIsYearly(!isYearly)}
-          className="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-primary"
-          role="switch"
-          aria-checked={isYearly}
-        >
-          <span className={cn("pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg transition duration-200 ease-in-out", isYearly ? "translate-x-5" : "translate-x-0")} />
-        </button>
-        <span className={cn("text-sm font-bold flex items-center gap-1.5", isYearly ? "text-foreground" : "text-muted-foreground")}>
-          Yearly <span className="text-[10px] bg-green-500/20 text-green-600 px-2 py-0.5 rounded-full uppercase tracking-widest font-black">Save 20%</span>
-        </span>
+      {/* Billing period + currency toggle row */}
+      <div className="flex flex-wrap justify-center items-center gap-4">
+        {/* Monthly / Yearly toggle */}
+        <div className="flex items-center gap-3">
+          <span className={cn("text-sm font-bold", !isYearly ? "text-foreground" : "text-muted-foreground")}>Monthly</span>
+          <button
+            onClick={() => setIsYearly(!isYearly)}
+            className="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-primary"
+            role="switch"
+            aria-checked={isYearly}
+          >
+            <span className={cn("pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg transition duration-200 ease-in-out", isYearly ? "translate-x-5" : "translate-x-0")} />
+          </button>
+          <span className={cn("text-sm font-bold flex items-center gap-1.5", isYearly ? "text-foreground" : "text-muted-foreground")}>
+            Yearly <span className="text-[10px] bg-green-500/20 text-green-600 px-2 py-0.5 rounded-full uppercase tracking-widest font-black">Save 20%</span>
+          </span>
+        </div>
+
+        {/* Vertical divider */}
+        <div className="hidden sm:block h-5 w-px bg-border" />
+
+        {/* Currency pill toggle */}
+        <div className="flex items-center gap-1 bg-muted/50 border border-border rounded-full p-1">
+          <button
+            onClick={() => setCurrency("INR")}
+            className={cn(
+              "px-3 py-1 rounded-full text-xs font-black transition-all duration-200",
+              currency === "INR"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            ₹ INR
+          </button>
+          <button
+            onClick={() => setCurrency("USD")}
+            className={cn(
+              "px-3 py-1 rounded-full text-xs font-black transition-all duration-200",
+              currency === "USD"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            $ USD
+          </button>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -176,7 +218,9 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
               <CardHeader className="pb-4 pt-8 px-8 flex-none">
                 <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{plan.name}</p>
                 <div className="flex items-baseline gap-1 mt-2">
-                  <span className="text-5xl font-black tracking-tight">₹{price}</span>
+                  <span className="text-5xl font-black tracking-tight">
+                    {currency === "INR" ? `₹${price}` : `$${usdPrice}`}
+                  </span>
                   <span className="text-muted-foreground text-sm">/{period}</span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">{plan.description}</p>
@@ -207,6 +251,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
                       usdAmount={usdPrice}
                       plan={plan.plan}
                       interval={isYearly ? "year" : "month"}
+                      currency={currency}
                     >
                       {overrideBtnText || plan.cta}
                     </UpgradeButton>
