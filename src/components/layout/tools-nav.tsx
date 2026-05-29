@@ -19,7 +19,7 @@ import {
   QrCode,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { ProBadge } from "@/components/ui/pro-gate"
+
 
 type NavItem = { title: string; href: string; icon: React.ElementType; pro?: boolean }
 type NavGroup = { label: string; items: NavItem[] }
@@ -100,7 +100,6 @@ export function ToolsNav() {
                   <Icon className={cn("h-4 w-4 shrink-0", isActive ? "text-primary" : "group-hover:text-foreground")} />
                   <span>{item.title}</span>
                 </span>
-                {item.pro && <ProBadge role={session?.user?.role} />}
               </Link>
             )
           })}
