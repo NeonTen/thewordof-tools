@@ -22,7 +22,8 @@ import {
   Check, 
   ExternalLink,
   X,
-  Trash2
+  Trash2,
+  Crown
 } from "lucide-react"
 import { ColorPicker } from "@/components/ui/color-picker"
 import { useUsageLimit } from "@/hooks/use-usage-limit"
@@ -824,15 +825,15 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                     {/* Locked Overlay if not Business */}
                     {!isBusiness && (
                       <div className="absolute inset-0 bg-background/40 flex flex-col items-center justify-center text-center p-6 z-10">
-                        <div className="bg-primary/10 text-primary p-3 rounded-full mb-3 shadow-inner">
-                          <Layers className="h-6 w-6" />
+                        <div className="bg-purple-500/10 text-purple-600 dark:text-purple-400 p-3 rounded-full mb-3 shadow-inner">
+                          <Crown className="h-6 w-6 fill-current" />
                         </div>
                         <h4 className="font-bold text-sm text-foreground">Business Feature Locked</h4>
                         <p className="text-xs text-muted-foreground max-w-sm mt-1 mb-4 leading-normal">
                           Geographic Scan Tracking is exclusive to the Business Plan. Upgrade to access real-time location metrics.
                         </p>
                         <Link href="/pricing">
-                          <Button size="sm" className="font-black text-xs px-5 shadow-lg shadow-primary/20">
+                          <Button size="sm" className="font-black text-xs px-5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-lg shadow-purple-500/20">
                             Upgrade to Business
                           </Button>
                         </Link>
