@@ -1,5 +1,6 @@
 import { PromptGenerator } from "@/components/tools/prompt-generator"
 import { auth } from "@/auth"
+import { prisma } from "@/lib/prisma"
 
 export const metadata = {
   title: "AI Prompt Generator",
@@ -10,6 +11,11 @@ export default async function PromptGeneratorPage() {
   const session = await auth()
   const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
+  const dbUser = session?.user?.id ? await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { creditsRemaining: true }
+  }) : null
+
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -19,7 +25,11 @@ export default async function PromptGeneratorPage() {
         </p>
       </div>
 
-      <PromptGenerator isPro={isPro} />
+      <PromptGenerator 
+        isPro={isPro} 
+        creditsRemaining={dbUser?.creditsRemaining ?? null} 
+        isLoggedIn={!!session?.user} 
+      />
     </div>
   )
 }

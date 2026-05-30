@@ -1,6 +1,7 @@
 import { ProductDescription } from "@/components/tools/product-description"
 import { auth } from "@/auth"
 import { generateSeoMetadata } from "@/app/lib/seo"
+import { prisma } from "@/lib/prisma"
 
 export const metadata = generateSeoMetadata({
   title: "Product Description Generator",
@@ -12,6 +13,11 @@ export default async function ProductDescriptionPage() {
   const session = await auth()
   const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
+  const dbUser = session?.user?.id ? await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { creditsRemaining: true }
+  }) : null
+
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -21,7 +27,11 @@ export default async function ProductDescriptionPage() {
         </p>
       </div>
 
-      <ProductDescription isPro={isPro} />
+      <ProductDescription 
+        isPro={isPro} 
+        creditsRemaining={dbUser?.creditsRemaining ?? null} 
+        isLoggedIn={!!session?.user} 
+      />
     </div>
   )
 }
