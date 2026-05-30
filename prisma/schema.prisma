@@ -27,6 +27,8 @@ model User {
   savedResumes  SavedResume[]
   savedInvoices SavedInvoice[]
   qrCodes       QrCode[]
+  creditsRemaining Int      @default(20)
+  creditsResetAt   DateTime @default(now())
 }
 
 model Account {
