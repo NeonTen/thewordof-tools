@@ -13,7 +13,8 @@ import {
   CheckCircle2,
   AlertCircle,
   Loader2,
-  ArrowLeft
+  ArrowLeft,
+  Sparkles
 } from "lucide-react"
 
 import {
@@ -68,6 +69,8 @@ export default function AdminUsersPage() {
   const [newPlan, setNewPlan] = React.useState("")
   const [newRole, setNewRole] = React.useState("")
   const [newPassword, setNewPassword] = React.useState("")
+  const [newCredits, setNewCredits] = React.useState(20)
+  const [isUpdateCreditsOpen, setIsUpdateCreditsOpen] = React.useState(false)
   const [actionLoading, setActionLoading] = React.useState(false)
 
   const fetchUsers = async () => {
@@ -107,6 +110,7 @@ export default function AdminUsersPage() {
         setIsUpdatePlanOpen(false)
         setIsUpdateRoleOpen(false)
         setIsResetPasswordOpen(false)
+        setIsUpdateCreditsOpen(false)
       }
     } catch (error) {
       console.error(error)
@@ -171,6 +175,7 @@ export default function AdminUsersPage() {
               <TableHead className="font-bold h-10 px-4">User</TableHead>
               <TableHead className="font-bold h-10 px-4">Role</TableHead>
               <TableHead className="font-bold h-10 px-4">Plan Details</TableHead>
+              <TableHead className="font-bold h-10 px-4">Credits</TableHead>
               <TableHead className="font-bold h-10 px-4">Payment Method</TableHead>
               <TableHead className="font-bold h-10 px-4">Start / Expire</TableHead>
               <TableHead className="font-bold h-10 px-4">Joined</TableHead>
@@ -246,6 +251,9 @@ export default function AdminUsersPage() {
                       )}
                     </div>
                   </TableCell>
+                  <TableCell className="py-3 px-4 font-mono font-bold text-xs">
+                    {user.creditsRemaining ?? 20}
+                  </TableCell>
                   <TableCell className="py-3 px-4">
                     <div className="flex flex-col">
                       <span className="text-xs font-bold uppercase">
@@ -298,6 +306,14 @@ export default function AdminUsersPage() {
                           }}>
                             <CreditCard className="mr-2 h-4 w-4" />
                             Update Subscription
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => {
+                            setSelectedUser(user)
+                            setNewCredits(user.creditsRemaining ?? 20)
+                            setIsUpdateCreditsOpen(true)
+                          }}>
+                            <Sparkles className="mr-2 h-4 w-4 text-amber-500 fill-amber-500" />
+                            Adjust Credits
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => {
                             setSelectedUser(user)
@@ -419,6 +435,33 @@ export default function AdminUsersPage() {
             >
               {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Update Password
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Adjust Credits Dialog */}
+      <Dialog open={isUpdateCreditsOpen} onOpenChange={setIsUpdateCreditsOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Adjust User Credits</DialogTitle>
+            <DialogDescription>
+              Manually set the remaining AI credit quota for {selectedUser?.email}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4 space-y-2">
+            <Label>Credits Remaining</Label>
+            <Input 
+              type="number"
+              value={newCredits}
+              onChange={(e) => setNewCredits(parseInt(e.target.value) || 0)}
+            />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsUpdateCreditsOpen(false)}>Cancel</Button>
+            <Button onClick={() => handleAction(selectedUser.id, { creditsRemaining: newCredits })} disabled={actionLoading}>
+              {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Update Credits
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -17,7 +17,7 @@ export async function PATCH(
     }
 
     const body = await req.json()
-    const { role, plan, status, resetPassword } = body
+    const { role, plan, status, resetPassword, creditsRemaining } = body
 
     if (resetPassword) {
       const hashedPassword = await hash(resetPassword, 12)
@@ -26,6 +26,13 @@ export async function PATCH(
         data: { password: hashedPassword }
       })
       return NextResponse.json({ message: "Password reset successfully" })
+    }
+
+    if (creditsRemaining !== undefined && creditsRemaining !== null) {
+      await prisma.user.update({
+        where: { id },
+        data: { creditsRemaining: parseInt(creditsRemaining) }
+      })
     }
 
     // Update Role
