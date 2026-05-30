@@ -3,6 +3,7 @@ import { generateText } from "ai"
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
+import { verifyAndDeductCredits } from "@/lib/credits"
 
 export async function POST(req: Request) {
   try {
@@ -21,6 +22,12 @@ export async function POST(req: Request) {
 
     if (!isPro) {
       return new NextResponse("Pro subscription required", { status: 403 })
+    }
+
+    // Deduct 1 credit for Pro AI Schema Generation
+    const deduction = await verifyAndDeductCredits(session.user.id, 1)
+    if (!deduction.success) {
+      return new NextResponse("Quota Exceeded: You do not have enough credits.", { status: 403 })
     }
 
     const { prompt, type } = await req.json()

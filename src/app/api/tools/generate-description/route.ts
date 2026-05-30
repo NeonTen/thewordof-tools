@@ -3,12 +3,23 @@ import { generateText } from 'ai'
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 
+import { verifyAndDeductCredits } from '@/lib/credits'
+
 export const maxDuration = 30
 export const dynamic = "force-dynamic"
 
 export async function POST(req: Request) {
   try {
     const session = await auth()
+    if (!session?.user?.id) {
+      return new NextResponse("Authentication required", { status: 401 })
+    }
+
+    // Deduct 1 credit for product description generation
+    const deduction = await verifyAndDeductCredits(session.user.id, 1)
+    if (!deduction.success) {
+      return new NextResponse("Quota Exceeded: You do not have enough credits.", { status: 403 })
+    }
 
     const formData = await req.formData()
     const title = formData.get("title") as string

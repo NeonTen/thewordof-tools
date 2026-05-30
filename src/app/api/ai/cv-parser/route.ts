@@ -4,17 +4,29 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { z } from 'zod'
 
+import { verifyAndDeductCredits } from '@/lib/credits'
+
 export const maxDuration = 30
 export const dynamic = "force-dynamic"
 
 export async function POST(req: Request) {
   try {
     const session = await auth()
+    if (!session?.user?.id) {
+      return new NextResponse("Authentication required", { status: 401 })
+    }
+
     const role = session?.user?.role
     const isBusinessOrAdmin = role === "BUSINESS" || role === "ADMIN"
 
     if (!isBusinessOrAdmin) {
       return new NextResponse("Unauthorized. Business or Admin tier required.", { status: 403 })
+    }
+
+    // Deduct 3 credits for heavy CV parsing task
+    const deduction = await verifyAndDeductCredits(session.user.id, 3)
+    if (!deduction.success) {
+      return new NextResponse("Quota Exceeded: You do not have enough credits.", { status: 403 })
     }
 
     const { text } = await req.json()

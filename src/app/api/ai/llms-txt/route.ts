@@ -3,19 +3,29 @@ import { streamText } from 'ai'
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 
+import { verifyAndDeductCredits } from '@/lib/credits'
+
 export const maxDuration = 30
 export const dynamic = "force-dynamic"
 
 export async function POST(req: Request) {
   try {
     const session = await auth()
-    const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
+    if (!session?.user?.id) {
+      return new NextResponse("Authentication required", { status: 401 })
+    }
 
     const body = await req.json()
     const { brandName, description, sitemapUrl, contactInfo, documentationUrls, apiUrls } = body
 
     if (!brandName || !description) {
       return new NextResponse("Missing required fields", { status: 400 })
+    }
+
+    // Deduct 1 credit for llms.txt generation
+    const deduction = await verifyAndDeductCredits(session.user.id, 1)
+    if (!deduction.success) {
+      return new NextResponse("Quota Exceeded: You do not have enough credits.", { status: 403 })
     }
 
     const prompt = `You are an AI SEO expert. Generate a professional llms.txt file for the following website.
