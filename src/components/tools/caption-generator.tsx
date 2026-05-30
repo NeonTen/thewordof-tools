@@ -94,17 +94,17 @@ export function CaptionGenerator({
               <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <Sparkles className="h-6 w-6 text-primary animate-pulse" />
               </div>
-              <div className="space-y-2 max-w-xs">
+              <div className="space-y-2">
                 <h3 className="font-bold text-base">AI Tool Requires Account</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   AI utilities require a free account to track monthly credit allocations. Register today to claim 20 free monthly AI credits!
                 </p>
               </div>
-              <div className="flex gap-3 w-full max-w-xs">
-                <Button className="w-full font-bold h-9 text-xs" asChild>
+              <div className="flex gap-3 w-full">
+                <Button className="flex-1 font-bold h-9 text-xs" asChild>
                   <Link href="/login">Login</Link>
                 </Button>
-                <Button variant="outline" className="w-full font-bold h-9 text-xs" asChild>
+                <Button variant="outline" className="flex-1 font-bold h-9 text-xs" asChild>
                   <Link href="/register">Sign Up</Link>
                 </Button>
               </div>

@@ -93,11 +93,11 @@ export function SeoGenerator({
                   AI utilities require a free account to track monthly credit allocations. Register today to claim 20 free monthly AI credits!
                 </p>
               </div>
-              <div className="flex gap-3 w-full max-w-xs">
-                <Button className="w-full font-bold h-9 text-xs" asChild>
+              <div className="flex gap-3 w-full">
+                <Button className="flex-1 font-bold h-9 text-xs" asChild>
                   <Link href="/login">Login</Link>
                 </Button>
-                <Button variant="outline" className="w-full font-bold h-9 text-xs" asChild>
+                <Button variant="outline" className="flex-1 font-bold h-9 text-xs" asChild>
                   <Link href="/register">Sign Up</Link>
                 </Button>
               </div>
