@@ -7,6 +7,9 @@ import { cn } from "@/lib/utils"
 import { SyncPlanButton } from "@/components/dashboard/sync-plan-button"
 import { PlanSection } from "@/components/dashboard/plan-section"
 import { SupportModal } from "@/components/dashboard/support-modal"
+import { prisma } from "@/lib/prisma"
+import { getCurrentCreditAllocation } from "@/lib/credits"
+import { CreditOverview } from "@/components/dashboard/credit-overview"
 
 export const dynamic = "force-dynamic"
 
@@ -19,6 +22,11 @@ export default async function DashboardPage() {
   const session = await auth()
   const userRole = session?.user?.role || "FREE"
   const isPro = userRole === "PRO" || userRole === "BUSINESS" || userRole === "ADMIN"
+
+  const dbUser = session?.user?.id ? await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { creditsRemaining: true, creditsResetAt: true, role: true }
+  }) : null
 
   const toolsDesc = userRole === "ADMIN" || userRole === "BUSINESS"
     ? "Browse and use all business & premium tools."
@@ -73,6 +81,16 @@ export default async function DashboardPage() {
           )
         })}
       </div>
+
+      {/* Credit overview status */}
+      {dbUser && (
+        <CreditOverview 
+          creditsRemaining={dbUser.creditsRemaining} 
+          creditsMax={getCurrentCreditAllocation(dbUser.role)} 
+          resetDate={dbUser.creditsResetAt} 
+          isFree={dbUser.role !== "PRO" && dbUser.role !== "BUSINESS" && dbUser.role !== "ADMIN"}
+        />
+      )}
 
       {/* Current plan */}
       <Card className={cn(
