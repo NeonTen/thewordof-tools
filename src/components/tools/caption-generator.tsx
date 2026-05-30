@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 // Removed useCompletion
 import { Loader2, Copy, Check, Sparkles, MessageSquare } from "lucide-react"
 import Link from "next/link"
@@ -12,13 +12,24 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-import { useUsageLimit } from "@/hooks/use-usage-limit"
+export function CaptionGenerator({ 
+  isPro = false,
+  creditsRemaining = null,
+  isLoggedIn = false
+}: { 
+  isPro?: boolean
+  creditsRemaining?: number | null
+  isLoggedIn?: boolean
+}) {
+  const [localCredits, setLocalCredits] = useState<number | null>(creditsRemaining)
 
-export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
-  const { count: usedToday, increment: incrementUsage } = useUsageLimit("caption-generator", "daily")
-  const MAX_FREE = 3
+  useEffect(() => {
+    setLocalCredits(creditsRemaining)
+  }, [creditsRemaining])
 
-  const limitReached = !isPro && usedToday >= MAX_FREE
+  const limitReached = isLoggedIn 
+    ? (localCredits !== null && localCredits <= 0) 
+    : false
 
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
   
@@ -46,9 +57,7 @@ export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
       })
 
       if (res.ok && res.body) {
-        if (!isPro) {
-          await incrementUsage(1)
-        }
+        setLocalCredits(prev => (prev !== null ? Math.max(0, prev - 1) : null))
         const reader = res.body.getReader()
         const decoder = new TextDecoder()
         while (true) {
@@ -80,88 +89,110 @@ export function CaptionGenerator({ isPro = false }: { isPro?: boolean }) {
           <CardTitle>Generate Captions</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={onSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Platform</Label>
-                <Select value={formData.platform} onValueChange={v => setFormData({...formData, platform: v || ""})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select platform" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Instagram">Instagram</SelectItem>
-                    <SelectItem value="LinkedIn">LinkedIn</SelectItem>
-                    <SelectItem value="Twitter">Twitter / X</SelectItem>
-                    <SelectItem value="Facebook">Facebook</SelectItem>
-                    <SelectItem value="TikTok">TikTok</SelectItem>
-                  </SelectContent>
-                </Select>
+          {!isLoggedIn ? (
+            <div className="text-center flex flex-col items-center justify-center min-h-[300px] gap-6 py-4">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Sparkles className="h-6 w-6 text-primary animate-pulse" />
               </div>
-              <div className="space-y-2">
-                <Label>Tone</Label>
-                <Select value={formData.tone} onValueChange={v => setFormData({...formData, tone: v || ""})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select tone" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Professional">Professional</SelectItem>
-                    <SelectItem value="Engaging">Engaging</SelectItem>
-                    <SelectItem value="Humorous">Humorous</SelectItem>
-                    <SelectItem value="Inspirational">Inspirational</SelectItem>
-                    <SelectItem value="Educational">Educational</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="space-y-2 max-w-xs">
+                <h3 className="font-bold text-base">AI Tool Requires Account</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  AI utilities require a free account to track monthly credit allocations. Register today to claim 20 free monthly AI credits!
+                </p>
+              </div>
+              <div className="flex gap-3 w-full max-w-xs">
+                <Button className="w-full font-bold h-9 text-xs" asChild>
+                  <Link href="/login">Login</Link>
+                </Button>
+                <Button variant="outline" className="w-full font-bold h-9 text-xs" asChild>
+                  <Link href="/register">Sign Up</Link>
+                </Button>
               </div>
             </div>
+          ) : (
+            <form onSubmit={onSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Platform</Label>
+                  <Select value={formData.platform} onValueChange={v => setFormData({...formData, platform: v || ""})}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select platform" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Instagram">Instagram</SelectItem>
+                      <SelectItem value="LinkedIn">LinkedIn</SelectItem>
+                      <SelectItem value="Twitter">Twitter / X</SelectItem>
+                      <SelectItem value="Facebook">Facebook</SelectItem>
+                      <SelectItem value="TikTok">TikTok</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Tone</Label>
+                  <Select value={formData.tone} onValueChange={v => setFormData({...formData, tone: v || ""})}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select tone" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Professional">Professional</SelectItem>
+                      <SelectItem value="Engaging">Engaging</SelectItem>
+                      <SelectItem value="Humorous">Humorous</SelectItem>
+                      <SelectItem value="Inspirational">Inspirational</SelectItem>
+                      <SelectItem value="Educational">Educational</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
 
-            <div className="space-y-2">
-              <Label>Target Audience</Label>
-              <Input 
-                placeholder="e.g. Startup founders, Fitness enthusiasts" 
-                value={formData.audience} 
-                onChange={e => setFormData({...formData, audience: e.target.value})} 
-              />
-            </div>
+              <div className="space-y-2">
+                <Label>Target Audience</Label>
+                <Input 
+                  placeholder="e.g. Startup founders, Fitness enthusiasts" 
+                  value={formData.audience} 
+                  onChange={e => setFormData({...formData, audience: e.target.value})} 
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label>Topic / What is the post about? *</Label>
-              <Textarea 
-                placeholder="Describe your product launch, blog post, or idea..." 
-                rows={4}
-                required
-                value={formData.topic} 
-                onChange={e => setFormData({...formData, topic: e.target.value})} 
-              />
-            </div>
+              <div className="space-y-2">
+                <Label>Topic / What is the post about? *</Label>
+                <Textarea 
+                  placeholder="Describe your product launch, blog post, or idea..." 
+                  rows={4}
+                  required
+                  value={formData.topic} 
+                  onChange={e => setFormData({...formData, topic: e.target.value})} 
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label>Keywords (Optional)</Label>
-              <Input 
-                placeholder="e.g. AI, SaaS, Productivity" 
-                value={formData.keywords} 
-                onChange={e => setFormData({...formData, keywords: e.target.value})} 
-              />
-            </div>
+              <div className="space-y-2">
+                <Label>Keywords (Optional)</Label>
+                <Input 
+                  placeholder="e.g. AI, SaaS, Productivity" 
+                  value={formData.keywords} 
+                  onChange={e => setFormData({...formData, keywords: e.target.value})} 
+                />
+              </div>
 
-            <Button type="submit" className="w-full" disabled={isLoading || !formData.topic || limitReached}>
-              {isLoading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Sparkles className="mr-2 h-4 w-4" />
+              <Button type="submit" className="w-full" disabled={isLoading || !formData.topic || limitReached}>
+                {isLoading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Sparkles className="mr-2 h-4 w-4" />
+                )}
+                {isLoading ? "Generating..." : limitReached ? "Out of Credits" : "Generate Captions"}
+              </Button>
+              {limitReached && (
+                <p className="text-[10px] text-center text-destructive font-bold">
+                  You have exhausted your credit balance. <Link href="/pricing" className="text-primary hover:underline">Upgrade to Pro &rarr;</Link>
+                </p>
               )}
-              {isLoading ? "Generating..." : limitReached ? "Daily Limit Reached" : "Generate Captions"}
-            </Button>
-            {limitReached && (
-              <p className="text-[10px] text-center text-muted-foreground">
-                You&apos;ve reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
-              </p>
-            )}
-            {!isPro && !limitReached && (
-              <p className="text-[10px] text-center text-muted-foreground">
-                {MAX_FREE - usedToday} of {MAX_FREE} free generations left today
-              </p>
-            )}
-          </form>
+              {!limitReached && (
+                <p className="text-[10px] text-center text-muted-foreground font-semibold">
+                  Costs 1 credit ({localCredits ?? 0} remaining)
+                </p>
+              )}
+            </form>
+          )}
         </CardContent>
       </Card>
 

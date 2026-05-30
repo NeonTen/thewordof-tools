@@ -4,6 +4,8 @@ import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 
+import { getCurrentCreditAllocation } from "@/lib/credits"
+
 export async function syncPlanStatus() {
   const session = await auth()
   
@@ -15,7 +17,11 @@ export async function syncPlanStatus() {
     // Check local database (for manual Admin upgrades or successful webhook payments)
     const dbUser = await prisma.user.findUnique({
       where: { id: session.user.id },
-      include: {
+      select: {
+        id: true,
+        role: true,
+        creditsRemaining: true,
+        creditsResetAt: true,
         subscriptions: {
           orderBy: { createdAt: 'desc' },
           take: 1
@@ -24,6 +30,22 @@ export async function syncPlanStatus() {
     })
 
     if (dbUser?.role === "PRO" || dbUser?.role === "BUSINESS" || dbUser?.role === "ADMIN" || dbUser?.subscriptions?.[0]?.plan === "PREMIUM" || dbUser?.subscriptions?.[0]?.plan === "BUSINESS") {
+      const targetAllocation = getCurrentCreditAllocation(dbUser.role)
+      
+      // If user upgraded but credits are still stuck on legacy/Free quota (<= 20 credits), reset/bump them to premium defaults
+      if ((dbUser.role === "PRO" || dbUser.role === "BUSINESS" || dbUser.role === "ADMIN") && dbUser.creditsRemaining <= 20) {
+        const nextReset = new Date()
+        nextReset.setMonth(nextReset.getMonth() + 1)
+        
+        await prisma.user.update({
+          where: { id: session.user.id },
+          data: {
+            creditsRemaining: targetAllocation,
+            creditsResetAt: nextReset
+          }
+        })
+      }
+
       revalidatePath("/dashboard")
       return { 
         success: true, 

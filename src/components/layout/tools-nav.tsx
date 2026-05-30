@@ -21,7 +21,7 @@ import {
 import { cn } from "@/lib/utils"
 
 
-type NavItem = { title: string; href: string; icon: React.ElementType; pro?: boolean }
+type NavItem = { title: string; href: string; icon: React.ElementType }
 type NavGroup = { label: string; items: NavItem[] }
 
 const navGroups: NavGroup[] = [
@@ -60,10 +60,10 @@ const navGroups: NavGroup[] = [
     label: "AI Tools",
     items: [
       { title: "Product Desc Gen", href: "/tools/product-description", icon: Sparkles },
-      { title: "Caption Gen",      href: "/tools/caption-generator",icon: Sparkles,      pro: true },
-      { title: "Prompt Gen",       href: "/tools/prompt-generator", icon: Brain,         pro: true },
-      { title: "CV Builder",       href: "/tools/cv-builder",       icon: PenLine,       pro: true },
-      { title: "SEO Generator",    href: "/tools/seo-generator",    icon: Search,        pro: true },
+      { title: "Caption Gen",      href: "/tools/caption-generator",icon: Sparkles },
+      { title: "Prompt Gen",       href: "/tools/prompt-generator", icon: Brain },
+      { title: "CV Builder",       href: "/tools/cv-builder",       icon: PenLine },
+      { title: "SEO Generator",    href: "/tools/seo-generator",    icon: Search },
     ],
   },
 ]

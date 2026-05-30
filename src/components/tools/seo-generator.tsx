@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useState } from "react"
-import { Loader2, Copy, Check, Search } from "lucide-react"
+import React, { useState, useEffect } from "react"
+import { Loader2, Copy, Check, Search, Sparkles } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,7 +9,6 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 interface SeoResult {
   title: string
@@ -17,14 +16,27 @@ interface SeoResult {
   keywords: string[]
 }
 
-export function SeoGenerator({ isPro = false }: { isPro?: boolean }) {
+export function SeoGenerator({ 
+  isPro = false,
+  creditsRemaining = null,
+  isLoggedIn = false
+}: { 
+  isPro?: boolean
+  creditsRemaining?: number | null
+  isLoggedIn?: boolean
+}) {
   const [copiedField, setCopiedField] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [result, setResult] = useState<SeoResult | null>(null)
-  const { count: usedToday, increment: incrementUsage } = useUsageLimit("seo-generator", "daily")
-  const MAX_FREE = 3
+  const [localCredits, setLocalCredits] = useState<number | null>(creditsRemaining)
 
-  const limitReached = !isPro && usedToday >= MAX_FREE
+  useEffect(() => {
+    setLocalCredits(creditsRemaining)
+  }, [creditsRemaining])
+
+  const limitReached = isLoggedIn 
+    ? (localCredits !== null && localCredits <= 0) 
+    : false
   
   const [formData, setFormData] = useState({
     keyword: "",
@@ -46,6 +58,7 @@ export function SeoGenerator({ isPro = false }: { isPro?: boolean }) {
       })
       
       if (res.ok) {
+        setLocalCredits(prev => (prev !== null ? Math.max(0, prev - 1) : null))
         const data = await res.json()
         setResult(data)
       }
@@ -53,13 +66,6 @@ export function SeoGenerator({ isPro = false }: { isPro?: boolean }) {
       console.error(error)
     } finally {
       setIsLoading(false)
-    }
-  }
-
-  const handleGenerate = async (e: React.FormEvent) => {
-    await onSubmit(e)
-    if (!isPro) {
-      await incrementUsage(1)
     }
   }
 
@@ -76,77 +82,99 @@ export function SeoGenerator({ isPro = false }: { isPro?: boolean }) {
           <CardTitle>SEO Parameters</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={onSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label>Primary Keyword *</Label>
-              <Input 
-                placeholder="e.g. Best wireless earbuds 2024" 
-                required
-                value={formData.keyword} 
-                onChange={e => setFormData({...formData, keyword: e.target.value})} 
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Page Type</Label>
-                <Select value={formData.pageType} onValueChange={v => setFormData({...formData, pageType: v || "Blog Post"})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Blog Post">Blog Post</SelectItem>
-                    <SelectItem value="Landing Page">Landing Page</SelectItem>
-                    <SelectItem value="Product Page">Product Page</SelectItem>
-                    <SelectItem value="Service Page">Service Page</SelectItem>
-                    <SelectItem value="About Page">About Page</SelectItem>
-                  </SelectContent>
-                </Select>
+          {!isLoggedIn ? (
+            <div className="text-center flex flex-col items-center justify-center min-h-[300px] gap-6 py-4">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Sparkles className="h-6 w-6 text-primary animate-pulse" />
               </div>
-              <div className="space-y-2">
-                <Label>Tone</Label>
-                <Select value={formData.tone} onValueChange={v => setFormData({...formData, tone: v || "Professional"})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select tone" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Professional">Professional</SelectItem>
-                    <SelectItem value="Persuasive">Persuasive</SelectItem>
-                    <SelectItem value="Informative">Informative</SelectItem>
-                    <SelectItem value="Exciting">Exciting</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="space-y-2 max-w-xs">
+                <h3 className="font-bold text-base">AI Tool Requires Account</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  AI utilities require a free account to track monthly credit allocations. Register today to claim 20 free monthly AI credits!
+                </p>
+              </div>
+              <div className="flex gap-3 w-full max-w-xs">
+                <Button className="w-full font-bold h-9 text-xs" asChild>
+                  <Link href="/login">Login</Link>
+                </Button>
+                <Button variant="outline" className="w-full font-bold h-9 text-xs" asChild>
+                  <Link href="/register">Sign Up</Link>
+                </Button>
               </div>
             </div>
+          ) : (
+            <form onSubmit={onSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label>Primary Keyword *</Label>
+                <Input 
+                  placeholder="e.g. Best wireless earbuds 2024" 
+                  required
+                  value={formData.keyword} 
+                  onChange={e => setFormData({...formData, keyword: e.target.value})} 
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label>Target Audience</Label>
-              <Input 
-                placeholder="e.g. Audiophiles, Tech enthusiasts" 
-                value={formData.audience} 
-                onChange={e => setFormData({...formData, audience: e.target.value})} 
-              />
-            </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Page Type</Label>
+                  <Select value={formData.pageType} onValueChange={v => setFormData({...formData, pageType: v || "Blog Post"})}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Blog Post">Blog Post</SelectItem>
+                      <SelectItem value="Landing Page">Landing Page</SelectItem>
+                      <SelectItem value="Product Page">Product Page</SelectItem>
+                      <SelectItem value="Service Page">Service Page</SelectItem>
+                      <SelectItem value="About Page">About Page</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Tone</Label>
+                  <Select value={formData.tone} onValueChange={v => setFormData({...formData, tone: v || "Professional"})}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select tone" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Professional">Professional</SelectItem>
+                      <SelectItem value="Persuasive">Persuasive</SelectItem>
+                      <SelectItem value="Informative">Informative</SelectItem>
+                      <SelectItem value="Exciting">Exciting</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
 
-            <Button onClick={handleGenerate} className="w-full" disabled={isLoading || !formData.keyword || limitReached}>
-              {isLoading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Search className="mr-2 h-4 w-4" />
+              <div className="space-y-2">
+                <Label>Target Audience</Label>
+                <Input 
+                  placeholder="e.g. Audiophiles, Tech enthusiasts" 
+                  value={formData.audience} 
+                  onChange={e => setFormData({...formData, audience: e.target.value})} 
+                />
+              </div>
+
+              <Button type="submit" className="w-full" disabled={isLoading || !formData.keyword || limitReached}>
+                {isLoading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Search className="mr-2 h-4 w-4" />
+                )}
+                {isLoading ? "Analyzing..." : limitReached ? "Out of Credits" : "Generate SEO Meta"}
+              </Button>
+              {limitReached && (
+                <p className="text-[10px] text-center text-destructive font-bold">
+                  You have exhausted your credit balance. <Link href="/pricing" className="text-primary hover:underline">Upgrade to Pro &rarr;</Link>
+                </p>
               )}
-              {isLoading ? "Analyzing..." : limitReached ? "Daily Limit Reached" : "Generate SEO Meta"}
-            </Button>
-            {limitReached && (
-              <p className="text-[10px] text-center text-muted-foreground">
-                You&apos;ve reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
-              </p>
-            )}
-            {!isPro && !limitReached && (
-              <p className="text-[10px] text-center text-muted-foreground">
-                {MAX_FREE - usedToday} of {MAX_FREE} free generations left today
-              </p>
-            )}
-          </form>
+              {!limitReached && (
+                <p className="text-[10px] text-center text-muted-foreground font-semibold">
+                  Costs 1 credit ({localCredits ?? 0} remaining)
+                </p>
+              )}
+            </form>
+          )}
         </CardContent>
       </Card>
 

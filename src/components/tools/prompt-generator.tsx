@@ -1,8 +1,7 @@
 "use client"
 
-import React, { useState } from "react"
-// Removed useCompletion
-import { Loader2, Copy, Check, Lightbulb } from "lucide-react"
+import React, { useState, useEffect } from "react"
+import { Loader2, Copy, Check, Lightbulb, Sparkles } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,13 +10,25 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { useUsageLimit } from "@/hooks/use-usage-limit"
 
-export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
-  const { count: usedToday, increment: incrementUsage } = useUsageLimit("prompt-generator", "daily")
-  const MAX_FREE = 3
+export function PromptGenerator({ 
+  isPro = false,
+  creditsRemaining = null,
+  isLoggedIn = false
+}: { 
+  isPro?: boolean
+  creditsRemaining?: number | null
+  isLoggedIn?: boolean
+}) {
+  const [localCredits, setLocalCredits] = useState<number | null>(creditsRemaining)
 
-  const limitReached = !isPro && usedToday >= MAX_FREE
+  useEffect(() => {
+    setLocalCredits(creditsRemaining)
+  }, [creditsRemaining])
+ 
+  const limitReached = isLoggedIn 
+    ? (localCredits !== null && localCredits <= 0) 
+    : false
   const [copied, setCopied] = useState(false)
   
   const [formData, setFormData] = useState({
@@ -43,9 +54,7 @@ export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
       })
 
       if (res.ok && res.body) {
-        if (!isPro) {
-          await incrementUsage(1)
-        }
+        setLocalCredits(prev => (prev !== null ? Math.max(0, prev - 1) : null))
         const reader = res.body.getReader()
         const decoder = new TextDecoder()
         while (true) {
@@ -75,70 +84,92 @@ export function PromptGenerator({ isPro = false }: { isPro?: boolean }) {
           <CardTitle>Design Prompt</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={onSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label>AI Target</Label>
-              <Select value={formData.category} onValueChange={v => setFormData({...formData, category: v || ""})}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select target AI" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ChatGPT">ChatGPT (Text)</SelectItem>
-                  <SelectItem value="Midjourney">Midjourney (Images)</SelectItem>
-                  <SelectItem value="Claude">Claude (Coding/Writing)</SelectItem>
-                  <SelectItem value="Stable Diffusion">Stable Diffusion (Images)</SelectItem>
-                </SelectContent>
-              </Select>
+          {!isLoggedIn ? (
+            <div className="text-center flex flex-col items-center justify-center min-h-[300px] gap-6 py-4">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Sparkles className="h-6 w-6 text-primary animate-pulse" />
+              </div>
+              <div className="space-y-2 max-w-xs">
+                <h3 className="font-bold text-base">AI Tool Requires Account</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  AI utilities require a free account to track monthly credit allocations. Register today to claim 20 free monthly AI credits!
+                </p>
+              </div>
+              <div className="flex gap-3 w-full max-w-xs">
+                <Button className="w-full font-bold h-9 text-xs" asChild>
+                  <Link href="/login">Login</Link>
+                </Button>
+                <Button variant="outline" className="w-full font-bold h-9 text-xs" asChild>
+                  <Link href="/register">Sign Up</Link>
+                </Button>
+              </div>
             </div>
+          ) : (
+            <form onSubmit={onSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label>AI Target</Label>
+                <Select value={formData.category} onValueChange={v => setFormData({...formData, category: v || ""})}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select target AI" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ChatGPT">ChatGPT (Text)</SelectItem>
+                    <SelectItem value="Midjourney">Midjourney (Images)</SelectItem>
+                    <SelectItem value="Claude">Claude (Coding/Writing)</SelectItem>
+                    <SelectItem value="Stable Diffusion">Stable Diffusion (Images)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div className="space-y-2">
-              <Label>Main Goal / Task *</Label>
-              <Input 
-                placeholder="e.g. Write a python script to scrape a website..." 
-                required
-                value={formData.goal} 
-                onChange={e => setFormData({...formData, goal: e.target.value})} 
-              />
-            </div>
+              <div className="space-y-2">
+                <Label>Main Goal / Task *</Label>
+                <Input 
+                  placeholder="e.g. Write a python script to scrape a website..." 
+                  required
+                  value={formData.goal} 
+                  onChange={e => setFormData({...formData, goal: e.target.value})} 
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label>Context / Background</Label>
-              <Textarea 
-                placeholder="e.g. I am a beginner in Python and need comments explaining the code." 
-                rows={3}
-                value={formData.context} 
-                onChange={e => setFormData({...formData, context: e.target.value})} 
-              />
-            </div>
+              <div className="space-y-2">
+                <Label>Context / Background</Label>
+                <Textarea 
+                  placeholder="e.g. I am a beginner in Python and need comments explaining the code." 
+                  rows={3}
+                  value={formData.context} 
+                  onChange={e => setFormData({...formData, context: e.target.value})} 
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label>Constraints / Rules</Label>
-              <Input 
-                placeholder="e.g. Do not use external libraries except BeautifulSoup." 
-                value={formData.constraints} 
-                onChange={e => setFormData({...formData, constraints: e.target.value})} 
-              />
-            </div>
+              <div className="space-y-2">
+                <Label>Constraints / Rules</Label>
+                <Input 
+                  placeholder="e.g. Do not use external libraries except BeautifulSoup." 
+                  value={formData.constraints} 
+                  onChange={e => setFormData({...formData, constraints: e.target.value})} 
+                />
+              </div>
 
-            <Button type="submit" className="w-full" disabled={isLoading || !formData.goal || limitReached}>
-              {isLoading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Lightbulb className="mr-2 h-4 w-4" />
+              <Button type="submit" className="w-full" disabled={isLoading || !formData.goal || limitReached}>
+                {isLoading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Sparkles className="mr-2 h-4 w-4" />
+                )}
+                {isLoading ? "Optimizing..." : limitReached ? "Out of Credits" : "Generate Optimal Prompt"}
+              </Button>
+              {limitReached && (
+                <p className="text-[10px] text-center text-destructive font-bold">
+                  You have exhausted your credit balance. <Link href="/pricing" className="text-primary hover:underline">Upgrade to Pro &rarr;</Link>
+                </p>
               )}
-              {isLoading ? "Optimizing..." : limitReached ? "Daily Limit Reached" : "Generate Optimal Prompt"}
-            </Button>
-            {limitReached && (
-              <p className="text-[10px] text-center text-muted-foreground">
-                You&apos;ve reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
-              </p>
-            )}
-            {!isPro && !limitReached && (
-              <p className="text-[10px] text-center text-muted-foreground">
-                {MAX_FREE - usedToday} of {MAX_FREE} free generations left today
-              </p>
-            )}
-          </form>
+              {!limitReached && (
+                <p className="text-[10px] text-center text-muted-foreground font-semibold">
+                  Costs 1 credit ({localCredits ?? 0} remaining)
+                </p>
+              )}
+            </form>
+          )}
         </CardContent>
       </Card>
 

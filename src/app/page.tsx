@@ -2,7 +2,7 @@ import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ArrowRight, Check, Zap, Sparkles, Image as ImageIcon, FileCode, Calculator, Wand2, FileText, Share2, Star } from "lucide-react"
+import { ArrowRight, Check, Zap, Sparkles, Image as ImageIcon, FileCode, Calculator, Wand2, FileText, Share2, Star, QrCode } from "lucide-react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { auth } from "@/auth"
@@ -59,32 +59,95 @@ export default async function Home() {
               <p className="text-muted-foreground max-w-xl mx-auto">From developers to marketers, we have the right tool for you. Fast, secure, and entirely browser-based.</p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
-                { title: "Image Converter", desc: "Batch convert and resize images with zero loss.", icon: ImageIcon, color: "text-blue-500", bg: "bg-blue-500/10" },
-                { title: "AI Caption Generator", desc: "Viral-ready captions for Instagram, TikTok, and more.", icon: Wand2, color: "text-purple-500", bg: "bg-purple-500/10" },
-                { title: "Invoice Generator", desc: "Professional, PDF-ready invoices in seconds.", icon: FileText, color: "text-emerald-500", bg: "bg-emerald-500/10" },
-                { title: "Code Minifier", desc: "Optimize your CSS/HTML for faster load times.", icon: FileCode, color: "text-orange-500", bg: "bg-orange-500/10" },
-                { title: "Financial Calculators", desc: "EMI, SIP, and more with interactive charts.", icon: Calculator, color: "text-rose-500", bg: "bg-rose-500/10" },
-                { title: "SEO Generator", desc: "Meta tags and descriptions optimized for search.", icon: Share2, color: "text-indigo-500", bg: "bg-indigo-500/10" },
+                { 
+                  title: "Dynamic QR Codes", 
+                  desc: "Create custom-branded QR codes with live tracking, redirection links, and advanced scan analytics.", 
+                  features: ["Custom shapes & colors", "Device & location tracking", "Redirection link manager"],
+                  icon: QrCode, 
+                  color: "text-blue-500", 
+                  bg: "bg-blue-500/10",
+                  href: "/tools/qr-code" 
+                },
+                { 
+                  title: "AI Resume & CV Builder", 
+                  desc: "Design clean, professional Resumes in seconds using ATS-optimized layouts, AI summary writers, and LinkedIn import.", 
+                  features: ["8 Premium templates", "AI summary helper", "Direct PDF generation"],
+                  icon: FileText, 
+                  color: "text-purple-500", 
+                  bg: "bg-purple-500/10",
+                  href: "/tools/cv-builder" 
+                },
+                { 
+                  title: "AI Caption & SEO Suite", 
+                  desc: "Accelerate your growth with viral caption creators and SEO tags + metadata optimized for search engine ranks.", 
+                  features: ["Instagram & TikTok captions", "Meta tags & descriptions", "Custom tone & goal settings"],
+                  icon: Wand2, 
+                  color: "text-indigo-500", 
+                  bg: "bg-indigo-500/10",
+                  href: "/tools/caption-generator" 
+                },
+                { 
+                  title: "Branded Invoice Generator", 
+                  desc: "Produce ready-to-send professional business invoices with custom logos, VAT/tax handling, and automated calculations.", 
+                  features: ["Branded PDF invoices", "Tax & discount calculators", "Local customer saving"],
+                  icon: Calculator, 
+                  color: "text-emerald-500", 
+                  bg: "bg-emerald-500/10",
+                  href: "/tools/invoice-generator" 
+                },
+                { 
+                  title: "Batch Image & SVG Compressor", 
+                  desc: "Optimize high-quality SVGs and batch convert or resize images directly inside your web browser.", 
+                  features: ["Up to 1,000 files in parallel", "Lossless SVG optimization", "100% browser local safety"],
+                  icon: ImageIcon, 
+                  color: "text-rose-500", 
+                  bg: "bg-rose-500/10",
+                  href: "/tools/image-converter" 
+                },
+                { 
+                  title: "Developer Utilities", 
+                  desc: "Minify code files, view side-by-side text differences, and generate advanced Schema markup for Google Rich Snippets.", 
+                  features: ["HTML/CSS/JS minifier", "Diff checker & editor", "Structured data generator"],
+                  icon: FileCode, 
+                  color: "text-orange-500", 
+                  bg: "bg-orange-500/10",
+                  href: "/tools/schema-generator" 
+                },
               ].map((tool, i) => {
                 const Icon = tool.icon
                 return (
-                  <Card key={i} className="group hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
-                    <CardContent className="p-8 space-y-4">
-                      <div className={cn("h-12 w-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300", tool.bg)}>
-                        <Icon className={cn("h-6 w-6", tool.color)} />
+                  <Card key={i} className="group hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 flex flex-col justify-between">
+                    <CardContent className="p-8 space-y-6 flex-1 flex flex-col justify-between">
+                      <div className="space-y-4">
+                        <div className={cn("h-12 w-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300", tool.bg)}>
+                          <Icon className={cn("h-6 w-6", tool.color)} />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold">{tool.title}</h3>
+                          <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{tool.desc}</p>
+                        </div>
+                        <ul className="space-y-2 pt-2">
+                          {tool.features.map((feat, idx) => (
+                            <li key={idx} className="flex items-center gap-2 text-xs text-muted-foreground font-semibold">
+                              <Check className="h-3.5 w-3.5 text-primary shrink-0" />
+                              <span>{feat}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                      <div>
-                        <h3 className="text-xl font-bold">{tool.title}</h3>
-                        <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{tool.desc}</p>
+                      <div className="pt-4 flex justify-end">
+                        <Link href={tool.href} className="text-xs font-black text-primary group-hover:underline flex items-center gap-1">
+                          Try Tool <ArrowRight className="h-3 w-3" />
+                        </Link>
                       </div>
                     </CardContent>
                   </Card>
                 )
               })}
             </div>
-            <div className="text-center mt-12">
+            <div className="text-center mt-16">
               <Link href="/tools">
                 <Button variant="ghost" className="font-bold hover:text-primary">
                   Explore all tools <ArrowRight className="ml-2 h-4 w-4" />
@@ -144,23 +207,24 @@ export default async function Home() {
                     </thead>
                     <tbody className="divide-y divide-border">
                       {[
+                        ["Monthly AI Credit Pool", "20 credits / mo", "500 credits / mo", "2,000 credits / mo"],
                         ["Core Utility Tools", "Unlimited", "Unlimited", "Unlimited"],
                         ["Batch Image Processing", "5 / day", "Up to 1,000 / batch", "Unlimited"],
                         ["SVG Optimization", "5 / day", "Up to 1,000 / batch", "Unlimited"],
                         ["Bulk ZIP Exports", "5 / day", "Up to 1,000 / batch", "Unlimited"],
-                        ["AI Caption Generator", "3 per gen", "10+ per gen", "Unlimited"],
-                        ["AI CV Builder", "Basic Summary", "8 Pro Templates", "8 Pro Templates + Import with AI"],
+                        ["AI Caption Generator", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
+                        ["AI Product Description", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
+                        ["AI SEO Generator", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
+                        ["AI Prompt Optimizer", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
+                        ["LLMS.txt Builder", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
+                        ["AI CV Builder & Import", "Costs 1 credit (Summary)", "Costs 1 credit", "Costs 1-3 credits"],
                         ["Invoice Generator", "3 / month", "Unlimited + Branding", "Unlimited + Branding"],
                         ["Cloud progress saving", "—", "✅ Unlimited", "✅ Unlimited"],
                         ["Dynamic QR Codes", "1 (15-day expiry)", "Unlimited (Lifetime)", "Unlimited + Analytics"],
-                        ["AI SEO Generator", "3 / day", "Unlimited", "Unlimited"],
-                        ["AI Prompt Optimizer", "3 / day", "Unlimited + History", "Unlimited + History"],
-                        ["LLMS.txt Builder", "1 / day", "Unlimited", "Unlimited"],
                         ["Advanced SEO Schema", "Basic", "Advanced", "Advanced"],
-                        ["Priority AI Queue", "—", "✓ Instant", "✓ Highest Priority"],
+                        ["Priority AI Queue", "—", "✓ Included", "✓ Highest Priority"],
                         ["Ad-Free Experience", "—", "✓", "✓"],
                         ["History Tracking", "—", "✓", "✓"],
-                        ["1-on-1 Onboarding", "—", "—", "✓ Included"],
                         ["Priority Tool Requests", "—", "—", "✓ Included"],
                         ["Early Access", "—", "✓", "✓"],
                         ["Priority Support", "—", "✓ Email", "✓ 24/7 Dedicated"],

@@ -25,12 +25,15 @@ export async function POST(req: Request) {
 
       const newRole = plan === "BUSINESS" ? "BUSINESS" : "PRO";
 
-      // Update user to PRO/BUSINESS
+      // Update user to PRO/BUSINESS and set expiration/credits
+      const defaultAllocation = newRole === "BUSINESS" ? 2000 : 500;
       await prisma.user.update({
         where: { id: session.user.id },
         data: { 
           role: newRole,
-          proExpiresAt: expiresAt
+          proExpiresAt: expiresAt,
+          creditsRemaining: defaultAllocation,
+          creditsResetAt: expiresAt
         },
       });
 

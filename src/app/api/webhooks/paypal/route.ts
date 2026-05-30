@@ -29,7 +29,11 @@ export async function POST(req: Request) {
         if (user) {
           await prisma.user.update({
             where: { id: user.id },
-            data: { role: "PRO" },
+            data: { 
+              role: "PRO",
+              creditsRemaining: 500,
+              creditsResetAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+            },
           });
 
           await prisma.subscription.upsert({
@@ -67,12 +71,15 @@ export async function POST(req: Request) {
             expiresAt.setMonth(expiresAt.getMonth() + 1);
           }
 
-          // Update user role
+          // Update user role and initialize credits
+          const defaultAllocation = details.role === "BUSINESS" ? 2000 : 500;
           await prisma.user.update({
             where: { id: user.id },
             data: { 
               role: details.role,
-              proExpiresAt: expiresAt
+              proExpiresAt: expiresAt,
+              creditsRemaining: defaultAllocation,
+              creditsResetAt: expiresAt
             },
           });
 
@@ -115,11 +122,14 @@ export async function POST(req: Request) {
 
           const newRole = sub.plan === "BUSINESS" ? "BUSINESS" : "PRO";
 
+          const defaultAllocation = newRole === "BUSINESS" ? 2000 : 500;
           await prisma.user.update({
             where: { id: sub.userId },
             data: {
               role: newRole,
               proExpiresAt: expiresAt,
+              creditsRemaining: defaultAllocation,
+              creditsResetAt: expiresAt
             },
           });
 

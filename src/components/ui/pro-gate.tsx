@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Lock, Sparkles, X, ArrowRight, Crown } from "lucide-react"
+import { Sparkles, X, ArrowRight, Crown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 

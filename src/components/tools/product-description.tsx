@@ -1,19 +1,24 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Loader2, Copy, Check } from "lucide-react"
-import { useUsageLimit } from "@/hooks/use-usage-limit"
+import { Loader2, Copy, Check, Sparkles } from "lucide-react"
 import Link from "next/link"
 
 interface ProductDescriptionProps {
   isPro?: boolean
+  creditsRemaining?: number | null
+  isLoggedIn?: boolean
 }
 
-export function ProductDescription({ isPro = false }: ProductDescriptionProps) {
+export function ProductDescription({ 
+  isPro = false,
+  creditsRemaining = null,
+  isLoggedIn = false
+}: ProductDescriptionProps) {
   const [title, setTitle] = useState("")
   const [featuresText, setFeaturesText] = useState("")
   const [imageFile, setImageFile] = useState<File | null>(null)
@@ -21,10 +26,15 @@ export function ProductDescription({ isPro = false }: ProductDescriptionProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string>("")
   const [copied, setCopied] = useState(false)
+  const [localCredits, setLocalCredits] = useState<number | null>(creditsRemaining)
 
-  const { count: usedToday, increment: incrementUsage } = useUsageLimit("product-description", "daily")
-  const MAX_FREE = 3
-  const limitReached = !isPro && usedToday >= MAX_FREE
+  useEffect(() => {
+    setLocalCredits(creditsRemaining)
+  }, [creditsRemaining])
+
+  const limitReached = isLoggedIn 
+    ? (localCredits !== null && localCredits <= 0) 
+    : false
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,15 +58,9 @@ export function ProductDescription({ isPro = false }: ProductDescriptionProps) {
         body: formData,
       })
       if (!res.ok) throw new Error("Failed to generate description")
+      setLocalCredits(prev => (prev !== null ? Math.max(0, prev - 1) : null))
       const data = await res.json()
       setGenerated(data.description)
-      
-      // Increment usage limit and send analytics event
-      await incrementUsage(1, {
-        titleLength: title.length,
-        hasImage: !!imageFile,
-        featureCount: featuresList.length,
-      })
     } catch (err) {
       setError((err as Error).message)
     } finally {
@@ -78,45 +82,67 @@ export function ProductDescription({ isPro = false }: ProductDescriptionProps) {
           <CardDescription>Enter product details to generate an optimized description.</CardDescription>
         </CardHeader>
         <CardContent className="px-0 pb-0">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground" htmlFor="title">Product Title *</label>
-              <Input id="title" value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g. Ergonomic Office Chair" required />
+          {!isLoggedIn ? (
+            <div className="text-center flex flex-col items-center justify-center min-h-[300px] gap-6 py-4">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Sparkles className="h-6 w-6 text-primary animate-pulse" />
+              </div>
+              <div className="space-y-2 max-w-xs">
+                <h3 className="font-bold text-base">AI Tool Requires Account</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  AI utilities require a free account to track monthly credit allocations. Register today to claim 20 free monthly AI credits!
+                </p>
+              </div>
+              <div className="flex gap-3 w-full max-w-xs">
+                <Button className="w-full font-bold h-9 text-xs" asChild>
+                  <Link href="/login">Login</Link>
+                </Button>
+                <Button variant="outline" className="w-full font-bold h-9 text-xs" asChild>
+                  <Link href="/register">Sign Up</Link>
+                </Button>
+              </div>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground" htmlFor="title">Product Title *</label>
+                <Input id="title" value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g. Ergonomic Office Chair" required />
+              </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground" htmlFor="image">Product Image (optional)</label>
-              <Input id="image" type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] ?? null)} />
-            </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground" htmlFor="image">Product Image (optional)</label>
+                <Input id="image" type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] ?? null)} />
+              </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground" htmlFor="features">Key Features (one per line)</label>
-              <Textarea
-                id="features"
-                value={featuresText}
-                onChange={e => setFeaturesText(e.target.value)}
-                placeholder="High density foam seat&#10;Adjustable lumbar support&#10;3D armrests&#10;Tilt mechanism"
-                rows={5}
-                className="w-full text-sm"
-              />
-            </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground" htmlFor="features">Key Features (one per line)</label>
+                <Textarea
+                  id="features"
+                  value={featuresText}
+                  onChange={e => setFeaturesText(e.target.value)}
+                  placeholder="High density foam seat&#10;Adjustable lumbar support&#10;3D armrests&#10;Tilt mechanism"
+                  rows={5}
+                  className="w-full text-sm"
+                />
+              </div>
 
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-            <Button type="submit" disabled={loading || limitReached} className="w-full flex items-center justify-center">
-              {loading ? <Loader2 className="animate-spin mr-2 h-4 w-4" /> : null}
-              {limitReached ? "Daily Limit Reached" : "Generate Description"}
-            </Button>
-            {limitReached && (
-              <p className="text-[10px] text-center text-muted-foreground">
-                You&apos;ve reached your 3 daily generations. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
-              </p>
-            )}
-            {!isPro && !limitReached && (
-              <p className="text-[10px] text-center text-muted-foreground">
-                {MAX_FREE - usedToday} of {MAX_FREE} free generations left today
-              </p>
-            )}
-          </form>
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              <Button type="submit" disabled={loading || limitReached} className="w-full flex items-center justify-center">
+                {loading ? <Loader2 className="animate-spin mr-2 h-4 w-4" /> : null}
+                {limitReached ? "Out of Credits" : "Generate Description"}
+              </Button>
+              {limitReached && (
+                <p className="text-[10px] text-center text-destructive font-bold">
+                  You have exhausted your credit balance. <Link href="/pricing" className="text-primary hover:underline">Upgrade to Pro &rarr;</Link>
+                </p>
+              )}
+              {!limitReached && (
+                <p className="text-[10px] text-center text-muted-foreground font-semibold">
+                  Costs 1 credit ({localCredits ?? 0} remaining)
+                </p>
+              )}
+            </form>
+          )}
         </CardContent>
       </Card>
 

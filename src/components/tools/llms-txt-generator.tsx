@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Cpu, Copy, Check, Download, Sparkles, HelpCircle, FileText, Globe, Info } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,13 +9,25 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { useUsageLimit } from "@/hooks/use-usage-limit"
 
-export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
-  const { count: usedToday, increment: incrementUsage } = useUsageLimit("llms-txt", "daily")
-  const MAX_FREE = 1
+export function LlmsTxtGenerator({ 
+  isPro = false,
+  creditsRemaining = null,
+  isLoggedIn = false
+}: { 
+  isPro?: boolean
+  creditsRemaining?: number | null
+  isLoggedIn?: boolean
+}) {
+  const [localCredits, setLocalCredits] = useState<number | null>(creditsRemaining)
 
-  const limitReached = !isPro && usedToday >= MAX_FREE
+  useEffect(() => {
+    setLocalCredits(creditsRemaining)
+  }, [creditsRemaining])
+
+  const limitReached = isLoggedIn 
+    ? (localCredits !== null && localCredits <= 0) 
+    : false
 
   const [formData, setFormData] = useState({
     brandName: "",
@@ -43,6 +55,7 @@ export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
       })
 
       if (res.ok && res.body) {
+        setLocalCredits(prev => (prev !== null ? Math.max(0, prev - 1) : null))
         const reader = res.body.getReader()
         const decoder = new TextDecoder()
         while (true) {
@@ -56,11 +69,6 @@ export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
       console.error(error)
     } finally {
       setIsLoading(false)
-      if (!isPro) {
-        // Only increment if we actually got a response (setOutput would have text)
-        // Since it's a stream, we just assume if it finished without error
-        await incrementUsage(1)
-      }
     }
   }
 
@@ -88,87 +96,109 @@ export function LlmsTxtGenerator({ isPro = false }: { isPro?: boolean }) {
             <CardDescription>Tell us about your website for AI optimization</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleGenerate} className="space-y-4">
-              <div className="space-y-2">
-                <Label>Brand / Website Name *</Label>
-                <Input 
-                  required
-                  placeholder="e.g. TheWordOf Tools" 
-                  value={formData.brandName}
-                  onChange={(e) => setFormData({...formData, brandName: e.target.value})}
-                />
+            {!isLoggedIn ? (
+              <div className="text-center flex flex-col items-center justify-center min-h-[300px] gap-6 py-4">
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Sparkles className="h-6 w-6 text-primary animate-pulse" />
+                </div>
+                <div className="space-y-2 max-w-xs">
+                  <h3 className="font-bold text-base">AI Tool Requires Account</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    AI utilities require a free account to track monthly credit allocations. Register today to claim 20 free monthly AI credits!
+                  </p>
+                </div>
+                <div className="flex gap-3 w-full max-w-xs">
+                  <Button className="w-full font-bold h-9 text-xs" asChild>
+                    <Link href="/login">Login</Link>
+                  </Button>
+                  <Button variant="outline" className="w-full font-bold h-9 text-xs" asChild>
+                    <Link href="/register">Sign Up</Link>
+                  </Button>
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label>Description *</Label>
-                <Textarea 
-                  required
-                  placeholder="What does your site do? Key features, products, or services..."
-                  rows={4}
-                  value={formData.description}
-                  onChange={(e) => setFormData({...formData, description: e.target.value})}
-                />
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
+            ) : (
+              <form onSubmit={handleGenerate} className="space-y-4">
                 <div className="space-y-2">
-                  <Label>Sitemap URL</Label>
+                  <Label>Brand / Website Name *</Label>
                   <Input 
-                    placeholder="https://example.com/sitemap.xml" 
-                    value={formData.sitemapUrl}
-                    onChange={(e) => setFormData({...formData, sitemapUrl: e.target.value})}
+                    required
+                    placeholder="e.g. TheWordOf Tools" 
+                    value={formData.brandName}
+                    onChange={(e) => setFormData({...formData, brandName: e.target.value})}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Contact Info</Label>
-                  <Input 
-                    placeholder="email@example.com" 
-                    value={formData.contactInfo}
-                    onChange={(e) => setFormData({...formData, contactInfo: e.target.value})}
+                  <Label>Description *</Label>
+                  <Textarea 
+                    required
+                    placeholder="What does your site do? Key features, products, or services..."
+                    rows={4}
+                    value={formData.description}
+                    onChange={(e) => setFormData({...formData, description: e.target.value})}
                   />
                 </div>
-              </div>
-              <div className="space-y-2">
-                <Label>Documentation URLs (Optional)</Label>
-                <Input 
-                  placeholder="https://docs.example.com" 
-                  value={formData.documentationUrls}
-                  onChange={(e) => setFormData({...formData, documentationUrls: e.target.value})}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>API Endpoints (Optional)</Label>
-                <Input 
-                  placeholder="https://api.example.com/v1" 
-                  value={formData.apiUrls}
-                  onChange={(e) => setFormData({...formData, apiUrls: e.target.value})}
-                />
-              </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Sitemap URL</Label>
+                    <Input 
+                      placeholder="https://example.com/sitemap.xml" 
+                      value={formData.sitemapUrl}
+                      onChange={(e) => setFormData({...formData, sitemapUrl: e.target.value})}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Contact Info</Label>
+                    <Input 
+                      placeholder="email@example.com" 
+                      value={formData.contactInfo}
+                      onChange={(e) => setFormData({...formData, contactInfo: e.target.value})}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Documentation URLs (Optional)</Label>
+                  <Input 
+                    placeholder="https://docs.example.com" 
+                    value={formData.documentationUrls}
+                    onChange={(e) => setFormData({...formData, documentationUrls: e.target.value})}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>API Endpoints (Optional)</Label>
+                  <Input 
+                    placeholder="https://api.example.com/v1" 
+                    value={formData.apiUrls}
+                    onChange={(e) => setFormData({...formData, apiUrls: e.target.value})}
+                  />
+                </div>
 
-              <Button type="submit" className="w-full h-12 gap-2 mt-4 font-bold rounded-xl shadow-lg shadow-primary/20" disabled={isLoading || limitReached}>
-                {isLoading ? (
-                  <span className="flex items-center gap-2">
-                    <span className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                    Generating...
-                  </span>
-                ) : limitReached ? (
-                  "Daily Limit Reached"
-                ) : (
-                  <>
-                    <Sparkles className="h-4 w-4" />
-                    Generate llms.txt
-                  </>
+                <Button type="submit" className="w-full h-12 gap-2 mt-4 font-bold rounded-xl shadow-lg shadow-primary/20" disabled={isLoading || limitReached}>
+                  {isLoading ? (
+                    <span className="flex items-center gap-2">
+                      <span className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                      Generating...
+                    </span>
+                  ) : limitReached ? (
+                    "Out of Credits"
+                  ) : (
+                    <>
+                      <Sparkles className="h-4 w-4" />
+                      Generate llms.txt
+                    </>
+                  )}
+                </Button>
+                {limitReached && (
+                  <p className="text-[10px] text-center text-destructive font-bold mt-2">
+                    You have exhausted your credit balance. <Link href="/pricing" className="text-primary hover:underline">Upgrade to Pro &rarr;</Link>
+                  </p>
                 )}
-              </Button>
-              {limitReached && (
-                <p className="text-[10px] text-center text-muted-foreground mt-2">
-                  You&apos;ve reached your 1 daily generation. <Link href="/pricing" className="text-primary font-bold hover:underline">Upgrade to Pro →</Link>
-                </p>
-              )}
-              {!isPro && !limitReached && (
-                <p className="text-[10px] text-center text-muted-foreground mt-2">
-                  {MAX_FREE - usedToday} of {MAX_FREE} free generation left today
-                </p>
-              )}
-            </form>
+                {!limitReached && (
+                  <p className="text-[10px] text-center text-muted-foreground font-semibold mt-2">
+                    Costs 1 credit ({localCredits ?? 0} remaining)
+                  </p>
+                )}
+              </form>
+            )}
           </CardContent>
         </Card>
       </div>
