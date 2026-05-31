@@ -25,14 +25,14 @@ export default async function Home() {
 
           <div className="container mx-auto px-6 max-w-6xl text-center space-y-8">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest animate-in fade-in slide-in-from-bottom-4 duration-1000">
-              <Sparkles className="h-3 w-3" /> Growing Suite of AI Tools
+              <Sparkles className="h-3 w-3" /> The Ultimate AI Productivity Toolkit
             </div>
             <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
-              The ultimate <br />
-              <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">AI Productivity Dashboard</span>
+              All Your Essential <br />
+              <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">Tools in One Dashboard</span>
             </h1>
             <p className="max-w-2xl mx-auto text-muted-foreground text-lg sm:text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
-              Stop switching tabs. TheWordOf Tools provides an ever-expanding collection of professional, browser-based utilities including AI invoice generators, image converters, SEO tag builders, and viral caption creators.
+              AI-powered productivity tools for creators, developers, and businesses. Generate invoices, convert images, build SEO tags, create QR codes, write content, and manage everyday tasks from one powerful workspace.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-700">
               <Link href={session ? "/dashboard" : "/tools"}>
