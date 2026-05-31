@@ -1,17 +1,10 @@
+import { PLAN_PRICING } from "@/config/pricing"
 import { prisma } from "@/lib/prisma"
 
 export function getCurrentCreditAllocation(role: string): number {
-  switch (role.toUpperCase()) {
-    case "PRO":
-    case "PREMIUM":
-      return 500
-    case "BUSINESS":
-      return 2000
-    case "ADMIN":
-      return 999999
-    default:
-      return 20
-  }
+  const key = role.toUpperCase() === "PRO" || role.toUpperCase() === "PREMIUM" ? "PREMIUM" : role.toUpperCase();
+  if (key === "ADMIN") return 999999;
+  return PLAN_PRICING[key as keyof typeof PLAN_PRICING]?.credits ?? 20;
 }
 
 export async function verifyAndDeductCredits(userId: string, cost: number): Promise<{ success: boolean; remaining: number; resetAt: Date }> {

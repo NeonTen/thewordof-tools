@@ -3,6 +3,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { capturePayPalOrder } from "@/lib/paypal";
 import { sendPaymentSuccessEmail, sendPaymentFailedEmail } from "@/lib/email";
+import { getCurrentCreditAllocation } from "@/lib/credits";
 
 export async function POST(req: Request) {
   try {
@@ -26,7 +27,7 @@ export async function POST(req: Request) {
       const newRole = plan === "BUSINESS" ? "BUSINESS" : "PRO";
 
       // Update user to PRO/BUSINESS and set expiration/credits
-      const defaultAllocation = newRole === "BUSINESS" ? 2000 : 500;
+      const defaultAllocation = getCurrentCreditAllocation(newRole);
       await prisma.user.update({
         where: { id: session.user.id },
         data: { 
