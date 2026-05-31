@@ -52,10 +52,15 @@ export async function POST(req: Request) {
         }
       }
     } 
-    else if (eventType === "BILLING.SUBSCRIPTION.CREATED" || eventType === "BILLING.SUBSCRIPTION.ACTIVATED") {
+    else if (eventType === "BILLING.SUBSCRIPTION.ACTIVATED") {
       const subscriptionId = resource.id;
       const userId = resource.custom_id;
       const planId = resource.plan_id;
+      const status = resource.status;
+
+      if (status !== "ACTIVE") {
+        return NextResponse.json({ received: true, message: `Subscription not active yet: status is ${status}` });
+      }
 
       if (userId) {
         const user = await prisma.user.findUnique({
