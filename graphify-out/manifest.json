@@ -135,8 +135,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/page.tsx": {
-    "mtime": 1780231631.1620662,
-    "ast_hash": "d6146da2cbf8e46a3377b77d999ca70a",
+    "mtime": 1780232340.1625316,
+    "ast_hash": "ecc848003b9d3774b7a9973ff18d024c",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/tools/layout.tsx": {
@@ -885,8 +885,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/pricing/pricing-cards.tsx": {
-    "mtime": 1780197709.2097702,
-    "ast_hash": "5fdb06a41bb6cc0371d9ed55ad1898ff",
+    "mtime": 1780232855.8672426,
+    "ast_hash": "0b39d030324849707f59cded6b6c0926",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/hooks/use-usage-limit.ts": {
@@ -1174,6 +1174,11 @@
     "ast_hash": "90eff66b6e16892263dad14cd7f92579",
     "semantic_hash": ""
   },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/plans/2026-05-31-pricing-table-fixes.md": {
+    "mtime": 1780232312.52123,
+    "ast_hash": "9faf20d4bfd8ab0b31ce6d82ef4a6d17",
+    "semantic_hash": ""
+  },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/plans/2026-05-29-mobile-nav-portal-left.md": {
     "mtime": 1780029056.2669466,
     "ast_hash": "11ead86633bd4269ba3dc991082a63a2",
@@ -1277,6 +1282,11 @@
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-30-credit-based-quota-system-design.md": {
     "mtime": 1780119878.065847,
     "ast_hash": "52d0deccbe282fb3f8d9cf186a45acfb",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-31-pricing-table-fixes-design.md": {
+    "mtime": 1780232295.8300343,
+    "ast_hash": "81e84d377238d2057d1c9dfb8b685a8f",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-29-mobile-nav-portal-left-design.md": {
