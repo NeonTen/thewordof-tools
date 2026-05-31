@@ -46,7 +46,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       ctaHref: "/dashboard",
       highlight: false,
       features: [
-        { label: "All 13 tools included", included: true },
+        { label: "All 25 tools included", included: true },
         { label: `${PLAN_PRICING.FREE.credits} monthly AI credits (shared pool)`, included: true },
         { label: "5 images per batch", included: true },
         { label: "5 SVGs per batch", included: true },
