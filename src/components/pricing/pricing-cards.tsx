@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { UpgradeButton } from "@/components/pricing/upgrade-button"
 
+import { PLAN_PRICING } from "@/config/pricing"
+
 interface PricingCardsProps {
   session: import("next-auth").Session | null
   isPro: boolean
@@ -34,10 +36,10 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
   const plans = [
     {
       name: "Free",
-      monthlyPrice: 0,
-      yearlyPrice: 0,
-      monthlyUsd: "0.00",
-      yearlyUsd: "0.00",
+      monthlyPrice: PLAN_PRICING.FREE.monthly.INR,
+      yearlyPrice: PLAN_PRICING.FREE.yearly.INR,
+      monthlyUsd: PLAN_PRICING.FREE.monthly.USD.toFixed(2),
+      yearlyUsd: PLAN_PRICING.FREE.yearly.USD.toFixed(2),
       plan: "FREE",
       description: "Everything you need to get started. No credit card required.",
       cta: "Get Started Free",
@@ -45,7 +47,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       highlight: false,
       features: [
         { label: "All 13 tools included", included: true },
-        { label: "20 monthly AI credits (shared pool)", included: true },
+        { label: `${PLAN_PRICING.FREE.credits} monthly AI credits (shared pool)`, included: true },
         { label: "5 images per batch", included: true },
         { label: "5 SVGs per batch", included: true },
         { label: "3 invoices per month", included: true },
@@ -64,10 +66,10 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
     },
     {
       name: "Pro",
-      monthlyPrice: 499,
-      yearlyPrice: 4999,
-      monthlyUsd: "5.99",
-      yearlyUsd: "59.99",
+      monthlyPrice: PLAN_PRICING.PREMIUM.monthly.INR,
+      yearlyPrice: PLAN_PRICING.PREMIUM.yearly.INR,
+      monthlyUsd: PLAN_PRICING.PREMIUM.monthly.USD.toString(),
+      yearlyUsd: PLAN_PRICING.PREMIUM.yearly.USD.toString(),
       plan: "PREMIUM",
       description: "For power users and professionals who need higher limits and premium tools.",
       cta: "Upgrade to Pro",
@@ -75,7 +77,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       badge: "Most Popular",
       features: [
         { label: "Everything in Free", included: true },
-        { label: "500 monthly AI credits (shared pool)", included: true },
+        { label: `${PLAN_PRICING.PREMIUM.credits} monthly AI credits (shared pool)`, included: true },
         { label: "AI CV builder (Costs 1 credit)", included: true },
         { label: "Up to 1,000 files per batch", included: true },
         { label: "Bulk ZIP downloads", included: true },
@@ -92,17 +94,17 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
     },
     {
       name: "Business",
-      monthlyPrice: 999,
-      yearlyPrice: 9999,
-      monthlyUsd: "19.99",
-      yearlyUsd: "199.99",
+      monthlyPrice: PLAN_PRICING.BUSINESS.monthly.INR,
+      yearlyPrice: PLAN_PRICING.BUSINESS.yearly.INR,
+      monthlyUsd: PLAN_PRICING.BUSINESS.monthly.USD.toString(),
+      yearlyUsd: PLAN_PRICING.BUSINESS.yearly.USD.toString(),
       plan: "BUSINESS",
       description: "For power creators and businesses needing unlimited processing and priority support.",
       cta: "Upgrade to Business",
       highlight: false,
       features: [
         { label: "Everything in Pro", included: true },
-        { label: "2,000 monthly AI credits (shared pool)", included: true },
+        { label: `${PLAN_PRICING.BUSINESS.credits} monthly AI credits (shared pool)`, included: true },
         { label: "AI CV builder & AI Import (Costs 1-3 credits)", included: true },
         { label: "100% Unlimited batch processing", included: true },
         { label: "Bulk ZIP downloads", included: true },
