@@ -2322,7 +2322,7 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L1",
       "id": "src_app_page_tsx",
-      "community": 92,
+      "community": 55,
       "norm_label": "page.tsx"
     },
     {
@@ -2331,7 +2331,7 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L10",
       "id": "app_page_home",
-      "community": 92,
+      "community": 55,
       "norm_label": "home()"
     },
     {
@@ -2358,7 +2358,7 @@
       "source_file": "src/app/tools/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_page_tsx",
-      "community": 45,
+      "community": 107,
       "norm_label": "page.tsx"
     },
     {
@@ -2367,7 +2367,7 @@
       "source_file": "src/app/tools/page.tsx",
       "source_location": "L29",
       "id": "tools_page_metadata",
-      "community": 45,
+      "community": 107,
       "norm_label": "metadata"
     },
     {
@@ -2376,7 +2376,7 @@
       "source_file": "src/app/tools/page.tsx",
       "source_location": "L35",
       "id": "tools_page_categories",
-      "community": 45,
+      "community": 107,
       "norm_label": "categories"
     },
     {
@@ -2385,7 +2385,7 @@
       "source_file": "src/app/tools/page.tsx",
       "source_location": "L83",
       "id": "tools_page_toolspage",
-      "community": 45,
+      "community": 107,
       "norm_label": "toolspage()"
     },
     {
@@ -2421,7 +2421,7 @@
       "source_file": "src/app/tools/text-diff/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_text_diff_page_tsx",
-      "community": 137,
+      "community": 148,
       "norm_label": "page.tsx"
     },
     {
@@ -2430,7 +2430,7 @@
       "source_file": "src/app/tools/text-diff/page.tsx",
       "source_location": "L4",
       "id": "text_diff_page_metadata",
-      "community": 137,
+      "community": 148,
       "norm_label": "metadata"
     },
     {
@@ -2439,7 +2439,7 @@
       "source_file": "src/app/tools/text-diff/page.tsx",
       "source_location": "L9",
       "id": "text_diff_page_textdiffpage",
-      "community": 137,
+      "community": 148,
       "norm_label": "textdiffpage()"
     },
     {
@@ -2556,7 +2556,7 @@
       "source_file": "src/app/tools/qr-code/expired/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_qr_code_expired_page_tsx",
-      "community": 7,
+      "community": 55,
       "norm_label": "page.tsx"
     },
     {
@@ -2565,7 +2565,7 @@
       "source_file": "src/app/tools/qr-code/expired/page.tsx",
       "source_location": "L6",
       "id": "expired_page_qrcodeexpiredpage",
-      "community": 7,
+      "community": 55,
       "norm_label": "qrcodeexpiredpage()"
     },
     {
@@ -2601,7 +2601,7 @@
       "source_file": "src/app/tools/svg-compressor/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_svg_compressor_page_tsx",
-      "community": 35,
+      "community": 7,
       "norm_label": "page.tsx"
     },
     {
@@ -2610,7 +2610,7 @@
       "source_file": "src/app/tools/svg-compressor/page.tsx",
       "source_location": "L4",
       "id": "svg_compressor_page_metadata",
-      "community": 35,
+      "community": 7,
       "norm_label": "metadata"
     },
     {
@@ -2619,7 +2619,7 @@
       "source_file": "src/app/tools/svg-compressor/page.tsx",
       "source_location": "L9",
       "id": "svg_compressor_page_svgcompressorpage",
-      "community": 35,
+      "community": 7,
       "norm_label": "svgcompressorpage()"
     },
     {
@@ -2700,7 +2700,7 @@
       "source_file": "src/app/tools/calculators/line-height/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_line_height_page_tsx",
-      "community": 150,
+      "community": 3,
       "norm_label": "page.tsx"
     },
     {
@@ -2709,7 +2709,7 @@
       "source_file": "src/app/tools/calculators/line-height/page.tsx",
       "source_location": "L5",
       "id": "line_height_page_metadata",
-      "community": 150,
+      "community": 3,
       "norm_label": "metadata"
     },
     {
@@ -2718,7 +2718,7 @@
       "source_file": "src/app/tools/calculators/line-height/page.tsx",
       "source_location": "L10",
       "id": "line_height_page_lineheightpage",
-      "community": 150,
+      "community": 3,
       "norm_label": "lineheightpage()"
     },
     {
@@ -2727,7 +2727,7 @@
       "source_file": "src/app/tools/calculators/emi/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_emi_page_tsx",
-      "community": 137,
+      "community": 146,
       "norm_label": "page.tsx"
     },
     {
@@ -2736,7 +2736,7 @@
       "source_file": "src/app/tools/calculators/emi/page.tsx",
       "source_location": "L5",
       "id": "emi_page_metadata",
-      "community": 137,
+      "community": 146,
       "norm_label": "metadata"
     },
     {
@@ -2745,7 +2745,7 @@
       "source_file": "src/app/tools/calculators/emi/page.tsx",
       "source_location": "L10",
       "id": "emi_page_emipage",
-      "community": 137,
+      "community": 146,
       "norm_label": "emipage()"
     },
     {
@@ -2754,7 +2754,7 @@
       "source_file": "src/app/tools/calculators/salary-to-hourly/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_salary_to_hourly_page_tsx",
-      "community": 158,
+      "community": 3,
       "norm_label": "page.tsx"
     },
     {
@@ -2763,7 +2763,7 @@
       "source_file": "src/app/tools/calculators/salary-to-hourly/page.tsx",
       "source_location": "L5",
       "id": "salary_to_hourly_page_metadata",
-      "community": 158,
+      "community": 3,
       "norm_label": "metadata"
     },
     {
@@ -2772,7 +2772,7 @@
       "source_file": "src/app/tools/calculators/salary-to-hourly/page.tsx",
       "source_location": "L10",
       "id": "salary_to_hourly_page_salaryhourlypage",
-      "community": 158,
+      "community": 3,
       "norm_label": "salaryhourlypage()"
     },
     {
@@ -2781,7 +2781,7 @@
       "source_file": "src/app/tools/calculators/bmi/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_bmi_page_tsx",
-      "community": 92,
+      "community": 3,
       "norm_label": "page.tsx"
     },
     {
@@ -2790,7 +2790,7 @@
       "source_file": "src/app/tools/calculators/bmi/page.tsx",
       "source_location": "L5",
       "id": "bmi_page_metadata",
-      "community": 92,
+      "community": 3,
       "norm_label": "metadata"
     },
     {
@@ -2799,7 +2799,7 @@
       "source_file": "src/app/tools/calculators/bmi/page.tsx",
       "source_location": "L10",
       "id": "bmi_page_bmipage",
-      "community": 92,
+      "community": 3,
       "norm_label": "bmipage()"
     },
     {
@@ -2808,7 +2808,7 @@
       "source_file": "src/app/tools/calculators/compound-interest/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_compound_interest_page_tsx",
-      "community": 148,
+      "community": 3,
       "norm_label": "page.tsx"
     },
     {
@@ -2817,7 +2817,7 @@
       "source_file": "src/app/tools/calculators/compound-interest/page.tsx",
       "source_location": "L5",
       "id": "compound_interest_page_metadata",
-      "community": 148,
+      "community": 3,
       "norm_label": "metadata"
     },
     {
@@ -2826,7 +2826,7 @@
       "source_file": "src/app/tools/calculators/compound-interest/page.tsx",
       "source_location": "L10",
       "id": "compound_interest_page_compoundinterestpage",
-      "community": 148,
+      "community": 3,
       "norm_label": "compoundinterestpage()"
     },
     {
@@ -2835,7 +2835,7 @@
       "source_file": "src/app/tools/calculators/aspect-ratio/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_aspect_ratio_page_tsx",
-      "community": 168,
+      "community": 3,
       "norm_label": "page.tsx"
     },
     {
@@ -2844,7 +2844,7 @@
       "source_file": "src/app/tools/calculators/aspect-ratio/page.tsx",
       "source_location": "L5",
       "id": "aspect_ratio_page_metadata",
-      "community": 168,
+      "community": 3,
       "norm_label": "metadata"
     },
     {
@@ -2853,7 +2853,7 @@
       "source_file": "src/app/tools/calculators/aspect-ratio/page.tsx",
       "source_location": "L10",
       "id": "aspect_ratio_page_aspectratiopage",
-      "community": 168,
+      "community": 3,
       "norm_label": "aspectratiopage()"
     },
     {
@@ -2862,7 +2862,7 @@
       "source_file": "src/app/tools/calculators/sip/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_sip_page_tsx",
-      "community": 169,
+      "community": 137,
       "norm_label": "page.tsx"
     },
     {
@@ -2871,7 +2871,7 @@
       "source_file": "src/app/tools/calculators/sip/page.tsx",
       "source_location": "L5",
       "id": "sip_page_metadata",
-      "community": 169,
+      "community": 137,
       "norm_label": "metadata"
     },
     {
@@ -2880,7 +2880,7 @@
       "source_file": "src/app/tools/calculators/sip/page.tsx",
       "source_location": "L10",
       "id": "sip_page_sippage",
-      "community": 169,
+      "community": 137,
       "norm_label": "sippage()"
     },
     {
@@ -2889,7 +2889,7 @@
       "source_file": "src/app/tools/calculators/px-to-rem/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_calculators_px_to_rem_page_tsx",
-      "community": 3,
+      "community": 147,
       "norm_label": "page.tsx"
     },
     {
@@ -2898,7 +2898,7 @@
       "source_file": "src/app/tools/calculators/px-to-rem/page.tsx",
       "source_location": "L5",
       "id": "px_to_rem_page_metadata",
-      "community": 3,
+      "community": 147,
       "norm_label": "metadata"
     },
     {
@@ -2907,7 +2907,7 @@
       "source_file": "src/app/tools/calculators/px-to-rem/page.tsx",
       "source_location": "L10",
       "id": "px_to_rem_page_pxtorempage",
-      "community": 3,
+      "community": 147,
       "norm_label": "pxtorempage()"
     },
     {
@@ -2970,7 +2970,7 @@
       "source_file": "src/app/tools/llms-txt/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_llms_txt_page_tsx",
-      "community": 25,
+      "community": 129,
       "norm_label": "page.tsx"
     },
     {
@@ -2979,7 +2979,7 @@
       "source_file": "src/app/tools/llms-txt/page.tsx",
       "source_location": "L5",
       "id": "llms_txt_page_metadata",
-      "community": 25,
+      "community": 129,
       "norm_label": "metadata"
     },
     {
@@ -2988,7 +2988,7 @@
       "source_file": "src/app/tools/llms-txt/page.tsx",
       "source_location": "L10",
       "id": "llms_txt_page_llmstxtpage",
-      "community": 25,
+      "community": 129,
       "norm_label": "llmstxtpage()"
     },
     {
@@ -3024,7 +3024,7 @@
       "source_file": "src/app/tools/prompt-generator/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_prompt_generator_page_tsx",
-      "community": 25,
+      "community": 129,
       "norm_label": "page.tsx"
     },
     {
@@ -3033,7 +3033,7 @@
       "source_file": "src/app/tools/prompt-generator/page.tsx",
       "source_location": "L5",
       "id": "prompt_generator_page_metadata",
-      "community": 25,
+      "community": 129,
       "norm_label": "metadata"
     },
     {
@@ -3042,7 +3042,7 @@
       "source_file": "src/app/tools/prompt-generator/page.tsx",
       "source_location": "L10",
       "id": "prompt_generator_page_promptgeneratorpage",
-      "community": 25,
+      "community": 129,
       "norm_label": "promptgeneratorpage()"
     },
     {
@@ -3051,7 +3051,7 @@
       "source_file": "src/app/tools/schema-generator/page.tsx",
       "source_location": "L1",
       "id": "src_app_tools_schema_generator_page_tsx",
-      "community": 167,
+      "community": 129,
       "norm_label": "page.tsx"
     },
     {
@@ -3060,7 +3060,7 @@
       "source_file": "src/app/tools/schema-generator/page.tsx",
       "source_location": "L4",
       "id": "schema_generator_page_metadata",
-      "community": 167,
+      "community": 129,
       "norm_label": "metadata"
     },
     {
@@ -3069,7 +3069,7 @@
       "source_file": "src/app/tools/schema-generator/page.tsx",
       "source_location": "L9",
       "id": "schema_generator_page_schemageneratorpage",
-      "community": 167,
+      "community": 129,
       "norm_label": "schemageneratorpage()"
     },
     {
@@ -3231,7 +3231,7 @@
       "source_file": "src/app/admin/users/page.tsx",
       "source_location": "L1",
       "id": "src_app_admin_users_page_tsx",
-      "community": 45,
+      "community": 35,
       "norm_label": "page.tsx"
     },
     {
@@ -3240,7 +3240,7 @@
       "source_file": "src/app/admin/users/page.tsx",
       "source_location": "L57",
       "id": "users_page_adminuserspage",
-      "community": 45,
+      "community": 35,
       "norm_label": "adminuserspage()"
     },
     {
@@ -3285,7 +3285,7 @@
       "source_file": "src/app/dashboard/page.tsx",
       "source_location": "L21",
       "id": "dashboard_page_dashboardpage",
-      "community": 160,
+      "community": 15,
       "norm_label": "dashboardpage()"
     },
     {
@@ -3321,7 +3321,7 @@
       "source_file": "src/app/dashboard/billing/page.tsx",
       "source_location": "L1",
       "id": "src_app_dashboard_billing_page_tsx",
-      "community": 7,
+      "community": 55,
       "norm_label": "page.tsx"
     },
     {
@@ -3330,7 +3330,7 @@
       "source_file": "src/app/dashboard/billing/page.tsx",
       "source_location": "L11",
       "id": "billing_page_billingpage",
-      "community": 7,
+      "community": 55,
       "norm_label": "billingpage()"
     },
     {
@@ -3339,7 +3339,7 @@
       "source_file": "src/app/actions/subscription.ts",
       "source_location": "L1",
       "id": "src_app_actions_subscription_ts",
-      "community": 160,
+      "community": 15,
       "norm_label": "subscription.ts"
     },
     {
@@ -3348,7 +3348,7 @@
       "source_file": "src/app/actions/subscription.ts",
       "source_location": "L9",
       "id": "actions_subscription_syncplanstatus",
-      "community": 160,
+      "community": 15,
       "norm_label": "syncplanstatus()"
     },
     {
@@ -3420,7 +3420,7 @@
       "source_file": "src/app/api/tools/invoice-generator/route.ts",
       "source_location": "L1",
       "id": "src_app_api_tools_invoice_generator_route_ts",
-      "community": 25,
+      "community": 158,
       "norm_label": "route.ts"
     },
     {
@@ -3429,7 +3429,7 @@
       "source_file": "src/app/api/tools/invoice-generator/route.ts",
       "source_location": "L5",
       "id": "invoice_generator_route_get",
-      "community": 25,
+      "community": 158,
       "norm_label": "get()"
     },
     {
@@ -3438,7 +3438,7 @@
       "source_file": "src/app/api/tools/invoice-generator/route.ts",
       "source_location": "L30",
       "id": "invoice_generator_route_post",
-      "community": 25,
+      "community": 158,
       "norm_label": "post()"
     },
     {
@@ -3492,7 +3492,7 @@
       "source_file": "src/app/api/tools/qr-code/delete/route.ts",
       "source_location": "L1",
       "id": "src_app_api_tools_qr_code_delete_route_ts",
-      "community": 129,
+      "community": 25,
       "norm_label": "route.ts"
     },
     {
@@ -3501,7 +3501,7 @@
       "source_file": "src/app/api/tools/qr-code/delete/route.ts",
       "source_location": "L5",
       "id": "delete_route_delete",
-      "community": 129,
+      "community": 25,
       "norm_label": "delete()"
     },
     {
@@ -3582,7 +3582,7 @@
       "source_file": "src/app/api/tools/cv-builder/route.ts",
       "source_location": "L1",
       "id": "src_app_api_tools_cv_builder_route_ts",
-      "community": 129,
+      "community": 25,
       "norm_label": "route.ts"
     },
     {
@@ -3591,7 +3591,7 @@
       "source_file": "src/app/api/tools/cv-builder/route.ts",
       "source_location": "L5",
       "id": "cv_builder_route_get",
-      "community": 129,
+      "community": 25,
       "norm_label": "get()"
     },
     {
@@ -3600,7 +3600,7 @@
       "source_file": "src/app/api/tools/cv-builder/route.ts",
       "source_location": "L30",
       "id": "cv_builder_route_post",
-      "community": 129,
+      "community": 25,
       "norm_label": "post()"
     },
     {
@@ -3771,7 +3771,7 @@
       "source_file": "src/app/api/support/route.ts",
       "source_location": "L1",
       "id": "src_app_api_support_route_ts",
-      "community": 25,
+      "community": 129,
       "norm_label": "route.ts"
     },
     {
@@ -3780,7 +3780,7 @@
       "source_file": "src/app/api/support/route.ts",
       "source_location": "L6",
       "id": "support_route_post",
-      "community": 25,
+      "community": 129,
       "norm_label": "post()"
     },
     {
@@ -3996,25 +3996,25 @@
       "source_file": "src/app/api/webhooks/paypal/route.ts",
       "source_location": "L1",
       "id": "src_app_api_webhooks_paypal_route_ts",
-      "community": 10,
+      "community": 96,
       "norm_label": "route.ts"
     },
     {
       "label": "getPlanDetailsByPlanId()",
       "file_type": "code",
       "source_file": "src/app/api/webhooks/paypal/route.ts",
-      "source_location": "L5",
+      "source_location": "L7",
       "id": "paypal_route_getplandetailsbyplanid",
-      "community": 10,
+      "community": 96,
       "norm_label": "getplandetailsbyplanid()"
     },
     {
       "label": "POST()",
       "file_type": "code",
       "source_file": "src/app/api/webhooks/paypal/route.ts",
-      "source_location": "L14",
+      "source_location": "L16",
       "id": "paypal_route_post",
-      "community": 10,
+      "community": 96,
       "norm_label": "post()"
     },
     {
@@ -4023,25 +4023,25 @@
       "source_file": "src/app/api/webhooks/razorpay/route.ts",
       "source_location": "L1",
       "id": "src_app_api_webhooks_razorpay_route_ts",
-      "community": 10,
+      "community": 96,
       "norm_label": "route.ts"
     },
     {
       "label": "getRazorpayPlanDetails()",
       "file_type": "code",
       "source_file": "src/app/api/webhooks/razorpay/route.ts",
-      "source_location": "L6",
+      "source_location": "L7",
       "id": "razorpay_route_getrazorpayplandetails",
-      "community": 10,
+      "community": 96,
       "norm_label": "getrazorpayplandetails()"
     },
     {
       "label": "POST()",
       "file_type": "code",
       "source_file": "src/app/api/webhooks/razorpay/route.ts",
-      "source_location": "L15",
+      "source_location": "L16",
       "id": "razorpay_route_post",
-      "community": 10,
+      "community": 96,
       "norm_label": "post()"
     },
     {
@@ -4104,7 +4104,7 @@
       "source_file": "src/app/pricing/page.tsx",
       "source_location": "L1",
       "id": "src_app_pricing_page_tsx",
-      "community": 7,
+      "community": 55,
       "norm_label": "page.tsx"
     },
     {
@@ -4113,7 +4113,7 @@
       "source_file": "src/app/pricing/page.tsx",
       "source_location": "L9",
       "id": "pricing_page_metadata",
-      "community": 7,
+      "community": 55,
       "norm_label": "metadata"
     },
     {
@@ -4122,7 +4122,7 @@
       "source_file": "src/app/pricing/page.tsx",
       "source_location": "L20",
       "id": "pricing_page_pricingpage",
-      "community": 7,
+      "community": 55,
       "norm_label": "pricingpage()"
     },
     {
@@ -4320,7 +4320,7 @@
       "source_file": "src/components/ui/card.tsx",
       "source_location": "L49",
       "id": "ui_card_carddescription",
-      "community": 131,
+      "community": 92,
       "norm_label": "carddescription()"
     },
     {
@@ -4374,7 +4374,7 @@
       "source_file": "src/components/ui/progress.tsx",
       "source_location": "L1",
       "id": "src_components_ui_progress_tsx",
-      "community": 147,
+      "community": 45,
       "norm_label": "progress.tsx"
     },
     {
@@ -4383,7 +4383,7 @@
       "source_file": "src/components/ui/progress.tsx",
       "source_location": "L8",
       "id": "ui_progress_progress",
-      "community": 147,
+      "community": 45,
       "norm_label": "progress()"
     },
     {
@@ -4491,7 +4491,7 @@
       "source_file": "src/components/ui/pro-gate.tsx",
       "source_location": "L1",
       "id": "src_components_ui_pro_gate_tsx",
-      "community": 45,
+      "community": 137,
       "norm_label": "pro-gate.tsx"
     },
     {
@@ -4500,7 +4500,7 @@
       "source_file": "src/components/ui/pro-gate.tsx",
       "source_location": "L9",
       "id": "ui_pro_gate_progateprops",
-      "community": 45,
+      "community": 137,
       "norm_label": "progateprops"
     },
     {
@@ -4509,7 +4509,7 @@
       "source_file": "src/components/ui/pro-gate.tsx",
       "source_location": "L25",
       "id": "ui_pro_gate_progate",
-      "community": 45,
+      "community": 137,
       "norm_label": "progate()"
     },
     {
@@ -4518,7 +4518,7 @@
       "source_file": "src/components/ui/pro-gate.tsx",
       "source_location": "L127",
       "id": "ui_pro_gate_probadge",
-      "community": 45,
+      "community": 107,
       "norm_label": "probadge()"
     },
     {
@@ -4527,7 +4527,7 @@
       "source_file": "src/components/ui/label.tsx",
       "source_location": "L1",
       "id": "src_components_ui_label_tsx",
-      "community": 3,
+      "community": 92,
       "norm_label": "label.tsx"
     },
     {
@@ -4536,7 +4536,7 @@
       "source_file": "src/components/ui/label.tsx",
       "source_location": "L7",
       "id": "ui_label_label",
-      "community": 3,
+      "community": 92,
       "norm_label": "label()"
     },
     {
@@ -4545,7 +4545,7 @@
       "source_file": "src/components/ui/navigation-menu.tsx",
       "source_location": "L1",
       "id": "src_components_ui_navigation_menu_tsx",
-      "community": 107,
+      "community": 45,
       "norm_label": "navigation-menu.tsx"
     },
     {
@@ -4554,7 +4554,7 @@
       "source_file": "src/components/ui/navigation-menu.tsx",
       "source_location": "L7",
       "id": "ui_navigation_menu_navigationmenu",
-      "community": 107,
+      "community": 45,
       "norm_label": "navigationmenu()"
     },
     {
@@ -4563,7 +4563,7 @@
       "source_file": "src/components/ui/navigation-menu.tsx",
       "source_location": "L29",
       "id": "ui_navigation_menu_navigationmenulist",
-      "community": 107,
+      "community": 45,
       "norm_label": "navigationmenulist()"
     },
     {
@@ -4572,7 +4572,7 @@
       "source_file": "src/components/ui/navigation-menu.tsx",
       "source_location": "L45",
       "id": "ui_navigation_menu_navigationmenuitem",
-      "community": 107,
+      "community": 45,
       "norm_label": "navigationmenuitem()"
     },
     {
@@ -4581,7 +4581,7 @@
       "source_file": "src/components/ui/navigation-menu.tsx",
       "source_location": "L58",
       "id": "ui_navigation_menu_navigationmenutriggerstyle",
-      "community": 107,
+      "community": 45,
       "norm_label": "navigationmenutriggerstyle"
     },
     {
@@ -4590,7 +4590,7 @@
       "source_file": "src/components/ui/navigation-menu.tsx",
       "source_location": "L62",
       "id": "ui_navigation_menu_navigationmenutrigger",
-      "community": 107,
+      "community": 45,
       "norm_label": "navigationmenutrigger()"
     },
     {
@@ -4599,7 +4599,7 @@
       "source_file": "src/components/ui/navigation-menu.tsx",
       "source_location": "L79",
       "id": "ui_navigation_menu_navigationmenucontent",
-      "community": 107,
+      "community": 45,
       "norm_label": "navigationmenucontent()"
     },
     {
@@ -4608,7 +4608,7 @@
       "source_file": "src/components/ui/navigation-menu.tsx",
       "source_location": "L95",
       "id": "ui_navigation_menu_navigationmenupositioner",
-      "community": 107,
+      "community": 45,
       "norm_label": "navigationmenupositioner()"
     },
     {
@@ -4617,7 +4617,7 @@
       "source_file": "src/components/ui/navigation-menu.tsx",
       "source_location": "L124",
       "id": "ui_navigation_menu_navigationmenulink",
-      "community": 107,
+      "community": 45,
       "norm_label": "navigationmenulink()"
     },
     {
@@ -4626,7 +4626,7 @@
       "source_file": "src/components/ui/navigation-menu.tsx",
       "source_location": "L140",
       "id": "ui_navigation_menu_navigationmenuindicator",
-      "community": 107,
+      "community": 45,
       "norm_label": "navigationmenuindicator()"
     },
     {
@@ -4680,7 +4680,7 @@
       "source_file": "src/components/ui/switch.tsx",
       "source_location": "L1",
       "id": "src_components_ui_switch_tsx",
-      "community": 131,
+      "community": 137,
       "norm_label": "switch.tsx"
     },
     {
@@ -4689,7 +4689,7 @@
       "source_file": "src/components/ui/switch.tsx",
       "source_location": "L8",
       "id": "ui_switch_switch",
-      "community": 131,
+      "community": 137,
       "norm_label": "switch"
     },
     {
@@ -4860,7 +4860,7 @@
       "source_file": "src/components/ui/color-picker.tsx",
       "source_location": "L1",
       "id": "src_components_ui_color_picker_tsx",
-      "community": 3,
+      "community": 92,
       "norm_label": "color-picker.tsx"
     },
     {
@@ -4869,7 +4869,7 @@
       "source_file": "src/components/ui/color-picker.tsx",
       "source_location": "L8",
       "id": "ui_color_picker_colorpickerprops",
-      "community": 3,
+      "community": 92,
       "norm_label": "colorpickerprops"
     },
     {
@@ -4887,7 +4887,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L1",
       "id": "src_components_ui_table_tsx",
-      "community": 45,
+      "community": 35,
       "norm_label": "table.tsx"
     },
     {
@@ -4896,7 +4896,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L7",
       "id": "ui_table_table",
-      "community": 45,
+      "community": 35,
       "norm_label": "table()"
     },
     {
@@ -4905,7 +4905,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L22",
       "id": "ui_table_tableheader",
-      "community": 45,
+      "community": 35,
       "norm_label": "tableheader()"
     },
     {
@@ -4914,7 +4914,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L32",
       "id": "ui_table_tablebody",
-      "community": 45,
+      "community": 35,
       "norm_label": "tablebody()"
     },
     {
@@ -4923,7 +4923,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L42",
       "id": "ui_table_tablefooter",
-      "community": 45,
+      "community": 35,
       "norm_label": "tablefooter()"
     },
     {
@@ -4932,7 +4932,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L55",
       "id": "ui_table_tablerow",
-      "community": 45,
+      "community": 35,
       "norm_label": "tablerow()"
     },
     {
@@ -4941,7 +4941,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L68",
       "id": "ui_table_tablehead",
-      "community": 45,
+      "community": 35,
       "norm_label": "tablehead()"
     },
     {
@@ -4950,7 +4950,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L81",
       "id": "ui_table_tablecell",
-      "community": 45,
+      "community": 35,
       "norm_label": "tablecell()"
     },
     {
@@ -4959,7 +4959,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L94",
       "id": "ui_table_tablecaption",
-      "community": 45,
+      "community": 35,
       "norm_label": "tablecaption()"
     },
     {
@@ -4968,7 +4968,7 @@
       "source_file": "src/components/ui/separator.tsx",
       "source_location": "L1",
       "id": "src_components_ui_separator_tsx",
-      "community": 3,
+      "community": 45,
       "norm_label": "separator.tsx"
     },
     {
@@ -4977,7 +4977,7 @@
       "source_file": "src/components/ui/separator.tsx",
       "source_location": "L6",
       "id": "ui_separator_separator",
-      "community": 3,
+      "community": 45,
       "norm_label": "separator()"
     },
     {
@@ -4986,7 +4986,7 @@
       "source_file": "src/components/ui/button.tsx",
       "source_location": "L1",
       "id": "src_components_ui_button_tsx",
-      "community": 7,
+      "community": 55,
       "norm_label": "button.tsx"
     },
     {
@@ -5004,7 +5004,7 @@
       "source_file": "src/components/ui/button.tsx",
       "source_location": "L44",
       "id": "ui_button_button",
-      "community": 7,
+      "community": 55,
       "norm_label": "button()"
     },
     {
@@ -5013,7 +5013,7 @@
       "source_file": "src/components/ui/checkbox.tsx",
       "source_location": "L1",
       "id": "src_components_ui_checkbox_tsx",
-      "community": 7,
+      "community": 137,
       "norm_label": "checkbox.tsx"
     },
     {
@@ -5022,7 +5022,7 @@
       "source_file": "src/components/ui/checkbox.tsx",
       "source_location": "L9",
       "id": "ui_checkbox_checkbox",
-      "community": 7,
+      "community": 137,
       "norm_label": "checkbox"
     },
     {
@@ -5067,7 +5067,7 @@
       "source_file": "src/components/ui/dropdown-menu.tsx",
       "source_location": "L21",
       "id": "ui_dropdown_menu_dropdownmenucontent",
-      "community": 45,
+      "community": 107,
       "norm_label": "dropdownmenucontent()"
     },
     {
@@ -5085,7 +5085,7 @@
       "source_file": "src/components/ui/dropdown-menu.tsx",
       "source_location": "L56",
       "id": "ui_dropdown_menu_dropdownmenulabel",
-      "community": 45,
+      "community": 107,
       "norm_label": "dropdownmenulabel()"
     },
     {
@@ -5094,7 +5094,7 @@
       "source_file": "src/components/ui/dropdown-menu.tsx",
       "source_location": "L76",
       "id": "ui_dropdown_menu_dropdownmenuitem",
-      "community": 45,
+      "community": 107,
       "norm_label": "dropdownmenuitem()"
     },
     {
@@ -5157,7 +5157,7 @@
       "source_file": "src/components/ui/dropdown-menu.tsx",
       "source_location": "L223",
       "id": "ui_dropdown_menu_dropdownmenuseparator",
-      "community": 45,
+      "community": 107,
       "norm_label": "dropdownmenuseparator()"
     },
     {
@@ -5265,7 +5265,7 @@
       "source_file": "src/components/ui/textarea.tsx",
       "source_location": "L1",
       "id": "src_components_ui_textarea_tsx",
-      "community": 131,
+      "community": 137,
       "norm_label": "textarea.tsx"
     },
     {
@@ -5274,7 +5274,7 @@
       "source_file": "src/components/ui/textarea.tsx",
       "source_location": "L5",
       "id": "ui_textarea_textarea",
-      "community": 131,
+      "community": 137,
       "norm_label": "textarea()"
     },
     {
@@ -5283,7 +5283,7 @@
       "source_file": "src/components/ui/input.tsx",
       "source_location": "L1",
       "id": "src_components_ui_input_tsx",
-      "community": 3,
+      "community": 92,
       "norm_label": "input.tsx"
     },
     {
@@ -5292,7 +5292,7 @@
       "source_file": "src/components/ui/input.tsx",
       "source_location": "L6",
       "id": "ui_input_input",
-      "community": 3,
+      "community": 92,
       "norm_label": "input()"
     },
     {
@@ -5364,7 +5364,7 @@
       "source_file": "src/components/tools/compound-interest-calculator.tsx",
       "source_location": "L10",
       "id": "tools_compound_interest_calculator_compoundinterestcalculator",
-      "community": 148,
+      "community": 3,
       "norm_label": "compoundinterestcalculator()"
     },
     {
@@ -5382,7 +5382,7 @@
       "source_file": "src/components/tools/text-diff.tsx",
       "source_location": "L13",
       "id": "tools_text_diff_textdiff",
-      "community": 137,
+      "community": 148,
       "norm_label": "textdiff()"
     },
     {
@@ -5463,7 +5463,7 @@
       "source_file": "src/components/tools/invoice-generator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_invoice_generator_tsx",
-      "community": 45,
+      "community": 35,
       "norm_label": "invoice-generator.tsx"
     },
     {
@@ -5472,7 +5472,7 @@
       "source_file": "src/components/tools/invoice-generator.tsx",
       "source_location": "L18",
       "id": "tools_invoice_generator_nativetoggle",
-      "community": 45,
+      "community": 35,
       "norm_label": "nativetoggle()"
     },
     {
@@ -5508,7 +5508,7 @@
       "source_file": "src/components/tools/px-to-rem-calculator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_px_to_rem_calculator_tsx",
-      "community": 3,
+      "community": 92,
       "norm_label": "px-to-rem-calculator.tsx"
     },
     {
@@ -5517,7 +5517,7 @@
       "source_file": "src/components/tools/px-to-rem-calculator.tsx",
       "source_location": "L9",
       "id": "tools_px_to_rem_calculator_ref_sizes",
-      "community": 3,
+      "community": 92,
       "norm_label": "ref_sizes"
     },
     {
@@ -5526,7 +5526,7 @@
       "source_file": "src/components/tools/px-to-rem-calculator.tsx",
       "source_location": "L11",
       "id": "tools_px_to_rem_calculator_pxtoremcalculator",
-      "community": 3,
+      "community": 147,
       "norm_label": "pxtoremcalculator()"
     },
     {
@@ -5535,7 +5535,7 @@
       "source_file": "src/components/tools/cv-builder.tsx",
       "source_location": "L1",
       "id": "src_components_tools_cv_builder_tsx",
-      "community": 3,
+      "community": 137,
       "norm_label": "cv-builder.tsx"
     },
     {
@@ -5544,7 +5544,7 @@
       "source_file": "src/components/tools/cv-builder.tsx",
       "source_location": "L26",
       "id": "tools_cv_builder_templates",
-      "community": 3,
+      "community": 137,
       "norm_label": "templates"
     },
     {
@@ -5553,7 +5553,7 @@
       "source_file": "src/components/tools/cv-builder.tsx",
       "source_location": "L39",
       "id": "tools_cv_builder_generateuniqueid",
-      "community": 3,
+      "community": 137,
       "norm_label": "generateuniqueid()"
     },
     {
@@ -5562,7 +5562,7 @@
       "source_file": "src/components/tools/cv-builder.tsx",
       "source_location": "L41",
       "id": "tools_cv_builder_cvbuilder",
-      "community": 129,
+      "community": 131,
       "norm_label": "cvbuilder()"
     },
     {
@@ -5571,7 +5571,7 @@
       "source_file": "src/components/tools/llms-txt-generator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_llms_txt_generator_tsx",
-      "community": 131,
+      "community": 92,
       "norm_label": "llms-txt-generator.tsx"
     },
     {
@@ -5625,7 +5625,7 @@
       "source_file": "src/components/tools/emi-calculator.tsx",
       "source_location": "L11",
       "id": "tools_emi_calculator_emicalculator",
-      "community": 137,
+      "community": 146,
       "norm_label": "emicalculator()"
     },
     {
@@ -5634,7 +5634,7 @@
       "source_file": "src/components/tools/salary-hourly-calculator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_salary_hourly_calculator_tsx",
-      "community": 3,
+      "community": 92,
       "norm_label": "salary-hourly-calculator.tsx"
     },
     {
@@ -5643,7 +5643,7 @@
       "source_file": "src/components/tools/salary-hourly-calculator.tsx",
       "source_location": "L9",
       "id": "tools_salary_hourly_calculator_salaryhourlycalculator",
-      "community": 158,
+      "community": 3,
       "norm_label": "salaryhourlycalculator()"
     },
     {
@@ -5652,7 +5652,7 @@
       "source_file": "src/components/tools/svg-compressor.tsx",
       "source_location": "L1",
       "id": "src_components_tools_svg_compressor_tsx",
-      "community": 131,
+      "community": 7,
       "norm_label": "svg-compressor.tsx"
     },
     {
@@ -5661,7 +5661,7 @@
       "source_file": "src/components/tools/svg-compressor.tsx",
       "source_location": "L42",
       "id": "tools_svg_compressor_nativetoggle",
-      "community": 131,
+      "community": 7,
       "norm_label": "nativetoggle()"
     },
     {
@@ -5670,7 +5670,7 @@
       "source_file": "src/components/tools/svg-compressor.tsx",
       "source_location": "L82",
       "id": "tools_svg_compressor_svgfile",
-      "community": 131,
+      "community": 7,
       "norm_label": "svgfile"
     },
     {
@@ -5679,7 +5679,7 @@
       "source_file": "src/components/tools/svg-compressor.tsx",
       "source_location": "L94",
       "id": "tools_svg_compressor_svgcompressor",
-      "community": 35,
+      "community": 7,
       "norm_label": "svgcompressor()"
     },
     {
@@ -5697,7 +5697,7 @@
       "source_file": "src/components/tools/bmi-calculator.tsx",
       "source_location": "L9",
       "id": "tools_bmi_calculator_bmicalculator",
-      "community": 92,
+      "community": 3,
       "norm_label": "bmicalculator()"
     },
     {
@@ -5706,7 +5706,7 @@
       "source_file": "src/components/tools/aspect-ratio-calculator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_aspect_ratio_calculator_tsx",
-      "community": 3,
+      "community": 92,
       "norm_label": "aspect-ratio-calculator.tsx"
     },
     {
@@ -5715,7 +5715,7 @@
       "source_file": "src/components/tools/aspect-ratio-calculator.tsx",
       "source_location": "L9",
       "id": "tools_aspect_ratio_calculator_presets",
-      "community": 3,
+      "community": 92,
       "norm_label": "presets"
     },
     {
@@ -5733,7 +5733,7 @@
       "source_file": "src/components/tools/word-counter.tsx",
       "source_location": "L1",
       "id": "src_components_tools_word_counter_tsx",
-      "community": 92,
+      "community": 137,
       "norm_label": "word-counter.tsx"
     },
     {
@@ -5742,7 +5742,7 @@
       "source_file": "src/components/tools/word-counter.tsx",
       "source_location": "L10",
       "id": "tools_word_counter_nativetoggle",
-      "community": 45,
+      "community": 137,
       "norm_label": "nativetoggle()"
     },
     {
@@ -5751,7 +5751,7 @@
       "source_file": "src/components/tools/word-counter.tsx",
       "source_location": "L48",
       "id": "tools_word_counter_wordcounter",
-      "community": 131,
+      "community": 137,
       "norm_label": "wordcounter()"
     },
     {
@@ -5760,7 +5760,7 @@
       "source_file": "src/components/tools/image-converter.tsx",
       "source_location": "L1",
       "id": "src_components_tools_image_converter_tsx",
-      "community": 147,
+      "community": 131,
       "norm_label": "image-converter.tsx"
     },
     {
@@ -5769,7 +5769,7 @@
       "source_file": "src/components/tools/image-converter.tsx",
       "source_location": "L36",
       "id": "tools_image_converter_imagefile",
-      "community": 147,
+      "community": 131,
       "norm_label": "imagefile"
     },
     {
@@ -5778,7 +5778,7 @@
       "source_file": "src/components/tools/image-converter.tsx",
       "source_location": "L53",
       "id": "tools_image_converter_nativetoggle",
-      "community": 147,
+      "community": 131,
       "norm_label": "nativetoggle()"
     },
     {
@@ -5787,7 +5787,7 @@
       "source_file": "src/components/tools/image-converter.tsx",
       "source_location": "L91",
       "id": "tools_image_converter_imageconverter",
-      "community": 147,
+      "community": 131,
       "norm_label": "imageconverter()"
     },
     {
@@ -5832,7 +5832,7 @@
       "source_file": "src/components/tools/gst-calculator.tsx",
       "source_location": "L59",
       "id": "tools_gst_calculator_gstcalculator",
-      "community": 13,
+      "community": 131,
       "norm_label": "gstcalculator()"
     },
     {
@@ -5841,7 +5841,7 @@
       "source_file": "src/components/tools/work-report.tsx",
       "source_location": "L1",
       "id": "src_components_tools_work_report_tsx",
-      "community": 92,
+      "community": 55,
       "norm_label": "work-report.tsx"
     },
     {
@@ -5850,7 +5850,7 @@
       "source_file": "src/components/tools/work-report.tsx",
       "source_location": "L21",
       "id": "tools_work_report_taskrow",
-      "community": 92,
+      "community": 55,
       "norm_label": "taskrow"
     },
     {
@@ -5859,7 +5859,7 @@
       "source_file": "src/components/tools/work-report.tsx",
       "source_location": "L30",
       "id": "tools_work_report_richtexteditorprops",
-      "community": 92,
+      "community": 55,
       "norm_label": "richtexteditorprops"
     },
     {
@@ -5868,7 +5868,7 @@
       "source_file": "src/components/tools/work-report.tsx",
       "source_location": "L36",
       "id": "tools_work_report_richtexteditor",
-      "community": 92,
+      "community": 55,
       "norm_label": "richtexteditor()"
     },
     {
@@ -5877,7 +5877,7 @@
       "source_file": "src/components/tools/work-report.tsx",
       "source_location": "L173",
       "id": "tools_work_report_workreportprops",
-      "community": 92,
+      "community": 55,
       "norm_label": "workreportprops"
     },
     {
@@ -5886,7 +5886,7 @@
       "source_file": "src/components/tools/work-report.tsx",
       "source_location": "L177",
       "id": "tools_work_report_parsedurationval",
-      "community": 92,
+      "community": 55,
       "norm_label": "parsedurationval()"
     },
     {
@@ -5895,7 +5895,7 @@
       "source_file": "src/components/tools/work-report.tsx",
       "source_location": "L204",
       "id": "tools_work_report_formatduration",
-      "community": 92,
+      "community": 55,
       "norm_label": "formatduration()"
     },
     {
@@ -6039,7 +6039,7 @@
       "source_file": "src/components/tools/schema-generator.tsx",
       "source_location": "L1",
       "id": "src_components_tools_schema_generator_tsx",
-      "community": 131,
+      "community": 92,
       "norm_label": "schema-generator.tsx"
     },
     {
@@ -6048,7 +6048,7 @@
       "source_file": "src/components/tools/schema-generator.tsx",
       "source_location": "L45",
       "id": "tools_schema_generator_schema_types",
-      "community": 131,
+      "community": 92,
       "norm_label": "schema_types"
     },
     {
@@ -6057,7 +6057,7 @@
       "source_file": "src/components/tools/schema-generator.tsx",
       "source_location": "L63",
       "id": "tools_schema_generator_schemagenerator",
-      "community": 167,
+      "community": 129,
       "norm_label": "schemagenerator()"
     },
     {
@@ -6102,7 +6102,7 @@
       "source_file": "src/components/tools/line-height-calculator.tsx",
       "source_location": "L9",
       "id": "tools_line_height_calculator_lineheightcalculator",
-      "community": 150,
+      "community": 3,
       "norm_label": "lineheightcalculator()"
     },
     {
@@ -6381,7 +6381,7 @@
       "source_file": "src/components/dashboard/settings-form.tsx",
       "source_location": "L1",
       "id": "src_components_dashboard_settings_form_tsx",
-      "community": 3,
+      "community": 92,
       "norm_label": "settings-form.tsx"
     },
     {
@@ -6390,7 +6390,7 @@
       "source_file": "src/components/dashboard/settings-form.tsx",
       "source_location": "L14",
       "id": "dashboard_settings_form_settingsformprops",
-      "community": 3,
+      "community": 92,
       "norm_label": "settingsformprops"
     },
     {
@@ -6399,7 +6399,7 @@
       "source_file": "src/components/dashboard/settings-form.tsx",
       "source_location": "L21",
       "id": "dashboard_settings_form_settingsform",
-      "community": 3,
+      "community": 92,
       "norm_label": "settingsform()"
     },
     {
@@ -6408,7 +6408,7 @@
       "source_file": "src/components/dashboard/sync-plan-button.tsx",
       "source_location": "L1",
       "id": "src_components_dashboard_sync_plan_button_tsx",
-      "community": 160,
+      "community": 15,
       "norm_label": "sync-plan-button.tsx"
     },
     {
@@ -6516,7 +6516,7 @@
       "source_file": "src/components/pricing/cancel-button.tsx",
       "source_location": "L1",
       "id": "src_components_pricing_cancel_button_tsx",
-      "community": 7,
+      "community": 55,
       "norm_label": "cancel-button.tsx"
     },
     {
@@ -6525,7 +6525,7 @@
       "source_file": "src/components/pricing/cancel-button.tsx",
       "source_location": "L8",
       "id": "pricing_cancel_button_cancelbutton",
-      "community": 7,
+      "community": 55,
       "norm_label": "cancelbutton()"
     },
     {
@@ -6561,7 +6561,7 @@
       "source_file": "src/components/pricing/upgrade-button.tsx",
       "source_location": "L36",
       "id": "pricing_upgrade_button_upgradebutton",
-      "community": 7,
+      "community": 55,
       "norm_label": "upgradebutton()"
     },
     {
@@ -6570,7 +6570,7 @@
       "source_file": "src/components/pricing/pricing-cards.tsx",
       "source_location": "L1",
       "id": "src_components_pricing_pricing_cards_tsx",
-      "community": 7,
+      "community": 55,
       "norm_label": "pricing-cards.tsx"
     },
     {
@@ -6579,7 +6579,7 @@
       "source_file": "src/components/pricing/pricing-cards.tsx",
       "source_location": "L13",
       "id": "pricing_pricing_cards_pricingcardsprops",
-      "community": 7,
+      "community": 55,
       "norm_label": "pricingcardsprops"
     },
     {
@@ -6588,7 +6588,7 @@
       "source_file": "src/components/pricing/pricing-cards.tsx",
       "source_location": "L20",
       "id": "pricing_pricing_cards_pricingcards",
-      "community": 7,
+      "community": 55,
       "norm_label": "pricingcards()"
     },
     {
@@ -6651,7 +6651,7 @@
       "source_file": "src/lib/credits.ts",
       "source_location": "L4",
       "id": "lib_credits_getcurrentcreditallocation",
-      "community": 160,
+      "community": 15,
       "norm_label": "getcurrentcreditallocation()"
     },
     {
@@ -6696,7 +6696,7 @@
       "source_file": "src/lib/utils.ts",
       "source_location": "L1",
       "id": "src_lib_utils_ts",
-      "community": 7,
+      "community": 137,
       "norm_label": "utils.ts"
     },
     {
@@ -6714,7 +6714,7 @@
       "source_file": "src/lib/image-utils.ts",
       "source_location": "L1",
       "id": "src_lib_image_utils_ts",
-      "community": 147,
+      "community": 131,
       "norm_label": "image-utils.ts"
     },
     {
@@ -6723,7 +6723,7 @@
       "source_file": "src/lib/image-utils.ts",
       "source_location": "L5",
       "id": "lib_image_utils_resizeoptions",
-      "community": 147,
+      "community": 131,
       "norm_label": "resizeoptions"
     },
     {
@@ -6732,7 +6732,7 @@
       "source_file": "src/lib/image-utils.ts",
       "source_location": "L13",
       "id": "lib_image_utils_image_presets",
-      "community": 147,
+      "community": 131,
       "norm_label": "image_presets"
     },
     {
@@ -6741,7 +6741,7 @@
       "source_file": "src/lib/image-utils.ts",
       "source_location": "L23",
       "id": "lib_image_utils_processimage",
-      "community": 147,
+      "community": 131,
       "norm_label": "processimage()"
     },
     {
@@ -6750,7 +6750,7 @@
       "source_file": "src/lib/image-utils.ts",
       "source_location": "L87",
       "id": "lib_image_utils_formatbytes",
-      "community": 147,
+      "community": 131,
       "norm_label": "formatbytes()"
     },
     {
@@ -6777,7 +6777,7 @@
       "source_file": "src/lib/calculator-math.ts",
       "source_location": "L6",
       "id": "lib_calculator_math_calculatebmi",
-      "community": 92,
+      "community": 3,
       "norm_label": "calculatebmi()"
     },
     {
@@ -6804,7 +6804,7 @@
       "source_file": "src/lib/calculator-math.ts",
       "source_location": "L32",
       "id": "lib_calculator_math_calculatelineheight",
-      "community": 150,
+      "community": 3,
       "norm_label": "calculatelineheight()"
     },
     {
@@ -6849,7 +6849,7 @@
       "source_file": "src/lib/calculator-math.ts",
       "source_location": "L66",
       "id": "lib_calculator_math_calculatecompoundinterest",
-      "community": 148,
+      "community": 3,
       "norm_label": "calculatecompoundinterest()"
     },
     {
@@ -6867,7 +6867,7 @@
       "source_file": "src/lib/calculator-math.ts",
       "source_location": "L122",
       "id": "lib_calculator_math_calculatesalarytohourly",
-      "community": 158,
+      "community": 3,
       "norm_label": "calculatesalarytohourly()"
     },
     {
@@ -6876,7 +6876,7 @@
       "source_file": "src/lib/svg-utils.ts",
       "source_location": "L1",
       "id": "src_lib_svg_utils_ts",
-      "community": 35,
+      "community": 7,
       "norm_label": "svg-utils.ts"
     },
     {
@@ -6885,7 +6885,7 @@
       "source_file": "src/lib/svg-utils.ts",
       "source_location": "L6",
       "id": "lib_svg_utils_svgoptions",
-      "community": 35,
+      "community": 7,
       "norm_label": "svgoptions"
     },
     {
@@ -6894,7 +6894,7 @@
       "source_file": "src/lib/svg-utils.ts",
       "source_location": "L18",
       "id": "lib_svg_utils_optimizesvg",
-      "community": 35,
+      "community": 7,
       "norm_label": "optimizesvg()"
     },
     {
@@ -6903,7 +6903,7 @@
       "source_file": "src/lib/svg-utils.ts",
       "source_location": "L68",
       "id": "lib_svg_utils_prettyprintsvg",
-      "community": 35,
+      "community": 7,
       "norm_label": "prettyprintsvg()"
     },
     {
@@ -6912,7 +6912,7 @@
       "source_file": "src/lib/svg-utils.ts",
       "source_location": "L90",
       "id": "lib_svg_utils_topascalcase",
-      "community": 35,
+      "community": 7,
       "norm_label": "topascalcase()"
     },
     {
@@ -6921,7 +6921,7 @@
       "source_file": "src/lib/svg-utils.ts",
       "source_location": "L95",
       "id": "lib_svg_utils_convertsvgtoreact",
-      "community": 35,
+      "community": 7,
       "norm_label": "convertsvgtoreact()"
     },
     {
@@ -6930,7 +6930,7 @@
       "source_file": "src/lib/svg-utils.ts",
       "source_location": "L158",
       "id": "lib_svg_utils_convertsvgtovue",
-      "community": 35,
+      "community": 7,
       "norm_label": "convertsvgtovue()"
     },
     {
@@ -6939,7 +6939,7 @@
       "source_file": "src/lib/svg-utils.ts",
       "source_location": "L171",
       "id": "lib_svg_utils_convertsvgtosvelte",
-      "community": 35,
+      "community": 7,
       "norm_label": "convertsvgtosvelte()"
     },
     {
@@ -11439,7 +11439,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1",
       "id": "agents_skills_writing_skills_anthropic_best_practices_md",
-      "community": 53,
+      "community": 46,
       "norm_label": "anthropic-best-practices.md"
     },
     {
@@ -11565,7 +11565,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L144",
       "id": "writing_skills_anthropic_best_practices_skill_structure",
-      "community": 132,
+      "community": 152,
       "norm_label": "skill structure"
     },
     {
@@ -11574,7 +11574,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L155",
       "id": "writing_skills_anthropic_best_practices_naming_conventions",
-      "community": 132,
+      "community": 152,
       "norm_label": "naming conventions"
     },
     {
@@ -11583,7 +11583,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L185",
       "id": "writing_skills_anthropic_best_practices_writing_effective_descriptions",
-      "community": 146,
+      "community": 152,
       "norm_label": "writing effective descriptions"
     },
     {
@@ -11592,7 +11592,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L205",
       "id": "writing_skills_anthropic_best_practices_codeblock_9",
-      "community": 146,
+      "community": 152,
       "norm_label": "code:yaml (description: extract text and tables from pdf files, fill fo)"
     },
     {
@@ -11601,7 +11601,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L211",
       "id": "writing_skills_anthropic_best_practices_codeblock_10",
-      "community": 146,
+      "community": 152,
       "norm_label": "code:yaml (description: analyze excel spreadsheets, create pivot tables)"
     },
     {
@@ -11610,7 +11610,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L217",
       "id": "writing_skills_anthropic_best_practices_codeblock_11",
-      "community": 146,
+      "community": 152,
       "norm_label": "code:yaml (description: generate descriptive commit messages by analyzi)"
     },
     {
@@ -11619,7 +11619,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L223",
       "id": "writing_skills_anthropic_best_practices_codeblock_12",
-      "community": 146,
+      "community": 152,
       "norm_label": "code:yaml (description: helps with documents)"
     },
     {
@@ -11628,7 +11628,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L227",
       "id": "writing_skills_anthropic_best_practices_codeblock_13",
-      "community": 146,
+      "community": 152,
       "norm_label": "code:yaml (description: processes data)"
     },
     {
@@ -11637,7 +11637,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L231",
       "id": "writing_skills_anthropic_best_practices_codeblock_14",
-      "community": 146,
+      "community": 152,
       "norm_label": "code:yaml (description: does stuff with files)"
     },
     {
@@ -11754,7 +11754,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L353",
       "id": "writing_skills_anthropic_best_practices_avoid_deeply_nested_references",
-      "community": 132,
+      "community": 152,
       "norm_label": "avoid deeply nested references"
     },
     {
@@ -11763,7 +11763,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L361",
       "id": "writing_skills_anthropic_best_practices_codeblock_22",
-      "community": 132,
+      "community": 152,
       "norm_label": "code:markdown (# skill.md)"
     },
     {
@@ -11772,7 +11772,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L374",
       "id": "writing_skills_anthropic_best_practices_codeblock_23",
-      "community": 132,
+      "community": 152,
       "norm_label": "code:markdown (# skill.md)"
     },
     {
@@ -11781,7 +11781,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L383",
       "id": "writing_skills_anthropic_best_practices_structure_longer_reference_files_with_table_of_contents",
-      "community": 132,
+      "community": 152,
       "norm_label": "structure longer reference files with table of contents"
     },
     {
@@ -11790,7 +11790,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L389",
       "id": "writing_skills_anthropic_best_practices_codeblock_24",
-      "community": 132,
+      "community": 152,
       "norm_label": "code:markdown (# api reference)"
     },
     {
@@ -12006,7 +12006,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L636",
       "id": "writing_skills_anthropic_best_practices_analysis_title_636",
-      "community": 90,
+      "community": 42,
       "norm_label": "[analysis title]"
     },
     {
@@ -12015,7 +12015,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L638",
       "id": "writing_skills_anthropic_best_practices_executive_summary_638",
-      "community": 90,
+      "community": 42,
       "norm_label": "executive summary"
     },
     {
@@ -12024,7 +12024,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L641",
       "id": "writing_skills_anthropic_best_practices_key_findings_641",
-      "community": 90,
+      "community": 42,
       "norm_label": "key findings"
     },
     {
@@ -12033,7 +12033,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L644",
       "id": "writing_skills_anthropic_best_practices_recommendations_644",
-      "community": 88,
+      "community": 42,
       "norm_label": "recommendations"
     },
     {
@@ -12042,7 +12042,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L646",
       "id": "writing_skills_anthropic_best_practices_codeblock_36",
-      "community": 88,
+      "community": 42,
       "norm_label": "code:block36"
     },
     {
@@ -12051,7 +12051,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L651",
       "id": "writing_skills_anthropic_best_practices_examples_pattern",
-      "community": 88,
+      "community": 42,
       "norm_label": "examples pattern"
     },
     {
@@ -12060,7 +12060,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L655",
       "id": "writing_skills_anthropic_best_practices_codeblock_37",
-      "community": 88,
+      "community": 42,
       "norm_label": "code:`markdown (## commit message format)"
     },
     {
@@ -12069,7 +12069,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L667",
       "id": "writing_skills_anthropic_best_practices_codeblock_38",
-      "community": 88,
+      "community": 42,
       "norm_label": "code:block38"
     },
     {
@@ -12078,7 +12078,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L676",
       "id": "writing_skills_anthropic_best_practices_codeblock_39",
-      "community": 88,
+      "community": 42,
       "norm_label": "code:block39"
     },
     {
@@ -12087,7 +12087,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L686",
       "id": "writing_skills_anthropic_best_practices_codeblock_40",
-      "community": 88,
+      "community": 42,
       "norm_label": "code:block40"
     },
     {
@@ -12096,7 +12096,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L693",
       "id": "writing_skills_anthropic_best_practices_conditional_workflow_pattern",
-      "community": 88,
+      "community": 42,
       "norm_label": "conditional workflow pattern"
     },
     {
@@ -12105,7 +12105,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L697",
       "id": "writing_skills_anthropic_best_practices_codeblock_41",
-      "community": 88,
+      "community": 42,
       "norm_label": "code:markdown (## document modification workflow)"
     },
     {
@@ -12114,7 +12114,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L721",
       "id": "writing_skills_anthropic_best_practices_evaluation_and_iteration",
-      "community": 166,
+      "community": 42,
       "norm_label": "evaluation and iteration"
     },
     {
@@ -12123,7 +12123,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L723",
       "id": "writing_skills_anthropic_best_practices_build_evaluations_first",
-      "community": 166,
+      "community": 42,
       "norm_label": "build evaluations first"
     },
     {
@@ -12132,7 +12132,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L739",
       "id": "writing_skills_anthropic_best_practices_codeblock_42",
-      "community": 166,
+      "community": 42,
       "norm_label": "code:json ({)"
     },
     {
@@ -12141,7 +12141,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L756",
       "id": "writing_skills_anthropic_best_practices_develop_skills_iteratively_with_claude",
-      "community": 166,
+      "community": 42,
       "norm_label": "develop skills iteratively with claude"
     },
     {
@@ -12150,7 +12150,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L812",
       "id": "writing_skills_anthropic_best_practices_observe_how_claude_navigates_skills",
-      "community": 166,
+      "community": 42,
       "norm_label": "observe how claude navigates skills"
     },
     {
@@ -12159,7 +12159,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L823",
       "id": "writing_skills_anthropic_best_practices_anti_patterns_to_avoid",
-      "community": 90,
+      "community": 42,
       "norm_label": "anti-patterns to avoid"
     },
     {
@@ -12168,7 +12168,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L825",
       "id": "writing_skills_anthropic_best_practices_avoid_windows_style_paths",
-      "community": 90,
+      "community": 42,
       "norm_label": "avoid windows-style paths"
     },
     {
@@ -12177,7 +12177,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L834",
       "id": "writing_skills_anthropic_best_practices_avoid_offering_too_many_options",
-      "community": 90,
+      "community": 42,
       "norm_label": "avoid offering too many options"
     },
     {
@@ -12186,7 +12186,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L838",
       "id": "writing_skills_anthropic_best_practices_codeblock_43",
-      "community": 90,
+      "community": 42,
       "norm_label": "code:`markdown (**bad example: too many choices** (confusing):)"
     },
     {
@@ -12195,7 +12195,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L846",
       "id": "writing_skills_anthropic_best_practices_codeblock_44",
-      "community": 90,
+      "community": 42,
       "norm_label": "code:block44"
     },
     {
@@ -12429,7 +12429,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1091",
       "id": "writing_skills_anthropic_best_practices_technical_notes",
-      "community": 170,
+      "community": 32,
       "norm_label": "technical notes"
     },
     {
@@ -12438,7 +12438,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1093",
       "id": "writing_skills_anthropic_best_practices_yaml_frontmatter_requirements",
-      "community": 170,
+      "community": 32,
       "norm_label": "yaml frontmatter requirements"
     },
     {
@@ -12447,7 +12447,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1097",
       "id": "writing_skills_anthropic_best_practices_token_budgets",
-      "community": 170,
+      "community": 32,
       "norm_label": "token budgets"
     },
     {
@@ -12456,7 +12456,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1101",
       "id": "writing_skills_anthropic_best_practices_checklist_for_effective_skills",
-      "community": 32,
+      "community": 150,
       "norm_label": "checklist for effective skills"
     },
     {
@@ -12465,7 +12465,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1105",
       "id": "writing_skills_anthropic_best_practices_core_quality",
-      "community": 32,
+      "community": 150,
       "norm_label": "core quality"
     },
     {
@@ -12474,7 +12474,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1118",
       "id": "writing_skills_anthropic_best_practices_code_and_scripts",
-      "community": 32,
+      "community": 150,
       "norm_label": "code and scripts"
     },
     {
@@ -12483,7 +12483,7 @@
       "source_file": ".agents/skills/writing-skills/anthropic-best-practices.md",
       "source_location": "L1129",
       "id": "writing_skills_anthropic_best_practices_testing",
-      "community": 32,
+      "community": 150,
       "norm_label": "testing"
     },
     {
@@ -14204,6 +14204,105 @@
       "id": "plans_2026_05_29_mobile_nav_portal_left_task_2_verification",
       "community": 156,
       "norm_label": "task 2: verification"
+    },
+    {
+      "label": "2026-06-01-subscription-emails.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L1",
+      "id": "docs_superpowers_plans_2026_06_01_subscription_emails_md",
+      "community": 88,
+      "norm_label": "2026-06-01-subscription-emails.md"
+    },
+    {
+      "label": "Subscription Webhook Emails Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L1",
+      "id": "plans_2026_06_01_subscription_emails_subscription_webhook_emails_implementation_plan",
+      "community": 88,
+      "norm_label": "subscription webhook emails implementation plan"
+    },
+    {
+      "label": "Task 1: Update PayPal Webhook Email Trigger",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L13",
+      "id": "plans_2026_06_01_subscription_emails_task_1_update_paypal_webhook_email_trigger",
+      "community": 88,
+      "norm_label": "task 1: update paypal webhook email trigger"
+    },
+    {
+      "label": "code:typescript (import { sendPaymentSuccessEmail } from \"@/lib/email\";)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L22",
+      "id": "plans_2026_06_01_subscription_emails_codeblock_1",
+      "community": 88,
+      "norm_label": "code:typescript (import { sendpaymentsuccessemail } from \"@/lib/email\";)"
+    },
+    {
+      "label": "code:typescript (// Create or update subscription record)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L32",
+      "id": "plans_2026_06_01_subscription_emails_codeblock_2",
+      "community": 88,
+      "norm_label": "code:typescript (// create or update subscription record)"
+    },
+    {
+      "label": "code:typescript (// Create or update subscription record)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L56",
+      "id": "plans_2026_06_01_subscription_emails_codeblock_3",
+      "community": 88,
+      "norm_label": "code:typescript (// create or update subscription record)"
+    },
+    {
+      "label": "Task 2: Update Razorpay Webhook Email Trigger",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L96",
+      "id": "plans_2026_06_01_subscription_emails_task_2_update_razorpay_webhook_email_trigger",
+      "community": 88,
+      "norm_label": "task 2: update razorpay webhook email trigger"
+    },
+    {
+      "label": "code:typescript (import { sendPaymentSuccessEmail } from \"@/lib/email\";)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L105",
+      "id": "plans_2026_06_01_subscription_emails_codeblock_4",
+      "community": 88,
+      "norm_label": "code:typescript (import { sendpaymentsuccessemail } from \"@/lib/email\";)"
+    },
+    {
+      "label": "code:typescript (await prisma.subscription.upsert({)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L114",
+      "id": "plans_2026_06_01_subscription_emails_codeblock_5",
+      "community": 88,
+      "norm_label": "code:typescript (await prisma.subscription.upsert({)"
+    },
+    {
+      "label": "code:typescript (await prisma.subscription.upsert({)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L142",
+      "id": "plans_2026_06_01_subscription_emails_codeblock_6",
+      "community": 88,
+      "norm_label": "code:typescript (await prisma.subscription.upsert({)"
+    },
+    {
+      "label": "code:bash (git add src/app/api/webhooks/paypal/route.ts src/app/api/web)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L183",
+      "id": "plans_2026_06_01_subscription_emails_codeblock_7",
+      "community": 88,
+      "norm_label": "code:bash (git add src/app/api/webhooks/paypal/route.ts src/app/api/web)"
     },
     {
       "label": "2026-05-29-all-calculators-dashboard.md",
@@ -16888,6 +16987,69 @@
       "norm_label": "verification plan"
     },
     {
+      "label": "2026-06-01-subscription-emails-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L1",
+      "id": "docs_superpowers_specs_2026_06_01_subscription_emails_design_md",
+      "community": 132,
+      "norm_label": "2026-06-01-subscription-emails-design.md"
+    },
+    {
+      "label": "Subscription Webhook Emails Design Spec",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L1",
+      "id": "specs_2026_06_01_subscription_emails_design_subscription_webhook_emails_design_spec",
+      "community": 132,
+      "norm_label": "subscription webhook emails design spec"
+    },
+    {
+      "label": "Proposed Changes",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L5",
+      "id": "specs_2026_06_01_subscription_emails_design_proposed_changes",
+      "community": 132,
+      "norm_label": "proposed changes"
+    },
+    {
+      "label": "[`src/app/api/webhooks/paypal/route.ts`](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/webhooks/paypal/route.ts)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L7",
+      "id": "specs_2026_06_01_subscription_emails_design_src_app_api_webhooks_paypal_route_ts_file_users_sajidkhan_gemini_antigravity_scratch_thewordof_tools_src_app_api_webhooks_paypal_route_ts",
+      "community": 132,
+      "norm_label": "[`src/app/api/webhooks/paypal/route.ts`](file:///users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/webhooks/paypal/route.ts)"
+    },
+    {
+      "label": "[`src/app/api/webhooks/razorpay/route.ts`](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/webhooks/razorpay/route.ts)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L12",
+      "id": "specs_2026_06_01_subscription_emails_design_src_app_api_webhooks_razorpay_route_ts_file_users_sajidkhan_gemini_antigravity_scratch_thewordof_tools_src_app_api_webhooks_razorpay_route_ts",
+      "community": 132,
+      "norm_label": "[`src/app/api/webhooks/razorpay/route.ts`](file:///users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/webhooks/razorpay/route.ts)"
+    },
+    {
+      "label": "Verification Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L17",
+      "id": "specs_2026_06_01_subscription_emails_design_verification_plan",
+      "community": 132,
+      "norm_label": "verification plan"
+    },
+    {
+      "label": "Automated",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L19",
+      "id": "specs_2026_06_01_subscription_emails_design_automated",
+      "community": 132,
+      "norm_label": "automated"
+    },
+    {
       "label": "2026-05-30-credits-quota-reset-on-upgrade-design.md",
       "file_type": "document",
       "source_file": "docs/superpowers/specs/2026-05-30-credits-quota-reset-on-upgrade-design.md",
@@ -17477,7 +17639,7 @@
       "file_type": "code",
       "source_file": "src/app/tools/page.tsx",
       "source_location": "L13",
-      "community": 45,
+      "community": 107,
       "norm_label": "alltools",
       "id": "tools_page_alltools"
     },
@@ -17486,7 +17648,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/work-report.tsx",
       "source_location": "L176",
-      "community": 92,
+      "community": 55,
       "norm_label": "duration_presets",
       "id": "tools_work_report_duration_presets"
     },
@@ -17576,7 +17738,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-import-modal.tsx",
       "source_location": "L1",
-      "community": 3,
+      "community": 90,
       "norm_label": "linkedin-import-modal.tsx",
       "id": "src_components_tools_linkedin_import_modal_tsx"
     },
@@ -17585,7 +17747,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-import-modal.tsx",
       "source_location": "L9",
-      "community": 3,
+      "community": 90,
       "norm_label": "linkedinicon()",
       "id": "tools_linkedin_import_modal_linkedinicon"
     },
@@ -17594,7 +17756,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-import-modal.tsx",
       "source_location": "L21",
-      "community": 3,
+      "community": 90,
       "norm_label": "linkedinimportresult",
       "id": "tools_linkedin_import_modal_linkedinimportresult"
     },
@@ -17603,7 +17765,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-import-modal.tsx",
       "source_location": "L40",
-      "community": 3,
+      "community": 90,
       "norm_label": "linkedinimportmodalprops",
       "id": "tools_linkedin_import_modal_linkedinimportmodalprops"
     },
@@ -17612,7 +17774,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-import-modal.tsx",
       "source_location": "L45",
-      "community": 3,
+      "community": 90,
       "norm_label": "linkedinimportmodal()",
       "id": "tools_linkedin_import_modal_linkedinimportmodal"
     },
@@ -17621,7 +17783,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-preview-modal.tsx",
       "source_location": "L1",
-      "community": 3,
+      "community": 90,
       "norm_label": "linkedin-preview-modal.tsx",
       "id": "src_components_tools_linkedin_preview_modal_tsx"
     },
@@ -17630,7 +17792,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-preview-modal.tsx",
       "source_location": "L6",
-      "community": 3,
+      "community": 90,
       "norm_label": "linkedinimportresult",
       "id": "tools_linkedin_preview_modal_linkedinimportresult"
     },
@@ -17639,7 +17801,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-preview-modal.tsx",
       "source_location": "L25",
-      "community": 3,
+      "community": 90,
       "norm_label": "linkedinpreviewmodalprops",
       "id": "tools_linkedin_preview_modal_linkedinpreviewmodalprops"
     },
@@ -17648,7 +17810,7 @@
       "file_type": "code",
       "source_file": "src/components/tools/linkedin-preview-modal.tsx",
       "source_location": "L32",
-      "community": 3,
+      "community": 90,
       "norm_label": "linkedinpreviewmodal()",
       "id": "tools_linkedin_preview_modal_linkedinpreviewmodal"
     }
@@ -25178,6 +25340,50 @@
       "target": "config_subscriptions_subscription_plans"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/paypal/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_paypal_route_ts",
+      "target": "src_lib_email_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/paypal/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_paypal_route_ts",
+      "target": "lib_email_sendpaymentsuccessemail",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/paypal/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_paypal_route_ts",
+      "target": "src_config_pricing_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/paypal/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_paypal_route_ts",
+      "target": "config_pricing_plan_pricing",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/api/webhooks/paypal/route.ts",
@@ -25207,6 +25413,17 @@
       "confidence_score": 1.0,
       "source": "paypal_route_post",
       "target": "paypal_route_getplandetailsbyplanid"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/api/webhooks/paypal/route.ts",
+      "source_location": "L116",
+      "weight": 1.0,
+      "source": "paypal_route_post",
+      "target": "lib_email_sendpaymentsuccessemail"
     },
     {
       "relation": "imports_from",
@@ -25242,6 +25459,28 @@
       "target": "config_subscriptions_subscription_plans"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/razorpay/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_razorpay_route_ts",
+      "target": "src_lib_email_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/webhooks/razorpay/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_webhooks_razorpay_route_ts",
+      "target": "lib_email_sendpaymentsuccessemail",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/api/webhooks/razorpay/route.ts",
@@ -25271,6 +25510,17 @@
       "confidence_score": 1.0,
       "source": "razorpay_route_post",
       "target": "razorpay_route_getrazorpayplandetails"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/api/webhooks/razorpay/route.ts",
+      "source_location": "L126",
+      "weight": 1.0,
+      "source": "razorpay_route_post",
+      "target": "lib_email_sendpaymentsuccessemail"
     },
     {
       "relation": "imports_from",
@@ -43992,9 +44242,9 @@
       "source_file": "docs/superpowers/plans/2026-05-31-pricing-table-fixes.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_superpowers_plans_2026_05_31_pricing_table_fixes_md",
-      "target": "plans_2026_05_31_pricing_table_fixes_pricing_table_and_comparison_fixes_implementation_plan",
-      "confidence_score": 1.0
+      "target": "plans_2026_05_31_pricing_table_fixes_pricing_table_and_comparison_fixes_implementation_plan"
     },
     {
       "relation": "contains",
@@ -44002,9 +44252,9 @@
       "source_file": "docs/superpowers/plans/2026-05-31-pricing-table-fixes.md",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_05_31_pricing_table_fixes_pricing_table_and_comparison_fixes_implementation_plan",
-      "target": "plans_2026_05_31_pricing_table_fixes_task_1_update_pricing_cards_features_list",
-      "confidence_score": 1.0
+      "target": "plans_2026_05_31_pricing_table_fixes_task_1_update_pricing_cards_features_list"
     },
     {
       "relation": "contains",
@@ -44012,9 +44262,9 @@
       "source_file": "docs/superpowers/plans/2026-05-31-pricing-table-fixes.md",
       "source_location": "L177",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_05_31_pricing_table_fixes_pricing_table_and_comparison_fixes_implementation_plan",
-      "target": "plans_2026_05_31_pricing_table_fixes_task_2_update_home_page_comparison_table",
-      "confidence_score": 1.0
+      "target": "plans_2026_05_31_pricing_table_fixes_task_2_update_home_page_comparison_table"
     },
     {
       "relation": "contains",
@@ -44022,9 +44272,9 @@
       "source_file": "docs/superpowers/plans/2026-05-31-pricing-table-fixes.md",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_05_31_pricing_table_fixes_task_1_update_pricing_cards_features_list",
-      "target": "plans_2026_05_31_pricing_table_fixes_codeblock_1",
-      "confidence_score": 1.0
+      "target": "plans_2026_05_31_pricing_table_fixes_codeblock_1"
     },
     {
       "relation": "contains",
@@ -44032,9 +44282,9 @@
       "source_file": "docs/superpowers/plans/2026-05-31-pricing-table-fixes.md",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_05_31_pricing_table_fixes_task_1_update_pricing_cards_features_list",
-      "target": "plans_2026_05_31_pricing_table_fixes_codeblock_2",
-      "confidence_score": 1.0
+      "target": "plans_2026_05_31_pricing_table_fixes_codeblock_2"
     },
     {
       "relation": "contains",
@@ -44042,9 +44292,9 @@
       "source_file": "docs/superpowers/plans/2026-05-31-pricing-table-fixes.md",
       "source_location": "L187",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_05_31_pricing_table_fixes_task_2_update_home_page_comparison_table",
-      "target": "plans_2026_05_31_pricing_table_fixes_codeblock_3",
-      "confidence_score": 1.0
+      "target": "plans_2026_05_31_pricing_table_fixes_codeblock_3"
     },
     {
       "relation": "contains",
@@ -44052,9 +44302,9 @@
       "source_file": "docs/superpowers/plans/2026-05-31-pricing-table-fixes.md",
       "source_location": "L193",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_05_31_pricing_table_fixes_task_2_update_home_page_comparison_table",
-      "target": "plans_2026_05_31_pricing_table_fixes_codeblock_4",
-      "confidence_score": 1.0
+      "target": "plans_2026_05_31_pricing_table_fixes_codeblock_4"
     },
     {
       "relation": "contains",
@@ -44062,9 +44312,9 @@
       "source_file": "docs/superpowers/plans/2026-05-31-pricing-table-fixes.md",
       "source_location": "L203",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_05_31_pricing_table_fixes_task_2_update_home_page_comparison_table",
-      "target": "plans_2026_05_31_pricing_table_fixes_codeblock_5",
-      "confidence_score": 1.0
+      "target": "plans_2026_05_31_pricing_table_fixes_codeblock_5"
     },
     {
       "relation": "contains",
@@ -44115,6 +44365,106 @@
       "confidence_score": 1.0,
       "source": "plans_2026_05_29_mobile_nav_portal_left_task_1_refactor_mobile_nav_tsx",
       "target": "plans_2026_05_29_mobile_nav_portal_left_codeblock_2"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_06_01_subscription_emails_md",
+      "target": "plans_2026_06_01_subscription_emails_subscription_webhook_emails_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "plans_2026_06_01_subscription_emails_subscription_webhook_emails_implementation_plan",
+      "target": "plans_2026_06_01_subscription_emails_task_1_update_paypal_webhook_email_trigger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "plans_2026_06_01_subscription_emails_subscription_webhook_emails_implementation_plan",
+      "target": "plans_2026_06_01_subscription_emails_task_2_update_razorpay_webhook_email_trigger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "plans_2026_06_01_subscription_emails_task_1_update_paypal_webhook_email_trigger",
+      "target": "plans_2026_06_01_subscription_emails_codeblock_1",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "plans_2026_06_01_subscription_emails_task_1_update_paypal_webhook_email_trigger",
+      "target": "plans_2026_06_01_subscription_emails_codeblock_2",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "plans_2026_06_01_subscription_emails_task_1_update_paypal_webhook_email_trigger",
+      "target": "plans_2026_06_01_subscription_emails_codeblock_3",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "plans_2026_06_01_subscription_emails_task_2_update_razorpay_webhook_email_trigger",
+      "target": "plans_2026_06_01_subscription_emails_codeblock_4",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "plans_2026_06_01_subscription_emails_task_2_update_razorpay_webhook_email_trigger",
+      "target": "plans_2026_06_01_subscription_emails_codeblock_5",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L142",
+      "weight": 1.0,
+      "source": "plans_2026_06_01_subscription_emails_task_2_update_razorpay_webhook_email_trigger",
+      "target": "plans_2026_06_01_subscription_emails_codeblock_6",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-06-01-subscription-emails.md",
+      "source_location": "L183",
+      "weight": 1.0,
+      "source": "plans_2026_06_01_subscription_emails_task_2_update_razorpay_webhook_email_trigger",
+      "target": "plans_2026_06_01_subscription_emails_codeblock_7",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -46432,9 +46782,9 @@
       "source_file": "docs/superpowers/specs/2026-05-31-pricing-table-fixes-design.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_superpowers_specs_2026_05_31_pricing_table_fixes_design_md",
-      "target": "specs_2026_05_31_pricing_table_fixes_design_pricing_table_and_comparison_fixes_design_spec",
-      "confidence_score": 1.0
+      "target": "specs_2026_05_31_pricing_table_fixes_design_pricing_table_and_comparison_fixes_design_spec"
     },
     {
       "relation": "contains",
@@ -46442,9 +46792,9 @@
       "source_file": "docs/superpowers/specs/2026-05-31-pricing-table-fixes-design.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specs_2026_05_31_pricing_table_fixes_design_pricing_table_and_comparison_fixes_design_spec",
-      "target": "specs_2026_05_31_pricing_table_fixes_design_proposed_changes",
-      "confidence_score": 1.0
+      "target": "specs_2026_05_31_pricing_table_fixes_design_proposed_changes"
     },
     {
       "relation": "contains",
@@ -46452,9 +46802,9 @@
       "source_file": "docs/superpowers/specs/2026-05-31-pricing-table-fixes-design.md",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specs_2026_05_31_pricing_table_fixes_design_pricing_table_and_comparison_fixes_design_spec",
-      "target": "specs_2026_05_31_pricing_table_fixes_design_verification_plan",
-      "confidence_score": 1.0
+      "target": "specs_2026_05_31_pricing_table_fixes_design_verification_plan"
     },
     {
       "relation": "contains",
@@ -46462,9 +46812,9 @@
       "source_file": "docs/superpowers/specs/2026-05-31-pricing-table-fixes-design.md",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specs_2026_05_31_pricing_table_fixes_design_proposed_changes",
-      "target": "specs_2026_05_31_pricing_table_fixes_design_src_components_pricing_pricing_cards_tsx_file_users_sajidkhan_gemini_antigravity_scratch_thewordof_tools_src_components_pricing_pricing_cards_tsx",
-      "confidence_score": 1.0
+      "target": "specs_2026_05_31_pricing_table_fixes_design_src_components_pricing_pricing_cards_tsx_file_users_sajidkhan_gemini_antigravity_scratch_thewordof_tools_src_components_pricing_pricing_cards_tsx"
     },
     {
       "relation": "contains",
@@ -46472,9 +46822,9 @@
       "source_file": "docs/superpowers/specs/2026-05-31-pricing-table-fixes-design.md",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specs_2026_05_31_pricing_table_fixes_design_proposed_changes",
-      "target": "specs_2026_05_31_pricing_table_fixes_design_src_app_page_tsx_file_users_sajidkhan_gemini_antigravity_scratch_thewordof_tools_src_app_page_tsx",
-      "confidence_score": 1.0
+      "target": "specs_2026_05_31_pricing_table_fixes_design_src_app_page_tsx_file_users_sajidkhan_gemini_antigravity_scratch_thewordof_tools_src_app_page_tsx"
     },
     {
       "relation": "contains",
@@ -46482,9 +46832,9 @@
       "source_file": "docs/superpowers/specs/2026-05-31-pricing-table-fixes-design.md",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specs_2026_05_31_pricing_table_fixes_design_verification_plan",
-      "target": "specs_2026_05_31_pricing_table_fixes_design_automated",
-      "confidence_score": 1.0
+      "target": "specs_2026_05_31_pricing_table_fixes_design_automated"
     },
     {
       "relation": "contains",
@@ -46845,6 +47195,66 @@
       "confidence_score": 1.0,
       "source": "specs_2026_05_30_live_credits_and_pricing_updates_design_proposed_changes",
       "target": "specs_2026_05_30_live_credits_and_pricing_updates_design_pricing_table_pages_components"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_06_01_subscription_emails_design_md",
+      "target": "specs_2026_06_01_subscription_emails_design_subscription_webhook_emails_design_spec",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "specs_2026_06_01_subscription_emails_design_subscription_webhook_emails_design_spec",
+      "target": "specs_2026_06_01_subscription_emails_design_proposed_changes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "specs_2026_06_01_subscription_emails_design_subscription_webhook_emails_design_spec",
+      "target": "specs_2026_06_01_subscription_emails_design_verification_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "specs_2026_06_01_subscription_emails_design_proposed_changes",
+      "target": "specs_2026_06_01_subscription_emails_design_src_app_api_webhooks_paypal_route_ts_file_users_sajidkhan_gemini_antigravity_scratch_thewordof_tools_src_app_api_webhooks_paypal_route_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "specs_2026_06_01_subscription_emails_design_proposed_changes",
+      "target": "specs_2026_06_01_subscription_emails_design_src_app_api_webhooks_razorpay_route_ts_file_users_sajidkhan_gemini_antigravity_scratch_thewordof_tools_src_app_api_webhooks_razorpay_route_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-06-01-subscription-emails-design.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "specs_2026_06_01_subscription_emails_design_verification_plan",
+      "target": "specs_2026_06_01_subscription_emails_design_automated",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -47540,5 +47950,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "98c9d7c240ca7587838736921a635bcd1a1df684"
+  "built_at_commit": "883fcbbfcb14d15fe5781114dcc35a5aeb840abb"
 }
