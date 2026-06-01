@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { SUBSCRIPTION_PLANS } from "@/config/subscriptions";
+import { sendPaymentSuccessEmail } from "@/lib/email";
+import { PLAN_PRICING } from "@/config/pricing";
 
 function getPlanDetailsByPlanId(planId: string) {
   const paypalPlans = SUBSCRIPTION_PLANS.paypal;
@@ -105,6 +107,21 @@ export async function POST(req: Request) {
               currentPeriodEnd: expiresAt,
             },
           });
+
+          // Send payment success email
+          const amount = details.role === "BUSINESS" 
+            ? (details.interval === "year" ? PLAN_PRICING.BUSINESS.yearly.USD : PLAN_PRICING.BUSINESS.monthly.USD)
+            : (details.interval === "year" ? PLAN_PRICING.PREMIUM.yearly.USD : PLAN_PRICING.PREMIUM.monthly.USD);
+
+          sendPaymentSuccessEmail({
+            toEmail: user.email!,
+            userName: user.name || "User",
+            planName: details.role,
+            amount: amount,
+            currency: "USD",
+            orderId: subscriptionId,
+            paymentProvider: "PAYPAL"
+          }).catch(err => console.error("PayPal subscription success email trigger error:", err));
         }
       }
     } 

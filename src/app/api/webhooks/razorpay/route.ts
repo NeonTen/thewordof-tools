@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { prisma } from "@/lib/prisma";
 import { SUBSCRIPTION_PLANS } from "@/config/subscriptions";
+import { sendPaymentSuccessEmail } from "@/lib/email";
 
 function getRazorpayPlanDetails(planId: string) {
   const rzpPlans = SUBSCRIPTION_PLANS.razorpay;
@@ -120,6 +121,17 @@ export async function POST(req: Request) {
             currentPeriodEnd: expiresAt,
           },
         });
+
+        // Send payment success email
+        sendPaymentSuccessEmail({
+          toEmail: user.email!,
+          userName: user.name || "User",
+          planName: details.role,
+          amount: payment.amount / 100,
+          currency: payment.currency,
+          orderId: subscriptionId,
+          paymentProvider: "RAZORPAY"
+        }).catch(err => console.error("Razorpay subscription success email trigger error:", err));
       }
     } 
     else if (event.event === "subscription.cancelled") {
