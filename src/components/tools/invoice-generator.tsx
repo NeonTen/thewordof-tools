@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Plus, Trash2, Download, Printer, Save, FolderOpen } from "lucide-react"
+import { Plus, Trash2, Download, Printer, Save, FolderOpen, X, Loader2 } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -545,5 +545,95 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
         </ul>
       </section>
     </div>
+    {isSaveModalOpen && (
+      <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+        <div 
+          className="absolute inset-0 bg-background/80 backdrop-blur-md animate-in fade-in duration-300" 
+          onClick={() => setIsSaveModalOpen(false)} 
+        />
+        <div className="relative w-full max-w-sm overflow-hidden rounded-3xl border bg-background p-6 shadow-2xl animate-in zoom-in-95 duration-300">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute top-4 right-4 h-8 w-8 rounded-full" 
+            onClick={() => setIsSaveModalOpen(false)}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Save className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-black">Save Invoice Progress</h3>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-xs uppercase font-black text-muted-foreground">Invoice Title</Label>
+              <Input 
+                value={saveTitle} 
+                onChange={e => setSaveTitle(e.target.value)}
+                placeholder="Invoice - Web Development"
+                className="h-10 text-xs"
+              />
+            </div>
+            <Button 
+              onClick={() => handleSaveInvoice()} 
+              disabled={isSavingInvoice || !saveTitle}
+              className="w-full h-11 font-black"
+            >
+              {isSavingInvoice ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save to Cloud"}
+            </Button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {isLoadModalOpen && (
+      <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+        <div 
+          className="absolute inset-0 bg-background/80 backdrop-blur-md animate-in fade-in duration-300" 
+          onClick={() => setIsLoadModalOpen(false)} 
+        />
+        <div className="relative w-full max-w-md overflow-hidden rounded-3xl border bg-background p-6 shadow-2xl animate-in zoom-in-95 duration-300">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute top-4 right-4 h-8 w-8 rounded-full" 
+            onClick={() => setIsLoadModalOpen(false)}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <FolderOpen className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-black">My Saved Invoices</h3>
+            </div>
+            
+            {isLoadingInvoicesList ? (
+              <div className="py-8 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
+            ) : savedInvoicesList.length === 0 ? (
+              <p className="text-xs text-muted-foreground text-center py-6">No saved invoices found. Click Save to create one.</p>
+            ) : (
+              <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
+                {savedInvoicesList.map((r) => (
+                  <div key={r.id} className="flex items-center justify-between p-3 border rounded-xl hover:bg-muted/40 transition-all">
+                    <div className="truncate pr-4">
+                      <p className="text-xs font-black truncate">{r.title}</p>
+                      <p className="text-[10px] text-muted-foreground">{new Date(r.updatedAt).toLocaleDateString()}</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Button size="sm" variant="secondary" onClick={() => handleLoadInvoice(r.id)} className="h-8 text-[10px] font-bold">
+                        Load
+                      </Button>
+                      <Button size="sm" variant="ghost" onClick={() => handleDeleteInvoice(r.id)} className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10">
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    )}
   </>)
 }
