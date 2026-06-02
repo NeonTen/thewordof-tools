@@ -51,7 +51,13 @@ export default function LoginPage() {
         <React.Suspense fallback={<div className="h-24" />}>
           <UserAuthForm type="login" />
         </React.Suspense>
-        <p className="px-8 text-center text-sm text-muted-foreground">
+        <p className="px-8 text-center text-sm text-muted-foreground flex flex-col gap-2">
+          <Link
+            href="/forgot-password"
+            className="hover:text-brand underline underline-offset-4"
+          >
+            Forgot Password?
+          </Link>
           <Link
             href="/register"
             className="hover:text-brand underline underline-offset-4"

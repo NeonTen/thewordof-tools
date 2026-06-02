@@ -308,3 +308,74 @@ export async function sendPaymentFailedEmail({
     console.error("Failed to deliver failure email notification to admin:", err);
   }
 }
+
+export async function sendPasswordResetEmail({
+  toEmail,
+  token,
+}: {
+  toEmail: string;
+  token: string;
+}) {
+  if (!resendKey) {
+    console.warn("RESEND_API_KEY not found. Skipping reset email delivery.");
+    return;
+  }
+
+  const resend = new Resend(resendKey);
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://thewordof.com";
+  const resetLink = `${baseUrl}/reset-password?token=${token}`;
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Reset your password — TheWordOf Tools</title>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fafafa; color: #1f2937; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 40px auto; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .header { padding: 40px; background: linear-gradient(135deg, #11182710, #11182705); border-bottom: 1px solid #f3f4f6; text-align: center; }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: -0.05em; color: #111827; }
+        .content { padding: 40px; }
+        .greeting { font-size: 20px; font-weight: 800; margin-bottom: 16px; }
+        .intro { font-size: 15px; line-height: 1.6; color: #4b5563; margin-bottom: 24px; }
+        .cta-button { display: inline-block; text-align: center; background-color: #111827; color: #ffffff !important; text-decoration: none; padding: 14px 28px; font-weight: 800; font-size: 15px; border-radius: 12px; margin-top: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .footer { padding: 24px; text-align: center; font-size: 12px; color: #9ca3af; border-top: 1px solid #f3f4f6; background-color: #f9fafb; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <div class="logo">TheWordOf Tools</div>
+        </div>
+        <div class="content">
+          <div class="greeting">Hello,</div>
+          <p class="intro">
+            We received a request to reset the password for your account. Please click the button below to choose a new password. This link is valid for 1 hour.
+          </p>
+          <div style="text-align: center;">
+            <a href="${resetLink}" class="cta-button">Reset Password</a>
+          </div>
+          <p class="intro" style="margin-top: 24px;">
+            If you did not request a password reset, you can safely ignore this email.
+          </p>
+        </div>
+        <div class="footer">
+          &copy; ${new Date().getFullYear()} TheWordOf Tools. All rights reserved.
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    await resend.emails.send({
+      from: "TheWordOf Tools <noreply@thewordof.com>",
+      to: toEmail,
+      subject: "Reset your password — TheWordOf Tools",
+      html
+    });
+  } catch (err) {
+    console.error("Failed to deliver reset email:", err);
+  }
+}

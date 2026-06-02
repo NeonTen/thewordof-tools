@@ -140,6 +140,11 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
                 {errors.email.message}
               </p>
             )}
+            {type === "register" && (
+              <p className="px-1 text-[10px] text-muted-foreground leading-normal mt-1">
+                ℹ️ Used for login credentials and secure password resets. Please double-check it.
+              </p>
+            )}
           </div>
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="password">
