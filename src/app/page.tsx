@@ -165,7 +165,7 @@ export default async function Home() {
               {[
                 { name: "Rahul Sharma", role: "Digital Marketer", text: "The AI Caption Generator has saved me hours. The captions are actually high quality and viral-ready." },
                 { name: "Jessica Chen", role: "Frontend Developer", text: "The SVG Compressor and Image Converter are my go-to tools now. Super fast and no quality loss." },
-                { name: "Sajid Khan", role: "SaaS Founder", text: "Everything I need in one dashboard. The invoice generator is a lifesaver for my freelance projects." },
+                { name: "John Doe", role: "SaaS Founder", text: "Everything I need in one dashboard. The invoice generator is a lifesaver for my freelance projects." },
               ].map((item, i) => (
                 <Card key={i} className="bg-muted/30 border-none shadow-none p-8 space-y-6 relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-4 opacity-5">
