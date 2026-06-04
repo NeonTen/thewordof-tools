@@ -407,7 +407,7 @@ export function WorkReport({}: WorkReportProps) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">Name</label>
-                <Input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Sajid Khan" />
+                <Input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. John Doe" />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">Date</label>
