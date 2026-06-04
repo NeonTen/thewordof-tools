@@ -94,7 +94,7 @@ export function AIParserModal({ onApply, onClose }: AIParserModalProps) {
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder="Paste here... E.g.
-Sajid Khan
+John Doe
 Senior Engineer
 
 Experience:
