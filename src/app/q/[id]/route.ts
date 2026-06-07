@@ -26,11 +26,36 @@ export async function GET(
 
     // Parse User-Agent
     const uaString = request.headers.get("user-agent") || ""
-    let device = "Desktop"
-    if (/tablet|ipad|playbook|silk/i.test(uaString)) {
-      device = "Tablet"
-    } else if (/mobile|iphone|ipod|android|blackberry|opera mini|iemobile|webos/i.test(uaString)) {
-      device = "Mobile"
+    let device = "Other Desktop"
+    const isMobile = /mobile|iphone|ipod|android|blackberry|opera mini|iemobile|webos/i.test(uaString)
+    const isTablet = /tablet|ipad|playbook|silk/i.test(uaString)
+
+    if (isTablet) {
+      if (/ipad/i.test(uaString)) {
+        device = "iPad"
+      } else if (/android/i.test(uaString)) {
+        device = "Android Tablet"
+      } else {
+        device = "Other Tablet"
+      }
+    } else if (isMobile) {
+      if (/iphone|ipod/i.test(uaString)) {
+        device = "iPhone"
+      } else if (/android/i.test(uaString)) {
+        device = "Android Phone"
+      } else {
+        device = "Other Mobile"
+      }
+    } else {
+      if (/macintosh|mac os x/i.test(uaString)) {
+        device = "Mac"
+      } else if (/windows/i.test(uaString)) {
+        device = "Windows PC"
+      } else if (/linux/i.test(uaString)) {
+        device = "Linux PC"
+      } else {
+        device = "Other Desktop"
+      }
     }
 
     let os = "Unknown"
