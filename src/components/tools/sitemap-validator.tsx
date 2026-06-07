@@ -292,7 +292,7 @@ export function SitemapValidator() {
               <Textarea 
                 id="sitemap-xml" 
                 placeholder="<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>..." 
-                className="min-h-[160px] max-h-[300px] font-mono text-xs overflow-y-auto"
+                className="min-h-[350px] max-h-[600px] font-mono text-xs overflow-y-auto"
                 value={rawXml}
                 onChange={e => setRawXml(e.target.value)}
               />
