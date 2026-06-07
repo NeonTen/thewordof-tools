@@ -788,7 +788,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                         ) : (
                           <ResponsiveContainer width="100%" height="100%">
                             <RechartsBarChart data={getBarData(browserOsTab)} layout="vertical">
-                              <XAxis type="number" stroke="#888888" fontSize={9} />
+                              <XAxis type="number" stroke="#888888" fontSize={9} allowDecimals={false} />
                               <YAxis dataKey="name" type="category" stroke="#888888" fontSize={9} width={60} />
                               <Tooltip />
                               <Bar dataKey="count" fill={browserOsTab === "browsers" ? "#8884d8" : "#82ca9d"} radius={[0, 4, 4, 0]} />
@@ -812,7 +812,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                         ) : (
                           <ResponsiveContainer width="100%" height="90%">
                             <RechartsBarChart data={getGeoData("countries")} layout="vertical">
-                              <XAxis type="number" stroke="#888888" fontSize={9} />
+                              <XAxis type="number" stroke="#888888" fontSize={9} allowDecimals={false} />
                               <YAxis dataKey="name" type="category" stroke="#888888" fontSize={9} width={50} />
                               <Tooltip />
                               <Bar dataKey="count" fill="#3b82f6" radius={[0, 4, 4, 0]} />
@@ -829,7 +829,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                         ) : (
                           <ResponsiveContainer width="100%" height="90%">
                             <RechartsBarChart data={getGeoData("cities")} layout="vertical">
-                              <XAxis type="number" stroke="#888888" fontSize={9} />
+                              <XAxis type="number" stroke="#888888" fontSize={9} allowDecimals={false} />
                               <YAxis dataKey="name" type="category" stroke="#888888" fontSize={9} width={80} />
                               <Tooltip />
                               <Bar dataKey="count" fill="#10b981" radius={[0, 4, 4, 0]} />
