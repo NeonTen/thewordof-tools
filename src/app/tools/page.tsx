@@ -21,10 +21,8 @@ import {
   Briefcase,
   Palette
 } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { ProBadge } from "@/components/ui/pro-gate"
-import { cn } from "@/lib/utils"
 import { auth } from "@/auth"
+import { ToolsList } from "@/components/tools/tools-list"
 
 export const metadata = {
   title: "Free Online AI Tools & Growing — TheWordOf Utility Dashboard",
@@ -63,6 +61,14 @@ const categories = [
     ]
   },
   {
+    title: "Design",
+    tools: [
+      { title: "Color Contrast Checker", desc: "Check foreground and background color contrast against WCAG standards.", icon: Palette, href: "/tools/color-contrast", pro: false },
+      { title: "Color Palette Generator", desc: "Generate mathematical color harmonies and export codes or images.", icon: Palette, href: "/tools/color-palette", pro: false },
+      { title: "Gradient Generator", desc: "Browse, customize and export CSS / Tailwind code for premium gradients.", icon: Palette, href: "/tools/gradient-generator", pro: false }
+    ]
+  },
+  {
     title: "Calculators",
     tools: [
       { title: "EMI Calculator",            desc: "Calculate your monthly EMI payments for home, car, or personal loans.",            icon: Percent,        href: "/tools/calculators/emi",             pro: false },
@@ -95,59 +101,7 @@ export default async function ToolsPage() {
         </p>
       </div>
 
-      <div className="space-y-12">
-        {categories.map((category) => (
-          <div key={category.title} className="space-y-4">
-            <h2 className="text-2xl font-black tracking-tight text-foreground/80 border-b pb-2">
-              {category.title}
-            </h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {category.tools.map((tool) => {
-                const Icon = tool.icon
-                return (
-                  <Link key={tool.href} href={tool.href}>
-                    <Card className={cn(
-                      "h-full group transition-all duration-200",
-                      tool.pro
-                        ? "hover:border-amber-500/30 hover:bg-amber-500/5 border-amber-500/10 bg-amber-500/[0.02]"
-                        : "hover:border-primary/30 hover:bg-primary/5"
-                    )}>
-                      <CardContent className="p-5 flex gap-4 items-start">
-                        <div className={cn(
-                          "h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-colors",
-                          tool.pro ? "bg-amber-500/10 group-hover:bg-amber-500/20" : "bg-primary/10 group-hover:bg-primary/15"
-                        )}>
-                          <Icon className={cn("h-5 w-5", tool.pro ? "text-amber-600 dark:text-amber-400" : "text-primary")} />
-                        </div>
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <p className="font-bold text-sm leading-tight">{tool.title}</p>
-                            {tool.pro && <ProBadge role={session?.user?.role} />}
-                          </div>
-                          <p className="text-xs text-muted-foreground leading-relaxed">{tool.desc}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                )
-              })}
-
-              {/* Render Coming Soon block only in the last section for visual balance */}
-              {category.title === "Calculators" && (
-                <Card className="h-full border-dashed border-2 bg-muted/20 flex items-center justify-center p-5 group transition-colors hover:bg-muted/30">
-                  <div className="text-center space-y-2">
-                    <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
-                      <Sparkles className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <p className="font-bold text-sm text-muted-foreground">More Tools Coming Soon</p>
-                    <p className="text-[10px] text-muted-foreground/70 uppercase tracking-widest font-black">Building 24/7</p>
-                  </div>
-                </Card>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+      <ToolsList categories={categories} isPro={isPro} userRole={session?.user?.role} />
     </div>
   )
 }
