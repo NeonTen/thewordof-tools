@@ -31,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/register',
     '/privacy',
     '/terms',
+    '/refund',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

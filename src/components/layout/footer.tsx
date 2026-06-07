@@ -10,8 +10,9 @@ export function Footer() {
           </p>
         </div>
         <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-          <Link href="/terms" className="hover:underline underline-offset-4">Terms</Link>
-          <Link href="/privacy" className="hover:underline underline-offset-4">Privacy</Link>
+          <Link href="/terms" className="hover:underline underline-offset-4">Terms & Conditions</Link>
+          <Link href="/privacy" className="hover:underline underline-offset-4">Privacy Policy</Link>
+          <Link href="/refund" className="hover:underline underline-offset-4">Refund Policy</Link>
         </div>
       </div>
     </footer>
