@@ -162,8 +162,6 @@ export default async function ChangelogPage() {
                           {/* Items content */}
                           <div 
                             className="prose dark:prose-invert max-w-none 
-                              prose-ul:list-none prose-ul:pl-0 prose-ul:space-y-3
-                              prose-li:border-l-2 prose-li:border-primary/20 prose-li:pl-4 prose-li:py-1 hover:prose-li:border-primary transition-colors
                               prose-strong:text-foreground prose-strong:font-bold
                               prose-code:text-primary prose-code:bg-primary/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-xs"
                             dangerouslySetInnerHTML={{ __html: section.html }}
