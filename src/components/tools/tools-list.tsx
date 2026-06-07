@@ -44,39 +44,55 @@ const CATEGORIES: Category[] = [
   {
     title: "Image & Code",
     tools: [
-      { title: "Image Converter",   desc: "Convert JPG, PNG, WEBP, AVIF in bulk. Client-side, private.",       icon: ImageIcon,  href: "/tools/image-converter",   pro: false },
-      { title: "SVG Compressor",    desc: "Minify, clean and optimize SVG files for faster web pages.",          icon: Zap,        href: "/tools/svg-compressor",    pro: true },
-      { title: "QR Code Generator", desc: "Generate QR codes with custom size and colors.",                     icon: Code,       href: "/tools/qr-code",           pro: true },
-      { title: "Code Minifier",     desc: "Minify JS, CSS, HTML and beautify in one click.",                     icon: FileCode,   href: "/tools/code-minifier",     pro: false },
-      { title: "Text Difference",   desc: "Compare two documents and highlight every change.",                    icon: Split,      href: "/tools/text-diff",         pro: false },
+      { title: "Image Converter",   desc: "Convert JPG, PNG, WEBP, AVIF in bulk. Client-side, private.",       icon: ImageIcon,  href: "/tools/image-code/image-converter",   pro: false },
+      { title: "SVG Compressor",    desc: "Minify, clean and optimize SVG files for faster web pages.",          icon: Zap,        href: "/tools/image-code/svg-compressor",    pro: true },
+      { title: "QR Code Generator", desc: "Generate QR codes with custom size and colors.",                     icon: Code,       href: "/tools/image-code/qr-code",           pro: true },
+      { title: "Code Minifier",     desc: "Minify JS, CSS, HTML and beautify in one click.",                     icon: FileCode,   href: "/tools/image-code/code-minifier",     pro: false },
+      { title: "Text Difference",   desc: "Compare two documents and highlight every change.",                    icon: Split,      href: "/tools/image-code/text-diff",         pro: false },
     ]
   },
   {
     title: "Finance & Dev",
     tools: [
-      { title: "Invoice Generator", desc: "Create professional PDF invoices in seconds.",                         icon: FileText,   href: "/tools/invoice-generator", pro: true },
-      { title: "Work Report Generator", desc: "Compile daily task trackers and print matching standard A4 PDFs.", icon: FileText,   href: "/tools/report",            pro: false },
-      { title: "Schema Generator",  desc: "Build JSON-LD structured data for SEO rich results in Google.",       icon: Code,       href: "/tools/schema-generator",  pro: false },
-      { title: "LLMS.TXT Generator",desc: "Generate AI-readable site descriptions for LLM crawlers.",            icon: Cpu,        href: "/tools/llms-txt",          pro: false },
+      { title: "Invoice Generator", desc: "Create professional PDF invoices in seconds.",                         icon: FileText,   href: "/tools/finance-dev/invoice-generator", pro: true },
+      { title: "Work Report Generator", desc: "Compile daily task trackers and print matching standard A4 PDFs.", icon: FileText,   href: "/tools/finance-dev/report",            pro: false },
+    ]
+  },
+  {
+    title: "Technical SEO",
+    tools: [
+      { title: "Schema Generator",  desc: "Build JSON-LD structured data for Google Rich Results with live previews.", icon: Code,       href: "/tools/technical-seo/schema-generator",  pro: false },
+      { title: "Robots.txt Gen & Tester", desc: "Configure robots.txt crawler directives and test path access rules.", icon: FileText,   href: "/tools/technical-seo/robots-generator",  pro: false },
+      { title: "Sitemap Validator", desc: "Fetch, validate, audit, and visually map XML Sitemap structures.", icon: ImageIcon,  href: "/tools/technical-seo/sitemap-validator", pro: false },
+      { title: "LLMS.TXT Generator",desc: "Generate AI-readable site descriptions for LLM crawlers.",            icon: Cpu,        href: "/tools/technical-seo/llms-txt",          pro: false },
+    ]
+  },
+  {
+    title: "SEO Audit",
+    tools: [
+      { title: "SERP Previewer", desc: "Preview Google Search results and generate metadata HTML tags.", icon: Search, href: "/tools/seo-audit/serp-preview", pro: false },
+      { title: "Keyword Density", desc: "Analyze keyword usage and optimize optimization ratios.", icon: FileText, href: "/tools/seo-audit/keyword-density", pro: false },
+      { title: "SEO Readability", desc: "Grade reading ease and score text complexity with Flesch-Kincaid formulas.", icon: Type, href: "/tools/seo-audit/readability-grader", pro: false },
+      { title: "Broken Link Checker", desc: "Scan pages for broken links, redirects, and anchor texts.", icon: Zap, href: "/tools/seo-audit/broken-links", pro: true }
     ]
   },
   {
     title: "AI Tools",
     tools: [
-      { title: "Product Description Generator", desc: "Create product titles, images and feature lists.",       icon: FileText,   href: "/tools/product-description", pro: false },
-      { title: "AI Caption Gen",    desc: "Platform-optimised social media captions powered by Gemini.",         icon: Sparkles,   href: "/tools/caption-generator", pro: true },
-      { title: "AI Prompt Gen",     desc: "Build expert-level prompts for ChatGPT, Claude, and Gemini.",         icon: Brain,      href: "/tools/prompt-generator",  pro: true },
-      { title: "AI CV Builder",     desc: "ATS-optimised CV summaries written by AI in under 60 seconds.",       icon: PenLine,    href: "/tools/cv-builder",        pro: true },
-      { title: "AI SEO Generator",  desc: "Generate optimised meta titles and descriptions that rank.",          icon: Search,     href: "/tools/seo-generator",     pro: true },
+      { title: "Product Description Generator", desc: "Create product titles, images and feature lists.",       icon: FileText,   href: "/tools/ai-tools/product-description", pro: false },
+      { title: "AI Caption Gen",    desc: "Platform-optimised social media captions powered by Gemini.",         icon: Sparkles,   href: "/tools/ai-tools/caption-generator", pro: true },
+      { title: "AI Prompt Gen",     desc: "Build expert-level prompts for ChatGPT, Claude, and Gemini.",         icon: Brain,      href: "/tools/ai-tools/prompt-generator",  pro: true },
+      { title: "AI CV Builder",     desc: "ATS-optimised CV summaries written by AI in under 60 seconds.",       icon: PenLine,    href: "/tools/ai-tools/cv-builder",        pro: true },
+      { title: "AI SEO Generator",  desc: "Generate optimised meta titles and descriptions that rank.",          icon: Search,     href: "/tools/ai-tools/seo-generator",     pro: true },
     ]
   },
   {
     title: "Design",
     tools: [
-      { title: "Color Contrast Checker", desc: "Check foreground and background color contrast against WCAG standards.", icon: Palette, href: "/tools/color-contrast", pro: false },
-      { title: "Color Palette Generator", desc: "Generate mathematical color harmonies and export codes or images.", icon: Palette, href: "/tools/color-palette", pro: false },
-      { title: "Gradient Generator", desc: "Browse, customize and export CSS / Tailwind code for premium gradients.", icon: Palette, href: "/tools/gradient-generator", pro: false },
-      { title: "Gradient Palette Generator", desc: "Generate 5 coordinating harmonious gradients and copy CSS variables.", icon: Palette, href: "/tools/gradient-palette", pro: false }
+      { title: "Color Contrast Checker", desc: "Check foreground and background color contrast against WCAG standards.", icon: Palette, href: "/tools/design/color-contrast", pro: false },
+      { title: "Color Palette Generator", desc: "Generate mathematical color harmonies and export codes or images.", icon: Palette, href: "/tools/design/color-palette", pro: false },
+      { title: "Gradient Generator", desc: "Browse, customize and export CSS / Tailwind code for premium gradients.", icon: Palette, href: "/tools/design/gradient-generator", pro: false },
+      { title: "Gradient Palette Generator", desc: "Generate 5 coordinating harmonious gradients and copy CSS variables.", icon: Palette, href: "/tools/design/gradient-palette", pro: false }
     ]
   },
   {
@@ -86,16 +102,17 @@ const CATEGORIES: Category[] = [
       { title: "SIP / Mutual Fund",         desc: "Project future returns of your Systematic Investment Plan (SIP) investments.",       icon: Coins,          href: "/tools/calculators/sip",             pro: false },
       { title: "Compound Interest",         desc: "Calculate compound interest returns with annual inflation adjustments.",            icon: TrendingUp,     href: "/tools/calculators/compound-interest", pro: false },
       { title: "Salary to Hourly Converter",desc: "Convert annual/monthly salary to hourly rates, daily rates, and vice-versa.",       icon: Briefcase,      href: "/tools/calculators/salary-to-hourly",  pro: false },
-      { title: "GST Calculator",            desc: "Calculate Goods and Services Tax (GST) for baseline or gross sums.",                icon: Percent,        href: "/tools/gst-calculator",              pro: false },
+      { title: "GST Calculator",            desc: "Calculate regional Goods and Services Tax (GST) for baseline or gross sums.",                icon: Percent,        href: "/tools/calculators/gst-calculator",              pro: false },
       { title: "BMI Calculator",            desc: "Calculate your Body Mass Index (BMI) using metric or imperial units.",               icon: Scale,          href: "/tools/calculators/bmi",             pro: false },
       { title: "Aspect Ratio Calculator",   desc: "Compute dimension resizes and aspect ratios for layouts and images.",                icon: Monitor,        href: "/tools/calculators/aspect-ratio",    pro: false },
       { title: "Line-height Converter",     desc: "Convert line-height pixels, rems, or percentages into relative CSS values.",        icon: Type,           href: "/tools/calculators/line-height",       pro: false },
       { title: "PX to REM Converter",       desc: "Convert pixels to REM units bidirectionally with lookup sheets.",                    icon: FileCode,       href: "/tools/calculators/px-to-rem",       pro: false },
-      { title: "Word Counter",              desc: "Get real-time statistics including word, character, and line counts.",               icon: Type,           href: "/tools/word-counter",                pro: false },
-      { title: "HEX/RGB/HSL Converter",     desc: "Convert colors between spaces with sliders and a visual picker.",                    icon: Palette,        href: "/tools/color-converter",             pro: false }
+      { title: "Word Counter",              desc: "Get real-time statistics including word, character, and line counts.",               icon: Type,           href: "/tools/calculators/word-counter",                pro: false },
+      { title: "HEX/RGB/HSL Converter",     desc: "Convert colors between spaces with sliders and a visual picker.",                    icon: Palette,        href: "/tools/calculators/color-converter",             pro: false }
     ]
   }
 ]
+
 
 export function ToolsList({ isPro, userRole }: { isPro: boolean, userRole?: string }) {
   const [search, setSearch] = useState("")
