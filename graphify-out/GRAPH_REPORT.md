@@ -1,16 +1,16 @@
-# Graph Report - thewordof-tools  (2026-06-07)
+# Graph Report - thewordof-tools  (2026-06-08)
 
 ## Corpus Check
-- 292 files · ~175,448 words
+- 323 files · ~197,359 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2112 nodes · 3043 edges · 182 communities (163 shown, 19 thin omitted)
+- 2278 nodes · 3438 edges · 210 communities (194 shown, 16 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d3ca6155`
+- Built from commit: `8ed9cfc0`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -184,18 +184,41 @@
 - [[_COMMUNITY_Community 179|Community 179]]
 - [[_COMMUNITY_Community 180|Community 180]]
 - [[_COMMUNITY_Community 181|Community 181]]
+- [[_COMMUNITY_Community 182|Community 182]]
+- [[_COMMUNITY_Community 183|Community 183]]
+- [[_COMMUNITY_Community 184|Community 184]]
+- [[_COMMUNITY_Community 185|Community 185]]
+- [[_COMMUNITY_Community 186|Community 186]]
+- [[_COMMUNITY_Community 187|Community 187]]
+- [[_COMMUNITY_Community 188|Community 188]]
+- [[_COMMUNITY_Community 189|Community 189]]
+- [[_COMMUNITY_Community 190|Community 190]]
+- [[_COMMUNITY_Community 191|Community 191]]
+- [[_COMMUNITY_Community 192|Community 192]]
+- [[_COMMUNITY_Community 193|Community 193]]
+- [[_COMMUNITY_Community 194|Community 194]]
+- [[_COMMUNITY_Community 195|Community 195]]
+- [[_COMMUNITY_Community 197|Community 197]]
+- [[_COMMUNITY_Community 198|Community 198]]
+- [[_COMMUNITY_Community 199|Community 199]]
+- [[_COMMUNITY_Community 200|Community 200]]
+- [[_COMMUNITY_Community 201|Community 201]]
+- [[_COMMUNITY_Community 202|Community 202]]
+- [[_COMMUNITY_Community 203|Community 203]]
+- [[_COMMUNITY_Community 204|Community 204]]
+- [[_COMMUNITY_Community 205|Community 205]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 143 edges
-2. `Button()` - 45 edges
-3. `CardContent()` - 40 edges
-4. `Card()` - 39 edges
-5. `CardHeader()` - 36 edges
-6. `CardTitle()` - 33 edges
-7. `Label()` - 27 edges
-8. `Input()` - 27 edges
-9. `useUsageLimit()` - 27 edges
-10. `Writing Skills` - 22 edges
+1. `cn()` - 148 edges
+2. `CardContent()` - 48 edges
+3. `Button()` - 48 edges
+4. `Card()` - 47 edges
+5. `CardHeader()` - 44 edges
+6. `CardTitle()` - 41 edges
+7. `ToolHeader()` - 36 edges
+8. `Label()` - 29 edges
+9. `Input()` - 29 edges
+10. `useUsageLimit()` - 27 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `cn()` --calls--> `clsx`  [INFERRED]
@@ -209,7 +232,7 @@
 - `SheetFooter()` --calls--> `cn()`  [EXTRACTED]
   src/components/ui/sheet.tsx → src/lib/utils.ts
 
-## Communities (182 total, 19 thin omitted)
+## Communities (210 total, 16 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.04
@@ -224,8 +247,8 @@ Cohesion: 0.05
 Nodes (43): 1. Explicit Negation in Rules, 2. Entry in Rationalization Table, 3. Red Flag Entry, 4. Update description, code:markdown (IMPORTANT: This is a real scenario. Choose and act.), code:yaml (description: Use when you wrote code before tests, when temp), code:markdown (your human partner: You read the skill and chose Option C an), code:markdown (Scenario: 200 lines done, forgot TDD, exhausted, dinner plan) (+35 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.09
-Nodes (22): metadata, SettingsFormProps, BmiResult, calculateAspectRatio(), calculateLineHeight(), calculateSalaryToHourly(), CompoundInterestInput, CompoundInterestYearData (+14 more)
+Cohesion: 0.1
+Nodes (23): metadata, BmiResult, calculateAspectRatio(), calculateBmi(), calculateSalaryToHourly(), CompoundInterestInput, CompoundInterestYearData, getGcd() (+15 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.05
@@ -240,8 +263,8 @@ Cohesion: 0.06
 Nodes (32): Anti-Pattern 1: Testing Mock Behavior, Anti-Pattern 2: Test-Only Methods in Production, Anti-Pattern 3: Mocking Without Understanding, Anti-Pattern 4: Incomplete Mocks, Anti-Pattern 5: Integration Tests as Afterthought, code:block1 (1. NEVER test mock behavior), code:block10 (BEFORE mocking any method:), code:typescript (// ❌ BAD: Partial mock - only fields you think you need) (+24 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.12
-Nodes (20): DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuGroup(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem(), DropdownMenuSeparator() (+12 more)
+Cohesion: 0.21
+Nodes (12): SupportModalProps, UpgradeButton(), UpgradeButtonProps, Window, Dialog(), DialogContent(), DialogDescription(), DialogFooter() (+4 more)
 
 ### Community 8 - "Community 8"
 Cohesion: 0.06
@@ -252,8 +275,8 @@ Cohesion: 0.07
 Nodes (29): Acknowledging Correct Feedback, Code Review Reception, code:block1 (WHEN receiving code review feedback:), code:block10 (Reviewer: "Remove legacy code"), code:block11 (Reviewer: "Implement proper metrics tracking with database, ), code:block12 (your human partner: "Fix items 1-6"), code:block2 (IF any item is unclear:), code:block3 (your human partner: "Fix 1-6") (+21 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.2
-Nodes (10): POST(), POST(), POST(), POST(), cancelPayPalSubscription(), capturePayPalOrder(), createPayPalOrder(), createPayPalSubscription() (+2 more)
+Cohesion: 0.18
+Nodes (11): POST(), SUBSCRIPTION_PLANS, POST(), POST(), cancelPayPalSubscription(), createPayPalOrder(), createPayPalSubscription(), getAccessToken() (+3 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.07
@@ -264,8 +287,8 @@ Cohesion: 0.22
 Nodes (8): code:typescript (features: [), code:typescript (features: [), code:typescript (["Dynamic QR Codes", "1 (15-day expiry)", "Unlimited (Lifeti), code:typescript (["Dynamic QR Codes", "1 (15-day expiry)", "Unlimited (Lifeti), code:bash (git add src/components/pricing/pricing-cards.tsx src/app/pag), Pricing Table and Comparison Fixes Implementation Plan, Task 1: Update Pricing Cards Features List, Task 2: Update Home Page Comparison Table
 
 ### Community 13 - "Community 13"
-Cohesion: 0.11
-Nodes (10): metadata, metadata, generateSeoMetadata(), SeoMetadataInput, metadata, metadata, metadata, QRCodeGenerator() (+2 more)
+Cohesion: 0.14
+Nodes (17): ColorConverterPage(), metadata, GSTCalculatorPage(), metadata, generateSeoMetadata(), SeoMetadataInput, metadata, ProductDescriptionPage() (+9 more)
 
 ### Community 14 - "Community 14"
 Cohesion: 0.08
@@ -312,8 +335,8 @@ Cohesion: 0.2
 Nodes (9): 1. General & UI Verification, 2. Tool-Specific Verification, 3. SEO & Analytics Verification, GST Calculator (`/tools/gst-calculator`), HEX / RGB / HSL Converter (`/tools/color-converter`), Product Description Generator (`/tools/product-description`), QA Checklist - Full Tool Suite Release (v0.2.0), QR Code Generator (`/tools/qr-code`) (+1 more)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.06
-Nodes (9): DELETE(), GET(), globalForPrisma, metadata, GET(), getDateStr(), getIdentifier(), POST() (+1 more)
+Cohesion: 0.1
+Nodes (9): globalForPrisma, LlmsTxtPage(), metadata, LlmsTxtGenerator(), GET(), getDateStr(), getIdentifier(), POST() (+1 more)
 
 ### Community 26 - "Community 26"
 Cohesion: 0.11
@@ -340,8 +363,8 @@ Cohesion: 0.14
 Nodes (12): code:dot (digraph when_to_use {), code:typescript (// ❌ BEFORE: Guessing at timing), code:typescript (// Tool ticks every 100ms - need 2 ticks to verify partial o), Common Mistakes, Condition-Based Waiting, Core Pattern, Implementation, Overview (+4 more)
 
 ### Community 32 - "Community 32"
-Cohesion: 0.15
-Nodes (13): code:block52, code:block53, code:block56 (bigquery-skill/), code:markdown (Use the BigQuery:bigquery_schema tool to retrieve table sche), Create verifiable intermediate outputs, MCP tool references, Next steps, Package dependencies (+5 more)
+Cohesion: 0.14
+Nodes (14): Checklist for effective Skills, Code and scripts, code:block52, code:block53, code:block56 (bigquery-skill/), code:markdown (Use the BigQuery:bigquery_schema tool to retrieve table sche), Core quality, Create verifiable intermediate outputs (+6 more)
 
 ### Community 33 - "Community 33"
 Cohesion: 0.29
@@ -352,8 +375,8 @@ Cohesion: 0.2
 Nodes (9): code:typescript (try {), code:bash (git add src/app/api/ai/linkedin-import/route.ts), code:typescript (if (!res.ok || data.error) {), code:bash (git add src/components/tools/linkedin-import-modal.tsx), code:bash (git add docs/superpowers/plans/2026-05-17-linkedin-import-fi), LinkedIn Import Fix Implementation Plan, Task 1: Update API Route User-Agent & 404 Status Handling, Task 2: Enhance LinkedIn Import Modal Error Messages (+1 more)
 
 ### Community 35 - "Community 35"
-Cohesion: 0.23
-Nodes (9): convertSvgToReact(), convertSvgToSvelte(), convertSvgToVue(), optimizeSVG(), prettyPrintSVG(), SVGOptions, toPascalCase(), metadata (+1 more)
+Cohesion: 0.25
+Nodes (12): convertSvgToReact(), convertSvgToSvelte(), convertSvgToVue(), optimizeSVG(), prettyPrintSVG(), SVGOptions, toPascalCase(), metadata (+4 more)
 
 ### Community 36 - "Community 36"
 Cohesion: 0.17
@@ -380,8 +403,8 @@ Cohesion: 0.08
 Nodes (23): code:typescript (import { google } from '@ai-sdk/google'), code:tsx (const handleApplyLinkedInData = (data: any) => {), code:tsx (import { CvBuilder } from "@/components/tools/cv-builder"), code:bash (git add src/components/tools/cv-builder.tsx src/app/tools/cv), code:tsx (["AI CV Builder", "Basic Summary", "Full Pro CV + PDF", "Ful), code:tsx (interface ProGateProps {), code:tsx ("use client"), code:bash (git add src/components/tools/linkedin-import-modal.tsx) (+15 more)
 
 ### Community 42 - "Community 42"
-Cohesion: 0.06
-Nodes (32): Advanced: Skills with executable code, [Analysis Title], Anti-patterns to avoid, Avoid offering too many options, Avoid Windows-style paths, Build evaluations first, code:block36, code:`markdown (## Commit message format) (+24 more)
+Cohesion: 0.2
+Nodes (10): Advanced: Skills with executable code, code:python (def process_file(path):), code:python (def process_file(path):), code:python (# HTTP requests typically complete within 30 seconds), code:python (TIMEOUT = 47  # Why 47?), code:`markdown (## Utility scripts), code:block50, code:block51 (+2 more)
 
 ### Community 43 - "Community 43"
 Cohesion: 0.22
@@ -392,11 +415,11 @@ Cohesion: 0.4
 Nodes (4): [0.2.0] - 2026-05-24, Added, Changed, Changelog
 
 ### Community 45 - "Community 45"
-Cohesion: 0.09
-Nodes (26): BillingPage(), cn(), NativeToggle(), NativeToggle(), NativeToggle(), NativeToggle(), NativeToggle(), Accordion() (+18 more)
+Cohesion: 0.08
+Nodes (33): BillingPage(), cn(), NativeToggle(), NativeToggle(), NativeToggle(), NativeToggle(), Accordion(), AccordionContent() (+25 more)
 
 ### Community 46 - "Community 46"
-Cohesion: 0.2
+Cohesion: 0.22
 Nodes (9): Avoid time-sensitive information, code:markdown (If you're doing this before August 2025, use the old API.), code:markdown (## Current method), code:`markdown (## Report structure), Common patterns, Content guidelines, Skill authoring best practices, Template pattern (+1 more)
 
 ### Community 47 - "Community 47"
@@ -424,7 +447,7 @@ Cohesion: 0.29
 Nodes (4): { Pool }, prisma, { PrismaClient }, { PrismaPg }
 
 ### Community 53 - "Community 53"
-Cohesion: 0.33
+Cohesion: 0.29
 Nodes (6): [Analysis Title], code:block34, code:`markdown (## Report structure), Executive summary, Key findings, Recommendations
 
 ### Community 54 - "Community 54"
@@ -432,8 +455,8 @@ Cohesion: 0.17
 Nodes (11): code:tsx (// Remove or comment out:), code:bash (git add src/components/layout/tools-nav.tsx), code:bash (git add src/app/tools/page.tsx), code:bash (git add src/components/ui/pro-gate.tsx), code:bash (git add src/components/tools/qr-code.tsx), Crown Icon, Premium Locks, and Sidebar Badge Updates Implementation Plan, Task 1: Navigation Sidebar Update, Task 2: All Tools Dashboard Update (+3 more)
 
 ### Community 55 - "Community 55"
-Cohesion: 0.22
-Nodes (10): FormData, loginSchema, registerSchema, UserAuthForm(), UserAuthFormProps, LoginPage(), metadata, metadata (+2 more)
+Cohesion: 0.33
+Nodes (4): GradientPalettePage(), metadata, GradientCard, GradientPalette()
 
 ### Community 56 - "Community 56"
 Cohesion: 0.29
@@ -552,8 +575,8 @@ Cohesion: 0.4
 Nodes (5): Discipline-Enforcing Skills (rules/requirements), Pattern Skills (mental models), Reference Skills (documentation/APIs), Technique Skills (how-to guides), Testing All Skill Types
 
 ### Community 86 - "Community 86"
-Cohesion: 0.09
-Nodes (22): metadata, metadata, SettingsForm(), metadata, calculateBmi(), metadata, PricingCards(), PricingCardsProps (+14 more)
+Cohesion: 0.1
+Nodes (22): metadata, metadata, tools, metadata, tools, metadata, tools, metadata (+14 more)
 
 ### Community 87 - "Community 87"
 Cohesion: 0.11
@@ -568,16 +591,16 @@ Cohesion: 0.11
 Nodes (17): code:ts (// In PricingCards on mount), code:ts (const [currency, setCurrency] = useState<"INR" | "USD">("INR), code:ts (useEffect(() => {), code:block4 ([ Monthly ] [toggle] [ Yearly  Save 20% ]    |    [ ₹ INR ] ), code:ts (currency?: "INR" | "USD"  // defaults to "INR"), Design Decisions, Detection Logic, Error Handling (+9 more)
 
 ### Community 90 - "Community 90"
-Cohesion: 0.12
-Nodes (16): CancelButton(), AIParserModal(), AIParserModalProps, AIPreviewModal(), AIPreviewModalProps, CVParserResult, TEMPLATES, LinkedInImportModal() (+8 more)
+Cohesion: 0.17
+Nodes (11): code:tsx (// Add select trigger mapping the activeType label and descr), code:tsx (// Google preview visual elements based on activeType), code:typescript (const generateRobotsTxt = () => {), code:typescript (const validatePath = (path: string, robotsTxt: string) => {), code:typescript (import { NextResponse } from "next/server"), code:typescript (const parseSitemap = (xmlText: string) => {), Task 1: Refactor Schema Generator Selector & Layout, Task 2: Robots.txt Generator & Validator (+3 more)
 
 ### Community 91 - "Community 91"
 Cohesion: 0.22
 Nodes (8): 1. Sidebar Navigation (`src/components/layout/tools-nav.tsx`), 2. All Tools Dashboard (`src/app/tools/page.tsx`), 3. Unified Locks & Badges (`src/components/ui/pro-gate.tsx`), 4. QR Code Lock Screen Overlay (`src/components/tools/qr-code.tsx`), Goal, Proposed Changes, Spec: Crown Icon, Premium Locks, and Sidebar Badge Updates, Verification
 
 ### Community 92 - "Community 92"
-Cohesion: 0.16
-Nodes (12): CreditOverviewProps, formatBytes(), IMAGE_PRESETS, processImage(), ResizeOptions, metadata, ImageConverter(), ImageFile (+4 more)
+Cohesion: 0.18
+Nodes (10): 1. Schema Generator (Enhanced), 2. Robots.txt Generator & Validator, 3. XML Sitemap Validator & Visualizer, 4. Core Web Vitals Checklist, Features, Features, Features, Refactored UI & Top Dropdown (+2 more)
 
 ### Community 93 - "Community 93"
 Cohesion: 0.15
@@ -592,8 +615,8 @@ Cohesion: 0.5
 Nodes (3): JWT, Session, User
 
 ### Community 96 - "Community 96"
-Cohesion: 0.25
-Nodes (10): SUBSCRIPTION_PLANS, POST(), sendPasswordResetEmail(), sendPaymentFailedEmail(), sendPaymentSuccessEmail(), getPlanDetailsByPlanId(), POST(), getRazorpayPlanDetails() (+2 more)
+Cohesion: 0.3
+Nodes (9): POST(), POST(), sendPasswordResetEmail(), sendPaymentFailedEmail(), sendPaymentSuccessEmail(), capturePayPalOrder(), getRazorpayPlanDetails(), POST() (+1 more)
 
 ### Community 97 - "Community 97"
 Cohesion: 0.5
@@ -608,8 +631,8 @@ Cohesion: 0.25
 Nodes (7): A4 Print Formatting (`@media print`), Auto-Totaling Formula, code:typescript (interface TaskRow {), Data Persistence & State Schema, File Structure & Routing, Overview, Work Report / Daily Task Tracker Design Spec
 
 ### Community 107 - "Community 107"
-Cohesion: 0.07
-Nodes (24): LogoutButton(), ThemeToggle(), DashboardNav(), navItems, DashboardShell(), Footer(), Header(), MobileNav() (+16 more)
+Cohesion: 0.05
+Nodes (32): LogoutButton(), metadata, ThemeToggle(), DashboardNav(), navItems, DashboardShell(), Footer(), Header() (+24 more)
 
 ### Community 108 - "Community 108"
 Cohesion: 0.29
@@ -624,12 +647,12 @@ Cohesion: 0.15
 Nodes (12): Architecture, code:typescript (type CVParserResult = {), Data Contracts, Decisions Made, File Changes, Global AI CV Parser — Design Spec, New API Route, Overview (+4 more)
 
 ### Community 129 - "Community 129"
-Cohesion: 0.06
-Nodes (8): metadata, metadata, metadata, metadata, metadata, metadata, { handlers, auth, signIn, signOut }, LlmsTxtGenerator()
+Cohesion: 0.08
+Nodes (6): DELETE(), GET(), metadata, SeoGeneratorPage(), { handlers, auth, signIn, signOut }, SeoGenerator()
 
 ### Community 131 - "Community 131"
-Cohesion: 0.14
-Nodes (24): useUsageLimit(), getDailyUsage(), getMonthlyUsage(), incrementDailyUsage(), incrementMonthlyUsage(), isLimitReached(), UsageData, CaptionGenerator() (+16 more)
+Cohesion: 0.18
+Nodes (15): useUsageLimit(), getDailyUsage(), getMonthlyUsage(), incrementDailyUsage(), incrementMonthlyUsage(), isLimitReached(), UsageData, GSTCalculatorProps (+7 more)
 
 ### Community 132 - "Community 132"
 Cohesion: 0.29
@@ -652,8 +675,8 @@ Cohesion: 0.33
 Nodes (4): code:bash (git add src/components/layout/mobile-nav.tsx), Mobile Navigation Drawer Backdrop Fix Implementation Plan, Task 1: Refactor mobile-nav.tsx, Task 2: Verification
 
 ### Community 137 - "Community 137"
-Cohesion: 0.3
-Nodes (9): calculators, metadata, SVGFile, CardDescription(), Tabs(), TabsContent(), TabsList(), tabsListVariants (+1 more)
+Cohesion: 0.31
+Nodes (7): calculators, metadata, Tabs(), TabsContent(), TabsList(), tabsListVariants, TabsTrigger()
 
 ### Community 138 - "Community 138"
 Cohesion: 0.22
@@ -695,6 +718,10 @@ Nodes (11): code:typescript (const uaString = request.headers.get("user-agent") 
 Cohesion: 0.15
 Nodes (12): Automated Tests, Footer and Policy Pages Update, Manual Verification, [MODIFY] [footer.tsx](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/layout/footer.tsx), [MODIFY] [sitemap.ts](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/sitemap.ts), Navigation & Layout, [NEW] [page.tsx](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/refund/page.tsx), Open Questions (+4 more)
 
+### Community 148 - "Community 148"
+Cohesion: 0.6
+Nodes (3): metadata, TextDiffPage(), TextDiff()
+
 ### Community 149 - "Community 149"
 Cohesion: 0.1
 Nodes (19): code:prisma (model User {), code:typescript (import { prisma } from "@/lib/prisma"), code:bash (git add src/app/admin/ src/app/api/admin/), code:bash (npx tsc --noEmit), code:bash (npx prisma db push), code:bash (git add prisma/schema.prisma), code:typescript (import { prisma } from "@/lib/prisma"), code:bash (git add src/lib/credits.ts) (+11 more)
@@ -708,12 +735,12 @@ Cohesion: 0.17
 Nodes (9): AI Tool Login Gating Implementation Plan, code:typescript (import { auth } from "@/auth"), code:bash (git add src/app/tools/), code:tsx (import { Sparkles } from "lucide-react"), code:bash (git add src/components/tools/), code:bash (npx tsc --noEmit), Task 1: Refactor Page Routes to Pass Credits and Session Status, Task 2: Implement Gating UI Overlay & Balance Displays in Client Components (+1 more)
 
 ### Community 152 - "Community 152"
-Cohesion: 0.08
-Nodes (26): Avoid deeply nested references, code:yaml (description: Analyze Excel spreadsheets, create pivot tables), code:yaml (description: Generate descriptive commit messages by analyzi), code:yaml (description: Helps with documents), code:yaml (description: Processes data), code:yaml (description: Does stuff with files), code:block15 (pdf/), code:`markdown (---) (+18 more)
+Cohesion: 0.17
+Nodes (12): code:block15 (pdf/), code:`markdown (---), code:block17, code:block18 (bigquery-skill/), code:`markdown (# BigQuery Data Analysis), code:block20, code:markdown (# DOCX Processing), Pattern 1: High-level guide with references (+4 more)
 
 ### Community 153 - "Community 153"
-Cohesion: 0.15
-Nodes (7): ColorConverter(), ColorConverterProps, COLORS, QRCodeProps, QrItem, QrStats, ColorPicker()
+Cohesion: 0.12
+Nodes (20): DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuGroup(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem(), DropdownMenuSeparator() (+12 more)
 
 ### Community 154 - "Community 154"
 Cohesion: 0.33
@@ -732,8 +759,8 @@ Cohesion: 0.33
 Nodes (5): 1. Mobile Navigation Component (`src/components/layout/mobile-nav.tsx`), Goal, Proposed Changes, Spec: Left-Sliding Portalized Mobile Navigation Drawer, Verification
 
 ### Community 158 - "Community 158"
-Cohesion: 0.21
-Nodes (12): SupportModalProps, UpgradeButton(), UpgradeButtonProps, Window, Dialog(), DialogContent(), DialogDescription(), DialogFooter() (+4 more)
+Cohesion: 0.13
+Nodes (15): FormData, loginSchema, registerSchema, UserAuthFormProps, QrCodeExpiredPage(), CancelButton(), AIParserModal(), AIParserModalProps (+7 more)
 
 ### Community 159 - "Community 159"
 Cohesion: 0.25
@@ -764,16 +791,16 @@ Cohesion: 0.33
 Nodes (5): Client Components, Design Document: AI Tools Login Overlay Flex Fix, Goal Description, Proposed Changes, Verification Plan
 
 ### Community 166 - "Community 166"
-Cohesion: 0.18
-Nodes (6): SheetContent(), SheetDescription(), SheetFooter(), SheetHeader(), SheetOverlay(), SheetTitle()
+Cohesion: 0.22
+Nodes (9): code:block36, code:`markdown (## Commit message format), code:block38, code:block39, code:block40, code:markdown (## Document modification workflow), Conditional workflow pattern, Examples pattern (+1 more)
 
 ### Community 167 - "Community 167"
 Cohesion: 0.29
 Nodes (6): Goal Description, [invoice-generator.tsx](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/invoice-generator.tsx), Manual Verification, Proposed Changes, Spec: Fix Missing Save and Load Modals in Invoice Generator, Verification Plan
 
 ### Community 168 - "Community 168"
-Cohesion: 0.22
-Nodes (9): NavigationMenu(), NavigationMenuContent(), NavigationMenuIndicator(), NavigationMenuItem(), NavigationMenuLink(), NavigationMenuList(), NavigationMenuPositioner(), NavigationMenuTrigger() (+1 more)
+Cohesion: 0.6
+Nodes (3): metadata, PromptGeneratorPage(), PromptGenerator()
 
 ### Community 169 - "Community 169"
 Cohesion: 0.22
@@ -788,45 +815,145 @@ Cohesion: 0.18
 Nodes (10): code:tsx (import { Header } from "@/components/layout/header"), code:bash (git add src/app/refund/page.tsx), code:tsx (<div className="flex items-center space-x-4 text-sm text-mut), code:typescript ('/privacy',), code:bash (git add src/components/layout/footer.tsx src/app/sitemap.ts), code:bash (git commit --allow-empty -m "chore: verify sitemap and foote), Footer & Policies Implementation Plan, Task 1: Create the Refund Policy Page (+2 more)
 
 ### Community 172 - "Community 172"
-Cohesion: 0.29
-Nodes (3): metadata, ColorContrast(), PRESETS
+Cohesion: 0.33
+Nodes (4): ColorContrastPage(), metadata, ColorContrast(), PRESETS
+
+### Community 173 - "Community 173"
+Cohesion: 0.33
+Nodes (3): ColorPalettePage(), metadata, ColorPalette()
 
 ### Community 174 - "Community 174"
-Cohesion: 0.33
-Nodes (4): metadata, GradientGenerator(), GradientPreset, PRESETS
+Cohesion: 0.39
+Nodes (5): GradientGeneratorPage(), metadata, GradientGenerator(), GradientPreset, PRESETS
 
 ### Community 175 - "Community 175"
 Cohesion: 0.18
 Nodes (10): Automated Tests, Manual Verification, [MODIFY] [qr-code.tsx](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/qr-code.tsx), [MODIFY] [route.ts](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/q/%5Bid%5D/route.ts), Open Questions, Proposed Changes, QR Code Generator Analytics Improvements, Redirect Handler & Analytics Dashboard (+2 more)
 
 ### Community 176 - "Community 176"
-Cohesion: 0.47
-Nodes (3): metadata, calculateCompoundInterest(), CompoundInterestCalculator()
+Cohesion: 0.25
+Nodes (7): Category Restructuring & Layout Polish Implementation Plan, code:tsx (import Link from "next/link"), code:bash (# Image & Code), Task 1: Reusable ToolHeader Component, Task 2: Folder Relocations & Href Configuration, Task 3: Tool Header Integration & Breadcrumbs, Task 4: Layout Sizing, Header Stickiness & Contrast Checker Full-width Fix
+
+### Community 177 - "Community 177"
+Cohesion: 0.6
+Nodes (3): CodeMinifierPage(), metadata, CodeMinifier()
 
 ### Community 178 - "Community 178"
 Cohesion: 0.22
 Nodes (8): Manual Verification, [MODIFY] [ai-parser-modal.tsx](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/ai-parser-modal.tsx), [MODIFY] [page.tsx](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/page.tsx), [MODIFY] [work-report.tsx](file:///Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/work-report.tsx), Proposed Changes, Replace User Name with Generic Placeholder, Verification Plan, Web Application
 
+### Community 179 - "Community 179"
+Cohesion: 0.09
+Nodes (14): metadata, metadata, metadata, metadata, metadata, metadata, metadata, EmiCalculator() (+6 more)
+
+### Community 180 - "Community 180"
+Cohesion: 0.25
+Nodes (4): DURATION_PRESETS, RichTextEditorProps, TaskRow, WorkReportProps
+
 ### Community 181 - "Community 181"
-Cohesion: 0.5
-Nodes (4): Checklist for effective Skills, Code and scripts, Core quality, Testing
+Cohesion: 0.25
+Nodes (8): [Analysis Title], Anti-patterns to avoid, Avoid offering too many options, Avoid Windows-style paths, code:`markdown (**Bad example: Too many choices** (confusing):), code:block44, Executive summary, Key findings
+
+### Community 182 - "Community 182"
+Cohesion: 0.29
+Nodes (6): 1. Folder Relocations inside `src/app/tools/`, 2. next.config.js Redirects, 3. Reusable ToolHeader Component, 4. Layout & Styling Alignment, Design Document: Category Restructuring & Layout Polish, Proposed Changes
+
+### Community 183 - "Community 183"
+Cohesion: 0.29
+Nodes (7): Avoid deeply nested references, code:markdown (# SKILL.md), code:markdown (# SKILL.md), code:markdown (# API Reference), Naming conventions, Skill structure, Structure longer reference files with table of contents
+
+### Community 184 - "Community 184"
+Cohesion: 0.29
+Nodes (7): code:yaml (description: Analyze Excel spreadsheets, create pivot tables), code:yaml (description: Generate descriptive commit messages by analyzi), code:yaml (description: Helps with documents), code:yaml (description: Processes data), code:yaml (description: Does stuff with files), code:yaml (description: Extract text and tables from PDF files, fill fo), Writing effective descriptions
+
+### Community 185 - "Community 185"
+Cohesion: 0.6
+Nodes (3): CaptionGeneratorPage(), metadata, CaptionGenerator()
+
+### Community 186 - "Community 186"
+Cohesion: 0.4
+Nodes (3): metadata, calculateCompoundInterest(), CompoundInterestCalculator()
+
+### Community 187 - "Community 187"
+Cohesion: 0.6
+Nodes (3): ImageConverterPage(), metadata, ImageConverter()
+
+### Community 188 - "Community 188"
+Cohesion: 0.13
+Nodes (12): ColorConverterProps, TEMPLATES, LinkedInImportModal(), LinkedInImportModalProps, LinkedInImportResult, COLORS, QRCodeProps, QrItem (+4 more)
+
+### Community 189 - "Community 189"
+Cohesion: 0.12
+Nodes (15): Automated Tests, code:typescript ({), code:typescript (import { NextResponse } from "next/server"), code:typescript (import { NextResponse } from "next/server"), code:typescript (import { NextResponse } from "next/server"), Manual Verification, Phase 3: SEO Audit Tools Implementation Plan, Proposed Changes (+7 more)
+
+### Community 190 - "Community 190"
+Cohesion: 0.29
+Nodes (7): CreditOverviewProps, formatBytes(), IMAGE_PRESETS, processImage(), ResizeOptions, ImageFile, Progress()
+
+### Community 191 - "Community 191"
+Cohesion: 0.18
+Nodes (6): SheetContent(), SheetDescription(), SheetFooter(), SheetHeader(), SheetOverlay(), SheetTitle()
+
+### Community 192 - "Community 192"
+Cohesion: 0.6
+Nodes (3): metadata, SchemaGeneratorPage(), SchemaGenerator()
+
+### Community 193 - "Community 193"
+Cohesion: 0.36
+Nodes (6): UserAuthForm(), LoginPage(), metadata, metadata, RegisterPage(), buttonVariants
+
+### Community 194 - "Community 194"
+Cohesion: 0.4
+Nodes (5): Build evaluations first, code:json ({), Develop Skills iteratively with Claude, Evaluation and iteration, Observe how Claude navigates Skills
+
+### Community 195 - "Community 195"
+Cohesion: 0.67
+Nodes (3): Technical notes, Token budgets, YAML frontmatter requirements
+
+### Community 197 - "Community 197"
+Cohesion: 0.32
+Nodes (4): SettingsForm(), SettingsFormProps, metadata, Separator()
+
+### Community 198 - "Community 198"
+Cohesion: 0.29
+Nodes (6): 1. SERP Previewer & Meta Tag Analyzer, 2. Keyword Density & Optimization Analyzer, 3. SEO Readability & Content Grader, 4. Broken Link & Anchor Text Auditor, Phase 3: SEO Audit Tools Design Specification, Proposed Changes
+
+### Community 199 - "Community 199"
+Cohesion: 0.33
+Nodes (4): metadata, DEFAULT_STOPWORDS, DensityItem, KeywordDensityAnalyzer()
+
+### Community 202 - "Community 202"
+Cohesion: 0.6
+Nodes (3): CvBuilderPage(), metadata, CvBuilder()
+
+### Community 203 - "Community 203"
+Cohesion: 0.6
+Nodes (3): InvoicesPage(), metadata, InvoiceGenerator()
+
+### Community 204 - "Community 204"
+Cohesion: 0.4
+Nodes (3): calculateLineHeight(), metadata, LineHeightCalculator()
+
+### Community 205 - "Community 205"
+Cohesion: 0.6
+Nodes (3): WordCounter(), metadata, WordCounterPage()
 
 ## Knowledge Gaps
-- **1050 isolated node(s):** `version`, `source`, `sourceType`, `skillPath`, `computedHash` (+1045 more)
+- **1089 isolated node(s):** `version`, `source`, `sourceType`, `skillPath`, `computedHash` (+1084 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **19 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 45` to `Community 160`, `Community 129`, `Community 0`, `Community 3`, `Community 131`, `Community 35`, `Community 166`, `Community 7`, `Community 168`, `Community 137`, `Community 107`, `Community 13`, `Community 86`, `Community 55`, `Community 153`, `Community 90`, `Community 92`, `Community 158`?**
-  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Community 45` to `Community 0`, `Community 3`, `Community 131`, `Community 7`, `Community 137`, `Community 13`, `Community 25`, `Community 153`, `Community 158`, `Community 160`, `Community 35`, `Community 179`, `Community 187`, `Community 188`, `Community 190`, `Community 191`, `Community 192`, `Community 193`, `Community 197`, `Community 86`, `Community 107`?**
+  _High betweenness centrality (0.047) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `Community 0` to `Community 133`?**
-  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+  _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **Why does `clsx` connect `Community 0` to `Community 45`?**
-  _High betweenness centrality (0.023) - this node is a cross-community bridge._
+  _High betweenness centrality (0.026) - this node is a cross-community bridge._
 - **What connects `version`, `source`, `sourceType` to the rest of the system?**
-  _1050 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1089 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.04 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**

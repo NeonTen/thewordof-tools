@@ -208,19 +208,13 @@ export function InvoiceGenerator({ isPro = false }: { isPro?: boolean }) {
 
   return (<>
     <div className="flex flex-col gap-8 print:block print:w-full">
-      <div className="print:hidden flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-6 mb-2">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Invoice Generator</h1>
-          <p className="text-muted-foreground mt-2">
-            Fill in the details below to generate a beautiful, print-ready PDF invoice.
-          </p>
-        </div>
-        {!isPro && (
-          <span className="text-xs font-bold text-muted-foreground bg-muted px-4 py-2 rounded-full shrink-0 self-start md:self-center">
+      {!isPro && (
+        <div className="print:hidden flex justify-end -mb-4">
+          <span className="text-xs font-bold text-muted-foreground bg-muted px-4 py-2 rounded-full">
             {MAX_FREE_INVOICES - usedThisMonth} of {MAX_FREE_INVOICES} free invoices left this month
           </span>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-2 gap-8 print:block print:w-full">
         {/* Editor Panel */}

@@ -1,3 +1,4 @@
+import { ToolHeader } from "@/components/tools/tool-header"
 import { BmiCalculator } from "@/components/tools/bmi-calculator"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -17,7 +18,7 @@ export default function BmiPage() {
         <ArrowLeft className="h-4 w-4" /> Back to Calculators
       </Link>
       <div>
-        <h1 className="text-3xl font-black tracking-tight">BMI Calculator</h1>
+        <ToolHeader category="Calculators" categoryHref="/tools/calculators" title="BMI Calculator" />
         <p className="text-muted-foreground mt-2">
           Monitor your body weight indices using standardized scales.
         </p>

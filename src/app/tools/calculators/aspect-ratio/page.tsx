@@ -1,3 +1,4 @@
+import { ToolHeader } from "@/components/tools/tool-header"
 import { AspectRatioCalculator } from "@/components/tools/aspect-ratio-calculator"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -17,7 +18,7 @@ export default function AspectRatioPage() {
         <ArrowLeft className="h-4 w-4" /> Back to Calculators
       </Link>
       <div>
-        <h1 className="text-3xl font-black tracking-tight">Aspect Ratio Calculator</h1>
+        <ToolHeader category="Calculators" categoryHref="/tools/calculators" title="Aspect Ratio Calculator" />
         <p className="text-muted-foreground mt-2">
           Calculate scale dimensions and relative aspect ratios instantly.
         </p>

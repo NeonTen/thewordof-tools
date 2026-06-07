@@ -1,3 +1,4 @@
+import { ToolHeader } from "@/components/tools/tool-header"
 import { EmiCalculator } from "@/components/tools/emi-calculator"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -17,7 +18,7 @@ export default function EmiPage() {
         <ArrowLeft className="h-4 w-4" /> Back to Calculators
       </Link>
       <div>
-        <h1 className="text-3xl font-black tracking-tight">Loan EMI Calculator</h1>
+        <ToolHeader category="Calculators" categoryHref="/tools/calculators" title="Loan EMI Calculator" />
         <p className="text-muted-foreground mt-2">
           Calculate monthly interest payments and amortization values.
         </p>

@@ -5,7 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/com
 import { Input } from "@/components/ui/input"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
-import ratesData from "@/app/tools/gst-calculator/rates.json"
+import ratesData from "@/app/tools/calculators/gst-calculator/rates.json"
 import { useUsageLimit } from "@/hooks/use-usage-limit"
 import { DollarSign, Landmark, Info } from "lucide-react"
 

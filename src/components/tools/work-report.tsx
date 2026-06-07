@@ -384,13 +384,7 @@ export function WorkReport({}: WorkReportProps) {
         }
       `}} />
       {/* Main Header with Export to PDF button */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print:hidden pb-4 border-b border-border/50">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Work Report Generator</h1>
-          <p className="text-muted-foreground mt-1 text-sm">
-            Build custom daily task sheets, calculate total hours worked, and print to PDF.
-          </p>
-        </div>
+      <div className="flex justify-end print:hidden pb-4 border-b border-border/50 -mb-4">
         <Button onClick={() => setIsPreviewOpen(true)} className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-lg shadow-primary/20 shrink-0">
           Export to PDF
         </Button>

@@ -66,6 +66,204 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
   const [aiPrompt, setAiPrompt] = useState("")
   const [isAiLoading, setIsAiLoading] = useState(false)
   const [output, setOutput] = useState("")
+  const [activeTab, setActiveTab] = useState<"code" | "preview">("code")
+  const [faqExpanded, setFaqExpanded] = useState<boolean[]>([false, false, false, false, false])
+
+  const renderGooglePreview = () => {
+    const defaultTitle = "Example Search Result Title - Website Name"
+    const defaultDesc = "This is a mockup of how your website content will look in Google Search results when using structured data schema markup."
+    const renderStars = (rating: number | string) => {
+      const num = Math.min(5, Math.max(1, parseFloat(rating as string) || 5))
+      return (
+        <span className="text-amber-500 font-medium">
+          {"★".repeat(Math.round(num))}
+          {"☆".repeat(5 - Math.round(num))}
+        </span>
+      )
+    }
+
+    switch (activeType) {
+      case "article":
+        const art = formData.article || {}
+        return (
+          <div className="font-sans text-sm space-y-1 max-w-xl text-left">
+            <div className="text-[12px] text-[#202124] flex items-center gap-1">
+              <span>example.com</span>
+              <span className="text-[#70757a]">› article</span>
+            </div>
+            <h3 className="text-[#1a0dab] hover:underline text-[19px] font-medium leading-tight cursor-pointer">
+              {art.headline || defaultTitle}
+            </h3>
+            <div className="flex gap-4 pt-1">
+              <div className="flex-1 text-xs text-[#4d5156] leading-relaxed">
+                <span className="text-[#70757a] mr-1">
+                  {art.datePublished ? new Date(art.datePublished).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Jun 8, 2026"} —
+                </span>
+                {defaultDesc} Written by {art.author || "Author name"}.
+              </div>
+              {art.image && (
+                <div className="w-16 h-16 rounded overflow-hidden bg-gray-100 shrink-0 border border-gray-200">
+                  <img src={art.image} alt="Article Thumbnail" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+                </div>
+              )}
+            </div>
+          </div>
+        )
+
+      case "faq":
+        const faqs = formData.faq || []
+        return (
+          <div className="font-sans text-sm space-y-1.5 max-w-xl text-left">
+            <div className="text-[12px] text-[#202124]">
+              <span>example.com</span> <span className="text-[#70757a]">› faq</span>
+            </div>
+            <h3 className="text-[#1a0dab] hover:underline text-[19px] font-medium leading-tight cursor-pointer">
+              Frequently Asked Questions (FAQ) - My Website
+            </h3>
+            <p className="text-xs text-[#4d5156]">{defaultDesc}</p>
+            
+            <div className="pt-2 divide-y divide-gray-100 text-xs">
+              {faqs.map((f: any, idx: number) => (
+                <div key={idx} className="py-2">
+                  <button 
+                    onClick={() => setFaqExpanded(prev => {
+                      const next = [...prev]
+                      next[idx] = !next[idx]
+                      return next
+                    })}
+                    className="flex justify-between items-center w-full text-left font-medium text-[#1a0dab] hover:underline cursor-pointer py-1"
+                  >
+                    <span>{f.q || `Question ${idx + 1}?`}</span>
+                    <span className="text-[10px] text-zinc-400">{faqExpanded[idx] ? "▲" : "▼"}</span>
+                  </button>
+                  {faqExpanded[idx] && (
+                    <p className="text-[#4d5156] mt-1 pl-2 leading-relaxed">{f.a || "Answer goes here..."}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+
+      case "product":
+        const prod = formData.product || {}
+        return (
+          <div className="font-sans text-sm space-y-1 max-w-xl text-left">
+            <div className="text-[12px] text-[#202124]">
+              <span>example.com</span> <span className="text-[#70757a]">› products</span>
+            </div>
+            <h3 className="text-[#1a0dab] hover:underline text-[19px] font-medium leading-tight cursor-pointer">
+              {prod.name || "Product Name - Buy Online"}
+            </h3>
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-[#70757a] bg-[#f8f9fa] p-2 rounded-lg border border-gray-200 mt-1">
+              <span className="flex items-center gap-1">
+                Rating: {renderStars(5)}
+                <span className="font-bold text-[#4d5156]">5.0</span>
+              </span>
+              <span>•</span>
+              <span>Price: <span className="font-bold text-[#4d5156]">{prod.currency || "USD"} {prod.price || "99.00"}</span></span>
+              <span>•</span>
+              <span className="text-green-700 font-medium">{prod.availability === "InStock" ? "In stock" : "Out of stock"}</span>
+            </div>
+            <p className="text-xs text-[#4d5156] leading-relaxed pt-1.5">
+              {prod.description || prod.name || defaultDesc}
+            </p>
+          </div>
+        )
+
+      case "recipe":
+        const rec = formData.recipe || {}
+        return (
+          <div className="font-sans text-sm space-y-1 max-w-xl text-left">
+            <div className="text-[12px] text-[#202124]">
+              <span>example.com</span> <span className="text-[#70757a]">› recipe</span>
+            </div>
+            <h3 className="text-[#1a0dab] hover:underline text-[19px] font-medium leading-tight cursor-pointer">
+              {rec.name || "Delicious Recipe Name"}
+            </h3>
+            <div className="flex gap-4 pt-1">
+              <div className="flex-1 space-y-1">
+                <div className="flex flex-wrap items-center gap-x-2 text-xs text-[#70757a]">
+                  <span>Rating: {renderStars(5)} <span className="font-bold text-[#4d5156]">5.0</span></span>
+                  <span>•</span>
+                  <span>Cook time: <span className="font-bold text-[#4d5156]">{rec.cookTime || "30 mins"}</span></span>
+                  {rec.calories && (
+                    <>
+                      <span>•</span>
+                      <span>Calories: <span className="font-bold text-[#4d5156]">{rec.calories}</span></span>
+                    </>
+                  )}
+                </div>
+                <p className="text-xs text-[#4d5156] leading-relaxed">
+                  {rec.description || defaultDesc}
+                </p>
+              </div>
+              {rec.image && (
+                <div className="w-16 h-16 rounded overflow-hidden bg-gray-100 shrink-0 border border-gray-200">
+                  <img src={rec.image} alt="Recipe Thumbnail" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+                </div>
+              )}
+            </div>
+          </div>
+        )
+
+      case "breadcrumb":
+        const crumbs = formData.breadcrumb || []
+        return (
+          <div className="font-sans text-sm space-y-1 max-w-xl text-left">
+            <div className="text-[12px] text-[#202124] flex items-center gap-1 flex-wrap">
+              <span>example.com</span>
+              {crumbs.map((c: any, i: number) => (
+                <span key={i} className="flex items-center gap-1">
+                  <span className="text-[#70757a]">›</span>
+                  <span className="text-[#4d5156]">{c.name || `Level ${i+1}`}</span>
+                </span>
+              ))}
+            </div>
+            <h3 className="text-[#1a0dab] hover:underline text-[19px] font-medium leading-tight cursor-pointer">
+              {crumbs[crumbs.length - 1]?.name || defaultTitle}
+            </h3>
+            <p className="text-xs text-[#4d5156] leading-relaxed">{defaultDesc}</p>
+          </div>
+        )
+
+      case "software":
+        const sw = formData.software || {}
+        return (
+          <div className="font-sans text-sm space-y-1 max-w-xl text-left">
+            <div className="text-[12px] text-[#202124]">
+              <span>example.com</span> <span className="text-[#70757a]">› software</span>
+            </div>
+            <h3 className="text-[#1a0dab] hover:underline text-[19px] font-medium leading-tight cursor-pointer">
+              {sw.name || "Software Application - Download"}
+            </h3>
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-[#70757a] mt-1">
+              <span>Rating: {renderStars(5)} <span className="font-bold text-[#4d5156]">4.9</span></span>
+              <span>•</span>
+              <span>Price: <span className="font-bold text-[#4d5156]">{parseFloat(sw.price) === 0 ? "Free" : `$${sw.price}`}</span></span>
+              <span>•</span>
+              <span>OS: <span className="font-bold text-[#4d5156]">{sw.operatingSystem || "Windows, macOS"}</span></span>
+            </div>
+            <p className="text-xs text-[#4d5156] leading-relaxed pt-1">
+              Download {sw.name || "our software"}, the best {sw.applicationCategory || "Utility"} application. {defaultDesc}
+            </p>
+          </div>
+        )
+
+      default:
+        return (
+          <div className="font-sans text-sm space-y-1 max-w-xl text-left">
+            <div className="text-[12px] text-[#202124]">
+              <span>example.com</span>
+            </div>
+            <h3 className="text-[#1a0dab] hover:underline text-[19px] font-medium leading-tight cursor-pointer">
+              {defaultTitle}
+            </h3>
+            <p className="text-xs text-[#4d5156] leading-relaxed">{defaultDesc}</p>
+          </div>
+        )
+    }
+  }
 
   // Fetcher states
   const [fetchUrl, setFetchUrl] = useState("")
@@ -430,65 +628,48 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
   }
 
   return (
-    <div className="grid lg:grid-cols-[300px_1fr] gap-8 items-start">
-      {/* Sidebar - Schema Selection */}
-      <div className="space-y-4">
-        <ProGate feature="URL Schema Import" isPro={isPro}>
-          <Button 
-            onClick={() => setIsModalOpen(true)}
-            className="w-full flex items-center justify-center gap-2 h-11 bg-muted hover:bg-muted/80 text-foreground font-black border border-primary/10 rounded-xl"
-          >
-            <Globe className="h-4 w-4 text-primary" />
-            Import from URL
-          </Button>
-        </ProGate>
-
-        <div className="hidden lg:block space-y-1">
-          {SCHEMA_TYPES.map((type) => {
-            const Icon = type.icon
-            return (
-              <button
-                key={type.id}
-                onClick={() => setActiveType(type.id)}
-                className={cn(
-                  "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group",
-                  activeType === type.id 
-                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                    : "hover:bg-muted text-muted-foreground hover:text-foreground"
-                )}
-              >
-                <Icon className={cn("h-4 w-4 shrink-0", activeType === type.id ? "text-white" : "group-hover:text-primary")} />
-                <div className="text-left overflow-hidden">
-                  <p className="truncate font-black">{type.label}</p>
-                  <p className={cn("text-[10px] truncate opacity-70", activeType === type.id ? "text-white" : "text-muted-foreground")}>
-                    {type.desc}
-                  </p>
-                </div>
-                {activeType === type.id && <ChevronRight className="ml-auto h-3 w-3 opacity-50" />}
-              </button>
-            )
-          })}
+    <div className="space-y-6">
+      {/* Top Selector dropdown card */}
+      <div className="bg-card p-4 border border-border rounded-2xl shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <span className="text-sm font-bold text-muted-foreground whitespace-nowrap">Schema Type:</span>
+          <div className="w-full sm:w-64">
+            <Select value={activeType} onValueChange={(val) => {
+              if (val) {
+                setActiveType(val)
+                setImportedSchemas([])
+              }
+            }}>
+              <SelectTrigger className="h-10 rounded-xl">
+                <SelectValue placeholder="Choose schema type..." />
+              </SelectTrigger>
+              <SelectContent>
+                {SCHEMA_TYPES.map((type) => (
+                  <SelectItem key={type.id} value={type.id}>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold">{type.label}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-        
-        {/* Mobile Selection */}
-        <div className="lg:hidden">
-          <Label className="mb-2 block">Schema Type</Label>
-          <Select value={activeType} onValueChange={(val) => setActiveType(val || "")}>
-            <SelectTrigger className="h-12 rounded-xl">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {SCHEMA_TYPES.map(t => (
-                <SelectItem key={t.id} value={t.id}>{t.label}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        <div className="w-full sm:w-auto">
+          <ProGate feature="URL Schema Import" isPro={isPro}>
+            <Button 
+              onClick={() => setIsModalOpen(true)}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 h-10 bg-muted hover:bg-muted/80 text-foreground font-black border border-primary/10 rounded-xl"
+            >
+              <Globe className="h-4 w-4 text-primary" />
+              Import from URL
+            </Button>
+          </ProGate>
         </div>
       </div>
 
-      <div className="space-y-8">
-        {/* Main Interface */}
-        <div className="grid xl:grid-cols-2 gap-8 items-start">
+      <div className="grid lg:grid-cols-2 gap-8 items-start">
+        {/* Editor Area */}
           {/* Editor Area */}
           <div className="space-y-6">
             <Card className="border-none shadow-sm overflow-hidden bg-muted/20">
@@ -904,6 +1085,7 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
               <div className="p-3.5 bg-primary/10 border border-primary/20 rounded-2xl flex items-center justify-between text-xs animate-in slide-in-from-top-2 duration-300">
                 <span className="text-muted-foreground font-medium">Showing schemas imported from URL.</span>
                 <button 
+                  type="button"
                   onClick={() => setImportedSchemas([])} 
                   className="font-black text-primary hover:underline"
                 >
@@ -911,29 +1093,62 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
                 </button>
               </div>
             )}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Code className="h-4 w-4 text-primary" />
-                <span className="text-sm font-black uppercase tracking-widest text-muted-foreground">JSON-LD Output</span>
+
+            {/* Tab Controls */}
+            <div className="flex items-center justify-between bg-card p-1.5 border border-border rounded-xl">
+              <div className="flex gap-1.5">
+                <button 
+                  type="button"
+                  onClick={() => setActiveTab("code")}
+                  className={cn(
+                    "px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer",
+                    activeTab === "code" ? "bg-primary text-primary-foreground shadow-sm" : "hover:bg-muted text-muted-foreground"
+                  )}
+                >
+                  JSON-LD Code
+                </button>
+                <button 
+                  type="button"
+                  onClick={() => setActiveTab("preview")}
+                  className={cn(
+                    "px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer",
+                    activeTab === "preview" ? "bg-primary text-primary-foreground shadow-sm" : "hover:bg-muted text-muted-foreground"
+                  )}
+                >
+                  Google Search Preview
+                </button>
               </div>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="h-8 rounded-lg font-bold text-xs gap-2"
-                onClick={copyToClipboard}
-              >
-                {copied ? <Check className="h-3 w-3 text-green-500" /> : <Copy className="h-3 w-3" />}
-                {copied ? "Copied!" : "Copy Code"}
-              </Button>
+              
+              {activeTab === "code" && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-8 rounded-lg font-bold text-xs gap-2"
+                  onClick={copyToClipboard}
+                >
+                  {copied ? <Check className="h-3 w-3 text-green-500" /> : <Copy className="h-3 w-3" />}
+                  {copied ? "Copied!" : "Copy Code"}
+                </Button>
+              )}
             </div>
-            <div className="relative">
-              <pre className="bg-zinc-950 text-zinc-300 p-6 rounded-3xl overflow-x-auto text-[11px] font-mono whitespace-pre-wrap min-h-[500px] max-h-[800px] shadow-2xl ring-1 ring-white/10 leading-relaxed custom-scrollbar">
-                {output}
-              </pre>
-              <div className="absolute top-4 right-4 pointer-events-none opacity-20">
-                <Layout className="h-32 w-32 rotate-12" />
+
+            {activeTab === "code" ? (
+              <div className="relative">
+                <pre className="bg-zinc-950 text-zinc-300 p-6 rounded-3xl overflow-x-auto text-[11px] font-mono whitespace-pre-wrap min-h-[500px] max-h-[800px] shadow-2xl ring-1 ring-white/10 leading-relaxed custom-scrollbar animate-in fade-in duration-300">
+                  {output}
+                </pre>
+                <div className="absolute top-4 right-4 pointer-events-none opacity-20">
+                  <Layout className="h-32 w-32 rotate-12" />
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="bg-white border border-gray-200 text-zinc-900 shadow-sm p-6 rounded-3xl min-h-[500px] animate-in fade-in duration-300 space-y-6">
+                <div>
+                  <h4 className="text-xs uppercase font-black text-zinc-400 tracking-wider mb-3">Google Search Rich Snippet Mockup</h4>
+                  {renderGooglePreview()}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -964,7 +1179,6 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
             </ul>
           </section>
         </div>
-      </div>
 
       {/* Import from URL Modal */}
       {isModalOpen && (

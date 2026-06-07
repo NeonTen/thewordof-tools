@@ -1,3 +1,4 @@
+import { ToolHeader } from "@/components/tools/tool-header"
 import { SipCalculator } from "@/components/tools/sip-calculator"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -17,7 +18,7 @@ export default function SipPage() {
         <ArrowLeft className="h-4 w-4" /> Back to Calculators
       </Link>
       <div>
-        <h1 className="text-3xl font-black tracking-tight">SIP Calculator</h1>
+        <ToolHeader category="Calculators" categoryHref="/tools/calculators" title="SIP Calculator" />
         <p className="text-muted-foreground mt-2">
           Determine compound growth returns for regular mutual fund investments.
         </p>

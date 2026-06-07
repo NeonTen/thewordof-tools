@@ -223,7 +223,7 @@ export function ColorPalette() {
         {colors.map((color, idx) => (
           <div 
             key={idx} 
-            className="relative rounded-2xl overflow-hidden flex flex-col justify-end p-5 transition-all shadow-sm border border-black/5" 
+            className="relative rounded-none overflow-hidden flex flex-col justify-end p-5 transition-all shadow-sm border border-black/5" 
             style={{ backgroundColor: color }}
           >
             <div className="absolute top-4 right-4">

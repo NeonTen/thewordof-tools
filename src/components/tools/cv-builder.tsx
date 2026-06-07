@@ -499,19 +499,13 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
     `}} />
 
     <div className="flex flex-col gap-8 print:block print:w-full">
-      <div className="print:hidden flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">AI CV Builder</h1>
-          <p className="text-muted-foreground mt-2">
-            Create a professional, ATS-optimized CV with AI.
-          </p>
-        </div>
-        {!isPro && (
-          <span className="text-xs font-bold text-muted-foreground bg-muted px-4 py-2 rounded-full shrink-0 self-start md:self-center">
+      {!isPro && (
+        <div className="print:hidden flex justify-end -mb-4">
+          <span className="text-xs font-bold text-muted-foreground bg-muted px-4 py-2 rounded-full">
             {MAX_FREE_PRINTS - usedThisMonth} of {MAX_FREE_PRINTS} free exports left this month
           </span>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_600px] gap-8 print:block print:w-full">
         {/* Editor Panel */}

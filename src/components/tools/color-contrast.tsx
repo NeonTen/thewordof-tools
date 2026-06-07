@@ -261,7 +261,7 @@ export function ColorContrast() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6 mt-8">
+      <div className="lg:col-span-12 grid md:grid-cols-3 gap-6 mt-8">
         <div className="bg-primary/5 border border-primary/10 p-5 rounded-2xl space-y-2">
           <h4 className="text-sm font-bold flex items-center gap-2">
             <span className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><span className="text-[10px] font-black">1</span></span> Why Contrast Matters
@@ -289,7 +289,7 @@ export function ColorContrast() {
       </div>
 
       {/* SEO Section */}
-      <div className="grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12 pb-20">
+      <div className="lg:col-span-12 grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12 pb-20">
         <section>
           <h2 className="text-2xl font-black tracking-tight mb-4">Understanding Color Contrast & Web Accessibility</h2>
           <p className="text-muted-foreground leading-relaxed">

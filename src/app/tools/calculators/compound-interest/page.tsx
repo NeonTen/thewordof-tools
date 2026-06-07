@@ -1,3 +1,4 @@
+import { ToolHeader } from "@/components/tools/tool-header"
 import { CompoundInterestCalculator } from "@/components/tools/compound-interest-calculator"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -17,7 +18,7 @@ export default function CompoundInterestPage() {
         <ArrowLeft className="h-4 w-4" /> Back to Calculators
       </Link>
       <div>
-        <h1 className="text-3xl font-black tracking-tight">Compound Interest Calculator</h1>
+        <ToolHeader category="Calculators" categoryHref="/tools/calculators" title="Compound Interest Calculator" />
         <p className="text-muted-foreground mt-2">
           Calculate compound wealth gains and inflation impact over a time horizon.
         </p>
