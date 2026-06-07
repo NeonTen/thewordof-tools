@@ -136,6 +136,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
   const [copiedId, setCopiedId] = useState<string>("")
   const [timeframe, setTimeframe] = useState<"daily" | "weekly" | "monthly">("daily")
   const [selectedQrDataUrl, setSelectedQrDataUrl] = useState<string>("")
+  const [browserOsTab, setBrowserOsTab] = useState<"browsers" | "os">("browsers")
 
   const { count: usedToday, increment: incrementUsage, refresh: refreshUsage } = useUsageLimit("qr-code", "daily")
   const MAX_FREE = 5
@@ -710,7 +711,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                       <ResponsiveContainer width="100%" height="90%">
                         <AreaChart data={getTimelineData()}>
                           <XAxis dataKey="name" stroke="#888888" fontSize={10} tickLine={false} />
-                          <YAxis stroke="#888888" fontSize={10} tickLine={false} />
+                          <YAxis stroke="#888888" fontSize={10} tickLine={false} allowDecimals={false} />
                           <Tooltip />
                           <Area type="monotone" dataKey="Scans" stroke="#0088FE" fillOpacity={0.1} fill="#0088FE" />
                           <Area type="monotone" dataKey="Unique Scans" stroke="#00C49F" fillOpacity={0.2} fill="#00C49F" />
@@ -762,19 +763,35 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                       </div>
                     </Card>
 
-                    {/* Browser Stats */}
+                    {/* Browser & OS Stats */}
                     <Card className="p-4">
-                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4">Browsers & OS</p>
+                      <div className="flex items-center justify-between mb-4">
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Browsers & OS</p>
+                        <div className="flex bg-muted p-0.5 rounded-lg gap-0.5 text-[10px] font-semibold">
+                          {(["browsers", "os"] as const).map(tab => (
+                            <button
+                              key={tab}
+                              type="button"
+                              onClick={() => setBrowserOsTab(tab)}
+                              className={`px-2 py-0.5 rounded transition-all ${
+                                browserOsTab === tab ? "bg-background text-foreground shadow-sm font-bold" : "text-muted-foreground hover:text-foreground"
+                              }`}
+                            >
+                              {tab === "browsers" ? "Browsers" : "OS"}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
                       <div className="h-44">
-                        {getBarData("browsers").length === 0 ? (
+                        {getBarData(browserOsTab).length === 0 ? (
                           <div className="h-full flex items-center justify-center text-xs text-muted-foreground">No data</div>
                         ) : (
                           <ResponsiveContainer width="100%" height="100%">
-                            <RechartsBarChart data={getBarData("browsers")} layout="vertical">
+                            <RechartsBarChart data={getBarData(browserOsTab)} layout="vertical">
                               <XAxis type="number" stroke="#888888" fontSize={9} />
                               <YAxis dataKey="name" type="category" stroke="#888888" fontSize={9} width={60} />
                               <Tooltip />
-                              <Bar dataKey="count" fill="#8884d8" radius={[0, 4, 4, 0]} />
+                              <Bar dataKey="count" fill={browserOsTab === "browsers" ? "#8884d8" : "#82ca9d"} radius={[0, 4, 4, 0]} />
                             </RechartsBarChart>
                           </ResponsiveContainer>
                         )}
