@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Type, AlertCircle, CheckCircle2, Award, BookOpen } from "lucide-react"
+import { Type, AlertCircle, CheckCircle2, Award, BookOpen, FileText, Globe, RefreshCw } from "lucide-react"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 // Simple syllable counter algorithm
 function countSyllablesInWord(word: string): number {
@@ -15,8 +16,52 @@ function countSyllablesInWord(word: string): number {
   return doubleVowelsMatch ? Math.max(1, doubleVowelsMatch.length) : 1
 }
 
-export function ReadabilityGrader() {
+export function ReadabilityGrader({ isPro }: { isPro: boolean }) {
   const [text, setText] = useState("Search engine optimization is the practice of orienting your website to rank higher on a search engine results page, so that you receive more traffic. The difference between organic SEO and paid advertising is that SEO involves organic ranking, which means you do not pay to be in that space. To make it simple, search engine optimization means taking a piece of online content and optimizing it so search engines like Google show it at the top of the page when someone searches for something.")
+  
+  // Scraper States
+  const [url, setUrl] = useState("")
+  const [fetching, setFetching] = useState(false)
+  const [fetchError, setFetchError] = useState("")
+  const [inputMode, setInputMode] = useState<"text" | "url">("text")
+
+  // Usage Limit
+  const { count: usedThisMonth, increment: incrementUsage } = useUsageLimit("readability-grader", "monthly")
+  const limitReached = !isPro && usedThisMonth >= 5
+
+  // Scraper Action
+  const handleFetchText = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!url) return
+
+    if (limitReached) {
+      setFetchError("Free plan limit reached (5 URL scrapes/month). Upgrade to Pro to bypass.")
+      return
+    }
+
+    setFetching(true)
+    setFetchError("")
+    try {
+      const res = await fetch("/api/tools/fetch-text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url })
+      })
+      const data = await res.json()
+      if (data.error) {
+        setFetchError(data.error)
+      } else {
+        setText(data.text)
+        setInputMode("text")
+        // Increment limit count
+        await incrementUsage()
+      }
+    } catch {
+      setFetchError("Failed to fetch page content. Please verify the URL.")
+    } finally {
+      setFetching(false)
+    }
+  }
 
   // Compute linguistic details
   const stats = useMemo(() => {
@@ -32,11 +77,12 @@ export function ReadabilityGrader() {
 
     let syllables = 0
     wordsList.forEach(w => {
-      syllables += countSyllablesInWord(w)
+      customBlock: {
+        syllables += countSyllablesInWord(w)
+      }
     })
 
     // Flesch Reading Ease Formula
-    // 206.835 - (1.015 * ASL) - (84.6 * ASW)
     const asl = words / sentences
     const asw = syllables / words
     const rawScore = 206.835 - (1.015 * asl) - (84.6 * asw)
@@ -92,14 +138,62 @@ export function ReadabilityGrader() {
       {/* Editor Block */}
       <div className="lg:col-span-7 space-y-6">
         <div className="bg-card p-5 border rounded-2xl space-y-4 shadow-sm flex flex-col h-full min-h-[400px]">
-          <h2 className="text-lg font-bold">Content Editor</h2>
-          <textarea 
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            rows={14}
-            placeholder="Paste or write your content here to analyze readability stats..."
-            className="flex-1 w-full px-3 py-2.5 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm leading-relaxed"
-          />
+          <div className="flex bg-muted/40 p-1 rounded-xl border border-border">
+            <button 
+              onClick={() => setInputMode("text")}
+              className={`flex-1 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-colors ${inputMode === "text" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              <FileText className="h-3.5 w-3.5" />
+              Raw Text
+            </button>
+            <button 
+              onClick={() => setInputMode("url")}
+              className={`flex-1 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-colors ${inputMode === "url" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              <Globe className="h-3.5 w-3.5" />
+              Scrape URL
+            </button>
+          </div>
+
+          {inputMode === "url" ? (
+            <div className="space-y-3 pt-2">
+              <div className="flex justify-between items-center text-xs text-muted-foreground font-bold px-1">
+                <span>Scrape Webpage URL</span>
+                {!isPro && (
+                  <span className="bg-muted px-2 py-0.5 rounded-full">
+                    {Math.max(0, 5 - usedThisMonth)} of 5 free scrapes left this month
+                  </span>
+                )}
+              </div>
+              <form onSubmit={handleFetchText} className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  placeholder="e.g. tools.thewordof.com/tools"
+                  className="flex-1 px-3 py-2 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
+                  disabled={limitReached}
+                />
+                <button 
+                  type="submit" 
+                  disabled={fetching || limitReached}
+                  className="px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50 shrink-0 flex items-center gap-1.5 cursor-pointer"
+                >
+                  {fetching ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : null}
+                  {fetching ? "Scraping..." : "Scrape"}
+                </button>
+              </form>
+            </div>
+          ) : (
+            <textarea 
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              rows={14}
+              placeholder="Paste or write your content here to analyze readability stats..."
+              className="flex-1 w-full px-3 py-2.5 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm leading-relaxed"
+            />
+          )}
+          {fetchError && <p className="text-xs text-destructive font-semibold">{fetchError}</p>}
         </div>
       </div>
 

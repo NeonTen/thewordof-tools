@@ -14,13 +14,13 @@ export default async function KeywordDensityPage() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <ToolHeader category="SEO Audit" categoryHref="/tools/seo-audit" title="Keyword Density" />
+        <ToolHeader category="Technical SEO" categoryHref="/tools/technical-seo" title="Keyword Density" />
         <p className="text-muted-foreground mt-2">
           Inspect word frequency distributions, filter common stop-words, and optimize your semantic target keywords density.
         </p>
       </div>
 
-      <KeywordDensityAnalyzer />
+      <KeywordDensityAnalyzer isPro={isPro} />
     </div>
   )
 }

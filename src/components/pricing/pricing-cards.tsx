@@ -72,6 +72,10 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       yearlyPrice: PLAN_PRICING.PREMIUM.yearly.INR,
       monthlyUsd: PLAN_PRICING.PREMIUM.monthly.USD.toString(),
       yearlyUsd: PLAN_PRICING.PREMIUM.yearly.USD.toString(),
+      originalMonthlyPrice: PLAN_PRICING.PREMIUM.originalMonthly.INR,
+      originalYearlyPrice: PLAN_PRICING.PREMIUM.originalYearly.INR,
+      originalMonthlyUsd: PLAN_PRICING.PREMIUM.originalMonthly.USD.toString(),
+      originalYearlyUsd: PLAN_PRICING.PREMIUM.originalYearly.USD.toString(),
       plan: "PREMIUM",
       description: "For power users and professionals who need higher limits and premium tools.",
       cta: "Upgrade to Pro",
@@ -102,6 +106,10 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       yearlyPrice: PLAN_PRICING.BUSINESS.yearly.INR,
       monthlyUsd: PLAN_PRICING.BUSINESS.monthly.USD.toString(),
       yearlyUsd: PLAN_PRICING.BUSINESS.yearly.USD.toString(),
+      originalMonthlyPrice: PLAN_PRICING.BUSINESS.originalMonthly.INR,
+      originalYearlyPrice: PLAN_PRICING.BUSINESS.originalYearly.INR,
+      originalMonthlyUsd: PLAN_PRICING.BUSINESS.originalMonthly.USD.toString(),
+      originalYearlyUsd: PLAN_PRICING.BUSINESS.originalYearly.USD.toString(),
       plan: "BUSINESS",
       description: "For power creators and businesses needing unlimited processing and priority support.",
       cta: "Upgrade to Business",
@@ -170,10 +178,12 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-8 max-w-[1440px] mx-auto">
         {plans.map((plan) => {
           const price = isYearly ? plan.yearlyPrice : plan.monthlyPrice
           const usdPrice = isYearly ? plan.yearlyUsd : plan.monthlyUsd
+          const originalPrice = isYearly ? (plan as any).originalYearlyPrice : (plan as any).originalMonthlyPrice
+          const originalUsdPrice = isYearly ? (plan as any).originalYearlyUsd : (plan as any).originalMonthlyUsd
           const period = isYearly ? "per year" : "per month"
           
           let showCurrentPlanBtn = false
@@ -217,10 +227,15 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
 
               <CardHeader className="pb-4 pt-8 px-8 flex-none">
                 <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{plan.name}</p>
-                <div className="flex items-baseline gap-1 mt-2">
+                <div className="flex items-baseline gap-2 mt-2 flex-wrap">
                   <span className="text-5xl font-black tracking-tight">
                     {currency === "INR" ? `₹${price}` : `$${usdPrice}`}
                   </span>
+                  {originalPrice !== undefined && (
+                    <span className="text-lg text-muted-foreground line-through font-bold">
+                      {currency === "INR" ? `₹${originalPrice}` : `$${originalUsdPrice}`}
+                    </span>
+                  )}
                   <span className="text-muted-foreground text-sm">/{period}</span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">{plan.description}</p>

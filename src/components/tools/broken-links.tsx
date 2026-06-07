@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react"
 import { ProGate } from "@/components/ui/pro-gate"
 import { RefreshCw, Search, CheckCircle2, AlertCircle, Link2, ExternalLink, ShieldAlert } from "lucide-react"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 interface ScannedLink {
   href: string
@@ -12,7 +13,7 @@ interface ScannedLink {
 }
 
 export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
-  const [url, setUrl] = useState("https://tools.thewordof.com")
+  const [url, setUrl] = useState("")
   const [links, setLinks] = useState<ScannedLink[]>([
     { href: "https://tools.thewordof.com", text: "Home Overview", type: "internal", status: 200 },
     { href: "https://tools.thewordof.com/tools", text: "All Utilities Directory", type: "internal", status: 200 },
@@ -26,10 +27,21 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
   const [scanError, setScanError] = useState("")
   const [filter, setFilter] = useState<"all" | "broken" | "redirect" | "internal" | "external">("all")
 
+  // Usage Limit
+  const { count: usedThisMonth, increment: incrementUsage } = useUsageLimit("broken-links", "monthly")
+  const limitReached = !isPro && usedThisMonth >= 3
+  const isFeatureUnlocked = isPro || usedThisMonth < 3
+
   // Scan Action
   const handleScan = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!url) return
+
+    if (limitReached) {
+      setScanError("Free plan limit reached (3 page audits/month). Upgrade to Pro to bypass.")
+      return
+    }
+
     setScanning(true)
     setScanError("")
     try {
@@ -43,6 +55,7 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
         setScanError(data.error)
       } else {
         setLinks(data.links)
+        await incrementUsage()
       }
     } catch {
       setScanError("Connection timed out or failed to parse target URL links.")
@@ -78,9 +91,16 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
       {/* Scan controls */}
       <div className="lg:col-span-12">
         <div className="bg-card p-6 border rounded-2xl shadow-sm space-y-4">
-          <h2 className="text-lg font-bold">Inspect Page Outbound Links</h2>
+          <div className="flex justify-between items-center max-w-2xl gap-4">
+            <h2 className="text-lg font-bold">Inspect Page Outbound Links</h2>
+            {!isPro && (
+              <span className="text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-full font-semibold shrink-0">
+                {Math.max(0, 3 - usedThisMonth)} of 3 free audits left this month
+              </span>
+            )}
+          </div>
           
-          <ProGate feature="Broken Link Checker" isPro={isPro}>
+          <ProGate feature="Broken Link Checker" isPro={isFeatureUnlocked}>
             <form onSubmit={handleScan} className="flex gap-2 max-w-2xl">
               <input 
                 type="text" 
@@ -88,10 +108,11 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="e.g. tools.thewordof.com"
                 className="flex-1 px-3 py-2 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
+                disabled={limitReached}
               />
               <button 
                 type="submit" 
-                disabled={scanning}
+                disabled={scanning || limitReached}
                 className="px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50 shrink-0 flex items-center gap-1.5 cursor-pointer"
               >
                 {scanning ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : null}

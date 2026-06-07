@@ -17,7 +17,7 @@ export default async function ToolsPage() {
       <div>
         <h1 className="text-4xl font-black tracking-tight">All Tools</h1>
         <p className="text-muted-foreground mt-2 text-lg">
-          Free, browser-based tools. No account required. {!isPro && (
+          Free, browser-based tools. AI tools require a free account. {!isPro && (
             <Link href="/pricing" className="text-primary font-semibold hover:underline">Upgrade for more →</Link>
           )}
         </p>

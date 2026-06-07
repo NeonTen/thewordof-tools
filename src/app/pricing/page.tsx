@@ -50,7 +50,7 @@ export default async function PricingPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="max-w-6xl mx-auto px-6 py-20 space-y-24">
+      <div className="max-w-[1440px] mx-auto px-6 py-20 space-y-24">
         {/* Hero */}
         <div className="text-center space-y-6 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
@@ -99,9 +99,13 @@ export default async function PricingPage() {
                       ["LLMS.txt Builder", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
                       ["AI CV Builder & Import", "Costs 1 credit (Summary)", "Costs 1 credit", "Costs 1-3 credits"],
                       ["Invoice Generator", "3 / month", "Unlimited + Branding", "Unlimited + Branding"],
-                      ["Cloud progress saving", "—", "✅ Unlimited", "✅ Unlimited"],
                       ["Dynamic QR Codes", "1 (15-day expiry)", "Unlimited (Lifetime)", "Unlimited + Analytics"],
+                      ["SERP Previewer", "5 scrapes / mo", "Unlimited", "Unlimited"],
+                      ["Keyword Density Analyzer", "5 crawls / mo", "Unlimited", "Unlimited"],
+                      ["SEO Readability Grader", "5 crawls / mo", "Unlimited", "Unlimited"],
+                      ["Broken Link Auditor", "3 audits / mo", "Unlimited", "Unlimited"],
                       ["Advanced SEO Schema", "Basic", "Advanced", "Advanced"],
+                      ["Cloud progress saving", "—", "✅ Unlimited", "✅ Unlimited"],
                       ["Priority AI Queue", "—", "✓ Included", "✓ Highest Priority"],
                       ["Ad-Free Experience", "—", "✓", "✓"],
                       ["History Tracking", "—", "✓", "✓"],

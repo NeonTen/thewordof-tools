@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react"
 import { Copy, Download, Globe, Smartphone, Monitor, Info, RefreshCw } from "lucide-react"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 // Simple pixel-width estimator for standard Google Fonts (Sans-serif)
 function estimatePixelWidth(text: string, isTitle: boolean = false): number {
@@ -27,16 +28,20 @@ function estimatePixelWidth(text: string, isTitle: boolean = false): number {
   return Math.round(width)
 }
 
-export function SerpPreviewer() {
+export function SerpPreviewer({ isPro }: { isPro: boolean }) {
   const [title, setTitle] = useState("TheWordOf Tools - Free Online Developer & SEO Utilities")
   const [description, setDescription] = useState("Access a suite of essential free online tools for developers and SEO professionals. Generate schema, validate robots.txt, check contrast, and analyze keyword density instantly.")
   const [url, setUrl] = useState("https://tools.thewordof.com")
-  const [slug, setSlug] = useState("seo-audit/serp-preview")
+  const [slug, setSlug] = useState("technical-seo/serp-preview")
   
   // URL Fetcher States
   const [fetchUrl, setFetchUrl] = useState("")
   const [fetching, setFetching] = useState(false)
   const [fetchError, setFetchError] = useState("")
+
+  // Usage Limit
+  const { count: usedThisMonth, increment: incrementUsage } = useUsageLimit("serp-previewer", "monthly")
+  const limitReached = !isPro && usedThisMonth >= 5
   
   // Display Options
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop")
@@ -108,6 +113,12 @@ export function SerpPreviewer() {
   const handleFetchMeta = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!fetchUrl) return
+
+    if (limitReached) {
+      setFetchError("Free plan limit reached (5 metadata imports/month). Upgrade to Pro to bypass.")
+      return
+    }
+
     setFetching(true)
     setFetchError("")
     try {
@@ -129,6 +140,8 @@ export function SerpPreviewer() {
         } catch {
           setUrl(fetchUrl)
         }
+        // Increment limit count
+        await incrementUsage()
       }
     } catch (err) {
       setFetchError("Connection timed out or failed to parse metadata.")
@@ -177,7 +190,14 @@ export function SerpPreviewer() {
       <div className="lg:col-span-6 space-y-6">
         {/* Scrape Form */}
         <div className="bg-card p-5 border rounded-2xl space-y-4 shadow-sm">
-          <h2 className="text-lg font-bold">Import Metadata from URL</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-bold">Import Metadata from URL</h2>
+            {!isPro && (
+              <span className="text-xs font-bold text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+                {Math.max(0, 5 - usedThisMonth)} of 5 free fetches left this month
+              </span>
+            )}
+          </div>
           <form onSubmit={handleFetchMeta} className="flex gap-2">
             <input 
               type="text" 
@@ -185,10 +205,11 @@ export function SerpPreviewer() {
               onChange={(e) => setFetchUrl(e.target.value)}
               placeholder="e.g. google.com"
               className="flex-1 px-3 py-2 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
+              disabled={limitReached}
             />
             <button 
               type="submit" 
-              disabled={fetching}
+              disabled={fetching || limitReached}
               className="px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50 shrink-0 flex items-center gap-1.5 cursor-pointer"
             >
               {fetching ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : null}
@@ -327,11 +348,11 @@ export function SerpPreviewer() {
             {activeTab === "preview" ? (
               <div className="w-full max-w-lg">
                 {device === "desktop" ? (
-                  // Google Desktop Preview
-                  <div className="bg-background p-6 rounded-2xl border border-border/80 shadow-md font-sans text-sm text-[#4d5156] space-y-1">
-                    <div className="text-[12px] leading-relaxed text-[#202124] flex items-center gap-1 truncate mb-0.5">
+                  // Google Desktop Preview (Forced Light Card Background for visibility in Dark Mode)
+                  <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-md font-sans text-sm text-[#4d5156] space-y-1">
+                    <div className="text-[12px] leading-relaxed text-[#5f6368] flex items-center gap-1 truncate mb-0.5">
                       <span>{url.replace(/https?:\/\//i, "")}</span>
-                      <span className="text-[#5f6368]">› {slug.replace(/\//g, " › ")}</span>
+                      <span>› {slug.replace(/\//g, " › ")}</span>
                     </div>
                     <a className="text-[#1a0dab] hover:underline text-[20px] leading-[26px] font-medium cursor-pointer block truncate">
                       {truncatedTitle || "Please enter a title"}
@@ -341,8 +362,8 @@ export function SerpPreviewer() {
                     </p>
                   </div>
                 ) : (
-                  // Google Mobile Preview
-                  <div className="bg-background p-5 rounded-2xl border border-border/80 shadow-md font-sans text-sm text-[#4d5156] space-y-2 max-w-[360px] mx-auto">
+                  // Google Mobile Preview (Forced Light Card Background for visibility in Dark Mode)
+                  <div className="bg-white border border-gray-200 p-5 rounded-2xl shadow-md font-sans text-sm text-[#4d5156] space-y-2 max-w-[360px] mx-auto">
                     <div className="flex items-center gap-2 text-[12px]">
                       <div className="h-6 w-6 rounded-full bg-[#f1f3f4] flex items-center justify-center shrink-0">
                         <Globe className="h-3.5 w-3.5 text-[#5f6368]" />

@@ -14,13 +14,13 @@ export default async function SerpPreviewPage() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <ToolHeader category="SEO Audit" categoryHref="/tools/seo-audit" title="SERP Previewer" />
+        <ToolHeader category="Technical SEO" categoryHref="/tools/technical-seo" title="SERP Previewer" />
         <p className="text-muted-foreground mt-2">
           Preview how your pages display in Google search results and verify meta tag accessibility standards.
         </p>
       </div>
 
-      <SerpPreviewer />
+      <SerpPreviewer isPro={isPro} />
     </div>
   )
 }

@@ -4,42 +4,73 @@ import {
   Code, 
   FileText, 
   Layers, 
-  Cpu
+  Cpu,
+  Search,
+  Type,
+  Zap
 } from "lucide-react"
 
 export const metadata = {
   title: "Technical SEO Validation & Audit Tools | TheWordOf Tools",
-  description: "Free online tools to generate structured schema markup, manage robots.txt directives, inspect sitemaps, and configure llms.txt descriptions.",
+  description: "Free online tools to generate structured schema markup, manage robots.txt directives, inspect sitemaps, analyze SERP layouts, and check readability.",
 }
 
 const tools = [
   {
     title: "Schema Generator",
     description: "Build JSON-LD structured data for Google Rich Results with live search previews.",
-    href: "/tools/schema-generator",
+    href: "/tools/technical-seo/schema-generator",
     icon: Code,
     pro: false,
   },
   {
     title: "Robots.txt Gen & Tester",
     description: "Configure robots.txt crawler directives and test path access rules locally.",
-    href: "/tools/robots-generator",
+    href: "/tools/technical-seo/robots-generator",
     icon: FileText,
     pro: false,
   },
   {
     title: "Sitemap Validator",
     description: "Fetch, validate, audit, and visually map XML Sitemap hierarchical structures.",
-    href: "/tools/sitemap-validator",
+    href: "/tools/technical-seo/sitemap-validator",
     icon: Layers,
     pro: false,
   },
   {
     title: "LLMS.TXT Generator",
     description: "Generate AI-readable site summaries and specifications for LLM web crawlers.",
-    href: "/tools/llms-txt",
+    href: "/tools/technical-seo/llms-txt",
     icon: Cpu,
     pro: false,
+  },
+  {
+    title: "SERP Previewer & Meta Tag Analyzer",
+    description: "Preview search results snippet presentation on Google Search, compute title/description sizing, and generate standard SEO and Open Graph tags.",
+    href: "/tools/technical-seo/serp-preview",
+    icon: Search,
+    pro: false,
+  },
+  {
+    title: "Keyword Density Analyzer",
+    description: "Extract text directly from URL imports or raw text blocks to calculate word frequency and search optimization ratios.",
+    href: "/tools/technical-seo/keyword-density",
+    icon: FileText,
+    pro: false,
+  },
+  {
+    title: "SEO Readability & Content Grader",
+    description: "Grade standard content readability scores using linguistic formulas including Flesch Reading Ease calculations.",
+    href: "/tools/technical-seo/readability-grader",
+    icon: Type,
+    pro: false,
+  },
+  {
+    title: "Broken Link & Anchor Text Auditor",
+    description: "Inspect external websites to identify broken links, redirects, internal vs external ratios, and anchor texts.",
+    href: "/tools/technical-seo/broken-links",
+    icon: Zap,
+    pro: true,
   },
 ]
 

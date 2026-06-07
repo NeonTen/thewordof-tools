@@ -23,7 +23,7 @@ export default async function Home() {
             <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full" />
           </div>
 
-          <div className="container mx-auto px-6 max-w-6xl text-center space-y-8">
+          <div className="container mx-auto px-6 max-w-[1440px] text-center space-y-8">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest animate-in fade-in slide-in-from-bottom-4 duration-1000">
               <Sparkles className="h-3 w-3" /> The Ultimate AI Productivity Toolkit
             </div>
@@ -53,7 +53,7 @@ export default async function Home() {
 
         {/* Tools Grid Preview */}
         <section className="py-24 bg-muted/30 border-y">
-          <div className="container mx-auto px-6 max-w-6xl">
+          <div className="container mx-auto px-6 max-w-[1440px]">
             <div className="text-center mb-16 space-y-4">
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Powerful tools for every task</h2>
               <p className="text-muted-foreground max-w-xl mx-auto">From developers to marketers, we have the right tool for you. Fast, secure, and entirely browser-based.</p>
@@ -159,7 +159,7 @@ export default async function Home() {
 
         {/* Testimonials */}
         <section className="py-24 overflow-hidden">
-          <div className="container mx-auto px-6 max-w-6xl">
+          <div className="container mx-auto px-6 max-w-[1440px]">
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-center mb-16">Trusted by makers worldwide</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {[
@@ -187,7 +187,7 @@ export default async function Home() {
 
         {/* Comparison Section */}
         <section className="py-24 bg-muted/30 border-y">
-          <div className="container mx-auto px-6 max-w-6xl">
+          <div className="container mx-auto px-6 max-w-[1440px]">
             <div className="text-center mb-16 space-y-4">
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Detailed Feature Comparison</h2>
               <p className="text-muted-foreground">Everything you get with our Free, Pro, and Business plans.</p>
@@ -219,11 +219,15 @@ export default async function Home() {
                         ["LLMS.txt Builder", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
                         ["AI CV Builder & Import", "Costs 1 credit (Summary)", "Costs 1 credit", "Costs 1-3 credits"],
                         ["Invoice Generator", "3 / month", "Unlimited + Branding", "Unlimited + Branding"],
-                        ["Cloud progress saving", "—", "✅ Unlimited", "✅ Unlimited"],
                         ["Dynamic QR Codes", "1 (15-day expiry)", "Unlimited (Lifetime)", "Unlimited (Lifetime)"],
                         ["Dynamic QR Analytics", "—", "Basic (Timeline, Device, Browser)", "Advanced (Timeline, Device, Browser + Geo Country/City)"],
+                        ["SERP Previewer", "5 scrapes / mo", "Unlimited", "Unlimited"],
+                        ["Keyword Density Analyzer", "5 crawls / mo", "Unlimited", "Unlimited"],
+                        ["SEO Readability Grader", "5 crawls / mo", "Unlimited", "Unlimited"],
+                        ["Broken Link Auditor", "3 audits / mo", "Unlimited", "Unlimited"],
                         ["SVG Framework Exports", "—", "✅ Yes (React/Vue/Svelte)", "✅ Yes (React/Vue/Svelte)"],
                         ["Advanced SEO Schema", "Basic", "Advanced", "Advanced"],
+                        ["Cloud progress saving", "—", "✅ Unlimited", "✅ Unlimited"],
                         ["Priority AI Queue", "—", "✓ Included", "✓ Highest Priority"],
                         ["Ad-Free Experience", "—", "✓", "✓"],
                         ["History Tracking", "—", "✓", "✓"],
@@ -269,7 +273,7 @@ export default async function Home() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-24 container mx-auto px-6 max-w-6xl">
+        <section className="py-24 container mx-auto px-6 max-w-[1440px]">
           <div className="bg-primary rounded-[3rem] p-12 md:p-24 text-center text-primary-foreground space-y-8 relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none">
               <Zap className="h-64 w-64 rotate-12" />

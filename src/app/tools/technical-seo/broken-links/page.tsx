@@ -14,7 +14,7 @@ export default async function BrokenLinksPage() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <ToolHeader category="SEO Audit" categoryHref="/tools/seo-audit" title="Broken Links" />
+        <ToolHeader category="Technical SEO" categoryHref="/tools/technical-seo" title="Broken Links" />
         <p className="text-muted-foreground mt-2">
           Scan target pages for dead links (404s), redirect chains, and verify descriptive anchor texts.
         </p>

@@ -14,13 +14,13 @@ export default async function ReadabilityGraderPage() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <ToolHeader category="SEO Audit" categoryHref="/tools/seo-audit" title="SEO Readability" />
+        <ToolHeader category="Technical SEO" categoryHref="/tools/technical-seo" title="SEO Readability" />
         <p className="text-muted-foreground mt-2">
           Calculate standard readability scores, evaluate sentence complexities, and optimize content structure for web readers.
         </p>
       </div>
 
-      <ReadabilityGrader />
+      <ReadabilityGrader isPro={isPro} />
     </div>
   )
 }

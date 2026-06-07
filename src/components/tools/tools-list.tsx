@@ -65,15 +65,10 @@ const CATEGORIES: Category[] = [
       { title: "Robots.txt Gen & Tester", desc: "Configure robots.txt crawler directives and test path access rules.", icon: FileText,   href: "/tools/technical-seo/robots-generator",  pro: false },
       { title: "Sitemap Validator", desc: "Fetch, validate, audit, and visually map XML Sitemap structures.", icon: ImageIcon,  href: "/tools/technical-seo/sitemap-validator", pro: false },
       { title: "LLMS.TXT Generator",desc: "Generate AI-readable site descriptions for LLM crawlers.",            icon: Cpu,        href: "/tools/technical-seo/llms-txt",          pro: false },
-    ]
-  },
-  {
-    title: "SEO Audit",
-    tools: [
-      { title: "SERP Previewer", desc: "Preview Google Search results and generate metadata HTML tags.", icon: Search, href: "/tools/seo-audit/serp-preview", pro: false },
-      { title: "Keyword Density", desc: "Analyze keyword usage and optimize optimization ratios.", icon: FileText, href: "/tools/seo-audit/keyword-density", pro: false },
-      { title: "SEO Readability", desc: "Grade reading ease and score text complexity with Flesch-Kincaid formulas.", icon: Type, href: "/tools/seo-audit/readability-grader", pro: false },
-      { title: "Broken Link Checker", desc: "Scan pages for broken links, redirects, and anchor texts.", icon: Zap, href: "/tools/seo-audit/broken-links", pro: true }
+      { title: "SERP Previewer", desc: "Preview Google Search results and generate metadata HTML tags.", icon: Search, href: "/tools/technical-seo/serp-preview", pro: false },
+      { title: "Keyword Density", desc: "Analyze keyword usage and optimize optimization ratios.", icon: FileText, href: "/tools/technical-seo/keyword-density", pro: false },
+      { title: "SEO Readability", desc: "Grade reading ease and score text complexity with Flesch-Kincaid formulas.", icon: Type, href: "/tools/technical-seo/readability-grader", pro: false },
+      { title: "Broken Link Checker", desc: "Scan pages for broken links, redirects, and anchor texts.", icon: Zap, href: "/tools/technical-seo/broken-links", pro: true }
     ]
   },
   {
@@ -151,21 +146,19 @@ export function ToolsList({ isPro, userRole }: { isPro: boolean, userRole?: stri
             className="w-full pl-9 pr-4 py-2 bg-muted/40 rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm text-foreground"
           />
         </div>
-        <div className="flex flex-wrap gap-1.5 w-full md:w-auto">
-          {categoryNames.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={cn(
-                "px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer",
-                selectedCategory === cat
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "bg-muted/40 text-muted-foreground hover:bg-muted/70"
-              )}
-            >
-              {cat}
-            </button>
-          ))}
+        <div className="w-full md:w-auto flex items-center gap-2">
+          <span className="text-xs font-bold text-muted-foreground whitespace-nowrap">Filter by:</span>
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="px-3 py-2 bg-muted/40 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-xs font-bold text-foreground cursor-pointer outline-none min-w-[160px] transition-all hover:bg-muted/70"
+          >
+            {categoryNames.map(cat => (
+              <option key={cat} value={cat} className="bg-background">
+                {cat}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

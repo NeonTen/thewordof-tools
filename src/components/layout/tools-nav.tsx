@@ -90,16 +90,10 @@ const navGroups: NavGroup[] = [
       { title: "Robots.txt Gen",   href: "/tools/technical-seo/robots-generator", icon: FileText },
       { title: "Sitemap Validator",href: "/tools/technical-seo/sitemap-validator",icon: ImageIcon },
       { title: "LLMS.TXT Gen",     href: "/tools/technical-seo/llms-txt",         icon: Cpu },
-    ],
-  },
-  {
-    label: "SEO Audit",
-    items: [
-      { title: "All SEO Audit",    href: "/tools/seo-audit",                  icon: LayoutGrid },
-      { title: "SERP Previewer",   href: "/tools/seo-audit/serp-preview",     icon: Search },
-      { title: "Keyword Density",  href: "/tools/seo-audit/keyword-density",  icon: FileText },
-      { title: "SEO Readability",  href: "/tools/seo-audit/readability-grader",icon: Type },
-      { title: "Broken Links",     href: "/tools/seo-audit/broken-links",     icon: Zap },
+      { title: "SERP Previewer",   href: "/tools/technical-seo/serp-preview",     icon: Search },
+      { title: "Keyword Density",  href: "/tools/technical-seo/keyword-density",  icon: FileText },
+      { title: "SEO Readability",  href: "/tools/technical-seo/readability-grader",icon: Type },
+      { title: "Broken Links",     href: "/tools/technical-seo/broken-links",     icon: Zap },
     ],
   },
   {
@@ -127,7 +121,6 @@ export function ToolsNav() {
     "Finance & Dev": false,
     "Design": false,
     "Technical SEO": true,
-    "SEO Audit": true,
     "AI Tools": false,
   })
 

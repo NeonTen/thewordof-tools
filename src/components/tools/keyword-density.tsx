@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react"
 import { Copy, RefreshCw, FileText, Globe, CheckCircle2, AlertCircle } from "lucide-react"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
 
 const DEFAULT_STOPWORDS = new Set([
   "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", "as", "at", 
@@ -23,7 +24,7 @@ interface DensityItem {
   percentage: number
 }
 
-export function KeywordDensityAnalyzer() {
+export function KeywordDensityAnalyzer({ isPro }: { isPro: boolean }) {
   const [text, setText] = useState("Search engine optimization (SEO) is the process of improving the quality and volume of website traffic to a website or a web page from search engines. SEO targets unpaid traffic rather than direct traffic or paid traffic. Unpaid traffic may originate from different kinds of searches, including image search, video search, academic search, news search, and industry-specific vertical search engines. Optimizing a website involves editing content, adding HTML tags, and modifying code to increase its relevance to specific keywords.")
   const [url, setUrl] = useState("")
   const [fetching, setFetching] = useState(false)
@@ -35,10 +36,20 @@ export function KeywordDensityAnalyzer() {
   const [targetKeywords, setTargetKeywords] = useState("SEO, traffic, search, website")
   const [activeGram, setActiveGram] = useState<1 | 2 | 3>(1)
 
+  // Usage Limit
+  const { count: usedThisMonth, increment: incrementUsage } = useUsageLimit("keyword-density", "monthly")
+  const limitReached = !isPro && usedThisMonth >= 5
+
   // Web Scraper
   const handleFetchText = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!url) return
+
+    if (limitReached) {
+      setFetchError("Free plan limit reached (5 URL scrapes/month). Upgrade to Pro to bypass.")
+      return
+    }
+
     setFetching(true)
     setFetchError("")
     try {
@@ -53,6 +64,8 @@ export function KeywordDensityAnalyzer() {
       } else {
         setText(data.text)
         setInputMode("text")
+        // Increment limit count
+        await incrementUsage()
       }
     } catch {
       setFetchError("Failed to fetch page content. Please verify the URL.")
@@ -189,23 +202,34 @@ export function KeywordDensityAnalyzer() {
           </div>
 
           {inputMode === "url" ? (
-            <form onSubmit={handleFetchText} className="flex gap-2">
-              <input 
-                type="text" 
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder="e.g. tools.thewordof.com/tools"
-                className="flex-1 px-3 py-2 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
-              />
-              <button 
-                type="submit" 
-                disabled={fetching}
-                className="px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50 shrink-0 flex items-center gap-1.5 cursor-pointer"
-              >
-                {fetching ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : null}
-                {fetching ? "Scraping..." : "Scrape"}
-              </button>
-            </form>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center text-xs text-muted-foreground font-bold px-1">
+                <span>Scrape Page URL</span>
+                {!isPro && (
+                  <span className="bg-muted px-2 py-0.5 rounded-full">
+                    {Math.max(0, 5 - usedThisMonth)} of 5 free scrapes left this month
+                  </span>
+                )}
+              </div>
+              <form onSubmit={handleFetchText} className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  placeholder="e.g. tools.thewordof.com/tools"
+                  className="flex-1 px-3 py-2 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
+                  disabled={limitReached}
+                />
+                <button 
+                  type="submit" 
+                  disabled={fetching || limitReached}
+                  className="px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50 shrink-0 flex items-center gap-1.5 cursor-pointer"
+                >
+                  {fetching ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : null}
+                  {fetching ? "Scraping..." : "Scrape"}
+                </button>
+              </form>
+            </div>
           ) : (
             <textarea 
               value={text}
