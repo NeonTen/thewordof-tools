@@ -236,24 +236,20 @@ export function ColorPalette() {
             </div>
             
             <div className="space-y-2 bg-black/25 backdrop-blur-md p-3.5 rounded-xl border border-white/10 text-white">
-              <input
-                type="color"
-                value={color}
-                onChange={(e) => {
-                  const val = e.target.value
-                  setColors((prev) => {
-                    const next = [...prev]
-                    next[idx] = val
-                    return next
-                  })
-                }}
-                className="w-full h-8 border border-white/20 rounded-lg cursor-pointer bg-transparent"
-              />
               <div className="flex justify-between items-center gap-2">
-                {/* Visual color box preview before HEX code */}
-                <div 
-                  className="w-4 h-4 rounded border border-white/30 shrink-0 shadow-sm" 
-                  style={{ backgroundColor: color }} 
+                {/* Small color picker box before HEX code */}
+                <input
+                  type="color"
+                  value={color}
+                  onChange={(e) => {
+                    const val = e.target.value
+                    setColors((prev) => {
+                      const next = [...prev]
+                      next[idx] = val
+                      return next
+                    })
+                  }}
+                  className="w-5 h-5 rounded border border-white/30 shrink-0 shadow-sm cursor-pointer p-0 bg-transparent [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch]:rounded"
                 />
                 <input
                   type="text"

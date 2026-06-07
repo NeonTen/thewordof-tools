@@ -206,28 +206,23 @@ export function GradientPalette() {
               </div>
 
               <div className="space-y-3 bg-black/30 backdrop-blur-md p-3.5 rounded-xl border border-white/10 text-white">
-                <div className="flex gap-2">
-                  <input
-                    type="color"
-                    value={grad.colorA}
-                    onChange={(e) => handleColorChange(idx, "A", e.target.value)}
-                    className="flex-1 h-7 border border-white/20 rounded-md cursor-pointer bg-transparent"
-                  />
-                  <input
-                    type="color"
-                    value={grad.colorB}
-                    onChange={(e) => handleColorChange(idx, "B", e.target.value)}
-                    className="flex-1 h-7 border border-white/20 rounded-md cursor-pointer bg-transparent"
-                  />
-                </div>
-
-                <div className="space-y-1.5 text-[11px] font-mono">
+                <div className="space-y-2 text-[11px] font-mono">
                   <div className="flex items-center gap-1.5">
-                    <div className="w-3.5 h-3.5 rounded border border-white/20 shrink-0" style={{ backgroundColor: grad.colorA }} />
+                    <input
+                      type="color"
+                      value={grad.colorA}
+                      onChange={(e) => handleColorChange(idx, "A", e.target.value)}
+                      className="w-5 h-5 rounded border border-white/30 shrink-0 shadow-sm cursor-pointer p-0 bg-transparent [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch]:rounded"
+                    />
                     <span className="font-bold opacity-90 truncate">{grad.colorA}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <div className="w-3.5 h-3.5 rounded border border-white/20 shrink-0" style={{ backgroundColor: grad.colorB }} />
+                    <input
+                      type="color"
+                      value={grad.colorB}
+                      onChange={(e) => handleColorChange(idx, "B", e.target.value)}
+                      className="w-5 h-5 rounded border border-white/30 shrink-0 shadow-sm cursor-pointer p-0 bg-transparent [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch]:rounded"
+                    />
                     <span className="font-bold opacity-90 truncate">{grad.colorB}</span>
                   </div>
                 </div>
