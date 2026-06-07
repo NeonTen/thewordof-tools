@@ -121,7 +121,7 @@ export default async function ChangelogPage() {
           </div>
 
           {/* Timeline Wrapper */}
-          <div className="relative border-l border-border/80 ml-4 md:ml-32 pl-8 space-y-16 py-4">
+          <div className="relative border-l border-border/80 ml-6 pl-8 space-y-16 py-4">
             
             {releases.map((release, rIdx) => (
               <div key={release.version} className="relative group">
@@ -131,24 +131,16 @@ export default async function ChangelogPage() {
                   <CheckCircle2 className="h-4 w-4" />
                 </span>
 
-                {/* Left Date label (Only visible on MD/large screens) */}
-                <div className="hidden md:block absolute -left-[180px] top-2.5 text-right w-[140px] space-y-1">
-                  <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">{release.date}</p>
-                  <p className="text-[10px] text-primary/80 font-bold flex items-center justify-end gap-1">
-                    <Calendar className="h-3 w-3" /> Released
-                  </p>
-                </div>
-
                 {/* Main Card content */}
                 <div className="space-y-6">
                   
                   {/* Version header */}
-                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-2">
+                  <div className="flex flex-wrap items-center gap-3">
                     <h2 className="text-3xl font-black tracking-tight text-foreground group-hover:text-primary transition-colors">
                       Version {release.version}
                     </h2>
-                    <span className="md:hidden text-xs font-black text-muted-foreground uppercase tracking-widest">
-                      {release.date}
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground bg-muted/40 px-2.5 py-1 rounded-full border">
+                      <Calendar className="h-3 w-3 text-primary" /> {release.date}
                     </span>
                   </div>
 
@@ -170,8 +162,8 @@ export default async function ChangelogPage() {
                           {/* Items content */}
                           <div 
                             className="prose dark:prose-invert max-w-none 
-                              prose-ul:list-disc prose-ul:pl-5 prose-ul:space-y-3
-                              prose-li:text-sm prose-li:text-muted-foreground prose-li:leading-relaxed
+                              prose-ul:list-none prose-ul:pl-0 prose-ul:space-y-3
+                              prose-li:border-l-2 prose-li:border-primary/20 prose-li:pl-4 prose-li:py-1 hover:prose-li:border-primary transition-colors
                               prose-strong:text-foreground prose-strong:font-bold
                               prose-code:text-primary prose-code:bg-primary/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-xs"
                             dangerouslySetInnerHTML={{ __html: section.html }}
