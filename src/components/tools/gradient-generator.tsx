@@ -77,7 +77,7 @@ export function GradientGenerator() {
     setTimeout(() => setCopiedText(""), 2000)
   }
 
-  return (
+  return (<>
     <div className="grid gap-6 lg:grid-cols-12">
       {/* Preset Selector */}
       <div className="lg:col-span-4 space-y-6">
@@ -205,8 +205,67 @@ export function GradientGenerator() {
           {copiedText && (
             <span className="text-xs text-primary font-bold text-center">Copied snippet to clipboard!</span>
           )}
+          </div>
         </div>
       </div>
-    </div>
-  )
+
+      <div className="grid md:grid-cols-3 gap-6 mt-8">
+        <div className="bg-primary/5 border border-primary/10 p-5 rounded-2xl space-y-2">
+          <h4 className="text-sm font-bold flex items-center gap-2">
+            <span className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><span className="text-[10px] font-black">1</span></span> Curated Presets
+          </h4>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Instantly browse beautiful, hand-crafted gradients optimized for backgrounds, header banners, buttons, and card states.
+          </p>
+        </div>
+        <div className="bg-primary/5 border border-primary/10 p-5 rounded-2xl space-y-2">
+          <h4 className="text-sm font-bold flex items-center gap-2">
+            <span className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><span className="text-[10px] font-black">2</span></span> Angle & Type Tuners
+          </h4>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Switch between linear and radial layouts, modify angles from 0° to 360°, and reverse color stop directions with one click.
+          </p>
+        </div>
+        <div className="bg-primary/5 border border-primary/10 p-5 rounded-2xl space-y-2">
+          <h4 className="text-sm font-bold flex items-center gap-2">
+            <span className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><span className="text-[10px] font-black">3</span></span> Production Export
+          </h4>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Export generated gradients to standard CSS rules or matching Tailwind CSS configuration utility classes instantly.
+          </p>
+        </div>
+      </div>
+
+      {/* SEO Section */}
+      <div className="grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12 pb-20">
+        <section>
+          <h2 className="text-2xl font-black tracking-tight mb-4">Enhance Your UI with Premium Gradients</h2>
+          <p className="text-muted-foreground leading-relaxed">
+            Gradients add depth, character, and visual hierarchy to modern web interfaces. By combining two or more harmonious colors, you create eye-catching focal points for landing pages and call-to-actions.
+          </p>
+          <p className="text-muted-foreground mt-4 leading-relaxed">
+            This tool helps developers quickly experiment with color stop modifications and angle selections, saving hours of manual CSS writing. Build high-quality visuals and test them in real-time before pushing to production.
+          </p>
+        </section>
+        <section className="bg-muted/30 p-8 rounded-3xl border border-border">
+          <h3 className="text-xl font-black tracking-tight mb-6">Benefits of Modern Web Gradients</h3>
+          <ul className="space-y-4 list-none p-0">
+            {[
+              { title: "Visual Depth", desc: "Transitions mimic natural lighting, making buttons and containers feel interactive and tactile." },
+              { title: "Brand Identity", desc: "Custom brand gradients create instantly recognizable landing pages and product banners." },
+              { title: "No Extra Load", desc: "CSS gradients compile directly in the browser, providing high-fidelity graphics without downloading heavy image files." },
+              { title: "Tailwind Integration", desc: "Our copy-paste Tailwind code lets you easily apply custom gradient styles inside your utility classes." },
+            ].map((item, i) => (
+              <li key={i} className="flex gap-4">
+                <div className="h-6 w-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-black text-primary">{i + 1}</div>
+                <div>
+                  <h4 className="font-bold text-foreground leading-none mb-1">{item.title}</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    </>)
 }

@@ -64,11 +64,14 @@ export function ColorPalette() {
   const generatePalette = useCallback(() => {
     setColors((prevColors) => {
       const newColors = [...prevColors]
-      // Determine base color (use the first locked color, or random if none locked)
       const firstLockedIdx = locked.indexOf(true)
+      
       let baseH = Math.floor(Math.random() * 360)
       let baseS = 65 + Math.floor(Math.random() * 20)
       let baseL = 40 + Math.floor(Math.random() * 30)
+
+      // Add a random angle offset on each generation to vary rule-based colors
+      const angleOffset = Math.floor(Math.random() * 360)
 
       if (firstLockedIdx !== -1) {
         try {
@@ -76,9 +79,7 @@ export function ColorPalette() {
           baseH = hsl.h
           baseS = hsl.s
           baseL = hsl.l
-        } catch (e) {
-          // Fallback on invalid user inputs
-        }
+        } catch (e) {}
       }
 
       for (let i = 0; i < 5; i++) {
@@ -87,32 +88,29 @@ export function ColorPalette() {
         let h = baseH, s = baseS, l = baseL
         
         if (harmony === "monochromatic") {
-          l = (15 + (i * 18)) % 90
-          s = baseS
+          l = (15 + (i * 18) + Math.floor(Math.random() * 15)) % 90
+          s = Math.max(20, Math.min(100, baseS + Math.floor(Math.random() * 30) - 15))
         } else if (harmony === "analogous") {
-          h = (baseH + (i - 2) * 20 + 360) % 360
-          l = baseL + (i - 2) * 5
+          h = (baseH + (i - 2) * 20 + angleOffset) % 360
+          l = Math.max(15, Math.min(85, baseL + (i - 2) * 5 + Math.floor(Math.random() * 10) - 5))
         } else if (harmony === "complementary") {
           if (i >= 3) {
-            h = (baseH + 180) % 360
-            l = baseL + (i - 4) * 10
+            h = (baseH + 180 + angleOffset) % 360
+            l = Math.max(15, Math.min(85, baseL + (i - 4) * 10 + Math.floor(Math.random() * 10) - 5))
           } else {
-            l = baseL + (i - 1) * 10
+            h = (baseH + angleOffset) % 360
+            l = Math.max(15, Math.min(85, baseL + (i - 1) * 10 + Math.floor(Math.random() * 10) - 5))
           }
         } else if (harmony === "triadic") {
-          if (i === 1 || i === 2) {
-            h = (baseH + 120) % 360
-          } else if (i === 3 || i === 4) {
-            h = (baseH + 240) % 360
-          }
-          l = baseL + (i % 2) * 10
+          const steps = [0, 120, 240]
+          const step = steps[Math.floor(Math.random() * steps.length)]
+          h = (baseH + step + angleOffset) % 360
+          l = Math.max(15, Math.min(85, baseL + (i % 2) * 10 + Math.floor(Math.random() * 10) - 5))
         } else if (harmony === "split") {
-          if (i === 1 || i === 2) {
-            h = (baseH + 150) % 360
-          } else if (i === 3 || i === 4) {
-            h = (baseH + 210) % 360
-          }
-          l = baseL + (i % 2) * 10
+          const steps = [0, 150, 210]
+          const step = steps[Math.floor(Math.random() * steps.length)]
+          h = (baseH + step + angleOffset) % 360
+          l = Math.max(15, Math.min(85, baseL + (i % 2) * 10 + Math.floor(Math.random() * 10) - 5))
         } else {
           // Completely random
           h = Math.floor(Math.random() * 360)
@@ -252,6 +250,11 @@ export function ColorPalette() {
                 className="w-full h-8 border border-white/20 rounded-lg cursor-pointer bg-transparent"
               />
               <div className="flex justify-between items-center gap-2">
+                {/* Visual color box preview before HEX code */}
+                <div 
+                  className="w-4 h-4 rounded border border-white/30 shrink-0 shadow-sm" 
+                  style={{ backgroundColor: color }} 
+                />
                 <input
                   type="text"
                   value={color}
@@ -343,6 +346,65 @@ export function ColorPalette() {
             </pre>
           </div>
         </div>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-6 mt-8">
+        <div className="bg-primary/5 border border-primary/10 p-5 rounded-2xl space-y-2">
+          <h4 className="text-sm font-bold flex items-center gap-2">
+            <span className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><span className="text-[10px] font-black">1</span></span> Harmony Rules
+          </h4>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Generate schemes using color wheel math (Monochromatic, Analogous, Complementary, Triadic, Split-Complementary) for balanced results.
+          </p>
+        </div>
+        <div className="bg-primary/5 border border-primary/10 p-5 rounded-2xl space-y-2">
+          <h4 className="text-sm font-bold flex items-center gap-2">
+            <span className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><span className="text-[10px] font-black">2</span></span> Lock Individual Colors
+          </h4>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Lock swatches that you want to keep. Regenerate the remaining slots to find the perfect companion colors.
+          </p>
+        </div>
+        <div className="bg-primary/5 border border-primary/10 p-5 rounded-2xl space-y-2">
+          <h4 className="text-sm font-bold flex items-center gap-2">
+            <span className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><span className="text-[10px] font-black">3</span></span> Asset Export
+          </h4>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Export palettes as clean CSS variables, copy Tailwind config definitions, JSON structures, or download a palette card PNG.
+          </p>
+        </div>
+      </div>
+
+      {/* SEO Section */}
+      <div className="grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12 pb-20">
+        <section>
+          <h2 className="text-2xl font-black tracking-tight mb-4">Designing with Harmonious Color Palettes</h2>
+          <p className="text-muted-foreground leading-relaxed">
+            A balanced color scheme is the foundation of any professional UI/UX design. Colors trigger emotional responses and guide user attention. Using established harmony rules ensures your visual palette is appealing and structured.
+          </p>
+          <p className="text-muted-foreground mt-4 leading-relaxed">
+            Our tool lets designers lock base brand colors and mathematically generate accompanying tints, shades, complementary tones, or triadic accents in seconds. Press Spacebar to quickly generate variations and export them.
+          </p>
+        </section>
+        <section className="bg-muted/30 p-8 rounded-3xl border border-border">
+          <h3 className="text-xl font-black tracking-tight mb-6">Popular Color Harmony Rules Explained</h3>
+          <ul className="space-y-4 list-none p-0">
+            {[
+              { title: "Analogous", desc: "Colors sitting next to each other on the color wheel. Highly soothing and cohesive." },
+              { title: "Complementary", desc: "Opposite colors that create high contrast and high energy when placed side-by-side." },
+              { title: "Triadic", desc: "Three colors spaced evenly (120 degrees apart) on the wheel. Offers vibrant but balanced contrast." },
+              { title: "Monochromatic", desc: "Varying lightness and saturation of a single color. Clean, minimalist, and very easy to match." },
+            ].map((item, i) => (
+              <li key={i} className="flex gap-4">
+                <div className="h-6 w-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-black text-primary">{i + 1}</div>
+                <div>
+                  <h4 className="font-bold text-foreground leading-none mb-1">{item.title}</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
     </div>
   )

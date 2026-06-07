@@ -260,6 +260,65 @@ export function ColorContrast() {
           </div>
         </div>
       </div>
+
+      <div className="grid md:grid-cols-3 gap-6 mt-8">
+        <div className="bg-primary/5 border border-primary/10 p-5 rounded-2xl space-y-2">
+          <h4 className="text-sm font-bold flex items-center gap-2">
+            <span className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><span className="text-[10px] font-black">1</span></span> Why Contrast Matters
+          </h4>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Good color contrast ensures that text is readable for everyone, including users with visual impairments, color blindness, or those viewing screens in direct sunlight.
+          </p>
+        </div>
+        <div className="bg-primary/5 border border-primary/10 p-5 rounded-2xl space-y-2">
+          <h4 className="text-sm font-bold flex items-center gap-2">
+            <span className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><span className="text-[10px] font-black">2</span></span> WCAG 2.1 Guidelines
+          </h4>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Level AA requires a contrast ratio of at least 4.5:1 for normal text and 3:1 for large text. Level AAA requires at least 7:1 for normal text and 4.5:1 for large text.
+          </p>
+        </div>
+        <div className="bg-primary/5 border border-primary/10 p-5 rounded-2xl space-y-2">
+          <h4 className="text-sm font-bold flex items-center gap-2">
+            <span className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><span className="text-[10px] font-black">3</span></span> Inclusive Design
+          </h4>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            By verifying accessibility contrast ratios early in the design phase, you prevent UX issues and make sure your platform complies with standard accessibility laws.
+          </p>
+        </div>
+      </div>
+
+      {/* SEO Section */}
+      <div className="grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12 pb-20">
+        <section>
+          <h2 className="text-2xl font-black tracking-tight mb-4">Understanding Color Contrast & Web Accessibility</h2>
+          <p className="text-muted-foreground leading-relaxed">
+            Web content accessibility is essential for creating inclusive digital products. Color contrast refers to the difference in luminance or color between the active text (foreground) and the backdrop it is written on (background).
+          </p>
+          <p className="text-muted-foreground mt-4 leading-relaxed">
+            Our tool helps you test contrast dynamically using the relative luminance calculations defined by the W3C. This guarantees that your color palettes are compliant with international standards, helping you pass accessibility audits and build better products.
+          </p>
+        </section>
+        <section className="bg-muted/30 p-8 rounded-3xl border border-border">
+          <h3 className="text-xl font-black tracking-tight mb-6">WCAG 2.1 Accessibility Checklist</h3>
+          <ul className="space-y-4 list-none p-0">
+            {[
+              { title: "AA Normal Text (Passes at ≥ 4.5:1)", desc: "Essential for standard body text, captions, and general paragraph elements under 18pt (24px) in size." },
+              { title: "AAA Normal Text (Passes at ≥ 7.0:1)", desc: "The highest standard of accessibility, ensuring maximum legibility for body text." },
+              { title: "AA Large Text (Passes at ≥ 3.0:1)", desc: "Applies to headings, large titles, or bold text over 14pt (approx. 18.6px) or regular text over 18pt." },
+              { title: "UI Components & Icons (Passes at ≥ 3.0:1)", desc: "Includes borders of input elements, visual status indicators, active buttons, and custom SVG icons." },
+            ].map((item, i) => (
+              <li key={i} className="flex gap-4">
+                <div className="h-6 w-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-black text-primary">{i + 1}</div>
+                <div>
+                  <h4 className="font-bold text-foreground leading-none mb-1">{item.title}</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
     </div>
   )
 }
