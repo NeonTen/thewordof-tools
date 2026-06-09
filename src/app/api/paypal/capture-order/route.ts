@@ -28,13 +28,16 @@ export async function POST(req: Request) {
 
       // Update user to PRO/BUSINESS and set expiration/credits
       const defaultAllocation = getCurrentCreditAllocation(newRole);
+      const creditsResetAt = new Date();
+      creditsResetAt.setMonth(creditsResetAt.getMonth() + 1);
+
       await prisma.user.update({
         where: { id: session.user.id },
         data: { 
           role: newRole,
           proExpiresAt: expiresAt,
           creditsRemaining: defaultAllocation,
-          creditsResetAt: expiresAt
+          creditsResetAt: creditsResetAt
         },
       });
 

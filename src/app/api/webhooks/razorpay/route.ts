@@ -89,13 +89,16 @@ export async function POST(req: Request) {
         }
 
         const defaultAllocation = details.role === "BUSINESS" ? 2000 : 500;
+        const creditsResetAt = new Date();
+        creditsResetAt.setMonth(creditsResetAt.getMonth() + 1);
+
         await prisma.user.update({
           where: { id: user.id },
           data: {
             role: details.role,
             proExpiresAt: expiresAt,
             creditsRemaining: defaultAllocation,
-            creditsResetAt: expiresAt,
+            creditsResetAt: creditsResetAt,
           },
         });
 

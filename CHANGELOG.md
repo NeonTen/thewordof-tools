@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2026-06-09
+
+### Fixed
+- **Yearly Subscription Credit Reset**: Fixed a bug where yearly subscribers only reset their AI credits once a year. Credits now correctly reset on a monthly basis for all subscription intervals.
+
 ## [1.1.0] - 2026-06-08
 
 ### Added
