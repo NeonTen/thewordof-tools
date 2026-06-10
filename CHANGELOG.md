@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2026-06-10
+
+### Added
+- **Broken Link & Anchor Auditor**:
+  - Implemented client-side pagination with page size selector, item range indicator, and navigation buttons.
+  - Added slow scan user notification alert displaying after 8 seconds of active scanning.
+- **SEO Readability & Content Grader**:
+  - Added Flesch Reading Ease score guide text explaining readability relationships.
+
+### Changed
+- **Schema Generator Simplification**: Removed the 'Google Search Preview' option, preview mockup rendering engine, and tab states from the schema generator UI.
+- **SEO Readability & Content Grader**:
+  - Renamed score sections to Flesch Reading Ease.
+  - Enhanced text color contrast for difficulty levels in dark mode (resolved illegible red text).
+
+### Fixed
+- **AI Schema Generation Decoupling**: Decoupled the AI Smart Generator from the manual Schema Type select dropdown, preventing AI output from modifying the form editor fields.
+- **Broken Link & Anchor Auditor**:
+  - Implemented bot-check bypass logic for major social network domains returning 400, 403, 503, or 999 status codes due to anti-scraping blocks.
+- **Keyword Density & N-Gram Analyzer**:
+  - Refactored matching algorithms using tokenized regex and a sliding window to correctly highlight arbitrary length multi-word keyword phrases.
+
 ## [1.1.1] - 2026-06-09
 
 ### Fixed
