@@ -32,6 +32,10 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
   const limitReached = !isPro && usedThisMonth >= 3
   const isFeatureUnlocked = isPro || usedThisMonth < 3
 
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState<number | "all">(10)
+
   // Scan Action
   const handleScan = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -75,7 +79,6 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
     return { total, ok, redirects, broken, internal, external }
   }, [links])
 
-  // Filtered List
   const filteredLinks = useMemo(() => {
     return links.filter(l => {
       if (filter === "broken") return l.status >= 400 || l.status === 0
@@ -85,6 +88,22 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
       return true
     })
   }, [links, filter])
+
+  // Reset page when filter or links change
+  useMemo(() => {
+    setCurrentPage(1)
+  }, [filter, links])
+
+  const paginatedLinks = useMemo(() => {
+    if (pageSize === "all") return filteredLinks
+    const start = (currentPage - 1) * pageSize
+    return filteredLinks.slice(start, start + pageSize)
+  }, [filteredLinks, currentPage, pageSize])
+
+  const totalPages = useMemo(() => {
+    if (pageSize === "all" || filteredLinks.length === 0) return 1
+    return Math.ceil(filteredLinks.length / pageSize)
+  }, [filteredLinks, pageSize])
 
   return (
     <div className="grid gap-6 lg:grid-cols-12">
@@ -189,7 +208,9 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
         <div className="bg-card border rounded-2xl overflow-hidden shadow-sm flex flex-col min-h-[440px]">
           <div className="p-4 bg-muted/20 border-b border-border flex items-center justify-between">
             <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Outbound Link Inventory</span>
-            <span className="text-[10px] bg-muted px-2 py-0.5 rounded-md font-bold text-muted-foreground">Showing {filteredLinks.length} items</span>
+            <span className="text-[10px] bg-muted px-2 py-0.5 rounded-md font-bold text-muted-foreground">
+              {pageSize === "all" ? `Showing all ${filteredLinks.length} items` : `Showing ${filteredLinks.length === 0 ? 0 : (currentPage - 1) * pageSize + 1}-${Math.min(filteredLinks.length, currentPage * pageSize)} of ${filteredLinks.length} items`}
+            </span>
           </div>
 
           <div className="overflow-x-auto">
@@ -202,7 +223,7 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
                 </tr>
               </thead>
               <tbody>
-                {filteredLinks.map((link, idx) => (
+                {paginatedLinks.map((link, idx) => (
                   <tr key={idx} className="border-b border-border last:border-none hover:bg-muted/10 transition-colors">
                     <td className="p-3 pl-5">
                       <div className="space-y-1 max-w-[200px]">
@@ -223,11 +244,11 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
                     </td>
                     <td className="p-3">
                       <a 
-                        href={link.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 truncate max-w-[280px]"
-                      >
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 truncate max-w-[280px]"
+                    >
                         <Link2 className="h-3 w-3 shrink-0" />
                         <span className="truncate">{link.href}</span>
                         <ExternalLink className="h-2.5 w-2.5 shrink-0" />
@@ -250,6 +271,54 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
               </tbody>
             </table>
           </div>
+
+          {/* Pagination Footer */}
+          {filteredLinks.length > 0 && (
+            <div className="p-4 bg-muted/10 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold">
+              <div className="flex items-center gap-2">
+                <span className="text-muted-foreground">Show</span>
+                <select
+                  value={pageSize}
+                  onChange={(e) => {
+                    const val = e.target.value
+                    setPageSize(val === "all" ? "all" : Number(val))
+                    setCurrentPage(1)
+                  }}
+                  className="bg-background border border-border rounded-lg px-2.5 py-1 focus:outline-none focus:ring-1 focus:ring-primary font-bold text-foreground cursor-pointer"
+                >
+                  <option value={10}>10 items</option>
+                  <option value={25}>25 items</option>
+                  <option value={50}>50 items</option>
+                  <option value={100}>100 items</option>
+                  <option value="all">All items</option>
+                </select>
+              </div>
+
+              {pageSize !== "all" && (
+                <div className="flex items-center gap-4">
+                  <span className="text-muted-foreground">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <div className="flex gap-1.5">
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      className="px-3 py-1.5 border border-border rounded-xl bg-card text-foreground font-bold hover:bg-muted/40 transition-colors disabled:opacity-40 disabled:hover:bg-card cursor-pointer"
+                    >
+                      Prev
+                    </button>
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                      disabled={currentPage === totalPages}
+                      className="px-3 py-1.5 border border-border rounded-xl bg-card text-foreground font-bold hover:bg-muted/40 transition-colors disabled:opacity-40 disabled:hover:bg-card cursor-pointer"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
