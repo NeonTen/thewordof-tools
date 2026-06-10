@@ -1,3 +1,5 @@
+import { auth } from "@/auth"
+import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
@@ -5,6 +7,16 @@ export async function POST(req: Request) {
     const { url } = await req.json()
     if (!url) {
       return NextResponse.json({ error: "URL is required" }, { status: 400 })
+    }
+
+    const session = await auth()
+    let isPro = false
+    if (session?.user?.id) {
+      const user = await prisma.user.findUnique({
+        where: { id: session.user.id },
+        include: { subscriptions: true }
+      })
+      isPro = user?.role === "PRO" || user?.role === "BUSINESS" || user?.role === "ADMIN" || user?.subscriptions?.[0]?.plan === "PREMIUM" || user?.subscriptions?.[0]?.plan === "BUSINESS"
     }
 
     const formattedUrl = url.startsWith("http") ? url : `https://${url}`
@@ -17,7 +29,7 @@ export async function POST(req: Request) {
 
     const response = await fetch(formattedUrl, {
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 SEO-Agent"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
       },
       signal: AbortSignal.timeout(8000)
     })
@@ -73,40 +85,48 @@ export async function POST(req: Request) {
       parsedLinks.push({ href: resolvedUrl, text: anchorText, type })
     }
 
-    // Scan the first 30 links in parallel batches of 5 to avoid overloading the system
-    const scannedLinks = await Promise.all(
-      parsedLinks.slice(0, 30).map(async (link) => {
-        try {
-          // Perform lightweight HEAD or GET check with short timeout
-          const headResponse = await fetch(link.href, {
-            method: "HEAD",
-            headers: {
-              "User-Agent": "Mozilla/5.0 SEO-Agent"
-            },
-            signal: AbortSignal.timeout(4000)
-          })
+    const limit = isPro ? parsedLinks.length : 30
+    const linksToScan = parsedLinks.slice(0, limit)
 
-          let status = headResponse.status
-          
-          // Fallback to GET if HEAD method is disallowed (e.g. 405 or 403)
-          if (status === 405 || status === 403) {
-            const getResponse = await fetch(link.href, {
-              method: "GET",
-              headers: {
-                "User-Agent": "Mozilla/5.0 SEO-Agent"
-              },
-              signal: AbortSignal.timeout(3000)
+    // Batch checks in parallel groups of 10 to avoid connection pooling issues or rate limits
+    const batchSize = 10
+    const scannedLinks: any[] = []
+    const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+
+    for (let i = 0; i < linksToScan.length; i += batchSize) {
+      const batch = linksToScan.slice(i, i + batchSize)
+      const results = await Promise.all(
+        batch.map(async (link) => {
+          let status = 0
+          try {
+            const headResponse = await fetch(link.href, {
+              method: "HEAD",
+              headers: { "User-Agent": userAgent },
+              signal: AbortSignal.timeout(4000)
             })
-            status = getResponse.status
+            status = headResponse.status
+          } catch {
+            // ignore and fallback to GET
+          }
+
+          if (status < 200 || status >= 400) {
+            try {
+              const getResponse = await fetch(link.href, {
+                method: "GET",
+                headers: { "User-Agent": userAgent },
+                signal: AbortSignal.timeout(4000)
+              })
+              status = getResponse.status
+            } catch {
+              status = 0 // network/connection issue
+            }
           }
 
           return { ...link, status }
-        } catch {
-          // Return 404 for timeouts or network failure errors
-          return { ...link, status: 404 }
-        }
-      })
-    )
+        })
+      )
+      scannedLinks.push(...results)
+    }
 
     return NextResponse.json({ links: scannedLinks })
   } catch (err: any) {
