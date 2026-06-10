@@ -430,8 +430,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/tools/scan-links/route.ts": {
-    "mtime": 1781067406.5628304,
-    "ast_hash": "845ba96dca42254733cc9b39c1746fff",
+    "mtime": 1781068235.6806612,
+    "ast_hash": "e9b5df8f6a6bd9fab9b5f4ad087eea2b",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/app/api/tools/generate-description/route.ts": {
@@ -840,8 +840,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/broken-links.tsx": {
-    "mtime": 1781067428.0171235,
-    "ast_hash": "f5e1c7222d96fd5c00519cb33af2be0f",
+    "mtime": 1781068252.1615992,
+    "ast_hash": "e597e6f14b00c2d7b28a80597a15b8dd",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/tool-header.tsx": {
@@ -1474,6 +1474,11 @@
     "ast_hash": "8ce196e1a4fc799c2598fcc0564ecb15",
     "semantic_hash": ""
   },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/plans/2026-06-10-broken-links-social-timer-plan.md": {
+    "mtime": 1781068213.3649106,
+    "ast_hash": "8c01559047d35c97916ad5abb16a6296",
+    "semantic_hash": ""
+  },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/plans/2026-06-08-technical-seo.md": {
     "mtime": 1780864054.8986974,
     "ast_hash": "c9a2824a736651843ce5f9c7c94c6be0",
@@ -1592,6 +1597,11 @@
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-06-04-replace-name-design.md": {
     "mtime": 1780543970.4521441,
     "ast_hash": "a2397221230c5a441c9e9be3548d6ea9",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-06-10-broken-links-social-timer-design.md": {
+    "mtime": 1781068198.1219368,
+    "ast_hash": "68d664330f9949861a11bd8f7fd7a372",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-29-preview-and-header-layout-fixes-design.md": {
