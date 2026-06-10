@@ -141,20 +141,23 @@ export function KeywordDensityAnalyzer({ isPro }: { isPro: boolean }) {
       .filter(k => k.length > 0)
     
     return keywords.map(kw => {
-      const lowerKw = kw.toLowerCase()
-      // Support matching multiple words phrase
-      const parts = lowerKw.split(/\s+/)
+      // Tokenize target keyword using the exact same word regex pattern
+      const parts = kw.match(/[a-zA-Z0-9'-]+/g) || []
       let count = 0
       
-      if (parts.length === 1) {
-        count = parsedWords.filter(w => w.toLowerCase() === lowerKw).length
-      } else if (parts.length === 2) {
-        for (let i = 0; i < parsedWords.length - 1; i++) {
-          if (parsedWords[i].toLowerCase() === parts[0] && parsedWords[i+1].toLowerCase() === parts[1]) count++
-        }
-      } else if (parts.length === 3) {
-        for (let i = 0; i < parsedWords.length - 2; i++) {
-          if (parsedWords[i].toLowerCase() === parts[0] && parsedWords[i+1].toLowerCase() === parts[1] && parsedWords[i+2].toLowerCase() === parts[2]) count++
+      if (parts.length > 0) {
+        const matchLength = parts.length
+        for (let i = 0; i <= parsedWords.length - matchLength; i++) {
+          let match = true
+          for (let j = 0; j < matchLength; j++) {
+            const wordA = caseSensitive ? parsedWords[i + j] : parsedWords[i + j].toLowerCase()
+            const wordB = caseSensitive ? parts[j] : parts[j].toLowerCase()
+            if (wordA !== wordB) {
+              match = false
+              break
+            }
+          }
+          if (match) count++
         }
       }
 
@@ -176,7 +179,7 @@ export function KeywordDensityAnalyzer({ isPro }: { isPro: boolean }) {
 
       return { keyword: kw, count, density, status, message }
     })
-  }, [targetKeywords, parsedWords, totalWordsCount])
+  }, [targetKeywords, parsedWords, totalWordsCount, caseSensitive])
 
   return (
     <div className="grid gap-6 lg:grid-cols-12">
