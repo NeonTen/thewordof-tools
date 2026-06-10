@@ -97,13 +97,13 @@ export function ReadabilityGrader({ isPro }: { isPro: boolean }) {
   // Grade & Assessment Interpretations
   const gradeLevel = useMemo(() => {
     const score = stats.score
-    if (score >= 90) return { grade: "5th Grade", ease: "Very Easy", desc: "Easy to read for an average 11-year-old student.", color: "text-green-500 bg-green-500/10 border-green-500/20" }
-    if (score >= 80) return { grade: "6th Grade", ease: "Easy", desc: "Conversational language, very easy to follow.", color: "text-green-500 bg-green-500/10 border-green-500/20" }
-    if (score >= 70) return { grade: "7th Grade", ease: "Fairly Easy", desc: "Standard plain English style, accessible to most readers.", color: "text-green-400 bg-green-500/5 border-green-400/20" }
+    if (score >= 90) return { grade: "5th Grade", ease: "Very Easy", desc: "Easy to read for an average 11-year-old student.", color: "text-green-600 dark:text-green-400 bg-green-500/10 dark:bg-green-500/20 border-green-500/20" }
+    if (score >= 80) return { grade: "6th Grade", ease: "Easy", desc: "Conversational language, very easy to follow.", color: "text-green-600 dark:text-green-400 bg-green-500/10 dark:bg-green-500/20 border-green-500/20" }
+    if (score >= 70) return { grade: "7th Grade", ease: "Fairly Easy", desc: "Standard plain English style, accessible to most readers.", color: "text-green-600 dark:text-green-400 bg-green-500/10 dark:bg-green-500/20 border-green-500/20" }
     if (score >= 60) return { grade: "8th & 9th Grade", ease: "Standard / Plain English", desc: "Ideal readability level for web articles, blogs, and public documentation.", color: "text-primary bg-primary/10 border-primary/20" }
     if (score >= 50) return { grade: "10th to 12th Grade", ease: "Fairly Difficult", desc: "Somewhat complex language, appropriate for high school students.", color: "text-amber-500 bg-amber-500/10 border-amber-500/20" }
-    if (score >= 30) return { grade: "College Student", ease: "Difficult", desc: "Dense text containing advanced terminology and long sentences.", color: "text-destructive bg-destructive/10 border-destructive/20" }
-    return { grade: "College Graduate", ease: "Very Difficult", desc: "Academic, scientific, or highly professional prose requiring post-graduate reading levels.", color: "text-destructive bg-destructive/10 border-destructive/20" }
+    if (score >= 30) return { grade: "College Student", ease: "Difficult", desc: "Dense text containing advanced terminology and long sentences.", color: "text-red-600 dark:text-red-400 bg-red-500/10 dark:bg-red-500/20 border-red-500/20 dark:border-red-500/30" }
+    return { grade: "College Graduate", ease: "Very Difficult", desc: "Academic, scientific, or highly professional prose requiring post-graduate reading levels.", color: "text-red-600 dark:text-red-400 bg-red-500/10 dark:bg-red-500/20 border-red-500/20 dark:border-red-500/30" }
   }, [stats.score])
 
   // Context Recommendations
@@ -206,7 +206,7 @@ export function ReadabilityGrader({ isPro }: { isPro: boolean }) {
           </div>
 
           <div className="space-y-1">
-            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Readability Score</h3>
+            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Flesch Reading Ease Score</h3>
             <p className="text-6xl font-black tracking-tight text-foreground">{stats.score}</p>
           </div>
 
@@ -298,12 +298,12 @@ export function ReadabilityGrader({ isPro }: { isPro: boolean }) {
       {/* SEO Section */}
       <div className="lg:col-span-12 grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12 pb-20">
         <section>
-          <h2 className="text-2xl font-black tracking-tight mb-4">The Impact of Readability on SEO Rankings</h2>
+          <h2 className="text-2xl font-black tracking-tight mb-4">Flesch Reading Ease & Google Rankings</h2>
           <p className="text-muted-foreground leading-relaxed">
-            While readability is not a direct ranking algorithm signal, search engines heavily measure user engagement metrics. Content that is easy to scan, read, and digest leads to longer user sessions and lower search return bounce rates.
+            This score is calculated using the industry-standard <strong>Flesch Reading Ease formula</strong> (which scores text based on average sentence length and syllable density). While readability formulas are not direct ranking signals officially approved by Google, search engine crawlers heavily measure user engagement metrics.
           </p>
           <p className="text-muted-foreground mt-4 leading-relaxed">
-            Formatting text using simple terms, dividing arguments with descriptive headers, and breaking up complex sentences helps both human visitors and indexing crawler engines catalog pages effectively.
+            Content that is easy to scan, read, and digest leads to longer user sessions and lower bounce rates. Writing clearly in plain language is one of the most effective ways to satisfy Google's helpful content systems.
           </p>
         </section>
         <section className="bg-muted/30 p-8 rounded-3xl border border-border">
