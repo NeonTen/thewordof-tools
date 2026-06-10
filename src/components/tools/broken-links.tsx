@@ -25,6 +25,7 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
   
   const [scanning, setScanning] = useState(false)
   const [scanError, setScanError] = useState("")
+  const [showSlowScanNotice, setShowSlowScanNotice] = useState(false)
   const [filter, setFilter] = useState<"all" | "broken" | "redirect" | "internal" | "external">("all")
 
   // Usage Limit
@@ -48,6 +49,13 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
 
     setScanning(true)
     setScanError("")
+    setShowSlowScanNotice(false)
+
+    // Set a timer to show slow scan notice after 8 seconds
+    const timer = setTimeout(() => {
+      setShowSlowScanNotice(true)
+    }, 8000)
+
     try {
       const res = await fetch("/api/tools/scan-links", {
         method: "POST",
@@ -64,6 +72,8 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
     } catch {
       setScanError("Connection timed out or failed to parse target URL links.")
     } finally {
+      clearTimeout(timer)
+      setShowSlowScanNotice(false)
       setScanning(false)
     }
   }
@@ -138,6 +148,13 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
                 {scanning ? "Scanning..." : "Scan Links"}
               </button>
             </form>
+
+            {scanning && showSlowScanNotice && (
+              <p className="text-xs text-amber-500 font-semibold animate-pulse mt-2.5 flex items-center gap-1.5">
+                <RefreshCw className="h-3 w-3 animate-spin" />
+                Analyzing link inventory... Since this page has a large number of links, it may take a minute or two.
+              </p>
+            )}
           </ProGate>
 
           {scanError && <p className="text-xs text-destructive font-semibold">{scanError}</p>}
