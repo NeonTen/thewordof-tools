@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2026-06-10
+
+### Changed
+- **Schema Generator Simplification**: Removed the 'Google Search Preview' option, associated preview mockup rendering engine, and tab states from the structured schema generator.
+
+### Fixed
+- **AI Schema Generation Decoupling**: Decoupled the AI Smart Generator from the manual Schema Type select dropdown, preventing the AI from overwriting the manual form fields.
+
 ## [1.1.1] - 2026-06-09
 
 ### Fixed
