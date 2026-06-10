@@ -850,8 +850,8 @@
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/readability-grader.tsx": {
-    "mtime": 1780868644.5331283,
-    "ast_hash": "0e6c6d478b29a23d01327f501ef03023",
+    "mtime": 1781068900.8128235,
+    "ast_hash": "93fe17a95222749c5bc6c72a4c0d1748",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/src/components/tools/px-to-rem-calculator.tsx": {
@@ -1474,6 +1474,11 @@
     "ast_hash": "8ce196e1a4fc799c2598fcc0564ecb15",
     "semantic_hash": ""
   },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/plans/2026-06-10-readability-grader-improvements-plan.md": {
+    "mtime": 1781068874.6520052,
+    "ast_hash": "c704a7a1f42d07bd118cc846a2f691c0",
+    "semantic_hash": ""
+  },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/plans/2026-06-10-broken-links-social-timer-plan.md": {
     "mtime": 1781068213.3649106,
     "ast_hash": "8c01559047d35c97916ad5abb16a6296",
@@ -1622,6 +1627,11 @@
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-29-ui-and-mobile-layout-improvements-design.md": {
     "mtime": 1780025227.2038403,
     "ast_hash": "3c75cd9d06d3484944077b7e04aae8fd",
+    "semantic_hash": ""
+  },
+  "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-06-10-readability-grader-improvements-design.md": {
+    "mtime": 1781068858.9003768,
+    "ast_hash": "c818454cde2cf4fb8c085a9cd40f6899",
     "semantic_hash": ""
   },
   "/Users/sajidkhan/.gemini/antigravity/scratch/thewordof-tools/docs/superpowers/specs/2026-05-29-email-links-and-admin-notifications-design.md": {
