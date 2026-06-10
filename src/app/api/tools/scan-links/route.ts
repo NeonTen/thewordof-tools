@@ -122,6 +122,18 @@ export async function POST(req: Request) {
             }
           }
 
+          // Special handling for major social media domains that aggressively block bots with 400/403/999/503
+          const socialDomains = ["facebook.com", "instagram.com", "linkedin.com", "twitter.com", "x.com", "youtube.com"]
+          try {
+            const domain = new URL(link.href).hostname.toLowerCase()
+            const isSocial = socialDomains.some(d => domain === d || domain.endsWith("." + d))
+            if (isSocial && (status === 400 || status === 403 || status === 999 || status === 503)) {
+              status = 200 // Treat as active/OK to avoid false broken status
+            }
+          } catch {
+            // ignore
+          }
+
           return { ...link, status }
         })
       )
