@@ -30,16 +30,16 @@ export async function POST(req: Request) {
       return new NextResponse("Quota Exceeded: You do not have enough credits.", { status: 403 })
     }
 
-    const { prompt, type } = await req.json()
+    const { prompt } = await req.json()
 
     if (!prompt) {
       return new NextResponse("Prompt is required", { status: 400 })
     }
 
-    console.log("AI_SCHEMA_REQUEST", { type, promptLength: prompt.length })
+    console.log("AI_SCHEMA_REQUEST", { promptLength: prompt.length })
 
-    const systemPrompt = `You are an expert SEO specialist. Generate a valid JSON-LD schema markup based on the user's description. 
-    The schema type requested is: ${type || 'detect from context'}.
+    const systemPrompt = `You are an expert SEO specialist. Generate exactly ONE single valid JSON-LD schema object representing the primary entity described by the user. 
+    Do NOT output multiple root-level schemas or wrap it in a @graph or array unless explicitly requested by the user. Detect the most appropriate schema type from the context.
     Return ONLY the JSON object. Do not include markdown code blocks. 
     Ensure it follows schema.org standards.`
 
