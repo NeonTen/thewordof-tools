@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.3] - 2026-06-11
+
+### Added
+- **SEO Readability & Content Grader**:
+  - Implemented paid (2 AI credits) **AI Readability Improver** utilizing Gemini models to simplify text.
+  - Added a side-by-side comparative diff preview modal highlighting modifications (complex vs simplified sentences) with Markdown markers stripped.
+  - Implemented **Export / Download** actions to download content in Markdown (`.md`), universal macOS Pages-compatible Rich Text Format (`.rtf`), and MS Word (`.docx`).
+  - Built an interactive export dropdown button displaying options in the theme's blue color only after draft application.
+  - Added a **PRO badge** on the Readability Grader card within the Technical SEO tools directory.
+
+### Changed
+- **Pricing & Copy Updates**:
+  - Removed explicit tool count from "All 25 tools included" to show "All utility tools included" for continuous updates.
+  - Removed `(shared pool)` label from AI credit features.
+  - Synchronized Pricing Page and Homepage FAQs, adding explicit notes clarifying account requirements for AI credit utilization.
+
 ## [1.1.2] - 2026-06-10
 
 ### Added
