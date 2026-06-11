@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo, useEffect } from "react"
-import { Type, AlertCircle, CheckCircle2, Award, BookOpen, FileText, Globe, RefreshCw, Sparkles, X as CloseIcon, Check } from "lucide-react"
+import { Type, AlertCircle, CheckCircle2, Award, BookOpen, FileText, Globe, RefreshCw, Sparkles, X as CloseIcon, Check, Download } from "lucide-react"
 import { useUsageLimit } from "@/hooks/use-usage-limit"
 import { diffSentences } from "@/lib/diff"
 import Link from "next/link"
@@ -41,6 +41,7 @@ export function ReadabilityGrader({
   const [improvedText, setImprovedText] = useState("")
   const [showDiffModal, setShowDiffModal] = useState(false)
   const [improveError, setImproveError] = useState("")
+  const [showExportMenu, setShowExportMenu] = useState(false)
 
   useEffect(() => {
     setLocalCredits(creditsRemaining)
@@ -431,31 +432,55 @@ ${rtfContent}
 
           {/* Download / Export Options (Only shows after AI Simplify is applied) */}
           {formattedText && (
-            <div className="pt-4 border-t border-border/50 mt-4 space-y-2">
-              <p className="text-[10px] text-muted-foreground font-semibold">EXPORT SIMPLIFIED CONTENT:</p>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <button
-                  onClick={downloadMd}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-sm shadow-primary/10"
-                >
-                  <FileText className="h-3.5 w-3.5" />
-                  .md (Markdown)
-                </button>
-                <button
-                  onClick={downloadRtf}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-sm shadow-primary/10"
-                >
-                  <BookOpen className="h-3.5 w-3.5" />
-                  .rtf (Pages)
-                </button>
-                <button
-                  onClick={downloadDocx}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-sm shadow-primary/10"
-                >
-                  <Award className="h-3.5 w-3.5" />
-                  .docx (Word)
-                </button>
-              </div>
+            <div className="pt-4 border-t border-border/50 mt-4 relative">
+              <button
+                onClick={() => setShowExportMenu(!showExportMenu)}
+                className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-sm shadow-primary/10"
+              >
+                <Download className="h-3.5 w-3.5" />
+                Download / Export Content
+              </button>
+
+              {showExportMenu && (
+                <>
+                  <div 
+                    className="fixed inset-0 z-40" 
+                    onClick={() => setShowExportMenu(false)}
+                  />
+                  <div className="absolute left-0 right-0 bottom-full mb-2 bg-card border border-border rounded-xl shadow-xl z-50 p-1 space-y-1 animate-in slide-in-from-bottom-2 duration-150 text-left">
+                    <button
+                      onClick={() => {
+                        downloadMd()
+                        setShowExportMenu(false)
+                      }}
+                      className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-xs font-bold rounded-lg transition-colors cursor-pointer"
+                    >
+                      <FileText className="h-4 w-4 text-primary" />
+                      Download as Markdown (.md)
+                    </button>
+                    <button
+                      onClick={() => {
+                        downloadRtf()
+                        setShowExportMenu(false)
+                      }}
+                      className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-xs font-bold rounded-lg transition-colors cursor-pointer"
+                    >
+                      <BookOpen className="h-4 w-4 text-primary" />
+                      Download as RTF (.rtf for macOS Pages)
+                    </button>
+                    <button
+                      onClick={() => {
+                        downloadDocx()
+                        setShowExportMenu(false)
+                      }}
+                      className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-xs font-bold rounded-lg transition-colors cursor-pointer"
+                    >
+                      <Award className="h-4 w-4 text-primary" />
+                      Download as Word (.docx for MS Word)
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>

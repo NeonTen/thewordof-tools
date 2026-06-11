@@ -103,15 +103,16 @@ export default async function PricingPage() {
                       ["SERP Previewer", "5 scrapes / mo", "Unlimited", "Unlimited"],
                       ["Keyword Density Analyzer", "5 crawls / mo", "Unlimited", "Unlimited"],
                       ["SEO Readability Grader", "5 crawls / mo", "Unlimited", "Unlimited"],
+                      ["AI Readability Improver", "—", "Costs 2 credits / use", "Costs 2 credits / use"],
                       ["Broken Link Auditor", "3 audits / mo", "Unlimited", "Unlimited"],
                       ["Advanced SEO Schema", "Basic", "Advanced", "Advanced"],
-                      ["Cloud progress saving", "—", "✅ Unlimited", "✅ Unlimited"],
-                      ["Priority AI Queue", "—", "✓ Included", "✓ Highest Priority"],
+                      ["Cloud progress saving", "—", "Unlimited", "Unlimited"],
+                      ["Priority AI Queue", "—", "Included", "Highest Priority"],
                       ["Ad-Free Experience", "—", "✓", "✓"],
                       ["History Tracking", "—", "✓", "✓"],
-                      ["Priority Tool Requests", "—", "—", "✓ Included"],
+                      ["Priority Tool Requests", "—", "—", "Included"],
                       ["Early Access", "—", "✓", "✓"],
-                      ["Priority Support", "—", "✓ Email", "✓ 24/7 Dedicated"],
+                      ["Priority Support", "—", "Email", "24/7 Dedicated"],
                     ].map(([feature, free, pro, business], i) => (
                       <tr key={i} className="hover:bg-muted/5 transition-colors">
                         <td className="py-4 px-8 font-bold whitespace-nowrap">{feature}</td>

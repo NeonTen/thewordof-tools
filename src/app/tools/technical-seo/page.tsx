@@ -63,7 +63,7 @@ const tools = [
     description: "Grade standard content readability scores using linguistic formulas including Flesch Reading Ease calculations.",
     href: "/tools/technical-seo/readability-grader",
     icon: Type,
-    pro: false,
+    pro: true,
   },
   {
     title: "Broken Link & Anchor Text Auditor",
