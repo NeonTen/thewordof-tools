@@ -18,6 +18,13 @@ function countSyllablesInWord(word: string): number {
   return doubleVowelsMatch ? Math.max(1, doubleVowelsMatch.length) : 1
 }
 
+function stripMarkdown(md: string): string {
+  return md
+    .replace(/^#+\s+/gm, '') // headings
+    .replace(/^\s*[-*]\s+/gm, '') // lists
+    .replace(/\*\*/g, '') // bold
+}
+
 export function ReadabilityGrader({ 
   isPro, 
   creditsRemaining = null,
@@ -28,6 +35,7 @@ export function ReadabilityGrader({
   isLoggedIn?: boolean
 }) {
   const [text, setText] = useState("Search engine optimization is the practice of orienting your website to rank higher on a search engine results page, so that you receive more traffic. The difference between organic SEO and paid advertising is that SEO involves organic ranking, which means you do not pay to be in that space. To make it simple, search engine optimization means taking a piece of online content and optimizing it so search engines like Google show it at the top of the page when someone searches for something.")
+  const [formattedText, setFormattedText] = useState("")
   const [localCredits, setLocalCredits] = useState<number | null>(creditsRemaining)
   const [isImproving, setIsImproving] = useState(false)
   const [improvedText, setImprovedText] = useState("")
@@ -71,6 +79,7 @@ export function ReadabilityGrader({
         setFetchError(data.error)
       } else {
         setText(data.text)
+        setFormattedText("")
         setInputMode("text")
         // Increment limit count
         await incrementUsage()
@@ -110,8 +119,9 @@ export function ReadabilityGrader({
   }
 
   const downloadMd = () => {
-    if (!text.trim()) return
-    const blob = new Blob([text], { type: "text/markdown;charset=utf-8" })
+    const sourceText = formattedText || text
+    if (!sourceText.trim()) return
+    const blob = new Blob([sourceText], { type: "text/markdown;charset=utf-8" })
     const url = URL.createObjectURL(blob)
     const link = document.createElement("a")
     link.href = url
@@ -120,52 +130,39 @@ export function ReadabilityGrader({
     URL.revokeObjectURL(url)
   }
 
-  const downloadDocx = () => {
-    if (!text.trim()) return
-    // Very simple Markdown-to-HTML converter
-    let htmlContent = text
-      .replace(/^# (.*?)$/gm, '<h1>$1</h1>')
-      .replace(/^## (.*?)$/gm, '<h2>$1</h2>')
-      .replace(/^### (.*?)$/gm, '<h3>$1</h3>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/^\s*[-*]\s+(.*?)$/gm, '<li>$1</li>')
-      // Wrap sequential <li> tags in <ul>
-      .replace(/(<li>.*?<\/li>)+/g, '<ul>$&</ul>')
-      // Handle paragraphs
-      .split('\n\n')
-      .map(p => {
-        if (p.trim().startsWith('<h') || p.trim().startsWith('<ul')) return p
-        return `<p>${p.replace(/\n/g, '<br/>')}</p>`
-      })
-      .join('\n')
+  const downloadRtf = () => {
+    const sourceText = formattedText || text
+    if (!sourceText.trim()) return
 
-    const docxTemplate = `
-      <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-      <head>
-        <title>Readability Grader Content</title>
-        <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
-        <style>
-          body { font-family: 'Calibri', Arial, sans-serif; line-height: 1.5; color: #111111; }
-          h1 { font-size: 20pt; font-weight: bold; margin-top: 12pt; margin-bottom: 6pt; color: #1e3a8a; }
-          h2 { font-size: 16pt; font-weight: bold; margin-top: 12pt; margin-bottom: 6pt; color: #1e3a8a; }
-          h3 { font-size: 13pt; font-weight: bold; margin-top: 12pt; margin-bottom: 6pt; color: #1e3a8a; }
-          p { margin-bottom: 8pt; font-size: 11pt; }
-          ul { margin-bottom: 8pt; margin-left: 20pt; }
-          li { font-size: 11pt; margin-bottom: 4pt; }
-          strong { font-weight: bold; }
-        </style>
-      </head>
-      <body>
-        ${htmlContent}
-      </body>
-      </html>
-    `
+    // Basic Markdown to RTF converter
+    let rtfContent = sourceText
+      // Escape RTF special characters first
+      .replace(/\\/g, '\\\\')
+      .replace(/{/g, '\\{')
+      .replace(/}/g, '\\}')
+      // Headings
+      .replace(/^# (.*?)$/gm, '\\line\\cf1\\b\\fs32 $1\\b0\\cf0\\fs22\\par\\line')
+      .replace(/^## (.*?)$/gm, '\\line\\cf1\\b\\fs28 $1\\b0\\cf0\\fs22\\par\\line')
+      .replace(/^### (.*?)$/gm, '\\line\\cf1\\b\\fs24 $1\\b0\\cf0\\fs22\\par\\line')
+      // Bold
+      .replace(/\*\*(.*?)\*\*/g, '\\b $1\\b0')
+      // List items
+      .replace(/^\s*[-*]\s+(.*?)$/gm, '{\\pntext\\tab\\\'b7\\tab}{\\*\\pndec}\\fi-360\\li720 $1\\par')
+      // Paragraph breaks
+      .replace(/\n\n/g, '\\par\\line ')
+      .replace(/\n/g, '\\par ')
 
-    const blob = new Blob(['\ufeff' + docxTemplate], { type: "application/msword;charset=utf-8" })
+    const rtfDoc = `{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\fonttbl{\\f0\\fnil\\fcharset0 Calibri;}}
+{\\colortbl ;\\red30\\green58\\blue138;\\red51\\green65\\blue85;}
+\\f0\\fs22\\cf2
+${rtfContent}
+}`
+
+    const blob = new Blob([rtfDoc], { type: "application/rtf;charset=utf-8" })
     const url = URL.createObjectURL(blob)
     const link = document.createElement("a")
     link.href = url
-    link.download = "readability-content.doc" // Renamed to .doc so MS Word / Google Docs opens it correctly
+    link.download = "readability-content.rtf"
     link.click()
     URL.revokeObjectURL(url)
   }
@@ -299,7 +296,10 @@ export function ReadabilityGrader({
           ) : (
             <textarea 
               value={text}
-              onChange={(e) => setText(e.target.value)}
+              onChange={(e) => {
+                setText(e.target.value)
+                setFormattedText("")
+              }}
               rows={14}
               placeholder="Paste or write your content here to analyze readability stats..."
               className="flex-1 w-full px-3 py-2.5 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm leading-relaxed"
@@ -389,11 +389,11 @@ export function ReadabilityGrader({
                 Download .md
               </button>
               <button
-                onClick={downloadDocx}
+                onClick={downloadRtf}
                 className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted/80 text-xs font-bold rounded-xl transition-colors cursor-pointer"
               >
                 <BookOpen className="h-3.5 w-3.5" />
-                Download .docx
+                Download .rtf
               </button>
             </div>
           )}
@@ -545,7 +545,7 @@ export function ReadabilityGrader({
                           : ''
                       }
                     >
-                      {block.text}
+                      {stripMarkdown(block.text)}
                     </span>
                   ))}
                 </div>
@@ -567,7 +567,7 @@ export function ReadabilityGrader({
                           : ''
                       }
                     >
-                      {block.text}
+                      {stripMarkdown(block.text)}
                     </span>
                   ))}
                 </div>
@@ -584,7 +584,8 @@ export function ReadabilityGrader({
               </button>
               <button
                 onClick={() => {
-                  setText(improvedText)
+                  setFormattedText(improvedText)
+                  setText(stripMarkdown(improvedText))
                   setShowDiffModal(false)
                 }}
                 className="px-5 py-2 bg-primary text-primary-foreground hover:bg-primary/90 text-sm font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
