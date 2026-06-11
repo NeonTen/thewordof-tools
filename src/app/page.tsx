@@ -238,10 +238,26 @@ export default async function Home() {
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-center mb-16">Common Questions</h2>
             <div className="space-y-6">
               {[
-                { q: "Is it really free?", a: "Yes. All tools have a generous free tier that works forever. We are constantly adding new utilities to the collection." },
-                { q: "Is my data secure?", a: "100%. All processing (except AI generation) happens directly in your browser. We never see your files." },
-                { q: "Can I use AI tools for free?", a: "Yes, every AI tool has a daily free limit. You can upgrade to Pro for high-volume use." },
-                { q: "Do you offer refunds?", a: "Yes, we offer a 7-day money-back guarantee for our Pro subscription if you are not satisfied." },
+                {
+                  q: "Do I need to create an account to use the tools?",
+                  a: "For basic utility tools (like calculators, minifiers, or image conversion), no account is required. However, you must create a free account to use any AI-powered tools so we can manage your monthly AI credit pool.",
+                },
+                {
+                  q: "How do AI credits work?",
+                  a: "Each account starts with a free tier of 20 monthly AI credits. AI tasks consume different amounts (e.g., SEO generation costs 1 credit, while AI readability simplification costs 2 credits). Upgrading to Pro gives you up to 500 credits/month.",
+                },
+                {
+                  q: "Is my data safe?",
+                  a: "Yes. All standard calculations, file compression, minification, and image processing happen entirely inside your web browser locally. Nothing is uploaded to our servers unless you explicitly run an AI-powered tool.",
+                },
+                {
+                  q: "What payment methods do you accept?",
+                  a: "We support Credit/Debit cards (Visa, Mastercard), UPI, and Net Banking securely processed via PayPal and Razorpay.",
+                },
+                {
+                  q: "Can I cancel my subscription anytime?",
+                  a: "Yes. You can manage, upgrade, or cancel your subscription at any time from your account dashboard. You will retain Pro features until your current billing period expires.",
+                },
               ].map((faq, i) => (
                 <div key={i} className="group border rounded-2xl p-8 hover:border-primary/50 transition-all bg-background">
                   <h3 className="font-bold text-xl mb-3 flex items-center justify-between">
