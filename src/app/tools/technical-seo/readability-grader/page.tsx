@@ -1,6 +1,7 @@
 import { ToolHeader } from "@/components/tools/tool-header"
 import { ReadabilityGrader } from "@/components/tools/readability-grader"
 import { auth } from "@/auth"
+import { prisma } from "@/lib/prisma"
 
 export const metadata = {
   title: "SEO Readability & Content Grader | TheWordOf Tools",
@@ -11,6 +12,11 @@ export default async function ReadabilityGraderPage() {
   const session = await auth()
   const isPro = session?.user?.role === "PRO" || session?.user?.role === "BUSINESS" || session?.user?.role === "ADMIN"
 
+  const dbUser = session?.user?.id ? await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { creditsRemaining: true }
+  }) : null
+
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -20,7 +26,11 @@ export default async function ReadabilityGraderPage() {
         </p>
       </div>
 
-      <ReadabilityGrader isPro={isPro} />
+      <ReadabilityGrader 
+        isPro={isPro} 
+        creditsRemaining={dbUser?.creditsRemaining ?? null} 
+        isLoggedIn={!!session?.user}
+      />
     </div>
   )
 }
