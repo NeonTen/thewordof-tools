@@ -32,7 +32,8 @@ export async function POST(req: Request) {
     - Simplify complex and multi-syllabic words with simpler synonyms.
     - Break up long, complex sentences into shorter, clear sentences.
     - Keep the original meaning, tone, and information intact.
-    - Do NOT add markdown formatting, code blocks, or HTML tag wrappers around the output. Just return the clean, plain rewritten text.
+    - Preserve or introduce clear formatting using standard Markdown. Use '#' or '##' for sections/headings, list blocks ('-' or '1.') for key items, and '**' for emphasis where it makes the text easier to scan.
+    - Do NOT include HTML tag wrappers, code block backticks (like \`\`\`markdown), or other non-plain-text symbols. Just return the raw markdown content.
 
     Original Text:
     ${text}`
