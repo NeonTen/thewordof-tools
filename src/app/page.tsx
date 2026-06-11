@@ -6,6 +6,7 @@ import { ArrowRight, Check, Zap, Sparkles, Image as ImageIcon, FileCode, Calcula
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { auth } from "@/auth"
+import { TestimonialsCarousel } from "@/components/home/testimonials-carousel"
 
 export default async function Home() {
   const session = await auth()
@@ -161,27 +162,7 @@ export default async function Home() {
         <section className="py-24 overflow-hidden">
           <div className="container mx-auto px-6 max-w-[1440px]">
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-center mb-16">Trusted by makers worldwide</h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                { name: "Rahul Sharma", role: "Digital Marketer", text: "The AI Caption Generator has saved me hours. The captions are actually high quality and viral-ready." },
-                { name: "Jessica Chen", role: "Frontend Developer", text: "The SVG Compressor and Image Converter are my go-to tools now. Super fast and no quality loss." },
-                { name: "John Doe", role: "SaaS Founder", text: "Everything I need in one dashboard. The invoice generator is a lifesaver for my freelance projects." },
-              ].map((item, i) => (
-                <Card key={i} className="bg-muted/30 border-none shadow-none p-8 space-y-6 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 p-4 opacity-5">
-                    <Star className="h-20 w-20 fill-primary text-primary" />
-                  </div>
-                  <div className="flex gap-1">
-                    {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-primary text-primary" />)}
-                  </div>
-                  <p className="italic text-lg">&ldquo;{item.text}&rdquo;</p>
-                  <div>
-                    <p className="font-bold">{item.name}</p>
-                    <p className="text-sm text-muted-foreground">{item.role}</p>
-                  </div>
-                </Card>
-              ))}
-            </div>
+            <TestimonialsCarousel />
           </div>
         </section>
 

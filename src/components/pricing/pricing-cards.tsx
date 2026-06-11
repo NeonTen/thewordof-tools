@@ -46,8 +46,8 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       ctaHref: "/dashboard",
       highlight: false,
       features: [
-        { label: "All 25 tools included", included: true },
-        { label: `${PLAN_PRICING.FREE.credits} monthly AI credits (shared pool)`, included: true },
+        { label: "All utility tools included", included: true },
+        { label: `${PLAN_PRICING.FREE.credits} monthly AI credits`, included: true },
         { label: "5 images per batch", included: true },
         { label: "5 SVGs per batch", included: true },
         { label: "3 invoices per month", included: true },
@@ -83,7 +83,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       badge: "Most Popular",
       features: [
         { label: "Everything in Free", included: true },
-        { label: `${PLAN_PRICING.PREMIUM.credits} monthly AI credits (shared pool)`, included: true },
+        { label: `${PLAN_PRICING.PREMIUM.credits} monthly AI credits`, included: true },
         { label: "AI CV builder (Costs 1 credit)", included: true },
         { label: "Up to 1,000 files per batch", included: true },
         { label: "Bulk ZIP downloads", included: true },
@@ -116,7 +116,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       highlight: false,
       features: [
         { label: "Everything in Pro", included: true },
-        { label: `${PLAN_PRICING.BUSINESS.credits} monthly AI credits (shared pool)`, included: true },
+        { label: `${PLAN_PRICING.BUSINESS.credits} monthly AI credits`, included: true },
         { label: "AI CV builder & AI Import (Costs 1-3 credits)", included: true },
         { label: "100% Unlimited batch processing", included: true },
         { label: "Geographic (country/city) scan tracking", included: true },

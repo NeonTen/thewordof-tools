@@ -27,23 +27,23 @@ export default async function PricingPage() {
   const faqs = [
     {
       q: "Do I need to create an account to use the tools?",
-      a: "No. All tools are accessible without an account. Simply visit the tool you need and start using it immediately. Creating an account lets you save history and upgrade to Pro.",
+      a: "For basic utility tools (like calculators, minifiers, or image conversion), no account is required. However, you must create a free account to use any AI-powered tools so we can manage your monthly AI credit pool.",
     },
     {
-      q: "Are the free limits enforced strictly?",
-      a: "In the current version, free limits are soft limits — they show an upgrade prompt but do not block access. Full enforcement will come with the Pro launch.",
+      q: "How do AI credits work?",
+      a: "Each account starts with a free tier of 20 monthly AI credits. AI tasks consume different amounts (e.g., SEO generation costs 1 credit, while AI readability simplification costs 2 credits). Upgrading to Pro gives you up to 500 credits/month.",
     },
     {
       q: "Is my data safe?",
-      a: "Yes. All image processing, SVG compression, code minification, and calculations happen entirely in your browser. Nothing is uploaded to our servers unless you're using an AI tool.",
+      a: "Yes. All standard calculations, file compression, minification, and image processing happen entirely inside your web browser locally. Nothing is uploaded to our servers unless you explicitly run an AI-powered tool.",
     },
     {
       q: "What payment methods do you accept?",
-      a: "We will support UPI, Credit/Debit cards (Visa, Mastercard, RuPay), and Net Banking at launch via Razorpay.",
+      a: "We support Credit/Debit cards (Visa, Mastercard), UPI, and Net Banking securely processed via PayPal and Razorpay.",
     },
     {
-      q: "Can I cancel my Pro subscription anytime?",
-      a: "Yes. Cancel anytime from your account settings. You'll retain Pro access until the end of your billing period.",
+      q: "Can I cancel my subscription anytime?",
+      a: "Yes. You can manage, upgrade, or cancel your subscription at any time from your account dashboard. You will retain Pro features until your current billing period expires.",
     },
   ]
 
