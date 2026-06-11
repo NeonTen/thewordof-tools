@@ -167,6 +167,57 @@ ${rtfContent}
     URL.revokeObjectURL(url)
   }
 
+  const downloadDocx = () => {
+    const sourceText = formattedText || text
+    if (!sourceText.trim()) return
+    // Very simple Markdown-to-HTML converter
+    let htmlContent = sourceText
+      .replace(/^# (.*?)$/gm, '<h1>$1</h1>')
+      .replace(/^## (.*?)$/gm, '<h2>$1</h2>')
+      .replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^\s*[-*]\s+(.*?)$/gm, '<li>$1</li>')
+      // Wrap sequential <li> tags in <ul>
+      .replace(/(<li>.*?<\/li>)+/g, '<ul>$&</ul>')
+      // Handle paragraphs
+      .split('\n\n')
+      .map(p => {
+        if (p.trim().startsWith('<h') || p.trim().startsWith('<ul')) return p
+        return `<p>${p.replace(/\n/g, '<br/>')}</p>`
+      })
+      .join('\n')
+
+    const docxTemplate = `
+      <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+      <head>
+        <title>Readability Grader Content</title>
+        <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
+        <style>
+          body { font-family: 'Calibri', Arial, sans-serif; line-height: 1.5; color: #111111; }
+          h1 { font-size: 20pt; font-weight: bold; margin-top: 12pt; margin-bottom: 6pt; color: #1e3a8a; }
+          h2 { font-size: 16pt; font-weight: bold; margin-top: 12pt; margin-bottom: 6pt; color: #1e3a8a; }
+          h3 { font-size: 13pt; font-weight: bold; margin-top: 12pt; margin-bottom: 6pt; color: #1e3a8a; }
+          p { margin-bottom: 8pt; font-size: 11pt; }
+          ul { margin-bottom: 8pt; margin-left: 20pt; }
+          li { font-size: 11pt; margin-bottom: 4pt; }
+          strong { font-weight: bold; }
+        </style>
+      </head>
+      <body>
+        ${htmlContent}
+      </body>
+      </html>
+    `
+
+    const blob = new Blob(['\ufeff' + docxTemplate], { type: "application/msword;charset=utf-8" })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement("a")
+    link.href = url
+    link.download = "readability-content.doc"
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
   const diffs = useMemo(() => {
     if (!showDiffModal) return { originalDiff: [], improvedDiff: [] }
     return diffSentences(text, improvedText)
@@ -378,23 +429,33 @@ ${rtfContent}
             </div>
           )}
 
-          {/* Download / Export Options */}
-          {text.trim() && (
-            <div className="pt-4 border-t border-border/50 mt-4 flex gap-2">
-              <button
-                onClick={downloadMd}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted/80 text-xs font-bold rounded-xl transition-colors cursor-pointer"
-              >
-                <FileText className="h-3.5 w-3.5" />
-                Download .md
-              </button>
-              <button
-                onClick={downloadRtf}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted/80 text-xs font-bold rounded-xl transition-colors cursor-pointer"
-              >
-                <BookOpen className="h-3.5 w-3.5" />
-                Download .rtf
-              </button>
+          {/* Download / Export Options (Only shows after AI Simplify is applied) */}
+          {formattedText && (
+            <div className="pt-4 border-t border-border/50 mt-4 space-y-2">
+              <p className="text-[10px] text-muted-foreground font-semibold">EXPORT SIMPLIFIED CONTENT:</p>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <button
+                  onClick={downloadMd}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-sm shadow-primary/10"
+                >
+                  <FileText className="h-3.5 w-3.5" />
+                  .md (Markdown)
+                </button>
+                <button
+                  onClick={downloadRtf}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-sm shadow-primary/10"
+                >
+                  <BookOpen className="h-3.5 w-3.5" />
+                  .rtf (Pages)
+                </button>
+                <button
+                  onClick={downloadDocx}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-sm shadow-primary/10"
+                >
+                  <Award className="h-3.5 w-3.5" />
+                  .docx (Word)
+                </button>
+              </div>
             </div>
           )}
         </div>
