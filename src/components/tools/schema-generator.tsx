@@ -856,7 +856,7 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
               feature="AI Smart Schema Generator" 
               isPro={isPro}
             >
-              <Card className="border-2 border-amber-500/20 shadow-xl shadow-amber-500/5 overflow-hidden">
+              <Card className="border-2 border-amber-500/30 dark:border-amber-500/50 shadow-xl shadow-amber-500/[0.05] dark:shadow-amber-500/[0.1] bg-gradient-to-br from-amber-500/[0.03] via-background to-orange-500/[0.03] overflow-hidden">
                 <CardHeader className="bg-amber-500/5 border-b border-amber-500/10">
                   <div className="flex items-center gap-2">
                     <Sparkles className="h-5 w-5 text-amber-500" />

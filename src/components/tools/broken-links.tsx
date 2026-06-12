@@ -27,6 +27,11 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
   const [scanError, setScanError] = useState("")
   const [showSlowScanNotice, setShowSlowScanNotice] = useState(false)
   const [filter, setFilter] = useState<"all" | "broken" | "redirect" | "internal" | "external">("all")
+  const [totalFound, setTotalFound] = useState<number | null>(null)
+  const [isLimited, setIsLimited] = useState(false)
+  const [excludeHeader, setExcludeHeader] = useState(false)
+  const [excludeFooter, setExcludeFooter] = useState(false)
+  const [excludeNav, setExcludeNav] = useState(false)
 
   // Usage Limit
   const { count: usedThisMonth, increment: incrementUsage } = useUsageLimit("broken-links", "monthly")
@@ -60,13 +65,15 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
       const res = await fetch("/api/tools/scan-links", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url })
+        body: JSON.stringify({ url, excludeHeader, excludeFooter, excludeNav })
       })
       const data = await res.json()
       if (data.error) {
         setScanError(data.error)
       } else {
         setLinks(data.links)
+        setTotalFound(data.totalFound || data.links.length)
+        setIsLimited(!!data.isLimited)
         await incrementUsage()
       }
     } catch {
@@ -129,7 +136,6 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
             )}
           </div>
           
-          <ProGate feature="Broken Link Checker" isPro={isFeatureUnlocked}>
             <form onSubmit={handleScan} className="flex gap-2 max-w-2xl">
               <input 
                 type="text" 
@@ -137,17 +143,48 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="e.g. tools.thewordof.com"
                 className="flex-1 px-3 py-2 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
-                disabled={limitReached}
               />
-              <button 
-                type="submit" 
-                disabled={scanning || limitReached}
-                className="px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50 shrink-0 flex items-center gap-1.5 cursor-pointer"
-              >
-                {scanning ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : null}
-                {scanning ? "Scanning..." : "Scan Links"}
-              </button>
+              <ProGate feature="Broken Link Checker" isPro={isFeatureUnlocked} className="shrink-0">
+                <button 
+                  type="submit" 
+                  disabled={scanning || limitReached}
+                  className="px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50 shrink-0 flex items-center gap-1.5 cursor-pointer"
+                >
+                  {scanning ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : null}
+                  {scanning ? "Scanning..." : "Scan Links"}
+                </button>
+              </ProGate>
             </form>
+
+            <div className="flex flex-wrap items-center gap-4 mt-3 text-xs">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={excludeHeader}
+                  onChange={(e) => setExcludeHeader(e.target.checked)}
+                  className="rounded text-primary border-border focus:ring-primary/20 h-4 w-4"
+                />
+                <span className="text-muted-foreground font-medium">Exclude Header</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={excludeFooter}
+                  onChange={(e) => setExcludeFooter(e.target.checked)}
+                  className="rounded text-primary border-border focus:ring-primary/20 h-4 w-4"
+                />
+                <span className="text-muted-foreground font-medium">Exclude Footer</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={excludeNav}
+                  onChange={(e) => setExcludeNav(e.target.checked)}
+                  className="rounded text-primary border-border focus:ring-primary/20 h-4 w-4"
+                />
+                <span className="text-muted-foreground font-medium">Exclude Navigation</span>
+              </label>
+            </div>
 
             {scanning && showSlowScanNotice && (
               <p className="text-xs text-amber-500 font-semibold animate-pulse mt-2.5 flex items-center gap-1.5">
@@ -155,7 +192,6 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
                 Analyzing link inventory... Since this page has a large number of links, it may take a minute or two.
               </p>
             )}
-          </ProGate>
 
           {scanError && <p className="text-xs text-destructive font-semibold">{scanError}</p>}
         </div>
@@ -222,6 +258,15 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
 
       {/* Results Table */}
       <div className="lg:col-span-8 space-y-6">
+        {isLimited && totalFound && (
+          <div className="bg-amber-500/10 border border-amber-500/20 p-4 rounded-2xl text-xs text-amber-800 dark:text-amber-200 font-medium leading-relaxed animate-in slide-in-from-top-2 duration-300">
+            <ShieldAlert className="h-4 w-4 text-amber-500 inline mr-2 -mt-0.5" />
+            Only the first <strong>30 URLs</strong> were scanned under the free version. There are <strong>{totalFound} URLs</strong> found on this page.{" "}
+            <a href="/pricing" className="text-amber-600 dark:text-amber-400 font-black hover:underline inline-flex items-center gap-0.5 ml-1">
+              Upgrade to Pro to scan all &rarr;
+            </a>
+          </div>
+        )}
         <div className="bg-card border rounded-2xl overflow-hidden shadow-sm flex flex-col min-h-[440px]">
           <div className="p-4 bg-muted/20 border-b border-border flex items-center justify-between">
             <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Outbound Link Inventory</span>

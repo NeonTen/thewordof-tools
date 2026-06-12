@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.4] - 2026-06-12
+
+### Added
+- **Broken Link & Anchor Auditor**:
+  - Added checkboxes/options to exclude `<header>`, `<footer>`, and `<nav>` elements from link scans.
+  - Implemented client-side limits showing total page links vs the 30-URL free scan limit in an inline notice.
+
+### Changed
+- **Schema Generator**:
+  - Redesigned and highlighted the AI Smart Generator section with amber gradients, borders, and shadows to prevent it from appearing faded or invisible in the free version.
+- **Work Report Generator**:
+  - Restyled delete and clear formatting actions to use higher-contrast red colors in dark mode.
+
+### Fixed
+- **Broken Link & Anchor Auditor**:
+  - Added `shrink-0` layout sizing wrapper to prevent the `<ProGate>` element overlay from stretching and intercepting clicks on the URL text input.
+- **Color Contrast Checker**:
+  - Added support for recursive CSS variable lookups and Tailwind utility class color resolution to prevent false positives.
+
 ## [1.1.3] - 2026-06-11
 
 ### Added

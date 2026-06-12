@@ -18,6 +18,13 @@ const tools = [
     pro: false,
   },
   {
+    title: "Color Contrast Scanner",
+    description: "Scan any webpage URL to find element color combinations that fail WCAG readability contrast guidelines.",
+    href: "/tools/color-contrast-scanner",
+    icon: Palette,
+    pro: true,
+  },
+  {
     title: "Color Palette Generator",
     description: "Generate mathematical color harmonies and export codes or images.",
     href: "/tools/color-palette",

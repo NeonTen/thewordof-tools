@@ -4,19 +4,23 @@ import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
   try {
-    const { url } = await req.json()
+    const { url, excludeHeader, excludeFooter, excludeNav } = await req.json()
     if (!url) {
       return NextResponse.json({ error: "URL is required" }, { status: 400 })
     }
 
-    const session = await auth()
     let isPro = false
-    if (session?.user?.id) {
-      const user = await prisma.user.findUnique({
-        where: { id: session.user.id },
-        include: { subscriptions: true }
-      })
-      isPro = user?.role === "PRO" || user?.role === "BUSINESS" || user?.role === "ADMIN" || user?.subscriptions?.[0]?.plan === "PREMIUM" || user?.subscriptions?.[0]?.plan === "BUSINESS"
+    try {
+      const session = await auth()
+      if (session?.user?.id) {
+        const user = await prisma.user.findUnique({
+          where: { id: session.user.id },
+          include: { subscriptions: true }
+        })
+        isPro = user?.role === "PRO" || user?.role === "BUSINESS" || user?.role === "ADMIN" || user?.subscriptions?.[0]?.plan === "PREMIUM" || user?.subscriptions?.[0]?.plan === "BUSINESS"
+      }
+    } catch {
+      isPro = false
     }
 
     const formattedUrl = url.startsWith("http") ? url : `https://${url}`
@@ -39,6 +43,17 @@ export async function POST(req: Request) {
     }
 
     const html = await response.text()
+    let cleanHtml = html
+    
+    if (excludeHeader) {
+      cleanHtml = cleanHtml.replace(/<header\b[^>]*>([\s\S]*?)<\/header>/gi, "")
+    }
+    if (excludeFooter) {
+      cleanHtml = cleanHtml.replace(/<footer\b[^>]*>([\s\S]*?)<\/footer>/gi, "")
+    }
+    if (excludeNav) {
+      cleanHtml = cleanHtml.replace(/<nav\b[^>]*>([\s\S]*?)<\/nav>/gi, "")
+    }
     
     // Simple robust regex to extract links and anchor texts
     const linkRegex = /<a\s+(?:[^>]*?\s+)?href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi
@@ -46,7 +61,7 @@ export async function POST(req: Request) {
     const seenUrls = new Set<string>()
 
     let match
-    while ((match = linkRegex.exec(html)) !== null) {
+    while ((match = linkRegex.exec(cleanHtml)) !== null) {
       let href = match[1].trim()
       
       // Filter anchors, mailto, tel, javascript links
@@ -140,7 +155,11 @@ export async function POST(req: Request) {
       scannedLinks.push(...results)
     }
 
-    return NextResponse.json({ links: scannedLinks })
+    return NextResponse.json({ 
+      links: scannedLinks,
+      totalFound: parsedLinks.length,
+      isLimited: !isPro && parsedLinks.length > 30
+    })
   } catch (err: any) {
     return NextResponse.json({ error: err.message || "Failed to audit webpage links" }, { status: 500 })
   }

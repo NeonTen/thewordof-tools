@@ -42,7 +42,7 @@ export function ProGate({ children, feature, isPro = false, className, tier = 'p
       />
       
       {/* Visual Indicator: Dimmed + Crown Icon */}
-      <div className="pointer-events-none opacity-40 select-none grayscale-[0.8] transition-all group-hover:grayscale-0 group-hover:opacity-60">
+      <div className="pointer-events-none opacity-70 select-none grayscale-[0.2] transition-all group-hover:opacity-85">
         <div className={cn(
           "absolute top-1 right-1 z-[5] backdrop-blur-md p-1.5 rounded-md border shadow-sm",
           isBusinessTier

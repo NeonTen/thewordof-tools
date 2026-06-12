@@ -85,6 +85,7 @@ const CATEGORIES: Category[] = [
     title: "Design",
     tools: [
       { title: "Color Contrast Checker", desc: "Check foreground and background color contrast against WCAG standards.", icon: Palette, href: "/tools/design/color-contrast", pro: false },
+      { title: "Color Contrast Scanner", desc: "Scan webpage URLs to detect elements failing accessibility compliance guidelines.", icon: Palette, href: "/tools/design/color-contrast-scanner", pro: true },
       { title: "Color Palette Generator", desc: "Generate mathematical color harmonies and export codes or images.", icon: Palette, href: "/tools/design/color-palette", pro: false },
       { title: "Gradient Generator", desc: "Browse, customize and export CSS / Tailwind code for premium gradients.", icon: Palette, href: "/tools/design/gradient-generator", pro: false },
       { title: "Gradient Palette Generator", desc: "Generate 5 coordinating harmonious gradients and copy CSS variables.", icon: Palette, href: "/tools/design/gradient-palette", pro: false }

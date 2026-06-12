@@ -149,7 +149,7 @@ function RichTextEditor({ value, onChange, placeholder }: RichTextEditorProps) {
         <button
           type="button"
           onClick={clearFormat}
-          className="p-1.5 rounded hover:bg-muted hover:text-foreground transition-colors text-destructive/80"
+          className="p-1.5 rounded hover:bg-muted hover:text-foreground transition-colors text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
           title="Clear Format"
         >
           <Eraser className="h-3.5 w-3.5" />
@@ -495,7 +495,7 @@ export function WorkReport({}: WorkReportProps) {
                         </td>
                         <td className="py-1 text-right w-12">
                           <div className="flex items-center justify-end">
-                            <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive/60 hover:text-destructive hover:bg-destructive/10" onClick={() => deleteRow(idx)} disabled={tasks.length === 1}>
+                            <Button size="icon" variant="ghost" className="h-7 w-7 text-red-500 hover:text-red-600 hover:bg-red-50/10 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-950/30" onClick={() => deleteRow(idx)} disabled={tasks.length === 1}>
                               <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
@@ -528,7 +528,7 @@ export function WorkReport({}: WorkReportProps) {
               {tasks.map((task, idx) => (
                 <div key={task.id} className="border border-border/50 rounded-xl p-4 bg-muted/5 space-y-3 relative">
                   <div className="absolute top-2 right-2">
-                    <Button size="icon" variant="ghost" className="h-8 w-8 text-destructive" onClick={() => deleteRow(idx)} disabled={tasks.length === 1}>
+                    <Button size="icon" variant="ghost" className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-50/10 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-950/30" onClick={() => deleteRow(idx)} disabled={tasks.length === 1}>
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
@@ -624,7 +624,7 @@ export function WorkReport({}: WorkReportProps) {
                       <button 
                         type="button"
                         onClick={() => setExtraImage("")}
-                        className="absolute top-0 right-0 bg-destructive text-white p-0.5 rounded-bl"
+                        className="absolute top-0 right-0 bg-red-600 hover:bg-red-700 text-white p-0.5 rounded-bl transition-colors"
                       >
                         <Trash2 className="h-3 w-3" />
                       </button>
@@ -671,7 +671,7 @@ export function WorkReport({}: WorkReportProps) {
                       <button 
                         type="button"
                         onClick={() => setExtraImage2("")}
-                        className="absolute top-0 right-0 bg-destructive text-white p-0.5 rounded-bl"
+                        className="absolute top-0 right-0 bg-red-600 hover:bg-red-700 text-white p-0.5 rounded-bl transition-colors"
                       >
                         <Trash2 className="h-3 w-3" />
                       </button>

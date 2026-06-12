@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
       { source: "/tools/cv-builder", destination: "/tools/ai-tools/cv-builder", permanent: true },
       { source: "/tools/seo-generator", destination: "/tools/ai-tools/seo-generator", permanent: true },
       { source: "/tools/color-contrast", destination: "/tools/design/color-contrast", permanent: true },
+      { source: "/tools/color-contrast-scanner", destination: "/tools/design/color-contrast-scanner", permanent: true },
       { source: "/tools/color-palette", destination: "/tools/design/color-palette", permanent: true },
       { source: "/tools/gradient-generator", destination: "/tools/design/gradient-generator", permanent: true },
       { source: "/tools/gradient-palette", destination: "/tools/design/gradient-palette", permanent: true },
