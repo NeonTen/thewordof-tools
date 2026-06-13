@@ -45,6 +45,7 @@ const navGroups: NavGroup[] = [
       { title: "QR Code Gen",      href: "/tools/image-code/qr-code",          icon: QrCode },
       { title: "Code Minifier",    href: "/tools/image-code/code-minifier",    icon: FileCode },
       { title: "Text Difference",  href: "/tools/image-code/text-diff",        icon: Split },
+      { title: "Doc Converter",    href: "/tools/image-code/doc-converter",    icon: FileText },
     ],
   },
   {
