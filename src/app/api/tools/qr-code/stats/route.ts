@@ -60,6 +60,11 @@ export async function GET(request: NextRequest) {
     const scansList = qrCode.scans.map(s => ({
       createdAt: s.createdAt,
       isUnique: s.isUnique,
+      device: s.device,
+      os: s.os,
+      browser: s.browser,
+      country: s.country,
+      city: s.city,
     }))
 
     return NextResponse.json({

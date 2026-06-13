@@ -69,7 +69,15 @@ interface QrStats {
   browsers: Record<string, number>
   countries: Record<string, number>
   cities: Record<string, number>
-  scans: Array<{ createdAt: string; isUnique: boolean }>
+  scans: Array<{ 
+    createdAt: string 
+    isUnique: boolean 
+    device?: string
+    os?: string
+    browser?: string
+    country?: string | null
+    city?: string | null
+  }>
 }
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"]
@@ -91,11 +99,15 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
 
   // UTM tracking state
   const [showUtm, setShowUtm] = useState(false)
+  const [utmId, setUtmId] = useState("")
   const [utmSource, setUtmSource] = useState("")
   const [utmMedium, setUtmMedium] = useState("")
   const [utmCampaign, setUtmCampaign] = useState("")
   const [utmTerm, setUtmTerm] = useState("")
   const [utmContent, setUtmContent] = useState("")
+
+  // Export dropdown state
+  const [showExportDropdown, setShowExportDropdown] = useState(false)
 
   const buildUrlWithUtm = (baseUrl: string) => {
     if (!baseUrl) return ""
@@ -105,6 +117,7 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
       const urlString = hasProtocol ? baseUrl : `https://${baseUrl}`
       const urlObj = new URL(urlString)
       if (showUtm) {
+        if (utmId) urlObj.searchParams.set("utm_id", utmId)
         if (utmSource) urlObj.searchParams.set("utm_source", utmSource)
         if (utmMedium) urlObj.searchParams.set("utm_medium", utmMedium)
         if (utmCampaign) urlObj.searchParams.set("utm_campaign", utmCampaign)
@@ -348,10 +361,10 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
 
   const handleExportCSV = () => {
     if (!stats || !stats.scans) return
-    const headers = ["Timestamp", "IP Address", "Unique Scan", "Country", "City", "Browser", "OS"]
+    const headers = ["Timestamp", "Device Type", "Unique Scan", "Country", "City", "Browser", "OS"]
     const rows = stats.scans.map(s => [
       new Date(s.createdAt).toISOString(),
-      s.ip || "N/A",
+      s.device || "Unknown",
       s.isUnique ? "TRUE" : "FALSE",
       s.country || "Unknown",
       s.city || "Unknown",
@@ -492,7 +505,11 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                   </label>
                   
                   {showUtm && (
-                    <div className="grid grid-cols-2 gap-3 pl-6 border-l border-dashed border-border/60 animate-in slide-in-from-top-2 duration-200">
+                    <div className="grid grid-cols-2 gap-3 mt-2 animate-in slide-in-from-top-2 duration-200">
+                      <div className="space-y-1 col-span-2">
+                        <label className="text-xs font-bold text-muted-foreground">Campaign ID (optional)</label>
+                        <Input value={utmId} onChange={e => setUtmId(e.target.value)} placeholder="e.g. key_promo_1" className="h-8 text-xs" />
+                      </div>
                       <div className="space-y-1">
                         <label className="text-xs font-bold text-muted-foreground">Source</label>
                         <Input value={utmSource} onChange={e => setUtmSource(e.target.value)} placeholder="e.g. qr" className="h-8 text-xs" />
@@ -762,29 +779,45 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                       <p className="text-xs text-muted-foreground truncate max-w-md">Redirecting to {selectedQr.targetUrl}</p>
                     </div>
                      <div className="flex items-center gap-3">
-                      <ProGate feature="Analytics Export" isPro={isBusiness} tier="business">
-                        <div className="relative group">
-                          <Button size="sm" variant="outline" className="text-xs font-bold gap-1 cursor-pointer">
-                            Export Report ▾
-                          </Button>
-                          <div className="absolute right-0 top-full mt-1 w-36 bg-card border border-border rounded-lg shadow-lg hidden group-hover:block z-50 overflow-hidden">
-                            <button 
-                              type="button" 
-                              onClick={handleExportCSV}
-                              className="w-full text-left px-3 py-2 text-xs font-semibold hover:bg-muted/50 transition-colors cursor-pointer text-foreground"
-                            >
-                              Export as CSV
-                            </button>
-                            <button 
-                              type="button" 
-                              onClick={handlePrintPDF}
-                              className="w-full text-left px-3 py-2 text-xs font-semibold hover:bg-muted/50 border-t border-border/40 transition-colors cursor-pointer text-foreground"
-                            >
-                              Print PDF Report
-                            </button>
-                          </div>
-                        </div>
-                      </ProGate>
+                       <ProGate feature="Analytics Export" isPro={isBusiness} tier="business">
+                         <div className="relative">
+                           <Button 
+                             size="sm" 
+                             variant="outline" 
+                             className="text-xs font-bold gap-1 cursor-pointer"
+                             onClick={() => setShowExportDropdown(!showExportDropdown)}
+                           >
+                             Export Report ▾
+                           </Button>
+                           {showExportDropdown && (
+                             <>
+                               <div className="fixed inset-0 z-40" onClick={() => setShowExportDropdown(false)} />
+                               <div className="absolute right-0 top-full mt-1.5 w-36 bg-card border border-border rounded-lg shadow-lg z-50 overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
+                                 <button 
+                                   type="button" 
+                                   onClick={() => {
+                                     handleExportCSV()
+                                     setShowExportDropdown(false)
+                                   }}
+                                   className="w-full text-left px-3 py-2 text-xs font-semibold hover:bg-muted/50 transition-colors cursor-pointer text-foreground block"
+                                 >
+                                   Export as CSV
+                                 </button>
+                                 <button 
+                                   type="button" 
+                                   onClick={() => {
+                                     handlePrintPDF()
+                                     setShowExportDropdown(false)
+                                   }}
+                                   className="w-full text-left px-3 py-2 text-xs font-semibold hover:bg-muted/50 border-t border-border/40 transition-colors cursor-pointer text-foreground block"
+                                 >
+                                   Print PDF Report
+                                 </button>
+                               </div>
+                             </>
+                           )}
+                         </div>
+                       </ProGate>
                       <div className="flex bg-muted p-0.5 rounded-lg gap-0.5 text-xs font-semibold">
                         {(["daily", "weekly", "monthly"] as const).map(t => (
                           <button
