@@ -346,6 +346,34 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
     setTimeout(() => setCopiedId(""), 2000)
   }
 
+  const handleExportCSV = () => {
+    if (!stats || !stats.scans) return
+    const headers = ["Timestamp", "IP Address", "Unique Scan", "Country", "City", "Browser", "OS"]
+    const rows = stats.scans.map(s => [
+      new Date(s.createdAt).toISOString(),
+      s.ip || "N/A",
+      s.isUnique ? "TRUE" : "FALSE",
+      s.country || "Unknown",
+      s.city || "Unknown",
+      s.browser || "Unknown",
+      s.os || "Unknown"
+    ])
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(r => r.map(val => `"${String(val).replace(/"/g, '""')}"`).join(","))
+    ].join("\n")
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement("a")
+    link.href = url
+    link.setAttribute("download", `qr-scans-${selectedQr?.id || "export"}.csv`)
+    link.click()
+  }
+
+  const handlePrintPDF = () => {
+    window.print()
+  }
+
   // Analytics graph processing
   const getTimelineData = () => {
     if (!stats || !stats.scans) return []
@@ -400,6 +428,17 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
 
   return (
     <div className="space-y-12">
+      <style>{`
+        @media print {
+          header, footer, nav, aside, button, .no-print, [role="navigation"], .absolute.group {
+            display: none !important;
+          }
+          body {
+            background: white !important;
+            color: black !important;
+          }
+        }
+      `}</style>
       <div className="grid lg:grid-cols-2 gap-8">
         <Card className="glassmorphism p-6 h-fit">
           <CardHeader className="px-0 pt-0">
@@ -722,19 +761,44 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                       <h3 className="font-bold text-lg">Scan Insights</h3>
                       <p className="text-xs text-muted-foreground truncate max-w-md">Redirecting to {selectedQr.targetUrl}</p>
                     </div>
-                    <div className="flex bg-muted p-0.5 rounded-lg gap-0.5 text-xs font-semibold">
-                      {(["daily", "weekly", "monthly"] as const).map(t => (
-                        <button
-                          key={t}
-                          type="button"
-                          onClick={() => setTimeframe(t)}
-                          className={`px-2.5 py-1 rounded-md capitalize transition-all ${
-                            timeframe === t ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
-                          }`}
-                        >
-                          {t}
-                        </button>
-                      ))}
+                     <div className="flex items-center gap-3">
+                      <ProGate feature="Analytics Export" isPro={isBusiness} tier="business">
+                        <div className="relative group">
+                          <Button size="sm" variant="outline" className="text-xs font-bold gap-1 cursor-pointer">
+                            Export Report ▾
+                          </Button>
+                          <div className="absolute right-0 top-full mt-1 w-36 bg-card border border-border rounded-lg shadow-lg hidden group-hover:block z-50 overflow-hidden">
+                            <button 
+                              type="button" 
+                              onClick={handleExportCSV}
+                              className="w-full text-left px-3 py-2 text-xs font-semibold hover:bg-muted/50 transition-colors cursor-pointer text-foreground"
+                            >
+                              Export as CSV
+                            </button>
+                            <button 
+                              type="button" 
+                              onClick={handlePrintPDF}
+                              className="w-full text-left px-3 py-2 text-xs font-semibold hover:bg-muted/50 border-t border-border/40 transition-colors cursor-pointer text-foreground"
+                            >
+                              Print PDF Report
+                            </button>
+                          </div>
+                        </div>
+                      </ProGate>
+                      <div className="flex bg-muted p-0.5 rounded-lg gap-0.5 text-xs font-semibold">
+                        {(["daily", "weekly", "monthly"] as const).map(t => (
+                          <button
+                            key={t}
+                            type="button"
+                            onClick={() => setTimeframe(t)}
+                            className={`px-2.5 py-1 rounded-md capitalize transition-all ${
+                              timeframe === t ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                            }`}
+                          >
+                            {t}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
 
