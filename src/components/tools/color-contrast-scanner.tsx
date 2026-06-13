@@ -20,58 +20,9 @@ interface ContrastFailure {
 
 export function ColorContrastScanner({ isPro }: { isPro: boolean }) {
   const [url, setUrl] = useState("")
-  const [failures, setFailures] = useState<ContrastFailure[]>([
-    {
-      tag: "button",
-      selector: "button.btn-primary",
-      text: "Submit Form",
-      fgColor: "#777777",
-      bgColor: "#ffffff",
-      ratio: 2.4,
-      requiredRatio: 4.5,
-      isLargeText: false,
-      aaFailed: true,
-      aaaFailed: true,
-    },
-    {
-      tag: "p",
-      selector: "p.description",
-      text: "Read our comprehensive terms of services to understand your rights.",
-      fgColor: "#999999",
-      bgColor: "#f8fafc",
-      ratio: 2.84,
-      requiredRatio: 4.5,
-      isLargeText: false,
-      aaFailed: true,
-      aaaFailed: true,
-    },
-    {
-      tag: "a",
-      selector: "a.nav-link",
-      text: "Pricing Plans",
-      fgColor: "#f43f5e",
-      bgColor: "#ffe4e6",
-      ratio: 3.12,
-      requiredRatio: 4.5,
-      isLargeText: false,
-      aaFailed: true,
-      aaaFailed: true,
-    },
-    {
-      tag: "h3",
-      selector: "h3.card-title",
-      text: "Premium Service",
-      fgColor: "#fbbf24",
-      bgColor: "#ffffff",
-      ratio: 1.63,
-      requiredRatio: 3.0,
-      isLargeText: true,
-      aaFailed: true,
-      aaaFailed: true,
-    }
-  ])
+  const [failures, setFailures] = useState<ContrastFailure[]>([])
 
-  const [totalScanned, setTotalScanned] = useState(45)
+  const [totalScanned, setTotalScanned] = useState(0)
   const [scanning, setScanning] = useState(false)
   const [scanError, setScanError] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
@@ -152,14 +103,71 @@ export function ColorContrastScanner({ isPro }: { isPro: boolean }) {
       <div className="lg:col-span-12">
         <div className="bg-card p-6 border rounded-2xl shadow-sm space-y-4">
           <div className="flex justify-between items-center max-w-2xl gap-4">
-            <div>
+            <div className="flex items-center gap-3">
               <h2 className="text-lg font-bold flex items-center gap-2">
                 Color Contrast Scanner
                 {!isPro && <ProBadge />}
               </h2>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Audit any live website page to identify and fix accessibility contrast errors.
-              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setUrl("https://tools.thewordof.com")
+                  setFailures([
+                    {
+                      tag: "button",
+                      selector: "button.btn-primary",
+                      text: "Submit Form",
+                      fgColor: "#777777",
+                      bgColor: "#ffffff",
+                      ratio: 2.4,
+                      requiredRatio: 4.5,
+                      isLargeText: false,
+                      aaFailed: true,
+                      aaaFailed: true,
+                    },
+                    {
+                      tag: "p",
+                      selector: "p.description",
+                      text: "Read our comprehensive terms of services to understand your rights.",
+                      fgColor: "#999999",
+                      bgColor: "#f8fafc",
+                      ratio: 2.84,
+                      requiredRatio: 4.5,
+                      isLargeText: false,
+                      aaFailed: true,
+                      aaaFailed: true,
+                    },
+                    {
+                      tag: "a",
+                      selector: "a.nav-link",
+                      text: "Pricing Plans",
+                      fgColor: "#f43f5e",
+                      bgColor: "#ffe4e6",
+                      ratio: 3.12,
+                      requiredRatio: 4.5,
+                      isLargeText: false,
+                      aaFailed: true,
+                      aaaFailed: true,
+                    },
+                    {
+                      tag: "h3",
+                      selector: "h3.card-title",
+                      text: "Premium Service",
+                      fgColor: "#fbbf24",
+                      bgColor: "#ffffff",
+                      ratio: 1.63,
+                      requiredRatio: 3.0,
+                      isLargeText: true,
+                      aaFailed: true,
+                      aaaFailed: true,
+                    }
+                  ])
+                  setTotalScanned(45)
+                }}
+                className="text-xs font-bold text-primary hover:underline cursor-pointer focus:outline-none"
+              >
+                Try an Example
+              </button>
             </div>
             {!isPro && (
               <span className="text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-full font-semibold shrink-0">

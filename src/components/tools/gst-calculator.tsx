@@ -92,7 +92,7 @@ export function GSTCalculator({ isPro = false }: GSTCalculatorProps) {
   }, [region, amount, inclusive, incrementUsage])
 
   return (
-    <div className="grid xl:grid-cols-4 gap-8 pb-8 md:pb-20">
+    <div className="grid xl:grid-cols-4 gap-8">
       {/* Left Input Fields */}
       <div className="xl:col-span-3 space-y-6">
         <Card className="glassmorphism p-6 h-full flex flex-col justify-between">

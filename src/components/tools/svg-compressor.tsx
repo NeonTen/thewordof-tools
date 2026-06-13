@@ -259,7 +259,7 @@ export function SVGCompressor({ role = "USER" }: { role?: string }) {
     : 0
 
   return (
-    <div className="space-y-8 pb-20">
+    <div className="space-y-8">
       <div className="grid xl:grid-cols-4 gap-8">
         {/* Input Section */}
         <div className="xl:col-span-3 space-y-8">

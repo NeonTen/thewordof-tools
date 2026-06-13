@@ -87,7 +87,7 @@ export function WordCounter() {
   }, [text, words, lines, incrementUsage])
 
   return (
-    <div className="grid xl:grid-cols-4 gap-8 pb-8 md:pb-20">
+    <div className="grid xl:grid-cols-4 gap-8">
       {/* Left Input Field */}
       <div className="xl:col-span-3 space-y-6">
         <Card className="glassmorphism p-6 h-full min-h-[400px] flex flex-col">

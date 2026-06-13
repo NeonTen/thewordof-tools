@@ -289,7 +289,7 @@ export function ColorContrast() {
       </div>
 
       {/* SEO Section */}
-      <div className="lg:col-span-12 grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12 pb-20">
+      <div className="lg:col-span-12 grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12">
         <section>
           <h2 className="text-2xl font-black tracking-tight mb-4">Understanding Color Contrast & Web Accessibility</h2>
           <p className="text-muted-foreground leading-relaxed">

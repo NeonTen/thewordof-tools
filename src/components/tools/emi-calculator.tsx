@@ -143,7 +143,7 @@ export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
     </div>
 
     {/* SEO Section */}
-    <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-20">
+    <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12">
       <section>
         <h2 className="text-2xl font-black tracking-tight mb-4">What is an EMI Calculator?</h2>
         <p className="text-muted-foreground leading-relaxed">

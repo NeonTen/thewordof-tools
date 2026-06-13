@@ -244,7 +244,7 @@ export function ImageConverter({ role = "USER" }: { role?: string }) {
   const completedImages = images.filter(i => i.status === "completed")
 
   return (<>
-    <div className="grid xl:grid-cols-3 gap-8 pb-8 md:pb-20">
+    <div className="grid xl:grid-cols-3 gap-8">
       <div className="xl:col-span-2 space-y-8">
         {/* Upload Area */}
         <Card className="border-primary/20 bg-primary/5">
@@ -595,7 +595,7 @@ export function ImageConverter({ role = "USER" }: { role?: string }) {
     </div>
 
     {/* SEO Info Section */}
-    <div className="grid md:grid-cols-2 gap-12 mt-8 md:mt-16 border-t pt-12 pb-20">
+    <div className="grid md:grid-cols-2 gap-12 mt-8 md:mt-16 border-t pt-12">
       <section>
         <h2 className="text-2xl font-black tracking-tight mb-4">What is Image Conversion?</h2>
         <p className="text-muted-foreground leading-relaxed">
