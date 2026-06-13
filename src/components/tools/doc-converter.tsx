@@ -179,7 +179,8 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
         format: "a4"
       })
 
-      const pdfWidth = doc.internal.pageSize.getWidth()
+      const pdfWidth = doc.internal.pageSize.getWidth() // 595.28 pt
+      const margin = 36 // 36pt = 0.5 inch margins
 
       await new Promise<void>((resolve, reject) => {
         doc.html(container, {
@@ -187,16 +188,22 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
             pdf.save(filename.replace(/\.[^/.]+$/, "") + ".pdf")
             resolve()
           },
-          x: 0,
-          y: 0,
-          width: pdfWidth,
+          x: margin,
+          y: margin,
+          width: pdfWidth - (margin * 2), // Balanced margins on left/right
           windowWidth: 794,
           autoPaging: "text",
           html2canvas: {
             scale: 1,
             useCORS: true,
             logging: false,
+            windowWidth: 794, // Force same responsive breakpoint
             onclone: (clonedDoc) => {
+              // Clean body styles on the clone to prevent layout shifts
+              clonedDoc.body.style.margin = "0"
+              clonedDoc.body.style.padding = "0"
+              clonedDoc.body.style.overflow = "visible"
+              
               const clonedWrapper = clonedDoc.getElementById("pdf-render-wrapper")
               if (clonedWrapper) {
                 clonedWrapper.style.width = "794px"
