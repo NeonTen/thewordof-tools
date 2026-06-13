@@ -1,5 +1,6 @@
 "use client"
 
+import { ProGate } from "@/components/ui/pro-gate"
 import React, { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
@@ -87,6 +88,34 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string>("")
   const [logoUrl, setLogoUrl] = useState<string>("")
+
+  // UTM tracking state
+  const [showUtm, setShowUtm] = useState(false)
+  const [utmSource, setUtmSource] = useState("")
+  const [utmMedium, setUtmMedium] = useState("")
+  const [utmCampaign, setUtmCampaign] = useState("")
+  const [utmTerm, setUtmTerm] = useState("")
+  const [utmContent, setUtmContent] = useState("")
+
+  const buildUrlWithUtm = (baseUrl: string) => {
+    if (!baseUrl) return ""
+    try {
+      // Basic check if it's a valid URL or needs protocol prefix
+      const hasProtocol = baseUrl.startsWith("http://") || baseUrl.startsWith("https://")
+      const urlString = hasProtocol ? baseUrl : `https://${baseUrl}`
+      const urlObj = new URL(urlString)
+      if (showUtm) {
+        if (utmSource) urlObj.searchParams.set("utm_source", utmSource)
+        if (utmMedium) urlObj.searchParams.set("utm_medium", utmMedium)
+        if (utmCampaign) urlObj.searchParams.set("utm_campaign", utmCampaign)
+        if (utmTerm) urlObj.searchParams.set("utm_term", utmTerm)
+        if (utmContent) urlObj.searchParams.set("utm_content", utmContent)
+      }
+      return urlObj.toString()
+    } catch {
+      return baseUrl // fallback for plain text or malformed URLs
+    }
+  }
 
   const addLogoToQrCode = (qrUrl: string, logo: string, qrSize: number, bg: string): Promise<string> => {
     return new Promise((resolve) => {
@@ -247,11 +276,12 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
           return
         }
 
+        const targetRedirectUrl = showUtm ? buildUrlWithUtm(text) : text
         // Create DB record
         const createRes = await fetch("/api/tools/qr-code/create", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ targetUrl: text, fgColor, bgColor, size, logoUrl }),
+          body: JSON.stringify({ targetUrl: targetRedirectUrl, fgColor, bgColor, size, logoUrl }),
         })
         if (!createRes.ok) {
           throw new Error("Failed to register dynamic redirect")
@@ -406,6 +436,54 @@ export function QRCodeGenerator({ isPro = false, isBusiness = false }: QRCodePro
                 placeholder={qrType === "dynamic" ? "https://mywebsite.com/destination" : "e.g. hello world / URL"} 
                 required 
               />
+            </div>
+
+            {/* UTM Campaign Tracking - Business Feature */}
+            <div className="border-t border-border/40 pt-4 space-y-2">
+              <ProGate feature="UTM Campaign Tracking" isPro={isBusiness} tier="business">
+                <div className="space-y-3">
+                  <label className="flex items-center gap-2 cursor-pointer select-none">
+                    <input 
+                      type="checkbox"
+                      checked={showUtm}
+                      onChange={(e) => setShowUtm(e.target.checked)}
+                      className="rounded border-border text-primary focus:ring-primary/20 h-4 w-4 cursor-pointer"
+                    />
+                    <span className="text-sm font-bold text-muted-foreground">Add UTM Campaign Tracking</span>
+                  </label>
+                  
+                  {showUtm && (
+                    <div className="grid grid-cols-2 gap-3 pl-6 border-l border-dashed border-border/60 animate-in slide-in-from-top-2 duration-200">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-muted-foreground">Source</label>
+                        <Input value={utmSource} onChange={e => setUtmSource(e.target.value)} placeholder="e.g. qr" className="h-8 text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-muted-foreground">Medium</label>
+                        <Input value={utmMedium} onChange={e => setUtmMedium(e.target.value)} placeholder="e.g. print" className="h-8 text-xs" />
+                      </div>
+                      <div className="space-y-1 col-span-2">
+                        <label className="text-xs font-bold text-muted-foreground">Campaign Name</label>
+                        <Input value={utmCampaign} onChange={e => setUtmCampaign(e.target.value)} placeholder="e.g. summer_launch" className="h-8 text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-muted-foreground">Term</label>
+                        <Input value={utmTerm} onChange={e => setUtmTerm(e.target.value)} placeholder="e.g. flyer" className="h-8 text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-muted-foreground">Content</label>
+                        <Input value={utmContent} onChange={e => setUtmContent(e.target.value)} placeholder="e.g. scan_v1" className="h-8 text-xs" />
+                      </div>
+                      {text && (
+                        <div className="col-span-2 mt-1 p-2 bg-muted/30 border border-border/40 rounded-lg text-[10px] text-muted-foreground break-all">
+                          <span className="font-bold block uppercase tracking-wider mb-0.5">Tagged URL Preview:</span>
+                          {buildUrlWithUtm(text)}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </ProGate>
             </div>
 
             <div className="space-y-2">
