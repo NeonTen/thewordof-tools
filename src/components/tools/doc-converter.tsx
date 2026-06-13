@@ -124,9 +124,11 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     const html2canvas = (await import("html2canvas")).default
 
     const container = document.createElement("div")
-    container.style.position = "absolute"
-    container.style.left = "-9999px"
-    container.style.top = "-9999px"
+    container.style.position = "fixed"
+    container.style.top = "0"
+    container.style.left = "0"
+    container.style.zIndex = "-9999"
+    container.style.pointerEvents = "none"
     container.style.width = "794px" // A4 width at 96 DPI
     container.style.padding = "48px"
     container.style.boxSizing = "border-box"
@@ -182,7 +184,9 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
           html2canvas: {
             scale: 2,
             useCORS: true,
-            logging: false
+            logging: false,
+            scrollX: 0,
+            scrollY: 0
           }
         })
       })
