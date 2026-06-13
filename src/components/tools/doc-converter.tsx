@@ -175,11 +175,11 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     try {
       const doc = new jsPDF({
         orientation: "portrait",
-        unit: "mm",
+        unit: "pt",
         format: "a4"
       })
 
-      const pdfWidth = doc.internal.pageSize.getWidth() // 210mm
+      const pdfWidth = doc.internal.pageSize.getWidth()
 
       await new Promise<void>((resolve, reject) => {
         doc.html(container, {
