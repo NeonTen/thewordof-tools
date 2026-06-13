@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.5] - 2026-06-13
+
+### Added
+- **AI Resume & CV Builder**:
+  - Added 5 new premium templates: **Executive** (formal serif layout), **Minimalist Pro** (clean asymmetrical design), **Developer Pro** (indigo-themed grid details), **Metro Grid** (boxed structural dividers), and **Accent Left** (emerald side-accent layout).
+  - Added support for parsing and mapping projects during raw text/LinkedIn AI imports.
+
+### Changed
+- **Pricing & Marketing**:
+  - Updated pricing plan feature lists and detailed comparison tables on both the Pricing page and Homepage to highlight 10 premium resume templates and AI parser improvements.
+  - Updated the homepage features grid to highlight Dynamic QR Code parameter/export options, CV templates, and SEO Readability Grader capabilities.
+- **AI CV Builder SEO**:
+  - Added detailed educational and SEO paragraphs explaining CV building, ATS optimizations, and parser mechanics at the bottom of the page.
+  - Adjusted bottom container padding to match other tools and align spacing cleanly before `Related Tools`.
+
+### Fixed
+- **AI Resume Parser**:
+  - Fixed "Import with AI" to correctly extract and map contact details (`email` and `phone`).
+- **AI CV Builder Print Styles**:
+  - Hid breadcrumbs and `ToolHeader` titles globally during printing.
+  - Set print margins to A4 portrait `15mm` top/bottom to prevent clipping on multi-page printouts, and added a `@page :first` top margin override to keep page 1 headers aligned with the top of the A4 paper.
+  - Implemented client-side sync converting text skills to/from bars when switching edit tabs.
+
 ## [1.1.4] - 2026-06-12
 
 ### Added

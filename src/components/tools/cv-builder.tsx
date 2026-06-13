@@ -26,14 +26,14 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 const TEMPLATES = [
   { id: 'modern', name: 'modern', pro: false },
   { id: 'elegant', name: 'elegant', pro: false },
-  { id: 'minimal', name: 'minimalist', pro: true },
   { id: 'creative', name: 'creative', pro: true },
   { id: 'tech', name: 'compact (tech)', pro: true },
-  { id: 'bold', name: 'bold', pro: true },
   { id: 'sidebar', name: 'sidebar', pro: true },
-  { id: 'futuristic', name: 'futuristic', pro: true },
-  { id: 'classic', name: 'classic', pro: true },
-  { id: 'startup', name: 'startup', pro: true },
+  { id: 'executive', name: 'executive pro', pro: true },
+  { id: 'minimalist-pro', name: 'minimalist pro', pro: true },
+  { id: 'developer', name: 'developer pro', pro: true },
+  { id: 'metro', name: 'metro grid', pro: true },
+  { id: 'accent', name: 'accent left', pro: true },
 ]
 
 const generateUniqueId = () => Date.now() + Math.random()
@@ -75,6 +75,8 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
       ...prev,
       name: data.name || prev.name,
       title: data.title || prev.title,
+      email: data.email || prev.email,
+      phone: data.phone || prev.phone,
       location: data.location || prev.location,
       summary: data.summary || prev.summary,
       skillsText: data.skillsText || prev.skillsText
@@ -98,6 +100,16 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
         school: edu.school || "",
         degree: edu.degree || "",
         period: edu.period || ""
+      })))
+    }
+
+    // Map projects
+    if (data.projects && data.projects.length > 0) {
+      setProjects(data.projects.map((proj, idx: number) => ({
+        id: Date.now() + idx,
+        title: proj.title || "",
+        link: proj.link || "",
+        desc: proj.desc || ""
       })))
     }
   }
@@ -299,33 +311,33 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
       textTransform: 'uppercase',
       letterSpacing: '0.05em',
       marginBottom: '12px',
-      color: templateId === 'futuristic' ? 'white' : '#111827',
+      color: '#111827',
       display: 'block',
     }
 
-    if (templateId === 'modern' || templateId === 'creative' || templateId === 'classic') {
+    if (templateId === 'modern' || templateId === 'creative' || templateId === 'accent') {
       return { ...base, borderBottom: `2px solid ${accentColor}`, paddingBottom: '4px' }
     }
     if (templateId === 'elegant') {
       return { ...base, borderBottom: `1px solid ${accentColor}`, paddingBottom: '6px', textAlign: 'center' as const, fontWeight: 'normal' }
     }
-    if (templateId === 'bold') {
-      return { ...base, borderLeft: `4px solid ${accentColor}`, paddingLeft: '15px', marginBottom: '15px' }
-    }
     if (templateId === 'sidebar') {
       return { ...base, fontSize: '16px', borderBottom: `1px solid ${accentColor}`, paddingBottom: '4px' }
     }
-    if (templateId === 'futuristic') {
-      return { ...base, color: '#38bdf8', fontSize: '14px', letterSpacing: '2px', border: 'none' }
-    }
-    if (templateId === 'startup') {
-      if (title === 'Contact' || title === 'Skills') {
-        return { ...base, fontSize: '14px', color: '#64748b', marginBottom: '12px', border: 'none' }
-      }
-      return { ...base, fontSize: '20px', color: accentColor, borderBottom: `2px solid ${accentColor}`, paddingBottom: '4px', textTransform: 'none' as const }
-    }
     if (templateId === 'tech') {
       return { ...base, fontFamily: 'monospace', color: accentColor, textTransform: 'none' as const, border: 'none' }
+    }
+    if (templateId === 'executive') {
+      return { ...base, fontFamily: '"Times New Roman", Times, serif', fontSize: '15px', color: '#1e3a8a', borderBottom: `1px solid #cbd5e1`, paddingBottom: '3px', letterSpacing: '0.1em' }
+    }
+    if (templateId === 'minimalist-pro') {
+      return { ...base, fontSize: '12px', letterSpacing: '0.15em', color: '#475569', borderBottom: '1px solid #f1f5f9', paddingBottom: '6px' }
+    }
+    if (templateId === 'developer') {
+      return { ...base, fontSize: '13px', fontFamily: 'monospace', color: '#4f46e5', borderLeft: '3px solid #4f46e5', paddingLeft: '8px' }
+    }
+    if (templateId === 'metro') {
+      return { ...base, fontSize: '11px', letterSpacing: '0.08em', backgroundColor: '#f8fafc', color: '#0f172a', padding: '6px 12px', borderRadius: '6px', display: 'inline-block', border: '1px solid #e2e8f0', marginBottom: '16px' }
     }
 
     return base
@@ -359,10 +371,10 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
       <p style={{ 
         fontSize: '14px', 
         lineHeight: '1.6', 
-        color: templateId === 'futuristic' ? 'rgba(255,255,255,0.8)' : '#374151',
+        color: '#374151',
         margin: 0,
         textAlign: templateId === 'elegant' ? 'center' : 'left' as const,
-        fontStyle: (templateId === 'elegant' || templateId === 'minimal') ? 'italic' : 'normal'
+        fontStyle: (templateId === 'elegant' || templateId === 'minimalist-pro') ? 'italic' : 'normal'
       }}>
         {templateId === 'tech' ? `/* ${cv.summary} */` : cv.summary}
       </p>, 
@@ -372,7 +384,7 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
   const renderSkills = (accentColor = '#2563eb') => 
     renderSection("Skills", 
       skillMode === 'text' ? (
-        <p style={{ fontSize: '14px', color: templateId === 'futuristic' ? 'rgba(255,255,255,0.8)' : '#374151', margin: 0 }}>{cv.skillsText}</p>
+        <p style={{ fontSize: '14px', color: '#374151', margin: 0 }}>{cv.skillsText}</p>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {skills.map(s => {
@@ -388,10 +400,10 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
             return (
               <div key={s.id} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontWeight: '600' }}>
-                  <span style={{ color: templateId === 'futuristic' ? 'white' : 'inherit' }}>{s.name}</span>
-                  <span style={{ color: templateId === 'futuristic' ? 'rgba(255,255,255,0.6)' : 'inherit' }}>{s.rating}%</span>
+                  <span>{s.name}</span>
+                  <span>{s.rating}%</span>
                 </div>
-                <div style={{ width: '100%', height: '6px', backgroundColor: templateId === 'futuristic' ? 'rgba(255,255,255,0.1)' : '#f1f5f9', borderRadius: '3px', overflow: 'hidden', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+                <div style={{ width: '100%', height: '6px', backgroundColor: '#f1f5f9', borderRadius: '3px', overflow: 'hidden', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
                   <div style={{ width: `${s.rating}%`, height: '100%', backgroundColor: accentColor, borderRadius: '3px', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }} />
                 </div>
               </div>
@@ -409,21 +421,11 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
           if (templateId === 'tech') {
             return <div key={e.id} style={{ paddingLeft: '20px', color: '#334155', fontSize: '13px' }}><p style={{ margin: 0 }}>{`{ role: "${e.role}", company: "${e.company}", desc: "${e.desc}" },`}</p></div>
           }
-          if (templateId === 'futuristic') {
-            return (
-              <div key={e.id} style={{ borderLeft: '2px solid rgba(56,189,248,0.3)', paddingLeft: '20px', position: 'relative' }}>
-                <div style={{ position: 'absolute', left: '-5px', top: '6px', width: '8px', height: '8px', backgroundColor: '#38bdf8', borderRadius: '50%', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }} />
-                <div style={{ fontWeight: 'bold', fontSize: '16px' }}>{e.role}</div>
-                <div style={{ fontSize: '13px', color: 'rgba(56,189,248,0.7)' }}>{e.company} / {e.period}</div>
-                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', marginTop: '8px', margin: 0 }}>{e.desc}</p>
-              </div>
-            )
-          }
           return (
             <div key={e.id}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
-                <span style={{ color: templateId === 'futuristic' ? 'white' : 'inherit' }}>{e.role} {templateId === 'elegant' ? '|' : '@'} {e.company}</span>
-                <span style={{ fontSize: '12px', color: '#666', fontWeight: 'normal' }}>{e.period}</span>
+                <span>{e.role} {templateId === 'elegant' ? '|' : '@'} {e.company}</span>
+                <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: 'normal' }}>{e.period}</span>
               </div>
               <p style={{ fontSize: '13px', color: '#4b5563', marginTop: '4px', margin: 0 }}>{e.desc}</p>
             </div>
@@ -443,10 +445,10 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
           return (
             <div key={p.id}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <h3 style={{ fontWeight: '600', color: templateId === 'futuristic' ? '#38bdf8' : '#111827', margin: 0, fontSize: '14px' }}>{p.title}</h3>
+                <h3 style={{ fontWeight: '600', color: '#111827', margin: 0, fontSize: '14px' }}>{p.title}</h3>
                 <span style={{ fontSize: '12px', color: accentColor }}>{p.link}</span>
               </div>
-              <p style={{ fontSize: '14px', color: templateId === 'futuristic' ? 'rgba(255,255,255,0.6)' : '#374151', margin: '4px 0 0 0' }}>{p.desc}</p>
+              <p style={{ fontSize: '14px', color: '#374151', margin: '4px 0 0 0' }}>{p.desc}</p>
             </div>
           )
         })}
@@ -464,10 +466,10 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
           return (
             <div key={edu.id}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
-                <span style={{ color: templateId === 'futuristic' ? 'white' : 'inherit' }}>{edu.school}</span>
-                <span style={{ color: templateId === 'futuristic' ? 'rgba(255,255,255,0.4)' : '#6b7280', fontSize: '12px', fontWeight: 'normal' }}>{edu.period}</span>
+                <span>{edu.school}</span>
+                <span style={{ color: '#6b7280', fontSize: '12px', fontWeight: 'normal' }}>{edu.period}</span>
               </div>
-              <p style={{ fontSize: '13px', color: templateId === 'futuristic' ? 'rgba(255,255,255,0.6)' : '#4b5563', margin: 0 }}>{edu.degree}</p>
+              <p style={{ fontSize: '13px', color: '#4b5563', margin: 0 }}>{edu.degree}</p>
             </div>
           )
         })}
@@ -480,13 +482,19 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
     <style dangerouslySetInnerHTML={{ __html: `
       @media print {
         @page { 
-          margin: 0; 
-          size: auto;
+          margin: 15mm 0; 
+          size: A4 portrait;
+        }
+        @page :first {
+          margin-top: 0;
         }
         body { 
           margin: 0; 
           -webkit-print-color-adjust: exact !important; 
           print-color-adjust: exact !important;
+        }
+        header, footer, nav, aside, .no-print, [class*="ToolHeader"] {
+          display: none !important;
         }
         .print-full-width {
           width: 100% !important;
@@ -564,7 +572,29 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Skills & Expertise</CardTitle>
             <ProGate feature="Skill Bars" isPro={isPro}>
-              <Tabs value={skillMode} onValueChange={(val) => setSkillMode(val as 'text' | 'bars')}>
+              <Tabs 
+                value={skillMode} 
+                onValueChange={(val) => {
+                  const mode = val as 'text' | 'bars'
+                  setSkillMode(mode)
+                  if (mode === 'bars') {
+                    const list = cv.skillsText.split(',').map(s => s.trim()).filter(Boolean)
+                    if (list.length > 0) {
+                      setSkills(list.map((name, i) => {
+                        const existing = skills.find(s => s.name.toLowerCase() === name.toLowerCase())
+                        return {
+                          id: existing?.id || (Date.now() + i + Math.random()),
+                          name,
+                          rating: existing?.rating || 80
+                        }
+                      }))
+                    }
+                  } else {
+                    const text = skills.map(s => s.name).filter(Boolean).join(', ')
+                    setCv(prev => ({ ...prev, skillsText: text }))
+                  }
+                }}
+              >
                 <TabsList className="h-8">
                   <TabsTrigger value="text" className="text-[10px] uppercase font-bold px-3"><AlignLeft className="h-3 w-3 mr-1" /> Text</TabsTrigger>
                   <TabsTrigger value="bars" className="text-[10px] uppercase font-bold px-3"><BarChart3 className="h-3 w-3 mr-1" /> Bars</TabsTrigger>
@@ -762,49 +792,116 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
             </div>
           )}
 
-          {/* Minimalist */}
-          {templateId === 'minimal' && (
-            <div style={{ padding: '60px' }}>
-               <h1 style={{ fontSize: '42px', fontWeight: '300', margin: 0 }}>{cv.name}</h1>
-               <div style={{ display: 'grid', gridTemplateColumns: '150px 1fr', gap: '40px', marginTop: '40px' }}>
-                  <div style={{ fontSize: '12px', color: '#999', lineHeight: '2' }}>
-                    {photo && <img src={photo} style={{ width: '100px', height: '100px', borderRadius: '50%', marginBottom: '20px', objectFit: 'cover' }} />}
-                    <p>{cv.email}</p>
-                    <p>{cv.phone}</p>
-                    <p>{cv.location}</p>
-                  </div>
-                  <div>
-                    {renderSummary()}
-                    {renderSkills()}
-                    {renderExperience()}
-                    {renderProjects()}
-                    {renderEducation()}
-                  </div>
-               </div>
+          {/* Executive Template */}
+          {templateId === 'executive' && (
+            <div style={{ padding: '50px 40px', fontFamily: '"Times New Roman", Times, serif', color: '#1e293b' }}>
+              <div style={{ textAlign: 'center', marginBottom: '25px', borderBottom: '2px double #cbd5e1', paddingBottom: '16px' }}>
+                <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: '#1e3a8a', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 8px 0' }}>{cv.name}</h1>
+                <p style={{ fontSize: '15px', color: '#475569', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 12px 0' }}>{cv.title}</p>
+                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '15px', fontSize: '12px', color: '#64748b' }}>
+                  <span>{cv.email}</span><span>|</span><span>{cv.phone}</span><span>|</span><span>{cv.location}</span>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                {renderSummary('#1e3a8a')}
+                {renderSkills('#1e3a8a')}
+                {renderExperience('#1e3a8a')}
+                {renderProjects('#1e3a8a')}
+                {renderEducation('#1e3a8a')}
+              </div>
             </div>
           )}
 
-          {/* Bold Template */}
-          {templateId === 'bold' && (
-            <div style={{ minHeight: '297mm' }}>
-              <div style={{ backgroundColor: '#111827', color: 'white', padding: '60px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+          {/* Minimalist Pro Template */}
+          {templateId === 'minimalist-pro' && (
+            <div style={{ padding: '50px', color: '#334155', fontFamily: 'Inter, sans-serif' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #e2e8f0', paddingBottom: '30px', marginBottom: '30px' }}>
                 <div>
-                  <h1 style={{ fontSize: '48px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '-1px' }}>{cv.name}</h1>
-                  <p style={{ fontSize: '20px', color: '#3b82f6', fontWeight: 'bold' }}>{cv.title}</p>
+                  <h1 style={{ fontSize: '36px', fontWeight: '800', letterSpacing: '-0.02em', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
+                  <p style={{ fontSize: '16px', color: '#64748b', marginTop: '4px', margin: 0 }}>{cv.title}</p>
                 </div>
-                {photo && <img src={photo} style={{ width: '120px', height: '120px', borderRadius: '12px', border: '4px solid #3b82f6', objectFit: 'cover' }} />}
+                <div style={{ textAlign: 'right', fontSize: '12px', color: '#64748b', lineHeight: '1.6' }}>
+                  {photo && <img src={photo} style={{ width: '80px', height: '80px', borderRadius: '16px', marginBottom: '12px', objectFit: 'cover', marginLeft: 'auto' }} />}
+                  <div>{cv.email}</div>
+                  <div>{cv.phone}</div>
+                  <div>{cv.location}</div>
+                </div>
               </div>
-              <div style={{ padding: '40px', display: 'grid', gridTemplateColumns: '1fr 250px', gap: '40px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  {renderSummary('#3b82f6')}
-                  {renderExperience('#3b82f6')}
-                  {renderProjects('#3b82f6')}
-                  {renderEducation('#3b82f6')}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                {renderSummary('#475569')}
+                {renderSkills('#475569')}
+                {renderExperience('#475569')}
+                {renderProjects('#475569')}
+                {renderEducation('#475569')}
+              </div>
+            </div>
+          )}
+
+          {/* Developer Pro Template */}
+          {templateId === 'developer' && (
+            <div style={{ padding: '45px', color: '#0f172a', fontFamily: 'Inter, sans-serif' }}>
+              <div style={{ borderLeft: '4px solid #4f46e5', paddingLeft: '20px', marginBottom: '35px' }}>
+                <h1 style={{ fontSize: '34px', fontWeight: '900', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
+                <p style={{ fontSize: '18px', color: '#4f46e5', fontWeight: 'bold', margin: '4px 0 0 0' }}>{cv.title}</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '10px', fontSize: '12px', color: '#64748b' }}>
+                  <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>
                 </div>
-                <div style={{ backgroundColor: '#f3f4f6', padding: '20px', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
-                  <h3 style={{ fontWeight: 'bold', marginBottom: '10px' }}>Contact</h3>
-                  <p style={{ fontSize: '12px', margin: '0 0 20px 0' }}>{cv.email}<br/>{cv.phone}<br/>{cv.location}</p>
-                  {renderSkills('#3b82f6')}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                {renderSummary('#4f46e5')}
+                {renderSkills('#4f46e5')}
+                {renderExperience('#4f46e5')}
+                {renderProjects('#4f46e5')}
+                {renderEducation('#4f46e5')}
+              </div>
+            </div>
+          )}
+
+          {/* Metro Grid Template */}
+          {templateId === 'metro' && (
+            <div style={{ padding: '40px', color: '#1e293b', fontFamily: 'Inter, sans-serif' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '20px', border: '1px solid #cbd5e1', padding: '24px', borderRadius: '12px', marginBottom: '30px' }}>
+                <div>
+                  <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
+                  <p style={{ fontSize: '16px', color: '#0284c7', fontWeight: '600', marginTop: '4px', margin: 0 }}>{cv.title}</p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '12px', fontSize: '12px', color: '#64748b' }}>
+                    <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>
+                  </div>
+                </div>
+                {photo && <img src={photo} style={{ width: '90px', height: '90px', borderRadius: '8px', objectFit: 'cover' }} />}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
+                {renderSummary('#0284c7')}
+                {renderSkills('#0284c7')}
+                {renderExperience('#0284c7')}
+                {renderProjects('#0284c7')}
+                {renderEducation('#0284c7')}
+              </div>
+            </div>
+          )}
+
+          {/* Accent Left Template */}
+          {templateId === 'accent' && (
+            <div style={{ display: 'grid', gridTemplateColumns: '8px 1fr', minHeight: '297mm', fontFamily: 'Inter, sans-serif' }}>
+              <div style={{ backgroundColor: '#059669', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }} />
+              <div style={{ padding: '50px 40px', color: '#1f2937' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '35px' }}>
+                  <div>
+                    <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#111827', margin: 0 }}>{cv.name}</h1>
+                    <p style={{ fontSize: '18px', color: '#059669', fontWeight: '700', marginTop: '4px', margin: 0 }}>{cv.title}</p>
+                  </div>
+                  <div style={{ textAlign: 'right', fontSize: '13px', color: '#4b5563' }}>
+                    <p style={{ margin: 0 }}>{cv.email}</p>
+                    <p style={{ margin: '4px 0 0 0' }}>{cv.phone}</p>
+                    <p style={{ margin: '4px 0 0 0' }}>{cv.location}</p>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                  {renderSummary('#059669')}
+                  {renderSkills('#059669')}
+                  {renderExperience('#059669')}
+                  {renderProjects('#059669')}
+                  {renderEducation('#059669')}
                 </div>
               </div>
             </div>
@@ -825,80 +922,6 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
                   {renderExperience('#1e293b')}
                   {renderProjects('#1e293b')}
                   {renderEducation('#1e293b')}
-               </div>
-            </div>
-          )}
-
-          {/* Futuristic Template */}
-          {templateId === 'futuristic' && (
-            <div style={{ backgroundColor: '#020617', color: 'white', minHeight: '297mm', padding: '60px 40px', position: 'relative', overflow: 'hidden', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
-               <div style={{ position: 'absolute', top: 0, right: 0, width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%)' }} />
-               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid rgba(56,189,248,0.3)', paddingBottom: '30px', marginBottom: '40px' }}>
-                  <div><h1 style={{ fontSize: '48px', fontWeight: 'bold', letterSpacing: '-2px', margin: 0, background: 'linear-gradient(to right, #38bdf8, #818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{cv.name}</h1><p style={{ fontSize: '20px', color: '#38bdf8', letterSpacing: '4px', textTransform: 'uppercase', marginTop: '5px' }}>{cv.title}</p></div>
-                  <div style={{ textAlign: 'right', fontSize: '13px', color: 'rgba(255,255,255,0.6)' }}>
-                    <p style={{ margin: 0 }}>{cv.email}</p>
-                    <p style={{ margin: '4px 0 0 0' }}>{cv.phone}</p>
-                    <p style={{ margin: '4px 0 0 0' }}>{cv.location}</p>
-                  </div>
-               </div>
-               <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '60px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    {renderSummary('#38bdf8')}
-                    {renderExperience('#38bdf8')}
-                    {renderProjects('#38bdf8')}
-                    {renderEducation('#38bdf8')}
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    {renderSkills('#38bdf8')}
-                  </div>
-               </div>
-            </div>
-          )}
-
-          {/* Classic Template */}
-          {templateId === 'classic' && (
-            <div style={{ padding: '60px', fontFamily: '"Times New Roman", Times, serif' }}>
-               <div style={{ textAlign: 'center', borderBottom: '1px solid #000', paddingBottom: '10px', marginBottom: '30px' }}><h1 style={{ fontSize: '36px', margin: 0 }}>{cv.name}</h1><p style={{ fontSize: '14px' }}>{cv.email} | {cv.phone} | {cv.location}</p></div>
-               {renderSummary('#000')}
-               {renderSkills('#000')}
-               {renderExperience('#000')}
-               {renderProjects('#000')}
-               {renderEducation('#000')}
-            </div>
-          )}
-
-          {/* Startup Template */}
-          {templateId === 'startup' && (
-            <div style={{ padding: '40px' }}>
-               <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '30px' }}>
-                 {photo && <img src={photo} style={{ width: '120px', height: '120px', borderRadius: '30px', objectFit: 'cover' }} />}
-                 <div>
-                   <h1 style={{ fontSize: '40px', fontWeight: 'black', letterSpacing: '-1.5px', color: '#0f172a' }}>{cv.name}</h1>
-                   <p style={{ fontSize: '18px', color: '#6366f1', fontWeight: 'bold' }}>{cv.title}</p>
-                 </div>
-               </div>
-               
-               <div style={{ width: '100%', marginBottom: '40px' }}>
-                 {renderSummary('#6366f1')}
-               </div>
-
-               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '40px' }}>
-                  <div>
-                    {renderExperience('#6366f1')}
-                    {renderProjects('#6366f1')}
-                    {renderEducation('#6366f1')}
-                  </div>
-                  <div>
-                    {renderSection("Contact", 
-                      <div style={{ fontSize: '13px', color: '#475569', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <p style={{ margin: 0 }}>{cv.email}</p>
-                        <p style={{ margin: 0 }}>{cv.phone}</p>
-                        <p style={{ margin: 0 }}>{cv.location}</p>
-                      </div>,
-                      '#64748b'
-                    )}
-                    {renderSkills('#6366f1')}
-                  </div>
                </div>
             </div>
           )}
@@ -951,10 +974,21 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
     </div>
 
     {/* SEO Section */}
-    <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-20 print:hidden">
+    <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-0 print:hidden">
       <section>
         <h2 className="text-2xl font-black tracking-tight mb-4">Why use an AI CV Builder?</h2>
-        <p className="text-muted-foreground">Professional CVs are the key to landing high-paying jobs. Our AI helps you craft the perfect summary and experience descriptions tailored to your industry.</p>
+        <p className="text-muted-foreground leading-relaxed">
+          Creating a professional CV that stands out to recruiters can be challenging. Our AI-powered CV builder simplifies this process by helping you draft compelling professional summaries, optimize your work experience descriptions, and format your layout instantly. Using advanced LLM models, the builder ensures that your achievements are highlighted clearly and concisely. With ATS-friendly templates, you can download your custom resume in high-quality PDF format, ready to submit to top employers.
+        </p>
+      </section>
+      <section className="bg-muted/30 p-8 rounded-3xl border border-primary/5">
+        <h3 className="text-xl font-black tracking-tight mb-4">ATS-Optimized Templates & LinkedIn Import</h3>
+        <p className="text-xs text-muted-foreground leading-relaxed mb-4">
+          Modern employers use Applicant Tracking Systems (ATS) to scan resumes for key roles and skills. Our templates—including Modern, Elegant, Creative, Tech, and Sidebar—are engineered with correct CSS layout standards to ensure high parser readability.
+        </p>
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          With the &quot;Import with AI&quot; feature, you can paste raw bio or LinkedIn text, and our system automatically maps contact details (email, phone, location), work updates, education, and projects. Switch between plain text skills and visual rating bars to match the visual styling of your industry.
+        </p>
       </section>
     </div>
     {showAIParserModal && (

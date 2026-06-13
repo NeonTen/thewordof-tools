@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 export type CVParserResult = {
   name: string
   title: string
+  email: string
+  phone: string
   location: string
   summary: string
   skillsText: string
@@ -20,6 +22,11 @@ export type CVParserResult = {
     degree: string
     period: string
   }>
+  projects: Array<{
+    title: string
+    link: string
+    desc: string
+  }>
 }
 
 interface AIPreviewModalProps {
@@ -32,6 +39,7 @@ interface AIPreviewModalProps {
 export function AIPreviewModal({ data, onApply, onBack, onClose }: AIPreviewModalProps) {
   const hasExp = data.experience && data.experience.length > 0
   const hasEdu = data.education && data.education.length > 0
+  const hasProj = data.projects && data.projects.length > 0
   const hasSkills = data.skillsText && data.skillsText.trim().length > 0
 
   return (
@@ -73,6 +81,14 @@ export function AIPreviewModal({ data, onApply, onBack, onClose }: AIPreviewModa
               <div>
                 <span className="text-xs text-muted-foreground block">Title</span>
                 <span className="font-medium">{data.title || "—"}</span>
+              </div>
+              <div>
+                <span className="text-xs text-muted-foreground block">Email</span>
+                <span className="font-medium">{data.email || "—"}</span>
+              </div>
+              <div>
+                <span className="text-xs text-muted-foreground block">Phone</span>
+                <span className="font-medium">{data.phone || "—"}</span>
               </div>
               <div className="col-span-2">
                 <span className="text-xs text-muted-foreground block">Location</span>
@@ -132,6 +148,31 @@ export function AIPreviewModal({ data, onApply, onBack, onClose }: AIPreviewModa
                       <span className="text-muted-foreground font-medium shrink-0">{item.period}</span>
                     </div>
                     <p className="text-muted-foreground font-semibold">{item.school}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Projects */}
+          <div className="space-y-3 rounded-2xl border p-4 bg-muted/10">
+            <div className="flex items-center justify-between">
+              <h4 className="font-semibold text-sm flex items-center gap-2 text-foreground">
+                <Briefcase className="h-4 w-4 text-primary" /> Key Projects
+              </h4>
+              {hasProj && <CheckCircle className="h-4 w-4 text-emerald-500 fill-emerald-500/10" />}
+            </div>
+            {!hasProj ? (
+              <p className="text-xs text-muted-foreground italic">No projects identified.</p>
+            ) : (
+              <div className="space-y-4 pt-2">
+                {data.projects.map((item, idx) => (
+                  <div key={idx} className="text-xs space-y-1 relative pl-4 border-l-2 border-primary/20 last:pb-0 pb-2">
+                    <div className="flex justify-between items-start">
+                      <h5 className="font-bold text-foreground">{item.title}</h5>
+                      {item.link && <span className="text-muted-foreground font-medium shrink-0">{item.link}</span>}
+                    </div>
+                    {item.desc && <p className="text-muted-foreground leading-relaxed pt-1">{item.desc}</p>}
                   </div>
                 ))}
               </div>

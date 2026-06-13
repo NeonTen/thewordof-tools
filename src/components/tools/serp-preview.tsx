@@ -29,10 +29,10 @@ function estimatePixelWidth(text: string, isTitle: boolean = false): number {
 }
 
 export function SerpPreviewer({ isPro }: { isPro: boolean }) {
-  const [title, setTitle] = useState("TheWordOf Tools - Free Online Developer & SEO Utilities")
-  const [description, setDescription] = useState("Access a suite of essential free online tools for developers and SEO professionals. Generate schema, validate robots.txt, check contrast, and analyze keyword density instantly.")
-  const [url, setUrl] = useState("https://tools.thewordof.com")
-  const [slug, setSlug] = useState("technical-seo/serp-preview")
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [url, setUrl] = useState("")
+  const [slug, setSlug] = useState("")
   
   // URL Fetcher States
   const [fetchUrl, setFetchUrl] = useState("")
@@ -221,7 +221,21 @@ export function SerpPreviewer({ isPro }: { isPro: boolean }) {
 
         {/* Manual Configuration Inputs */}
         <div className="bg-card p-5 border rounded-2xl space-y-5 shadow-sm">
-          <h2 className="text-lg font-bold">Configure Meta Tags</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-bold">Configure Meta Tags</h2>
+            <button
+              type="button"
+              onClick={() => {
+                setTitle("TheWordOf Tools - Free Online Developer & SEO Utilities")
+                setDescription("Access a suite of essential free online tools for developers and SEO professionals. Generate schema, validate robots.txt, check contrast, and analyze keyword density instantly.")
+                setUrl("https://tools.thewordof.com")
+                setSlug("technical-seo/serp-preview")
+              }}
+              className="text-xs font-bold text-primary hover:underline cursor-pointer focus:outline-none"
+            >
+              Try an Example
+            </button>
+          </div>
           
           <div className="space-y-1.5">
             <div className="flex justify-between items-baseline">
@@ -423,7 +437,7 @@ export function SerpPreviewer({ isPro }: { isPro: boolean }) {
       </div>
 
       {/* SEO Section */}
-      <div className="lg:col-span-12 grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12 pb-20">
+      <div className="lg:col-span-12 grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12">
         <section>
           <h2 className="text-2xl font-black tracking-tight mb-4">Mastering Meta Tags & Search Snippets</h2>
           <p className="text-muted-foreground leading-relaxed">

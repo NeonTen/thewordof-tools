@@ -1,6 +1,7 @@
 import { ToolsNav } from "@/components/layout/tools-nav"
 import { Header } from "@/components/layout/header"
 import { PageTransition } from "@/components/layout/page-transition"
+import { RelatedTools } from "@/components/tools/related-tools"
 
 export default function ToolsLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,6 +15,9 @@ export default function ToolsLayout({ children }: { children: React.ReactNode })
         </aside>
         <main className="flex w-full flex-col overflow-hidden py-8 px-6 md:px-8 lg:px-10 bg-background print:p-0">
           <PageTransition>{children}</PageTransition>
+          <div className="print:hidden">
+            <RelatedTools />
+          </div>
         </main>
       </div>
     </div>

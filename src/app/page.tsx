@@ -65,7 +65,7 @@ export default async function Home() {
                 { 
                   title: "Dynamic QR Codes", 
                   desc: "Create custom-branded QR codes with live tracking, redirection links, and advanced scan analytics.", 
-                  features: ["Custom shapes & colors", "Device & location tracking", "Redirection link manager"],
+                  features: ["Custom shapes & colors", "Scan analytics & UTM Builder", "CSV/PDF report exports"],
                   icon: QrCode, 
                   color: "text-blue-500", 
                   bg: "bg-blue-500/10",
@@ -74,7 +74,7 @@ export default async function Home() {
                 { 
                   title: "AI Resume & CV Builder", 
                   desc: "Design clean, professional Resumes in seconds using ATS-optimized layouts, AI summary writers, and LinkedIn import.", 
-                  features: ["8 Premium templates", "AI summary helper", "Direct PDF generation"],
+                  features: ["10 Premium templates", "AI Resume parser & import", "Direct PDF generation"],
                   icon: FileText, 
                   color: "text-purple-500", 
                   bg: "bg-purple-500/10",
@@ -83,7 +83,7 @@ export default async function Home() {
                 { 
                   title: "AI Caption & SEO Suite", 
                   desc: "Accelerate your growth with viral caption creators and SEO tags + metadata optimized for search engine ranks.", 
-                  features: ["Instagram & TikTok captions", "Meta tags & descriptions", "Custom tone & goal settings"],
+                  features: ["Readability Grader & AI Improver", "Meta tags & description generator", "Instagram & TikTok captions"],
                   icon: Wand2, 
                   color: "text-indigo-500", 
                   bg: "bg-indigo-500/10",
@@ -198,7 +198,7 @@ export default async function Home() {
                         ["AI SEO Generator", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
                         ["AI Prompt Optimizer", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
                         ["LLMS.txt Builder", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
-                        ["AI CV Builder & Import", "Costs 1 credit (Summary)", "Costs 1 credit", "Costs 1-3 credits"],
+                        ["AI CV Builder & Import", "Costs 1 credit (Summary)", "Pro (10 templates) (Costs 1 credit)", "Business (10 templates + AI Parser) (Costs 1-3 credits)"],
                         ["Invoice Generator", "3 / month", "Unlimited + Branding", "Unlimited + Branding"],
                         ["Dynamic QR Codes", "1 (15-day expiry)", "Unlimited (Lifetime)", "Unlimited (Lifetime)"],
                         ["Dynamic QR Analytics", "—", "Basic (Timeline, Device, Browser)", "Advanced (Timeline, Device, Browser + Geo Country/City)"],

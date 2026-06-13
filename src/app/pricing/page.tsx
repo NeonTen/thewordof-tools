@@ -97,7 +97,7 @@ export default async function PricingPage() {
                       ["AI SEO Generator", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
                       ["AI Prompt Optimizer", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
                       ["LLMS.txt Builder", "Costs 1 credit", "Costs 1 credit", "Costs 1 credit"],
-                      ["AI CV Builder & Import", "Costs 1 credit (Summary)", "Costs 1 credit", "Costs 1-3 credits"],
+                      ["AI CV Builder & Import", "Costs 1 credit (Summary)", "Pro (10 templates) (Costs 1 credit)", "Business (10 templates + AI Parser) (Costs 1-3 credits)"],
                       ["Invoice Generator", "3 / month", "Unlimited + Branding", "Unlimited + Branding"],
                       ["Dynamic QR Codes", "1 (15-day expiry)", "Unlimited (Lifetime)", "Unlimited + Analytics"],
                       ["SERP Previewer", "5 scrapes / mo", "Unlimited", "Unlimited"],

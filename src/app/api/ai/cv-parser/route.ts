@@ -39,6 +39,8 @@ export async function POST(req: Request) {
       schema: z.object({
         name: z.string(),
         title: z.string(),
+        email: z.string(),
+        phone: z.string(),
         location: z.string(),
         summary: z.string(),
         skillsText: z.string(),
@@ -52,12 +54,18 @@ export async function POST(req: Request) {
           school: z.string(),
           degree: z.string(),
           period: z.string()
+        })),
+        projects: z.array(z.object({
+          title: z.string(),
+          link: z.string(),
+          desc: z.string()
         }))
       }),
       prompt: `You are an expert CV Parser.
 Extract professional info from this raw CV text, LinkedIn profile copy, or professional bio. 
 Return empty strings or arrays for missing details.
 Ensure skillsText is a flat comma-separated list of extracted skills (e.g. "React, Next.js, TypeScript").
+Identify any notable key projects (e.g., LearningMole, ProfileTree) and populate them in the projects array with title, link (if any), and desc.
 
 Raw input text:
 ${text.substring(0, 30000)}

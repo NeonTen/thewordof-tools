@@ -9,7 +9,7 @@ interface ToolHeaderProps {
 
 export function ToolHeader({ category, categoryHref, title }: ToolHeaderProps) {
   return (
-    <div className="flex flex-col gap-4 mb-6">
+    <div className="flex flex-col gap-4 mb-6 print:hidden">
       {/* Breadcrumbs */}
       <div className="flex items-center gap-1.5 text-xs font-bold text-muted-foreground">
         <Link href="/tools" className="hover:text-foreground transition-colors">Tools</Link>

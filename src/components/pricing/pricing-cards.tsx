@@ -86,7 +86,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       features: [
         { label: "Everything in Free", included: true },
         { label: `${PLAN_PRICING.PREMIUM.credits} monthly AI credits`, included: true },
-        { label: "AI CV builder (Costs 1 credit)", included: true },
+        { label: "AI CV builder (10 Premium templates) (Costs 1 credit)", included: true },
         { label: "Up to 1,000 files per batch", included: true },
         { label: "Bulk ZIP downloads", included: true },
         { label: "Unlimited invoices + branding", included: true },
@@ -121,7 +121,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
       features: [
         { label: "Everything in Pro", included: true },
         { label: `${PLAN_PRICING.BUSINESS.credits} monthly AI credits`, included: true },
-        { label: "AI CV builder & AI Import (Costs 1-3 credits)", included: true },
+        { label: "AI CV builder & AI parser import (10 templates) (Costs 1-3 credits)", included: true },
         { label: "100% Unlimited batch processing", included: true },
         { label: "Geographic (country/city) scan tracking", included: true },
         { label: "UTM campaign builder for QR codes", included: true },

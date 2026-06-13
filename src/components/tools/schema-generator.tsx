@@ -944,7 +944,7 @@ export function SchemaGenerator({ isPro = false }: { isPro?: boolean }) {
         </div>
 
         {/* SEO Info Section */}
-        <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-20">
+        <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12">
           <section>
             <h2 className="text-2xl font-black tracking-tight mb-4">What is JSON-LD Schema Markup?</h2>
             <p className="text-muted-foreground leading-relaxed">

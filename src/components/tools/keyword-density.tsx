@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react"
 import { Copy, RefreshCw, FileText, Globe, CheckCircle2, AlertCircle } from "lucide-react"
 import { useUsageLimit } from "@/hooks/use-usage-limit"
+import { TagInput } from "@/components/ui/tag-input"
 
 const DEFAULT_STOPWORDS = new Set([
   "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", "as", "at", 
@@ -25,7 +26,7 @@ interface DensityItem {
 }
 
 export function KeywordDensityAnalyzer({ isPro }: { isPro: boolean }) {
-  const [text, setText] = useState("Search engine optimization (SEO) is the process of improving the quality and volume of website traffic to a website or a web page from search engines. SEO targets unpaid traffic rather than direct traffic or paid traffic. Unpaid traffic may originate from different kinds of searches, including image search, video search, academic search, news search, and industry-specific vertical search engines. Optimizing a website involves editing content, adding HTML tags, and modifying code to increase its relevance to specific keywords.")
+  const [text, setText] = useState("")
   const [url, setUrl] = useState("")
   const [fetching, setFetching] = useState(false)
   const [fetchError, setFetchError] = useState("")
@@ -33,7 +34,7 @@ export function KeywordDensityAnalyzer({ isPro }: { isPro: boolean }) {
   const [inputMode, setInputMode] = useState<"text" | "url">("text")
   const [excludeStopwords, setExcludeStopwords] = useState(true)
   const [caseSensitive, setCaseSensitive] = useState(false)
-  const [targetKeywords, setTargetKeywords] = useState("SEO, traffic, search, website")
+  const [targetKeywords, setTargetKeywords] = useState<string[]>(["SEO", "traffic", "search", "website"])
   const [activeGram, setActiveGram] = useState<1 | 2 | 3>(1)
 
   // Usage Limit
@@ -135,12 +136,7 @@ export function KeywordDensityAnalyzer({ isPro }: { isPro: boolean }) {
 
   // Target Keywords Validator
   const targetsAnalysis = useMemo(() => {
-    const keywords = targetKeywords
-      .split(",")
-      .map(k => k.trim())
-      .filter(k => k.length > 0)
-    
-    return keywords.map(kw => {
+    return targetKeywords.map(kw => {
       // Tokenize target keyword using the exact same word regex pattern
       const parts = kw.match(/[a-zA-Z0-9'-]+/g) || []
       let count = 0
@@ -234,13 +230,28 @@ export function KeywordDensityAnalyzer({ isPro }: { isPro: boolean }) {
               </form>
             </div>
           ) : (
-            <textarea 
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              rows={10}
-              placeholder="Paste your content here..."
-              className="w-full px-3 py-2.5 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm leading-relaxed"
-            />
+            <>
+              <div className="flex justify-between items-center text-xs text-muted-foreground font-bold px-1 pt-1">
+                <span>Raw Text Content</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setText("Search engine optimization (SEO) is the process of improving the quality and volume of website traffic to a website or a web page from search engines. SEO targets unpaid traffic rather than direct traffic or paid traffic. Unpaid traffic may originate from different kinds of searches, including image search, video search, academic search, news search, and industry-specific vertical search engines. Optimizing a website involves editing content, adding HTML tags, and modifying code to increase its relevance to specific keywords.")
+                    setTargetKeywords(["SEO", "traffic", "search", "website"])
+                  }}
+                  className="text-xs font-bold text-primary hover:underline cursor-pointer focus:outline-none"
+                >
+                  Try an Example
+                </button>
+              </div>
+              <textarea 
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                rows={10}
+                placeholder="Paste your content here..."
+                className="w-full px-3 py-2.5 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm leading-relaxed"
+              />
+            </>
           )}
           {fetchError && <p className="text-xs text-destructive font-semibold">{fetchError}</p>}
         </div>
@@ -271,13 +282,11 @@ export function KeywordDensityAnalyzer({ isPro }: { isPro: boolean }) {
           </div>
 
           <div className="space-y-1.5 pt-2">
-            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Target Keywords (comma-separated)</label>
-            <input 
-              type="text" 
-              value={targetKeywords}
-              onChange={(e) => setTargetKeywords(e.target.value)}
-              placeholder="e.g. SEO, keywords, optimization"
-              className="w-full px-3 py-2 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm font-semibold"
+            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Target Keywords</label>
+            <TagInput 
+              tags={targetKeywords}
+              onChange={setTargetKeywords}
+              placeholder="Type keyword and press Enter..."
             />
           </div>
         </div>
@@ -396,7 +405,7 @@ export function KeywordDensityAnalyzer({ isPro }: { isPro: boolean }) {
       </div>
 
       {/* SEO Section */}
-      <div className="lg:col-span-12 grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12 pb-20">
+      <div className="lg:col-span-12 grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12">
         <section>
           <h2 className="text-2xl font-black tracking-tight mb-4">Understanding Keyword Density & Organic SEO</h2>
           <p className="text-muted-foreground leading-relaxed">

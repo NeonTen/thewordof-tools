@@ -14,14 +14,7 @@ interface ScannedLink {
 
 export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
   const [url, setUrl] = useState("")
-  const [links, setLinks] = useState<ScannedLink[]>([
-    { href: "https://tools.thewordof.com", text: "Home Overview", type: "internal", status: 200 },
-    { href: "https://tools.thewordof.com/tools", text: "All Utilities Directory", type: "internal", status: 200 },
-    { href: "https://tools.thewordof.com/pricing", text: "Plans & Pro Billing", type: "internal", status: 200 },
-    { href: "https://google.com/search-console", text: "Google Webmaster Console", type: "external", status: 200 },
-    { href: "https://example.com/broken-page-demo", text: "Legacy Resource Document", type: "external", status: 404 },
-    { href: "https://httpstat.us/301", text: "Redirected Target API", type: "external", status: 301 }
-  ])
+  const [links, setLinks] = useState<ScannedLink[]>([])
   
   const [scanning, setScanning] = useState(false)
   const [scanError, setScanError] = useState("")
@@ -128,7 +121,27 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
       <div className="lg:col-span-12">
         <div className="bg-card p-6 border rounded-2xl shadow-sm space-y-4">
           <div className="flex justify-between items-center max-w-2xl gap-4">
-            <h2 className="text-lg font-bold">Inspect Page Outbound Links</h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-lg font-bold">Inspect Page Outbound Links</h2>
+              <button
+                type="button"
+                onClick={() => {
+                  setUrl("https://tools.thewordof.com")
+                  setLinks([
+                    { href: "https://tools.thewordof.com", text: "Home Overview", type: "internal", status: 200 },
+                    { href: "https://tools.thewordof.com/tools", text: "All Utilities Directory", type: "internal", status: 200 },
+                    { href: "https://tools.thewordof.com/pricing", text: "Plans & Pro Billing", type: "internal", status: 200 },
+                    { href: "https://google.com/search-console", text: "Google Webmaster Console", type: "external", status: 200 },
+                    { href: "https://example.com/broken-page-demo", text: "Legacy Resource Document", type: "external", status: 404 },
+                    { href: "https://httpstat.us/301", text: "Redirected Target API", type: "external", status: 301 }
+                  ])
+                  setTotalFound(6)
+                }}
+                className="text-xs font-bold text-primary hover:underline cursor-pointer focus:outline-none"
+              >
+                Try an Example
+              </button>
+            </div>
             {!isPro && (
               <span className="text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-full font-semibold shrink-0">
                 {Math.max(0, 3 - usedThisMonth)} of 3 free audits left this month
@@ -413,7 +426,7 @@ export function BrokenLinksAuditor({ isPro }: { isPro: boolean }) {
       </div>
 
       {/* SEO Section */}
-      <div className="lg:col-span-12 grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12 pb-20">
+      <div className="lg:col-span-12 grid md:grid-cols-2 gap-12 mt-16 border-t border-border pt-12">
         <section>
           <h2 className="text-2xl font-black tracking-tight mb-4">The Importance of Outbound Link Audits</h2>
           <p className="text-muted-foreground leading-relaxed">
