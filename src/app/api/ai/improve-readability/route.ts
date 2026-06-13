@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       return new NextResponse("Authentication required", { status: 401 })
     }
 
-    const { text } = await req.json()
+    const { text, protectedKeywords = [] } = await req.json()
     if (!text || typeof text !== 'string') {
       return new NextResponse("Missing required fields", { status: 400 })
     }
@@ -25,15 +25,23 @@ export async function POST(req: Request) {
       return new NextResponse("Quota Exceeded: You do not have enough credits.", { status: 403 })
     }
 
+    const rules = [
+      "- Simplify complex and multi-syllabic words with simpler synonyms.",
+      "- Break up long, complex sentences into shorter, clear sentences.",
+      "- Keep the original meaning, tone, and information intact.",
+      "- Preserve or introduce clear formatting using standard Markdown. Use '#' or '##' for sections/headings, list blocks ('-' or '1.') for key items, and '**' for emphasis where it makes the text easier to scan.",
+      "- Do NOT include HTML tag wrappers, code block backticks (like ```markdown), or other non-plain-text symbols. Just return the raw markdown content."
+    ]
+
+    if (Array.isArray(protectedKeywords) && protectedKeywords.length > 0) {
+      rules.push(`- CRITICAL RULE: You MUST preserve the following terms exactly as they are without any modifications, simplification, or substitution: ${protectedKeywords.map(k => `"${k}"`).join(", ")}. Do NOT rewrite or simplify these words/phrases.`)
+    }
+
     const prompt = `You are an expert copywriter and editor. Your task is to rewrite the following text to make it significantly easier to read.
     
     Target: Improve the Flesch Reading Ease score of the text to be 60 or higher (Standard Plain English / 8th-9th Grade level).
     Rules:
-    - Simplify complex and multi-syllabic words with simpler synonyms.
-    - Break up long, complex sentences into shorter, clear sentences.
-    - Keep the original meaning, tone, and information intact.
-    - Preserve or introduce clear formatting using standard Markdown. Use '#' or '##' for sections/headings, list blocks ('-' or '1.') for key items, and '**' for emphasis where it makes the text easier to scan.
-    - Do NOT include HTML tag wrappers, code block backticks (like \`\`\`markdown), or other non-plain-text symbols. Just return the raw markdown content.
+    ${rules.join("\n")}
 
     Original Text:
     ${text}`
