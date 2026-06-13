@@ -187,32 +187,33 @@ export function GradientGenerator() {
           </div>
 
           {/* Editor controls below, full width of both columns */}
-          <div className="w-full">
-            <h3 className="font-bold text-sm text-foreground uppercase tracking-wider text-muted-foreground mb-4">Settings</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Left Column: Type and Angle */}
-              <div className="space-y-6">
-                <div>
-                  <label className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Type</label>
-                  <div className="flex gap-2 mt-1.5">
-                    <button 
-                      type="button"
-                      onClick={() => setType("linear")} 
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${type === "linear" ? "bg-primary text-primary-foreground shadow-sm" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
-                    >
-                      Linear
-                    </button>
-                    <button 
-                      type="button"
-                      onClick={() => setType("radial")} 
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${type === "radial" ? "bg-primary text-primary-foreground shadow-sm" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
-                    >
-                      Radial
-                    </button>
-                  </div>
+          <div className="w-full space-y-6">
+            <h3 className="font-bold text-sm text-foreground uppercase tracking-wider text-muted-foreground">Settings</h3>
+            
+            {/* Row 1: Type & Angle side-by-side */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-xs text-muted-foreground font-bold uppercase tracking-wider">Type</label>
+                <div className="flex gap-2 mt-1.5">
+                  <button 
+                    type="button"
+                    onClick={() => setType("linear")} 
+                    className={`flex-1 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${type === "linear" ? "bg-primary text-primary-foreground shadow-sm" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
+                  >
+                    Linear
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => setType("radial")} 
+                    className={`flex-1 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${type === "radial" ? "bg-primary text-primary-foreground shadow-sm" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
+                  >
+                    Radial
+                  </button>
                 </div>
+              </div>
 
-                {type === "linear" && (
+              <div>
+                {type === "linear" ? (
                   <div>
                     <div className="flex justify-between text-xs font-bold">
                       <span className="text-muted-foreground uppercase tracking-wider">Angle</span>
@@ -227,8 +228,99 @@ export function GradientGenerator() {
                       className="w-full mt-1.5 cursor-pointer accent-primary" 
                     />
                   </div>
+                ) : (
+                  <div className="h-full flex items-end">
+                    <span className="text-xs text-muted-foreground italic pb-2">Radial gradients don't use angles.</span>
+                  </div>
                 )}
+              </div>
+            </div>
 
+            {/* Row 2: Full Width Interactive Gradient Track */}
+            <div className="space-y-3 pt-2">
+              <label className="block text-xs text-muted-foreground font-bold uppercase tracking-wider">
+                Interactive Gradient Track (Click to add stop, drag to move)
+              </label>
+              <div className="relative py-2">
+                <div 
+                  ref={trackRef}
+                  onClick={handleTrackClick}
+                  className="relative h-4 rounded-lg border border-border cursor-pointer select-none"
+                  style={{ background: `linear-gradient(to right, ${sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")})` }}
+                >
+                  {stops.map(s => (
+                    <div
+                      key={s.id}
+                      onMouseDown={(e) => handleDragStart(s.id, e)}
+                      onTouchStart={(e) => handleDragStart(s.id, e)}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setActiveStopId(s.id)
+                      }}
+                      className={`slider-pin absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-white shadow-md cursor-grab transition-all ${
+                        s.id === activeId ? "ring-2 ring-primary ring-offset-2 scale-110" : "hover:scale-105"
+                      }`}
+                      style={{ left: `${s.position}%`, transform: 'translate(-50%, -50%)', backgroundColor: s.color }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Row 3: Edit Panel & Flip button at bottom */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+              {(() => {
+                const activeStop = stops.find(s => s.id === activeId)
+                if (!activeStop) return null
+                return (
+                  <div className="bg-muted/30 p-4 border rounded-xl space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-muted-foreground font-black uppercase tracking-wider">
+                        Edit Color Stop
+                      </span>
+                      {stops.length > 2 && (
+                        <button 
+                          type="button"
+                          onClick={() => handleDeleteStop(activeStop.id)}
+                          className="text-[10px] text-destructive font-black uppercase tracking-wider hover:underline"
+                        >
+                          Delete Stop
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <input 
+                        type="color" 
+                        value={activeStop.color} 
+                        onChange={(e) => {
+                          const val = e.target.value
+                          setStops(prev => prev.map(s => s.id === activeId ? { ...s, color: val } : s))
+                        }} 
+                        className="w-10 h-10 border border-border rounded-xl cursor-pointer bg-transparent" 
+                      />
+                      <div className="flex-1 space-y-1">
+                        <div className="flex justify-between text-xs font-bold">
+                          <span>Position</span>
+                          <span className="font-mono">{activeStop.position}%</span>
+                        </div>
+                        <input 
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={activeStop.position}
+                          onChange={(e) => {
+                            const val = parseInt(e.target.value)
+                            setStops(prev => prev.map(s => s.id === activeId ? { ...s, position: val } : s))
+                          }}
+                          className="w-full cursor-pointer accent-primary"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )
+              })()}
+
+              <div className="flex justify-start pb-2">
                 <button 
                   type="button"
                   onClick={handleFlipGradients} 
@@ -236,88 +328,6 @@ export function GradientGenerator() {
                 >
                   <RefreshCw className="h-3.5 w-3.5" /> Flip Gradients
                 </button>
-              </div>
-
-              {/* Right Column: Colors & Slider Track */}
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <label className="text-xs text-muted-foreground font-bold uppercase tracking-wider">
-                    Interactive Gradient Track (Click to add stop, drag to move)
-                  </label>
-                  <div 
-                    ref={trackRef}
-                    onClick={handleTrackClick}
-                    className="relative h-4 rounded-lg border border-border cursor-pointer select-none"
-                    style={{ background: `linear-gradient(to right, ${sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")})` }}
-                  >
-                    {stops.map(s => (
-                      <div
-                        key={s.id}
-                        onMouseDown={(e) => handleDragStart(s.id, e)}
-                        onTouchStart={(e) => handleDragStart(s.id, e)}
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          setActiveStopId(s.id)
-                        }}
-                        className={`slider-pin absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-white shadow-md cursor-grab transition-all ${
-                          s.id === activeId ? "ring-2 ring-primary ring-offset-2 scale-110" : "hover:scale-105"
-                        }`}
-                        style={{ left: `${s.position}%`, transform: 'translate(-50%, -50%)', backgroundColor: s.color }}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                {(() => {
-                  const activeStop = stops.find(s => s.id === activeId)
-                  if (!activeStop) return null
-                  return (
-                    <div className="bg-muted/30 p-4 border rounded-xl space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-[10px] text-muted-foreground font-black uppercase tracking-wider">
-                          Edit Color Stop
-                        </span>
-                        {stops.length > 2 && (
-                          <button 
-                            type="button"
-                            onClick={() => handleDeleteStop(activeStop.id)}
-                            className="text-[10px] text-destructive font-black uppercase tracking-wider hover:underline"
-                          >
-                            Delete Stop
-                          </button>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <input 
-                          type="color" 
-                          value={activeStop.color} 
-                          onChange={(e) => {
-                            const val = e.target.value
-                            setStops(prev => prev.map(s => s.id === activeId ? { ...s, color: val } : s))
-                          }} 
-                          className="w-10 h-10 border border-border rounded-xl cursor-pointer bg-transparent" 
-                        />
-                        <div className="flex-1 space-y-1">
-                          <div className="flex justify-between text-xs font-bold">
-                            <span>Position</span>
-                            <span className="font-mono">{activeStop.position}%</span>
-                          </div>
-                          <input 
-                            type="range"
-                            min="0"
-                            max="100"
-                            value={activeStop.position}
-                            onChange={(e) => {
-                              const val = parseInt(e.target.value)
-                              setStops(prev => prev.map(s => s.id === activeId ? { ...s, position: val } : s))
-                            }}
-                            className="w-full cursor-pointer accent-primary"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })()}
               </div>
             </div>
           </div>
