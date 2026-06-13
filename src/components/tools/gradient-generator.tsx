@@ -22,16 +22,35 @@ const PRESETS: GradientPreset[] = [
   { name: "Emerald Dream", colors: ["#11998E", "#38EF7D"], angle: 135, type: "linear" }
 ]
 
+interface ColorStop {
+  id: string
+  color: string
+  position: number
+}
+
+function presetToStops(preset: GradientPreset): ColorStop[] {
+  return preset.colors.map((color, index) => ({
+    id: `stop-${index}-${Date.now()}-${Math.random()}`,
+    color,
+    position: Math.round((index / (preset.colors.length - 1)) * 100),
+  }))
+}
+
 export function GradientGenerator() {
   const [selected, setSelected] = useState<GradientPreset>(PRESETS[0])
-  const [colors, setColors] = useState<string[]>([...PRESETS[0].colors])
+  const [stops, setStops] = useState<ColorStop[]>(() => presetToStops(PRESETS[0]))
+  const [activeStopId, setActiveStopId] = useState<string>("")
   const [angle, setAngle] = useState(PRESETS[0].angle)
   const [type, setType] = useState<"linear" | "radial">(PRESETS[0].type)
   const [copiedText, setCopiedText] = useState("")
 
+  const activeId = activeStopId || (stops[0]?.id || "")
+
   const handleSelectPreset = (preset: GradientPreset) => {
     setSelected(preset)
-    setColors([...preset.colors])
+    const newStops = presetToStops(preset)
+    setStops(newStops)
+    setActiveStopId(newStops[0]?.id || "")
     setAngle(preset.angle)
     setType(preset.type)
   }
