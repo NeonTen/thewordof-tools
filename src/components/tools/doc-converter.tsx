@@ -1,7 +1,9 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { FileText, Loader2, Upload, Trash2, ArrowRight } from "lucide-react"
+import { FileText, Loader2, Upload, Trash2, ArrowRight, Sparkles } from "lucide-react"
+import { useUsageLimit } from "@/hooks/use-usage-limit"
+import { ProGate, ProBadge } from "@/components/ui/pro-gate"
 
 interface UploadedFile {
   name: string
@@ -10,12 +12,17 @@ interface UploadedFile {
   content: ArrayBuffer | string
 }
 
-export function DocConverter() {
+export function DocConverter({ role = "USER" }: { role?: string }) {
+  const isPro = role === "PRO" || role === "ADMIN" || role === "BUSINESS"
+
   const [file, setFile] = useState<UploadedFile | null>(null)
   const [converting, setConverting] = useState(false)
   const [error, setError] = useState("")
   const [dragActive, setDragActive] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const { count: usedToday, increment: incrementUsage } = useUsageLimit("doc-converter", "daily")
+  const limitReached = !isPro && usedToday >= 5
 
   const activeId = "" // placeholder or unneeded
 
@@ -49,10 +56,26 @@ export function DocConverter() {
 
   const processFile = (selected: File) => {
     setError("")
+    if (limitReached) {
+      setError("Daily conversion limit reached. Please upgrade to Pro for unlimited conversions.")
+      return
+    }
+
     const ext = selected.name.split(".").pop()?.toLowerCase() || ""
     const allowed = ["docx", "pdf", "txt", "md"]
     if (!allowed.includes(ext)) {
       setError("Unsupported file format. Please upload .docx, .pdf, .txt, or .md")
+      return
+    }
+
+    if (ext === "pdf" && !isPro) {
+      setError("PDF parsing is a Pro feature. Please upgrade to convert PDF documents.")
+      return
+    }
+
+    const maxSize = isPro ? 25 * 1024 * 1024 : 2 * 1024 * 1024
+    if (selected.size > maxSize) {
+      setError(`File size exceeds limit. Max allowed is ${isPro ? "25MB" : "2MB (Free)"}.`)
       return
     }
 
@@ -169,6 +192,7 @@ export function DocConverter() {
           downloadDocx(text, file.name)
         }
       }
+      await incrementUsage(1)
     } catch (err: any) {
       console.error(err)
       setError("Conversion failed: " + (err.message || "Unknown error"))
@@ -182,34 +206,41 @@ export function DocConverter() {
       <div className="lg:col-span-12">
         <div className="bg-card border border-border p-6 rounded-2xl shadow-sm space-y-6">
           {!file ? (
-            <div 
-              onDragEnter={handleDrag}
-              onDragOver={handleDrag}
-              onDragLeave={handleDrag}
-              onDrop={handleDrop}
-              onClick={() => fileInputRef.current?.click()}
-              className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all space-y-4 ${
-                dragActive 
-                  ? "border-primary bg-primary/5 scale-[0.99]" 
-                  : "border-border hover:border-primary/50 hover:bg-muted/30"
-              }`}
-            >
-              <input 
-                ref={fileInputRef}
-                type="file" 
-                accept=".docx,.pdf,.txt,.md"
-                onChange={handleFileChange}
-                className="hidden" 
-              />
-              <div className="h-16 w-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary">
-                <Upload className="h-8 w-8" />
+            <div className="space-y-4">
+              <div 
+                onDragEnter={handleDrag}
+                onDragOver={handleDrag}
+                onDragLeave={handleDrag}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+                className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all space-y-4 ${
+                  dragActive 
+                    ? "border-primary bg-primary/5 scale-[0.99]" 
+                    : "border-border hover:border-primary/50 hover:bg-muted/30"
+                }`}
+              >
+                <input 
+                  ref={fileInputRef}
+                  type="file" 
+                  accept=".docx,.pdf,.txt,.md"
+                  onChange={handleFileChange}
+                  className="hidden" 
+                />
+                <div className="h-16 w-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary">
+                  <Upload className="h-8 w-8" />
+                </div>
+                <div className="space-y-1">
+                  <p className="font-bold text-lg">Drag & Drop Document Here</p>
+                  <p className="text-xs text-muted-foreground">Supports DOCX, PDF, TXT, and MD files</p>
+                </div>
+                {error && (
+                  <p className="text-xs text-destructive font-bold">{error}</p>
+                )}
               </div>
-              <div className="space-y-1">
-                <p className="font-bold text-lg">Drag & Drop Document Here</p>
-                <p className="text-xs text-muted-foreground">Supports DOCX, PDF, TXT, and MD files</p>
-              </div>
-              {error && (
-                <p className="text-xs text-destructive font-bold">{error}</p>
+              {!isPro && (
+                <p className="text-xs text-muted-foreground text-center mt-2">
+                  Daily conversions used: {usedToday} / 5 &bull; Max size: 2MB (Free) / 25MB (Pro)
+                </p>
               )}
             </div>
           ) : (
@@ -283,13 +314,15 @@ export function DocConverter() {
                           >
                             Convert to Plain Text
                           </button>
-                          <button
-                            type="button"
-                            onClick={() => handleConvert("docx")}
-                            className="p-4 border border-border rounded-xl text-center font-bold hover:border-primary hover:bg-primary/5 transition-all text-sm cursor-pointer shadow-sm"
-                          >
-                            Convert to Word (.docx)
-                          </button>
+                          <ProGate feature="PDF to Word Converter" isPro={isPro}>
+                            <button
+                              type="button"
+                              onClick={() => handleConvert("docx")}
+                              className="p-4 border border-border rounded-xl text-center font-bold hover:border-primary hover:bg-primary/5 transition-all text-sm cursor-pointer shadow-sm w-full"
+                            >
+                              Convert to Word (.docx) <ProBadge />
+                            </button>
+                          </ProGate>
                         </>
                       )}
 
