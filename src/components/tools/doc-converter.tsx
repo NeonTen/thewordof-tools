@@ -119,23 +119,94 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     URL.revokeObjectURL(url)
   }
 
-  const downloadPdf = async (text: string, filename: string) => {
+  const downloadPdf = async (htmlContent: string, filename: string) => {
     const { jsPDF } = await import("jspdf")
-    const doc = new jsPDF()
-    const margin = 15
-    const pageHeight = doc.internal.pageSize.height
-    const splitText = doc.splitTextToSize(text, 180)
-    let y = 20
+    const html2canvas = (await import("html2canvas")).default
 
-    for (let i = 0; i < splitText.length; i++) {
-      if (y > pageHeight - 20) {
-        doc.addPage()
-        y = 20
+    const container = document.createElement("div")
+    container.style.position = "absolute"
+    container.style.left = "-9999px"
+    container.style.top = "-9999px"
+    container.style.width = "794px" // A4 width at 96 DPI
+    container.style.padding = "48px"
+    container.style.boxSizing = "border-box"
+    container.style.background = "#ffffff"
+    container.style.color = "#000000"
+    container.style.fontFamily = "Arial, sans-serif"
+    container.style.fontSize = "14px"
+    container.style.lineHeight = "1.6"
+
+    container.innerHTML = `
+      <style>
+        h1, h2, h3, h4, h5, h6 { font-weight: bold; margin-top: 1.2em; margin-bottom: 0.6em; color: #111111; line-height: 1.2; }
+        h1 { font-size: 24px; border-bottom: 1.5px solid #333333; padding-bottom: 6px; }
+        h2 { font-size: 18px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+        h3 { font-size: 15px; }
+        p { margin-top: 0; margin-bottom: 1em; }
+        ul, ol { margin-top: 0; margin-bottom: 1em; padding-left: 24px; list-style-position: outside; }
+        li { margin-bottom: 0.4em; }
+        a { color: #2563eb; text-decoration: underline; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 1.2em; }
+        th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-size: 13px; }
+        th { background-color: #f8fafc; font-weight: bold; }
+        strong { font-weight: bold; }
+        em { font-style: italic; }
+        blockquote { border-left: 4px solid #cbd5e1; padding-left: 16px; margin: 0 0 1em 0; color: #475569; font-style: italic; }
+        pre { background: #f1f5f9; padding: 12px; border-radius: 6px; overflow-x: auto; font-family: monospace; font-size: 13px; margin-bottom: 1em; }
+        code { font-family: monospace; background: #f1f5f9; padding: 2px 4px; border-radius: 4px; font-size: 13px; }
+      </style>
+      <div>${htmlContent}</div>
+    `
+    document.body.appendChild(container)
+
+    try {
+      const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4"
+      })
+
+      const pdfWidth = doc.internal.pageSize.getWidth() // 210mm
+
+      await new Promise<void>((resolve, reject) => {
+        doc.html(container, {
+          callback: function (pdf) {
+            pdf.save(filename.replace(/\.[^/.]+$/, "") + ".pdf")
+            resolve()
+          },
+          x: 0,
+          y: 0,
+          width: pdfWidth,
+          windowWidth: 794,
+          autoPaging: "text",
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            logging: false
+          }
+        })
+      })
+    } catch (err) {
+      console.error("HTML to PDF conversion failed, trying fallback text mode", err)
+      const doc = new jsPDF()
+      const margin = 15
+      const pageHeight = doc.internal.pageSize.height
+      const plainText = htmlContent.replace(/<[^>]+>/g, "\n").replace(/\n+/g, "\n")
+      const splitText = doc.splitTextToSize(plainText, 180)
+      let y = 20
+
+      for (let i = 0; i < splitText.length; i++) {
+        if (y > pageHeight - 20) {
+          doc.addPage()
+          y = 20
+        }
+        doc.text(splitText[i], margin, y)
+        y += 8
       }
-      doc.text(splitText[i], margin, y)
-      y += 8
+      doc.save(filename.replace(/\.[^/.]+$/, "") + ".pdf")
+    } finally {
+      document.body.removeChild(container)
     }
-    doc.save(filename.replace(/\.[^/.]+$/, "") + ".pdf")
   }
 
   const handleConvert = async (target: string) => {
@@ -162,8 +233,7 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
             .replace(/<[^>]+>/g, "")
           downloadFile(md, file.name.replace(".docx", ".md"), "text/markdown")
         } else if (target === "pdf") {
-          const text = html.replace(/<[^>]+>/g, "\n").replace(/\n+/g, "\n")
-          await downloadPdf(text, file.name)
+          await downloadPdf(html, file.name)
         }
       } else if (file.type === "pdf") {
         const pdfjs = await import("pdfjs-dist")
@@ -187,7 +257,20 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
       } else if (file.type === "txt" || file.type === "md") {
         const text = new TextDecoder().decode(file.content as ArrayBuffer)
         if (target === "pdf") {
-          await downloadPdf(text, file.name)
+          let htmlContent = ""
+          if (file.type === "md") {
+            const { marked } = await import("marked")
+            htmlContent = await marked.parse(text)
+          } else {
+            const escaped = text
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#039;")
+            htmlContent = escaped.split("\n").map(line => `<p style="margin: 0 0 4px 0; min-height: 1em; white-space: pre-wrap;">${line || "&nbsp;"}</p>`).join("")
+          }
+          await downloadPdf(htmlContent, file.name)
         } else if (target === "docx") {
           downloadDocx(text, file.name)
         }
