@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useRef } from "react"
 import { Copy, RefreshCw } from "lucide-react"
 
 interface GradientPreset {
@@ -58,6 +58,77 @@ export function GradientGenerator() {
   const sortedStops = useMemo(() => {
     return [...stops].sort((a, b) => a.position - b.position)
   }, [stops])
+
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  const handleDragStart = (id: string, e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault()
+    const isTouch = "touches" in e
+    const startX = isTouch ? e.touches[0].clientX : e.clientX
+    const initialPosition = stops.find(s => s.id === id)?.position ?? 0
+    const trackEl = trackRef.current
+    if (!trackEl) return
+
+    const rect = trackEl.getBoundingClientRect()
+    const trackWidth = rect.width || 1
+
+    const handleDragMove = (moveEvent: MouseEvent | TouchEvent) => {
+      const currentX = "touches" in moveEvent ? moveEvent.touches[0].clientX : moveEvent.clientX
+      const deltaX = currentX - startX
+      const deltaPercent = (deltaX / trackWidth) * 100
+      const nextPercent = Math.min(100, Math.max(0, Math.round(initialPosition + deltaPercent)))
+      setStops(prev => prev.map(s => s.id === id ? { ...s, position: nextPercent } : s))
+    }
+
+    const handleDragEnd = () => {
+      window.removeEventListener("mousemove", handleDragMove)
+      window.removeEventListener("mouseup", handleDragEnd)
+      window.removeEventListener("touchmove", handleDragMove)
+      window.removeEventListener("touchend", handleDragEnd)
+    }
+
+    window.addEventListener("mousemove", handleDragMove)
+    window.addEventListener("mouseup", handleDragEnd)
+    window.addEventListener("touchmove", handleDragMove)
+    window.addEventListener("touchend", handleDragEnd)
+  }
+
+  const handleTrackClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest(".slider-pin")) return
+
+    const trackEl = trackRef.current
+    if (!trackEl) return
+
+    const rect = trackEl.getBoundingClientRect()
+    const clickX = e.clientX - rect.left
+    const position = Math.min(100, Math.max(0, Math.round((clickX / rect.width) * 100)))
+
+    const activeStop = stops.find(s => s.id === activeId) ?? stops[0]
+    const newColor = activeStop ? activeStop.color : "#3b82f6"
+
+    const newStop: ColorStop = {
+      id: `stop-${Date.now()}-${Math.random()}`,
+      color: newColor,
+      position,
+    }
+
+    setStops(prev => [...prev, newStop])
+    setActiveStopId(newStop.id)
+  }
+
+  const handleDeleteStop = (id: string) => {
+    if (stops.length <= 2) return
+    const remaining = stops.filter(s => s.id !== id)
+    setStops(remaining)
+    setActiveStopId(remaining[0]?.id || "")
+  }
+
+  const handleFlipGradients = () => {
+    setStops(prev => prev.map(s => ({
+      ...s,
+      position: 100 - s.position
+    })))
+  }
 
   const cssCode = useMemo(() => {
     const stopsStr = sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")
@@ -153,26 +224,92 @@ export function GradientGenerator() {
                     />
                   </div>
                 )}
-                <div>
-                  <label className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Edit Colors</label>
-                  <div className="flex gap-2 mt-1.5">
-                    {colors.map((c, i) => (
-                      <input 
-                        key={i} 
-                        type="color" 
-                        value={c} 
-                        onChange={(e) => handleColorChange(i, e.target.value)} 
-                        className="w-10 h-10 border border-border rounded-xl cursor-pointer bg-transparent" 
+                <div className="space-y-4">
+                  <label className="text-xs text-muted-foreground font-bold uppercase tracking-wider">
+                    Interactive Gradient Track (Click to add, drag to move)
+                  </label>
+                  <div 
+                    ref={trackRef}
+                    onClick={handleTrackClick}
+                    className="relative h-6 rounded-xl border border-border cursor-pointer select-none"
+                    style={{ background: `linear-gradient(to right, ${sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")})` }}
+                  >
+                    {stops.map(s => (
+                      <div
+                        key={s.id}
+                        onMouseDown={(e) => handleDragStart(s.id, e)}
+                        onTouchStart={(e) => handleDragStart(s.id, e)}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setActiveStopId(s.id)
+                        }}
+                        className={`slider-pin absolute top-1/2 -translate-y-1/2 w-4 h-7 border rounded-md cursor-grab transition-all ${
+                          s.id === activeId ? "border-primary bg-primary shadow-lg ring-2 ring-primary/20 scale-110" : "border-muted-foreground/30 bg-background shadow"
+                        }`}
+                        style={{ left: `${s.position}%`, transform: 'translate(-50%, -50%)', backgroundColor: s.color }}
                       />
                     ))}
-                    <button 
-                      onClick={() => setColors([...colors].reverse())} 
-                      className="p-2 border border-border rounded-xl hover:bg-muted/50 text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-sm"
-                    >
-                      <RefreshCw className="h-3.5 w-3.5" /> Flip
-                    </button>
                   </div>
                 </div>
+
+                {(() => {
+                  const activeStop = stops.find(s => s.id === activeId)
+                  if (!activeStop) return null
+                  return (
+                    <div className="bg-muted/30 p-4 border rounded-xl space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-[10px] text-muted-foreground font-black uppercase tracking-wider">
+                          Edit Color Stop
+                        </span>
+                        {stops.length > 2 && (
+                          <button 
+                            type="button"
+                            onClick={() => handleDeleteStop(activeStop.id)}
+                            className="text-[10px] text-destructive font-black uppercase tracking-wider hover:underline"
+                          >
+                            Delete Stop
+                          </button>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <input 
+                          type="color" 
+                          value={activeStop.color} 
+                          onChange={(e) => {
+                            const val = e.target.value
+                            setStops(prev => prev.map(s => s.id === activeId ? { ...s, color: val } : s))
+                          }} 
+                          className="w-10 h-10 border border-border rounded-xl cursor-pointer bg-transparent" 
+                        />
+                        <div className="flex-1 space-y-1">
+                          <div className="flex justify-between text-xs font-bold">
+                            <span>Position</span>
+                            <span className="font-mono">{activeStop.position}%</span>
+                          </div>
+                          <input 
+                            type="range"
+                            min="0"
+                            max="100"
+                            value={activeStop.position}
+                            onChange={(e) => {
+                              const val = parseInt(e.target.value)
+                              setStops(prev => prev.map(s => s.id === activeId ? { ...s, position: val } : s))
+                            }}
+                            className="w-full cursor-pointer accent-primary"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })()}
+
+                <button 
+                  type="button"
+                  onClick={handleFlipGradients} 
+                  className="p-2 border border-border rounded-xl hover:bg-muted/50 text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-sm w-fit"
+                >
+                  <RefreshCw className="h-3.5 w-3.5" /> Flip Gradients
+                </button>
               </div>
             </div>
           </div>
