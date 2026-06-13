@@ -76,9 +76,14 @@ export function RelatedTools() {
   const pathname = usePathname()
   if (!pathname) return null
 
-  // Extract category key from path (e.g. /tools/technical-seo/readability-grader -> technical-seo)
-  const segments = pathname.split("/")
-  const categoryKey = segments[2]
+  // Filter out empty segments to get a clean list of path segments
+  const segments = pathname.split("/").filter(Boolean)
+  
+  // If it's the root tools page or a category landing page (e.g. /tools or /tools/[category])
+  // we do not show the related tools section to avoid duplicate grids.
+  if (segments.length <= 2) return null
+
+  const categoryKey = segments[1]
   const currentCategory = CATEGORIES[categoryKey]
 
   if (!currentCategory) return null
