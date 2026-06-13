@@ -77,6 +77,7 @@ const navGroups: NavGroup[] = [
     items: [
       { title: "All Design Tools", href: "/tools/design",           icon: LayoutGrid },
       { title: "Color Contrast",   href: "/tools/design/color-contrast",   icon: Palette },
+      { title: "Contrast Scanner", href: "/tools/design/color-contrast-scanner", icon: Palette },
       { title: "Color Palette",    href: "/tools/design/color-palette",    icon: Palette },
       { title: "Gradient Gen",     href: "/tools/design/gradient-generator", icon: Palette },
       { title: "Gradient Palette", href: "/tools/design/gradient-palette", icon: Palette },
