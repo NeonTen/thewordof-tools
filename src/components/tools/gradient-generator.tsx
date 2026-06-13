@@ -55,40 +55,25 @@ export function GradientGenerator() {
     setType(preset.type)
   }
 
-  const handleColorChange = (idx: number, val: string) => {
-    setColors((prev) => {
-      const next = [...prev]
-      next[idx] = val
-      return next
-    })
-  }
+  const sortedStops = useMemo(() => {
+    return [...stops].sort((a, b) => a.position - b.position)
+  }, [stops])
 
   const cssCode = useMemo(() => {
+    const stopsStr = sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")
     if (type === "radial") {
-      return `background: radial-gradient(circle, ${colors.join(", ")});`
+      return `background: radial-gradient(circle, ${stopsStr});`
     }
-    return `background: linear-gradient(${angle}deg, ${colors.join(", ")});`
-  }, [colors, angle, type])
+    return `background: linear-gradient(${angle}deg, ${stopsStr});`
+  }, [sortedStops, angle, type])
 
   const tailwindCode = useMemo(() => {
-    if (type === "radial") return `bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[${colors[0]}] to-[${colors[colors.length - 1]}]`
-    let dir = "bg-gradient-to-r"
-    if (angle >= 22.5 && angle < 67.5) dir = "bg-gradient-to-tr"
-    else if (angle >= 67.5 && angle < 112.5) dir = "bg-gradient-to-r"
-    else if (angle >= 112.5 && angle < 157.5) dir = "bg-gradient-to-br"
-    else if (angle >= 157.5 && angle < 202.5) dir = "bg-gradient-to-b"
-    else if (angle >= 202.5 && angle < 247.5) dir = "bg-gradient-to-bl"
-    else if (angle >= 247.5 && angle < 292.5) dir = "bg-gradient-to-l"
-    else if (angle >= 292.5 && angle < 337.5) dir = "bg-gradient-to-tl"
-    else dir = "bg-gradient-to-t"
-
-    const colorStops = colors.map((c, i) => {
-      if (i === 0) return `from-[${c}]`
-      if (i === colors.length - 1) return `to-[${c}]`
-      return `via-[${c}]`
-    })
-    return `${dir} ${colorStops.join(" ")}`
-  }, [colors, angle, type])
+    const stopsStr = sortedStops.map(s => `${s.color}_${s.position}%`).join(",")
+    if (type === "radial") {
+      return `bg-[radial-gradient(circle_at_center,_${stopsStr})]`
+    }
+    return `bg-[linear-gradient(${angle}deg,_${stopsStr})]`
+  }, [sortedStops, angle, type])
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text)
@@ -124,7 +109,7 @@ export function GradientGenerator() {
             {/* Preview Block */}
             <div 
               className="w-full md:w-1/2 aspect-video rounded-2xl border border-border overflow-hidden flex items-center justify-center relative shadow-inner" 
-              style={{ background: type === "radial" ? `radial-gradient(circle, ${colors.join(", ")})` : `linear-gradient(${angle}deg, ${colors.join(", ")})` }}
+              style={{ background: type === "radial" ? `radial-gradient(circle, ${sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")})` : `linear-gradient(${angle}deg, ${sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")})` }}
             >
               <div className="bg-black/45 backdrop-blur-md px-4 py-2 rounded-xl text-white text-xs font-bold border border-white/10 shadow-sm">
                 Live Preview
