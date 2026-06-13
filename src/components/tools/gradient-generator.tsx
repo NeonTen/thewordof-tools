@@ -155,10 +155,10 @@ export function GradientGenerator() {
   return (<>
     <div className="grid gap-6 lg:grid-cols-12">
       {/* Preset Selector */}
-      <div className="lg:col-span-4 space-y-6">
+      <div className="lg:col-span-3 space-y-6">
         <div className="bg-card p-5 border border-border rounded-2xl space-y-4 shadow-sm">
           <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">Presets Gallery</h2>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 gap-2">
             {PRESETS.map((preset) => (
               <button
                 key={preset.name}
@@ -174,33 +174,36 @@ export function GradientGenerator() {
       </div>
 
       {/* Preview and Editor */}
-      <div className="lg:col-span-8 space-y-6">
+      <div className="lg:col-span-9 space-y-6">
         <div className="bg-card p-6 border border-border rounded-2xl flex flex-col gap-6 shadow-sm">
-          <div className="flex flex-col md:flex-row gap-6 items-center">
-            {/* Preview Block */}
-            <div 
-              className="w-full md:w-1/2 aspect-video rounded-2xl border border-border overflow-hidden flex items-center justify-center relative shadow-inner" 
-              style={{ background: type === "radial" ? `radial-gradient(circle, ${sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")})` : `linear-gradient(${angle}deg, ${sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")})` }}
-            >
-              <div className="bg-black/45 backdrop-blur-md px-4 py-2 rounded-xl text-white text-xs font-bold border border-white/10 shadow-sm">
-                Live Preview
-              </div>
+          {/* Live Preview Block (Top, wide rectangle) */}
+          <div 
+            className="w-full h-32 md:h-40 rounded-2xl border border-border overflow-hidden flex items-center justify-center relative shadow-inner" 
+            style={{ background: type === "radial" ? `radial-gradient(circle, ${sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")})` : `linear-gradient(${angle}deg, ${sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")})` }}
+          >
+            <div className="bg-black/45 backdrop-blur-md px-4 py-2 rounded-xl text-white text-xs font-bold border border-white/10 shadow-sm">
+              Live Preview
             </div>
+          </div>
 
-            {/* Editor controls */}
-            <div className="w-full md:w-1/2 space-y-4">
-              <h3 className="font-bold text-sm text-foreground uppercase tracking-wider text-muted-foreground">Settings</h3>
-              <div className="space-y-4">
+          {/* Editor controls below, full width of both columns */}
+          <div className="w-full">
+            <h3 className="font-bold text-sm text-foreground uppercase tracking-wider text-muted-foreground mb-4">Settings</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Left Column: Type and Angle */}
+              <div className="space-y-6">
                 <div>
                   <label className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Type</label>
                   <div className="flex gap-2 mt-1.5">
                     <button 
+                      type="button"
                       onClick={() => setType("linear")} 
                       className={`flex-1 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${type === "linear" ? "bg-primary text-primary-foreground shadow-sm" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
                     >
                       Linear
                     </button>
                     <button 
+                      type="button"
                       onClick={() => setType("radial")} 
                       className={`flex-1 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${type === "radial" ? "bg-primary text-primary-foreground shadow-sm" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
                     >
@@ -208,6 +211,7 @@ export function GradientGenerator() {
                     </button>
                   </div>
                 </div>
+
                 {type === "linear" && (
                   <div>
                     <div className="flex justify-between text-xs font-bold">
@@ -224,14 +228,26 @@ export function GradientGenerator() {
                     />
                   </div>
                 )}
+
+                <button 
+                  type="button"
+                  onClick={handleFlipGradients} 
+                  className="p-2 border border-border rounded-xl hover:bg-muted/50 text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-sm w-fit"
+                >
+                  <RefreshCw className="h-3.5 w-3.5" /> Flip Gradients
+                </button>
+              </div>
+
+              {/* Right Column: Colors & Slider Track */}
+              <div className="space-y-6">
                 <div className="space-y-4">
                   <label className="text-xs text-muted-foreground font-bold uppercase tracking-wider">
-                    Interactive Gradient Track (Click to add, drag to move)
+                    Interactive Gradient Track (Click to add stop, drag to move)
                   </label>
                   <div 
                     ref={trackRef}
                     onClick={handleTrackClick}
-                    className="relative h-6 rounded-xl border border-border cursor-pointer select-none"
+                    className="relative h-4 rounded-lg border border-border cursor-pointer select-none"
                     style={{ background: `linear-gradient(to right, ${sortedStops.map(s => `${s.color} ${s.position}%`).join(", ")})` }}
                   >
                     {stops.map(s => (
@@ -243,8 +259,8 @@ export function GradientGenerator() {
                           e.stopPropagation()
                           setActiveStopId(s.id)
                         }}
-                        className={`slider-pin absolute top-1/2 -translate-y-1/2 w-4 h-7 border rounded-md cursor-grab transition-all ${
-                          s.id === activeId ? "border-primary bg-primary shadow-lg ring-2 ring-primary/20 scale-110" : "border-muted-foreground/30 bg-background shadow"
+                        className={`slider-pin absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-white shadow-md cursor-grab transition-all ${
+                          s.id === activeId ? "ring-2 ring-primary ring-offset-2 scale-110" : "hover:scale-105"
                         }`}
                         style={{ left: `${s.position}%`, transform: 'translate(-50%, -50%)', backgroundColor: s.color }}
                       />
@@ -302,14 +318,6 @@ export function GradientGenerator() {
                     </div>
                   )
                 })()}
-
-                <button 
-                  type="button"
-                  onClick={handleFlipGradients} 
-                  className="p-2 border border-border rounded-xl hover:bg-muted/50 text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-sm w-fit"
-                >
-                  <RefreshCw className="h-3.5 w-3.5" /> Flip Gradients
-                </button>
               </div>
             </div>
           </div>
