@@ -193,7 +193,7 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
           windowWidth: 794,
           autoPaging: "text",
           html2canvas: {
-            scale: 2,
+            scale: 1,
             useCORS: true,
             logging: false,
             onclone: (clonedDoc) => {
