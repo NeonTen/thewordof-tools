@@ -123,11 +123,21 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     const { jsPDF } = await import("jspdf")
     const html2canvas = (await import("html2canvas")).default
 
+    // Create wrapper that is completely hidden (0x0 overflow hidden) in the real DOM
+    const wrapper = document.createElement("div")
+    wrapper.id = "pdf-render-wrapper"
+    wrapper.style.position = "fixed"
+    wrapper.style.top = "0"
+    wrapper.style.left = "0"
+    wrapper.style.width = "0"
+    wrapper.style.height = "0"
+    wrapper.style.overflow = "hidden"
+    wrapper.style.pointerEvents = "none"
+    wrapper.style.zIndex = "-9999"
+
+    // Create container with full design styling
     const container = document.createElement("div")
     container.id = "pdf-render-container"
-    container.style.position = "fixed"
-    container.style.top = "0"
-    container.style.left = "0"
     container.style.width = "794px" // A4 width at 96 DPI
     container.style.padding = "48px"
     container.style.boxSizing = "border-box"
@@ -136,8 +146,7 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     container.style.fontFamily = "Arial, sans-serif"
     container.style.fontSize = "14px"
     container.style.lineHeight = "1.6"
-    container.style.visibility = "hidden"
-    container.style.pointerEvents = "none"
+    container.style.display = "block"
 
     container.innerHTML = `
       <style>
@@ -160,7 +169,8 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
       </style>
       <div>${htmlContent}</div>
     `
-    document.body.appendChild(container)
+    wrapper.appendChild(container)
+    document.body.appendChild(wrapper)
 
     try {
       const doc = new jsPDF({
@@ -187,10 +197,11 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
             useCORS: true,
             logging: false,
             onclone: (clonedDoc) => {
-              const el = clonedDoc.getElementById("pdf-render-container")
-              if (el) {
-                el.style.visibility = "visible"
-                el.style.position = "static"
+              const clonedWrapper = clonedDoc.getElementById("pdf-render-wrapper")
+              if (clonedWrapper) {
+                clonedWrapper.style.width = "794px"
+                clonedWrapper.style.height = "auto"
+                clonedWrapper.style.overflow = "visible"
               }
             }
           }
@@ -215,7 +226,7 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
       }
       doc.save(filename.replace(/\.[^/.]+$/, "") + ".pdf")
     } finally {
-      document.body.removeChild(container)
+      document.body.removeChild(wrapper)
     }
   }
 
