@@ -124,11 +124,10 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     const html2canvas = (await import("html2canvas")).default
 
     const container = document.createElement("div")
+    container.id = "pdf-render-container"
     container.style.position = "fixed"
     container.style.top = "0"
     container.style.left = "0"
-    container.style.zIndex = "-9999"
-    container.style.pointerEvents = "none"
     container.style.width = "794px" // A4 width at 96 DPI
     container.style.padding = "48px"
     container.style.boxSizing = "border-box"
@@ -137,6 +136,8 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     container.style.fontFamily = "Arial, sans-serif"
     container.style.fontSize = "14px"
     container.style.lineHeight = "1.6"
+    container.style.visibility = "hidden"
+    container.style.pointerEvents = "none"
 
     container.innerHTML = `
       <style>
@@ -185,8 +186,13 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
             scale: 2,
             useCORS: true,
             logging: false,
-            scrollX: 0,
-            scrollY: 0
+            onclone: (clonedDoc) => {
+              const el = clonedDoc.getElementById("pdf-render-container")
+              if (el) {
+                el.style.visibility = "visible"
+                el.style.position = "static"
+              }
+            }
           }
         })
       })
