@@ -161,8 +161,8 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     container.style.position = "absolute"
     container.style.top = "0"
     container.style.left = "0"
-    container.style.width = "595px" // Mirrors A4 page width (595.28pt) — jsPDF maps 1px = 1pt
-    container.style.padding = "36px" // Margins handled in container (36px = 36pt on PDF)
+    container.style.width = "523px" // A4 content area (595.28 - 2×36 margins) — 1px = 1pt
+    container.style.padding = "0" // Margins handled by jsPDF margin option for all pages
     container.style.boxSizing = "border-box"
     container.style.background = "#ffffff"
     container.style.color = "#222222"
@@ -176,7 +176,7 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
         #pdf-render-container, #pdf-render-container div { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #222; line-height: 1.5; font-size: 11px; overflow-wrap: break-word; word-break: break-word; }
         h1, h2, h3, h4, h5, h6 { color: #1a1a1a; font-weight: 700; line-height: 1.3; }
         h1 { font-size: 20px; margin-bottom: 4px; margin-top: 0; }
-        h2 { font-size: 15px; border-bottom: 1px solid #cccccc; padding-bottom: 2px; margin-top: 10px; margin-bottom: 4px; }
+        h2 { font-size: 15px; padding-bottom: 2px; margin-top: 10px; margin-bottom: 4px; }
         h3 { font-size: 13px; margin-top: 8px; margin-bottom: 3px; }
         p { margin: 0 0 4px 0; font-size: 11px; text-align: left; }
         ul, ol { margin: 0 0 4px 0; padding-left: 18px; }
@@ -202,6 +202,8 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
         format: "a4"
       })
 
+      const pageMargin = 36 // 36pt = 0.5 inch on all sides, all pages
+
       await new Promise<void>((resolve, reject) => {
         doc.html(container, {
           callback: function (pdf) {
@@ -210,14 +212,15 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
           },
           x: 0,
           y: 0,
-          width: 595.28, // Full A4 page width — container padding provides margins
-          windowWidth: 595,
+          width: 523.28, // Content area width (A4 width minus margins)
+          windowWidth: 523, // Match container width
+          margin: [pageMargin, pageMargin, pageMargin, pageMargin], // Consistent margins on ALL pages
           autoPaging: "text",
           html2canvas: {
             scale: 1,
             useCORS: true,
             logging: false,
-            windowWidth: 595, // Match container width exactly
+            windowWidth: 523,
             onclone: (clonedDoc) => {
               clonedDoc.body.style.margin = "0"
               clonedDoc.body.style.padding = "0"
@@ -259,10 +262,11 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
         const mammoth = await import("mammoth")
         const result = await mammoth.convertToHtml({ arrayBuffer: file.content as ArrayBuffer })
         const html = result.value
-          .replace(/Ø=Ü[^\s]*/g, "📞") // Phone emoji garble (flexible pattern)
-          .replace(/Ø&lt;/g, "🌐")
-          .replace(/Ø</g, "🌐")
-          .replace(/Ø[^\s]*/g, "") // Strip any remaining Ø-prefixed garble
+          .replace(/\u00d8=\u00dc[^\s]*/g, "") // Phone emoji garble (Ø=Ü... variants)
+          .replace(/\u00d8&lt;/g, "")             // Globe emoji garble (HTML-escaped)
+          .replace(/\u00d8</g, "")                // Globe emoji garble (raw)
+          .replace(/\u00d8[^\s]*/g, "")           // Strip any remaining Ø-prefixed garble
+          .replace(/[\u0080-\u00ff]{2,}/g, "")   // Strip runs of Latin-1 supplement garble
 
         if (target === "txt") {
           const text = html.replace(/<[^>]+>/g, "\n").replace(/\n+/g, "\n")
