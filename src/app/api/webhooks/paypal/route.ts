@@ -6,10 +6,26 @@ import { PLAN_PRICING } from "@/config/pricing";
 
 function getPlanDetailsByPlanId(planId: string) {
   const paypalPlans = SUBSCRIPTION_PLANS.paypal;
-  if (planId === paypalPlans.PRO_MONTHLY) return { plan: "PREMIUM" as const, interval: "month", role: "PRO" as const };
-  if (planId === paypalPlans.PRO_YEARLY) return { plan: "PREMIUM" as const, interval: "year", role: "PRO" as const };
-  if (planId === paypalPlans.BUSINESS_MONTHLY) return { plan: "BUSINESS" as const, interval: "month", role: "BUSINESS" as const };
-  if (planId === paypalPlans.BUSINESS_YEARLY) return { plan: "BUSINESS" as const, interval: "year", role: "BUSINESS" as const };
+  if (planId === paypalPlans.PRO_MONTHLY)
+    return {
+      plan: "PREMIUM" as const,
+      interval: "month",
+      role: "PRO" as const,
+    };
+  if (planId === paypalPlans.PRO_YEARLY)
+    return { plan: "PREMIUM" as const, interval: "year", role: "PRO" as const };
+  if (planId === paypalPlans.BUSINESS_MONTHLY)
+    return {
+      plan: "BUSINESS" as const,
+      interval: "month",
+      role: "BUSINESS" as const,
+    };
+  if (planId === paypalPlans.BUSINESS_YEARLY)
+    return {
+      plan: "BUSINESS" as const,
+      interval: "year",
+      role: "BUSINESS" as const,
+    };
   return { plan: "PREMIUM" as const, interval: "month", role: "PRO" as const };
 }
 
@@ -31,10 +47,10 @@ export async function POST(req: Request) {
         if (user) {
           await prisma.user.update({
             where: { id: user.id },
-            data: { 
+            data: {
               role: "PRO",
               creditsRemaining: 500,
-              creditsResetAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+              creditsResetAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
             },
           });
 
@@ -53,15 +69,17 @@ export async function POST(req: Request) {
           });
         }
       }
-    } 
-    else if (eventType === "BILLING.SUBSCRIPTION.ACTIVATED") {
+    } else if (eventType === "BILLING.SUBSCRIPTION.ACTIVATED") {
       const subscriptionId = resource.id;
       const userId = resource.custom_id;
       const planId = resource.plan_id;
       const status = resource.status;
 
       if (status !== "ACTIVE") {
-        return NextResponse.json({ received: true, message: `Subscription not active yet: status is ${status}` });
+        return NextResponse.json({
+          received: true,
+          message: `Subscription not active yet: status is ${status}`,
+        });
       }
 
       if (userId) {
@@ -85,11 +103,11 @@ export async function POST(req: Request) {
 
           await prisma.user.update({
             where: { id: user.id },
-            data: { 
+            data: {
               role: details.role,
               proExpiresAt: expiresAt,
               creditsRemaining: defaultAllocation,
-              creditsResetAt: creditsResetAt
+              creditsResetAt: creditsResetAt,
             },
           });
 
@@ -112,9 +130,14 @@ export async function POST(req: Request) {
           });
 
           // Send payment success email
-          const amount = details.role === "BUSINESS" 
-            ? (details.interval === "year" ? PLAN_PRICING.BUSINESS.yearly.USD : PLAN_PRICING.BUSINESS.monthly.USD)
-            : (details.interval === "year" ? PLAN_PRICING.PREMIUM.yearly.USD : PLAN_PRICING.PREMIUM.monthly.USD);
+          const amount =
+            details.role === "BUSINESS"
+              ? details.interval === "year"
+                ? PLAN_PRICING.BUSINESS.yearly.USD
+                : PLAN_PRICING.BUSINESS.monthly.USD
+              : details.interval === "year"
+                ? PLAN_PRICING.PREMIUM.yearly.USD
+                : PLAN_PRICING.PREMIUM.monthly.USD;
 
           sendPaymentSuccessEmail({
             toEmail: user.email!,
@@ -123,12 +146,16 @@ export async function POST(req: Request) {
             amount: amount,
             currency: "USD",
             orderId: subscriptionId,
-            paymentProvider: "PAYPAL"
-          }).catch(err => console.error("PayPal subscription success email trigger error:", err));
+            paymentProvider: "PAYPAL",
+          }).catch((err) =>
+            console.error(
+              "PayPal subscription success email trigger error:",
+              err,
+            ),
+          );
         }
       }
-    } 
-    else if (eventType === "PAYMENT.SALE.COMPLETED") {
+    } else if (eventType === "PAYMENT.SALE.COMPLETED") {
       // Recurring subscription charge success
       const subscriptionId = resource.billing_agreement_id;
 
@@ -157,7 +184,7 @@ export async function POST(req: Request) {
               role: newRole,
               proExpiresAt: expiresAt,
               creditsRemaining: defaultAllocation,
-              creditsResetAt: creditsResetAt
+              creditsResetAt: creditsResetAt,
             },
           });
 
@@ -173,8 +200,7 @@ export async function POST(req: Request) {
           });
         }
       }
-    } 
-    else if (eventType === "BILLING.SUBSCRIPTION.CANCELLED") {
+    } else if (eventType === "BILLING.SUBSCRIPTION.CANCELLED") {
       const subscriptionId = resource.id;
 
       if (subscriptionId) {
@@ -183,8 +209,10 @@ export async function POST(req: Request) {
           data: { status: "cancelled" },
         });
       }
-    } 
-    else if (eventType === "BILLING.SUBSCRIPTION.EXPIRED" || eventType === "BILLING.SUBSCRIPTION.PAYMENT.FAILED") {
+    } else if (
+      eventType === "BILLING.SUBSCRIPTION.EXPIRED" ||
+      eventType === "BILLING.SUBSCRIPTION.PAYMENT.FAILED"
+    ) {
       const subscriptionId = resource.id;
 
       if (subscriptionId) {

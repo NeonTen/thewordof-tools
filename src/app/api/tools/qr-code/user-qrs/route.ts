@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
-import { auth } from "@/auth"
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 
 export async function GET(request: NextRequest) {
-  const session = await auth()
+  const session = await auth();
   if (!session || !session.user || !session.user.id) {
-    return new NextResponse("Unauthorized", { status: 401 })
+    return new NextResponse("Unauthorized", { status: 401 });
   }
 
   try {
@@ -14,14 +14,14 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: "desc" },
       include: {
         _count: {
-          select: { scans: true }
-        }
-      }
-    })
+          select: { scans: true },
+        },
+      },
+    });
 
-    return NextResponse.json({ qrCodes })
+    return NextResponse.json({ qrCodes });
   } catch (error) {
-    console.error("List QR Error:", error)
-    return new NextResponse("Internal Server Error", { status: 500 })
+    console.error("List QR Error:", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

@@ -6,10 +6,26 @@ import { sendPaymentSuccessEmail } from "@/lib/email";
 
 function getRazorpayPlanDetails(planId: string) {
   const rzpPlans = SUBSCRIPTION_PLANS.razorpay;
-  if (planId === rzpPlans.PRO_MONTHLY) return { plan: "PREMIUM" as const, interval: "month", role: "PRO" as const };
-  if (planId === rzpPlans.PRO_YEARLY) return { plan: "PREMIUM" as const, interval: "year", role: "PRO" as const };
-  if (planId === rzpPlans.BUSINESS_MONTHLY) return { plan: "BUSINESS" as const, interval: "month", role: "BUSINESS" as const };
-  if (planId === rzpPlans.BUSINESS_YEARLY) return { plan: "BUSINESS" as const, interval: "year", role: "BUSINESS" as const };
+  if (planId === rzpPlans.PRO_MONTHLY)
+    return {
+      plan: "PREMIUM" as const,
+      interval: "month",
+      role: "PRO" as const,
+    };
+  if (planId === rzpPlans.PRO_YEARLY)
+    return { plan: "PREMIUM" as const, interval: "year", role: "PRO" as const };
+  if (planId === rzpPlans.BUSINESS_MONTHLY)
+    return {
+      plan: "BUSINESS" as const,
+      interval: "month",
+      role: "BUSINESS" as const,
+    };
+  if (planId === rzpPlans.BUSINESS_YEARLY)
+    return {
+      plan: "BUSINESS" as const,
+      interval: "year",
+      role: "BUSINESS" as const,
+    };
   return { plan: "PREMIUM" as const, interval: "month", role: "PRO" as const };
 }
 
@@ -42,10 +58,10 @@ export async function POST(req: Request) {
       if (user) {
         await prisma.user.update({
           where: { id: user.id },
-          data: { 
+          data: {
             role: "PRO",
             creditsRemaining: 500,
-            creditsResetAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+            creditsResetAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
           },
         });
 
@@ -65,8 +81,7 @@ export async function POST(req: Request) {
           },
         });
       }
-    } 
-    else if (event.event === "subscription.charged") {
+    } else if (event.event === "subscription.charged") {
       const subscription = event.payload.subscription.entity;
       const payment = event.payload.payment.entity;
       const subscriptionId = subscription.id;
@@ -79,7 +94,9 @@ export async function POST(req: Request) {
 
       if (user) {
         const details = getRazorpayPlanDetails(planId);
-        const expiresAt = subscription.current_end ? new Date(subscription.current_end * 1000) : new Date();
+        const expiresAt = subscription.current_end
+          ? new Date(subscription.current_end * 1000)
+          : new Date();
         if (!subscription.current_end) {
           if (details.interval === "year") {
             expiresAt.setFullYear(expiresAt.getFullYear() + 1);
@@ -133,11 +150,15 @@ export async function POST(req: Request) {
           amount: payment.amount / 100,
           currency: payment.currency,
           orderId: subscriptionId,
-          paymentProvider: "RAZORPAY"
-        }).catch(err => console.error("Razorpay subscription success email trigger error:", err));
+          paymentProvider: "RAZORPAY",
+        }).catch((err) =>
+          console.error(
+            "Razorpay subscription success email trigger error:",
+            err,
+          ),
+        );
       }
-    } 
-    else if (event.event === "subscription.cancelled") {
+    } else if (event.event === "subscription.cancelled") {
       const subscription = event.payload.subscription.entity;
       const subscriptionId = subscription.id;
 
@@ -145,11 +166,10 @@ export async function POST(req: Request) {
         where: { subscriptionId },
         data: { status: "cancelled" },
       });
-    } 
-    else if (
-      event.event === "subscription.completed" || 
-      event.event === "subscription.expired" || 
-      event.event === "subscription.halted" || 
+    } else if (
+      event.event === "subscription.completed" ||
+      event.event === "subscription.expired" ||
+      event.event === "subscription.halted" ||
       event.event === "subscription.paused"
     ) {
       const subscription = event.payload.subscription.entity;
@@ -162,7 +182,10 @@ export async function POST(req: Request) {
       for (const sub of updatedSubs) {
         await prisma.subscription.update({
           where: { id: sub.id },
-          data: { status: event.event === "subscription.paused" ? "paused" : "expired" },
+          data: {
+            status:
+              event.event === "subscription.paused" ? "paused" : "expired",
+          },
         });
 
         await prisma.user.update({

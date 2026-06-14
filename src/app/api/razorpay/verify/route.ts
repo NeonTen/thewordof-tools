@@ -11,18 +11,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { 
-      razorpay_order_id, 
+    const {
+      razorpay_order_id,
       razorpay_subscription_id,
-      razorpay_payment_id, 
+      razorpay_payment_id,
       razorpay_signature,
       amount,
       currency,
       plan = "PREMIUM",
-      interval = "month"
+      interval = "month",
     } = await req.json();
 
-    const body = razorpay_subscription_id 
+    const body = razorpay_subscription_id
       ? razorpay_payment_id + "|" + razorpay_subscription_id
       : razorpay_order_id + "|" + razorpay_payment_id;
 
@@ -50,11 +50,11 @@ export async function POST(req: Request) {
 
       await prisma.user.update({
         where: { id: session.user.id },
-        data: { 
+        data: {
           role: newRole,
           proExpiresAt: expiresAt,
           creditsRemaining: defaultAllocation,
-          creditsResetAt: creditsResetAt
+          creditsResetAt: creditsResetAt,
         },
       });
 
@@ -85,8 +85,10 @@ export async function POST(req: Request) {
           amount: parseFloat(amount),
           currency: currency,
           orderId: razorpay_order_id || razorpay_payment_id,
-          paymentProvider: "RAZORPAY"
-        }).catch(err => console.error("Verify success email trigger error:", err));
+          paymentProvider: "RAZORPAY",
+        }).catch((err) =>
+          console.error("Verify success email trigger error:", err),
+        );
       }
 
       return NextResponse.json({ success: true });
@@ -100,14 +102,23 @@ export async function POST(req: Request) {
           amount: parseFloat(amount),
           currency: currency,
           paymentProvider: "RAZORPAY",
-          errorMsg: "Signature verification failed. The payment signature could not be verified securely."
-        }).catch(err => console.error("Verify failure email trigger error:", err));
+          errorMsg:
+            "Signature verification failed. The payment signature could not be verified securely.",
+        }).catch((err) =>
+          console.error("Verify failure email trigger error:", err),
+        );
       }
 
-      return NextResponse.json({ error: "Verification failed" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Verification failed" },
+        { status: 400 },
+      );
     }
   } catch (error: any) {
     console.error("[RAZORPAY_VERIFY_ERROR]", error);
-    return NextResponse.json({ error: error.message || "Internal Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || "Internal Error" },
+      { status: 500 },
+    );
   }
 }

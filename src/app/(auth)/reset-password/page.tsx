@@ -1,34 +1,34 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useSearchParams, useRouter } from "next/navigation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Loader2 } from "lucide-react"
+import * as React from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 
 function ResetPasswordForm() {
-  const [isLoading, setIsLoading] = React.useState(false)
-  const [isSuccess, setIsSuccess] = React.useState(false)
-  const [error, setError] = React.useState<string | null>(null)
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const token = searchParams?.get("token")
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const token = searchParams?.get("token");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setIsLoading(true)
-    setError(null)
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
 
-    const formData = new FormData(e.currentTarget)
-    const password = formData.get("password")
-    const confirmPassword = formData.get("confirmPassword")
+    const formData = new FormData(e.currentTarget);
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match.")
-      setIsLoading(false)
-      return
+      setError("Passwords do not match.");
+      setIsLoading(false);
+      return;
     }
 
     try {
@@ -36,22 +36,22 @@ function ResetPasswordForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token, password }),
-      })
+      });
 
       if (res.ok) {
-        setIsSuccess(true)
+        setIsSuccess(true);
         setTimeout(() => {
-          router.push("/login")
-        }, 3000)
+          router.push("/login");
+        }, 3000);
       } else {
-        const txt = await res.text()
-        setError(txt || "Failed to reset password. Token may have expired.")
+        const txt = await res.text();
+        setError(txt || "Failed to reset password. Token may have expired.");
       }
     } catch (err) {
-      setError("An unexpected error occurred.")
-      console.error(err)
+      setError("An unexpected error occurred.");
+      console.error(err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -59,24 +59,27 @@ function ResetPasswordForm() {
     return (
       <div className="container flex h-screen w-screen flex-col items-center justify-center text-center">
         <h1 className="text-xl font-bold">Invalid Link</h1>
-        <p className="text-sm text-muted-foreground mt-2">No reset token found in link.</p>
+        <p className="text-sm text-muted-foreground mt-2">
+          No reset token found in link.
+        </p>
         <Button asChild className="mt-4" variant="outline">
           <Link href="/login">Return to Login</Link>
         </Button>
       </div>
-    )
+    );
   }
 
   return (
     <div className="container relative mx-auto flex h-screen w-screen flex-col items-center justify-center">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">Reset Password</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Reset Password
+          </h1>
           <p className="text-sm text-muted-foreground">
-            {isSuccess 
-              ? "Your password has been successfully reset! Redirecting to login..." 
-              : "Enter your new password below."
-            }
+            {isSuccess
+              ? "Your password has been successfully reset! Redirecting to login..."
+              : "Enter your new password below."}
           </p>
         </div>
 
@@ -84,7 +87,9 @@ function ResetPasswordForm() {
           <form onSubmit={onSubmit}>
             <div className="grid gap-2">
               <div className="grid gap-1">
-                <Label className="sr-only" htmlFor="password">New Password</Label>
+                <Label className="sr-only" htmlFor="password">
+                  New Password
+                </Label>
                 <Input
                   id="password"
                   name="password"
@@ -95,7 +100,9 @@ function ResetPasswordForm() {
                 />
               </div>
               <div className="grid gap-1">
-                <Label className="sr-only" htmlFor="confirmPassword">Confirm Password</Label>
+                <Label className="sr-only" htmlFor="confirmPassword">
+                  Confirm Password
+                </Label>
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -115,17 +122,19 @@ function ResetPasswordForm() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 export default function ResetPasswordPage() {
   return (
-    <React.Suspense fallback={
-      <div className="container flex h-screen w-screen flex-col items-center justify-center text-center">
-        <Loader2 className="h-6 w-6 animate-spin text-primary" />
-      </div>
-    }>
+    <React.Suspense
+      fallback={
+        <div className="container flex h-screen w-screen flex-col items-center justify-center text-center">
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+        </div>
+      }
+    >
       <ResetPasswordForm />
     </React.Suspense>
-  )
+  );
 }

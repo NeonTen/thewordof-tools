@@ -1,13 +1,13 @@
-import { prisma } from "@/lib/prisma"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, FileText, Database } from "lucide-react"
+import { prisma } from "@/lib/prisma";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Users, FileText, Database } from "lucide-react";
 
 export const metadata = {
   title: "Admin Dashboard",
-}
+};
 
 export default async function AdminPage() {
-  const userCount = await prisma.user.count()
+  const userCount = await prisma.user.count();
 
   return (
     <div className="flex flex-col gap-8">
@@ -41,7 +41,9 @@ export default async function AdminPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Database Health</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Database Health
+            </CardTitle>
             <Database className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -49,8 +51,8 @@ export default async function AdminPage() {
           </CardContent>
         </Card>
       </div>
-      
+
       {/* Could list actual users here using a Table component */}
     </div>
-  )
+  );
 }

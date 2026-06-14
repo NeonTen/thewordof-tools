@@ -1,29 +1,33 @@
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { 
-  Image as ImageIcon, 
-  Zap, 
-  FileCode, 
-  Split, 
-  QrCode
-} from "lucide-react"
+import { generateSeoMetadata } from "@/app/lib/seo";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Image as ImageIcon, Zap, FileCode, Split, QrCode } from "lucide-react";
 
-export const metadata = {
+export const metadata = generateSeoMetadata({
   title: "Image & Code Optimization Tools | TheWordOf Tools",
-  description: "Free client-side tools to convert images, compress SVGs, generate QR codes, minify files, and check text diffs.",
-}
+  description:
+    "Free client-side tools to convert images, compress SVGs, generate QR codes, minify files, and check text diffs.",
+});
 
 const tools = [
   {
     title: "Image Converter",
-    description: "Convert JPG, PNG, WEBP, AVIF in bulk. Client-side, completely private.",
+    description:
+      "Convert JPG, PNG, WEBP, AVIF in bulk. Client-side, completely private.",
     href: "/tools/image-converter",
     icon: ImageIcon,
     pro: false,
   },
   {
     title: "SVG Compressor",
-    description: "Minify, clean, and optimize SVG files for faster web loading.",
+    description:
+      "Minify, clean, and optimize SVG files for faster web loading.",
     href: "/tools/svg-compressor",
     icon: Zap,
     pro: true,
@@ -44,28 +48,36 @@ const tools = [
   },
   {
     title: "Text Difference",
-    description: "Compare two documents and highlight additions, deletions, or edits.",
+    description:
+      "Compare two documents and highlight additions, deletions, or edits.",
     href: "/tools/text-diff",
     icon: Split,
     pro: false,
   },
-]
+];
 
 export default function ImageCodePage() {
   return (
     <div className="flex flex-col gap-8 pb-16">
       <div>
-        <h1 className="text-3xl font-black tracking-tight">Image & Code Tools</h1>
+        <h1 className="text-3xl font-black tracking-tight">
+          Image & Code Tools
+        </h1>
         <p className="text-muted-foreground mt-2 text-base">
-          Optimize media assets, clean up developer files, and improve asset loading speeds.
+          Optimize media assets, clean up developer files, and improve asset
+          loading speeds.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tools.map((tool) => {
-          const Icon = tool.icon
+          const Icon = tool.icon;
           return (
-            <Link key={tool.href} href={tool.href} className="group block h-full">
+            <Link
+              key={tool.href}
+              href={tool.href}
+              className="group block h-full"
+            >
               <Card className="h-full border border-border/50 bg-card hover:bg-muted/30 transition-all duration-300 group-hover:border-primary/30 group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 <CardHeader className="flex flex-row items-center gap-4 space-y-0">
                   <div className="p-2.5 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
@@ -89,9 +101,9 @@ export default function ImageCodePage() {
                 </CardContent>
               </Card>
             </Link>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }

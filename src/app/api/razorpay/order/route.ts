@@ -19,7 +19,10 @@ export async function POST(req: Request) {
 
     if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
       console.error("Razorpay keys are missing");
-      return NextResponse.json({ error: "Razorpay credentials not configured" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Razorpay credentials not configured" },
+        { status: 500 },
+      );
     }
 
     const order = await razorpay.orders.create(options);
@@ -27,6 +30,9 @@ export async function POST(req: Request) {
     return NextResponse.json(order);
   } catch (error: any) {
     console.error("[RAZORPAY_ORDER_ERROR]", error);
-    return NextResponse.json({ error: error.message || "Internal Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || "Internal Error" },
+      { status: 500 },
+    );
   }
 }

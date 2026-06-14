@@ -14,19 +14,30 @@ export async function POST(req: Request) {
 
     const mappedPlan = plan === "PREMIUM" ? "PRO" : plan;
     const mappedInterval = interval === "year" ? "YEARLY" : "MONTHLY";
-    const planKey = `${mappedPlan}_${mappedInterval}` as keyof typeof SUBSCRIPTION_PLANS.paypal;
+    const planKey =
+      `${mappedPlan}_${mappedInterval}` as keyof typeof SUBSCRIPTION_PLANS.paypal;
     const planId = SUBSCRIPTION_PLANS.paypal[planKey];
 
     if (!planId) {
-      return NextResponse.json({ error: "Invalid subscription plan selection" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid subscription plan selection" },
+        { status: 400 },
+      );
     }
 
-    const subscription = await createPayPalSubscription(planId, session.user.id, session.user.email || undefined);
+    const subscription = await createPayPalSubscription(
+      planId,
+      session.user.id,
+      session.user.email || undefined,
+    );
 
     return NextResponse.json(subscription);
   } catch (error) {
     const err = error as Error;
     console.error("[PAYPAL_CREATE_SUBSCRIPTION_ERROR]", err);
-    return NextResponse.json({ error: err.message || "Internal Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: err.message || "Internal Error" },
+      { status: 500 },
+    );
   }
 }

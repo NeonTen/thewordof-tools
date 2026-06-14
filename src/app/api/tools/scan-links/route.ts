@@ -1,125 +1,159 @@
-import { auth } from "@/auth"
-import { prisma } from "@/lib/prisma"
-import { NextResponse } from "next/server"
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { url, excludeHeader, excludeFooter, excludeNav } = await req.json()
+    const { url, excludeHeader, excludeFooter, excludeNav } = await req.json();
     if (!url) {
-      return NextResponse.json({ error: "URL is required" }, { status: 400 })
+      return NextResponse.json({ error: "URL is required" }, { status: 400 });
     }
 
-    let isPro = false
+    let isPro = false;
     try {
-      const session = await auth()
+      const session = await auth();
       if (session?.user?.id) {
         const user = await prisma.user.findUnique({
           where: { id: session.user.id },
-          include: { subscriptions: true }
-        })
-        isPro = user?.role === "PRO" || user?.role === "BUSINESS" || user?.role === "ADMIN" || user?.subscriptions?.[0]?.plan === "PREMIUM" || user?.subscriptions?.[0]?.plan === "BUSINESS"
+          include: { subscriptions: true },
+        });
+        isPro =
+          user?.role === "PRO" ||
+          user?.role === "BUSINESS" ||
+          user?.role === "ADMIN" ||
+          user?.subscriptions?.[0]?.plan === "PREMIUM" ||
+          user?.subscriptions?.[0]?.plan === "BUSINESS";
       }
     } catch {
-      isPro = false
+      isPro = false;
     }
 
-    const formattedUrl = url.startsWith("http") ? url : `https://${url}`
-    let base: URL
+    const formattedUrl = url.startsWith("http") ? url : `https://${url}`;
+    let base: URL;
     try {
-      base = new URL(formattedUrl)
+      base = new URL(formattedUrl);
     } catch {
-      return NextResponse.json({ error: "Invalid URL structure provided." }, { status: 400 })
+      return NextResponse.json(
+        { error: "Invalid URL structure provided." },
+        { status: 400 },
+      );
     }
 
     const response = await fetch(formattedUrl, {
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },
-      signal: AbortSignal.timeout(8000)
-    })
+      signal: AbortSignal.timeout(8000),
+    });
 
     if (!response.ok) {
-      return NextResponse.json({ error: `Failed to fetch webpage: ${response.statusText}` }, { status: response.status })
+      return NextResponse.json(
+        { error: `Failed to fetch webpage: ${response.statusText}` },
+        { status: response.status },
+      );
     }
 
-    const html = await response.text()
-    let cleanHtml = html
-    
+    const html = await response.text();
+    let cleanHtml = html;
+
     if (excludeHeader) {
-      cleanHtml = cleanHtml.replace(/<header\b[^>]*>([\s\S]*?)<\/header>/gi, "")
+      cleanHtml = cleanHtml.replace(
+        /<header\b[^>]*>([\s\S]*?)<\/header>/gi,
+        "",
+      );
     }
     if (excludeFooter) {
-      cleanHtml = cleanHtml.replace(/<footer\b[^>]*>([\s\S]*?)<\/footer>/gi, "")
+      cleanHtml = cleanHtml.replace(
+        /<footer\b[^>]*>([\s\S]*?)<\/footer>/gi,
+        "",
+      );
     }
     if (excludeNav) {
-      cleanHtml = cleanHtml.replace(/<nav\b[^>]*>([\s\S]*?)<\/nav>/gi, "")
+      cleanHtml = cleanHtml.replace(/<nav\b[^>]*>([\s\S]*?)<\/nav>/gi, "");
     }
-    
-    // Simple robust regex to extract links and anchor texts
-    const linkRegex = /<a\s+(?:[^>]*?\s+)?href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi
-    const parsedLinks: { href: string; text: string; type: "internal" | "external" }[] = []
-    const seenUrls = new Set<string>()
 
-    let match
+    // Simple robust regex to extract links and anchor texts
+    const linkRegex =
+      /<a\s+(?:[^>]*?\s+)?href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi;
+    const parsedLinks: {
+      href: string;
+      text: string;
+      type: "internal" | "external";
+    }[] = [];
+    const seenUrls = new Set<string>();
+
+    let match;
     while ((match = linkRegex.exec(cleanHtml)) !== null) {
-      let href = match[1].trim()
-      
+      let href = match[1].trim();
+
       // Filter anchors, mailto, tel, javascript links
-      if (!href || href.startsWith("#") || href.startsWith("javascript:") || href.startsWith("mailto:") || href.startsWith("tel:")) {
-        continue
+      if (
+        !href ||
+        href.startsWith("#") ||
+        href.startsWith("javascript:") ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:")
+      ) {
+        continue;
       }
 
       // Resolve relative URLs
-      let resolvedUrl = href
+      let resolvedUrl = href;
       if (href.startsWith("/")) {
-        resolvedUrl = `${base.origin}${href}`
+        resolvedUrl = `${base.origin}${href}`;
       } else if (!href.startsWith("http")) {
-        resolvedUrl = `${base.origin}/${href}`
+        resolvedUrl = `${base.origin}/${href}`;
       }
 
       // De-duplicate URLs
       if (seenUrls.has(resolvedUrl)) {
-        continue
+        continue;
       }
-      seenUrls.add(resolvedUrl)
+      seenUrls.add(resolvedUrl);
 
       // Determine internal/external
-      let type: "internal" | "external" = "external"
+      let type: "internal" | "external" = "external";
       try {
-        const parsedResolved = new URL(resolvedUrl)
+        const parsedResolved = new URL(resolvedUrl);
         if (parsedResolved.hostname === base.hostname) {
-          type = "internal"
+          type = "internal";
         }
       } catch {
-        continue
+        continue;
       }
 
       // Strip inner tags from anchor text
-      const anchorText = match[2].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim() || "[No Text / Icon Link]"
+      const anchorText =
+        match[2]
+          .replace(/<[^>]+>/g, "")
+          .replace(/\s+/g, " ")
+          .trim() || "[No Text / Icon Link]";
 
-      parsedLinks.push({ href: resolvedUrl, text: anchorText, type })
+      parsedLinks.push({ href: resolvedUrl, text: anchorText, type });
     }
 
-    const limit = isPro ? parsedLinks.length : 30
-    const linksToScan = parsedLinks.slice(0, limit)
+    const limit = isPro ? parsedLinks.length : 30;
+    const linksToScan = parsedLinks.slice(0, limit);
 
     // Batch checks in parallel groups of 10 to avoid connection pooling issues or rate limits
-    const batchSize = 10
-    const scannedLinks: any[] = []
-    const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    const batchSize = 10;
+    const scannedLinks: any[] = [];
+    const userAgent =
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
     for (let i = 0; i < linksToScan.length; i += batchSize) {
-      const batch = linksToScan.slice(i, i + batchSize)
+      const batch = linksToScan.slice(i, i + batchSize);
       const results = await Promise.all(
         batch.map(async (link) => {
-          let status = 0
+          let status = 0;
           try {
             const headResponse = await fetch(link.href, {
               method: "HEAD",
               headers: { "User-Agent": userAgent },
-              signal: AbortSignal.timeout(4000)
-            })
-            status = headResponse.status
+              signal: AbortSignal.timeout(4000),
+            });
+            status = headResponse.status;
           } catch {
             // ignore and fallback to GET
           }
@@ -129,38 +163,56 @@ export async function POST(req: Request) {
               const getResponse = await fetch(link.href, {
                 method: "GET",
                 headers: { "User-Agent": userAgent },
-                signal: AbortSignal.timeout(4000)
-              })
-              status = getResponse.status
+                signal: AbortSignal.timeout(4000),
+              });
+              status = getResponse.status;
             } catch {
-              status = 0 // network/connection issue
+              status = 0; // network/connection issue
             }
           }
 
           // Special handling for major social media domains that aggressively block bots with 400/403/999/503
-          const socialDomains = ["facebook.com", "instagram.com", "linkedin.com", "twitter.com", "x.com", "youtube.com"]
+          const socialDomains = [
+            "facebook.com",
+            "instagram.com",
+            "linkedin.com",
+            "twitter.com",
+            "x.com",
+            "youtube.com",
+          ];
           try {
-            const domain = new URL(link.href).hostname.toLowerCase()
-            const isSocial = socialDomains.some(d => domain === d || domain.endsWith("." + d))
-            if (isSocial && (status === 400 || status === 403 || status === 999 || status === 503)) {
-              status = 200 // Treat as active/OK to avoid false broken status
+            const domain = new URL(link.href).hostname.toLowerCase();
+            const isSocial = socialDomains.some(
+              (d) => domain === d || domain.endsWith("." + d),
+            );
+            if (
+              isSocial &&
+              (status === 400 ||
+                status === 403 ||
+                status === 999 ||
+                status === 503)
+            ) {
+              status = 200; // Treat as active/OK to avoid false broken status
             }
           } catch {
             // ignore
           }
 
-          return { ...link, status }
-        })
-      )
-      scannedLinks.push(...results)
+          return { ...link, status };
+        }),
+      );
+      scannedLinks.push(...results);
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       links: scannedLinks,
       totalFound: parsedLinks.length,
-      isLimited: !isPro && parsedLinks.length > 30
-    })
+      isLimited: !isPro && parsedLinks.length > 30,
+    });
   } catch (err: any) {
-    return NextResponse.json({ error: err.message || "Failed to audit webpage links" }, { status: 500 })
+    return NextResponse.json(
+      { error: err.message || "Failed to audit webpage links" },
+      { status: 500 },
+    );
   }
 }

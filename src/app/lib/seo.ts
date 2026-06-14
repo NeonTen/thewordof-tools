@@ -1,9 +1,9 @@
-import { Metadata } from "next"
+import { Metadata } from "next";
 
 interface SeoMetadataInput {
-  title: string
-  description: string
-  keywords?: string[]
+  title: string;
+  description: string;
+  keywords?: string[];
 }
 
 export function generateSeoMetadata({
@@ -11,8 +11,13 @@ export function generateSeoMetadata({
   description,
   keywords = [],
 }: SeoMetadataInput): Metadata {
-  const baseKeywords = ["online tools", "free utility", "productivity tools", "developer tools"]
-  
+  const baseKeywords = [
+    "online tools",
+    "free utility",
+    "productivity tools",
+    "developer tools",
+  ];
+
   return {
     title: title,
     description,
@@ -28,5 +33,5 @@ export function generateSeoMetadata({
       title: `${title} | TheWordOf Tools`,
       description,
     },
-  }
+  };
 }

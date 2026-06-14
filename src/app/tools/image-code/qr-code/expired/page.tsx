@@ -1,7 +1,7 @@
-import React from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { AlertTriangle } from "lucide-react"
+import React from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { AlertTriangle } from "lucide-react";
 
 export default function QrCodeExpiredPage() {
   return (
@@ -12,7 +12,9 @@ export default function QrCodeExpiredPage() {
         </div>
         <h1 className="text-2xl font-bold tracking-tight">QR Code Expired</h1>
         <p className="text-muted-foreground text-sm leading-relaxed">
-          This QR code was generated under a temporary free tier and has expired after 15 days. If you are the owner, upgrade to Pro to instantly reactivate this QR code and unlock analytics!
+          This QR code was generated under a temporary free tier and has expired
+          after 15 days. If you are the owner, upgrade to Pro to instantly
+          reactivate this QR code and unlock analytics!
         </p>
         <div className="flex flex-col gap-2 pt-4">
           <Button asChild className="w-full font-bold">
@@ -24,5 +26,5 @@ export default function QrCodeExpiredPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

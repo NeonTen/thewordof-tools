@@ -1,15 +1,16 @@
-import React from "react"
-import { Metadata } from "next"
-import Link from "next/link"
+import { generateSeoMetadata } from "@/app/lib/seo";
+import React from "react";
+import { Metadata } from "next";
+import Link from "next/link";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import { UserAuthForm } from "@/components/auth/user-auth-form"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { UserAuthForm } from "@/components/auth/user-auth-form";
 
-export const metadata: Metadata = {
+export const metadata = generateSeoMetadata({
   title: "Create an account",
   description: "Create an account to get started.",
-}
+});
 
 export default function RegisterPage() {
   return (
@@ -18,7 +19,7 @@ export default function RegisterPage() {
         href="/login"
         className={cn(
           buttonVariants({ variant: "ghost" }),
-          "absolute right-4 top-4 md:right-8 md:top-8"
+          "absolute right-4 top-4 md:right-8 md:top-8",
         )}
       >
         Login
@@ -54,5 +55,5 @@ export default function RegisterPage() {
         </p>
       </div>
     </div>
-  )
+  );
 }

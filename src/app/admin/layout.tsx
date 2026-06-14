@@ -1,16 +1,16 @@
-import { auth } from "@/auth"
-import { redirect } from "next/navigation"
-import { ShieldAlert } from "lucide-react"
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+import { ShieldAlert } from "lucide-react";
 
 export default async function AdminLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const session = await auth()
+  const session = await auth();
 
   if (session?.user?.role !== "ADMIN") {
-    redirect("/dashboard")
+    redirect("/dashboard");
   }
 
   return (
@@ -22,15 +22,28 @@ export default async function AdminLayout({
             <span>SUPER ADMIN</span>
           </div>
           <nav className="flex items-center gap-6 text-sm font-medium ml-6">
-            <a href="/admin/users" className="transition-colors hover:text-foreground/80 text-foreground">Users</a>
-            <a href="/admin/analytics" className="transition-colors hover:text-foreground/80 text-muted-foreground">Analytics</a>
-            <a href="/admin/settings" className="transition-colors hover:text-foreground/80 text-muted-foreground">Global Settings</a>
+            <a
+              href="/admin/users"
+              className="transition-colors hover:text-foreground/80 text-foreground"
+            >
+              Users
+            </a>
+            <a
+              href="/admin/analytics"
+              className="transition-colors hover:text-foreground/80 text-muted-foreground"
+            >
+              Analytics
+            </a>
+            <a
+              href="/admin/settings"
+              className="transition-colors hover:text-foreground/80 text-muted-foreground"
+            >
+              Global Settings
+            </a>
           </nav>
         </div>
       </header>
-      <main className="flex-1 container px-6 py-10">
-        {children}
-      </main>
+      <main className="flex-1 container px-6 py-10">{children}</main>
     </div>
-  )
+  );
 }

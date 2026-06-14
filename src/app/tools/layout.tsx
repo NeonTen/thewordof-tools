@@ -1,9 +1,13 @@
-import { ToolsNav } from "@/components/layout/tools-nav"
-import { Header } from "@/components/layout/header"
-import { PageTransition } from "@/components/layout/page-transition"
-import { RelatedTools } from "@/components/tools/related-tools"
+import { ToolsNav } from "@/components/layout/tools-nav";
+import { Header } from "@/components/layout/header";
+import { PageTransition } from "@/components/layout/page-transition";
+import { RelatedTools } from "@/components/tools/related-tools";
 
-export default function ToolsLayout({ children }: { children: React.ReactNode }) {
+export default function ToolsLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex min-h-screen flex-col">
       <div className="print:hidden sticky top-0 z-50">
@@ -21,5 +25,5 @@ export default function ToolsLayout({ children }: { children: React.ReactNode })
         </main>
       </div>
     </div>
-  )
+  );
 }

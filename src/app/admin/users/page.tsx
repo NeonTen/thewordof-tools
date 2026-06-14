@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { 
-  Search, 
-  MoreVertical, 
-  Shield, 
-  User as UserIcon, 
-  Trash2, 
-  Key, 
+import * as React from "react";
+import Link from "next/link";
+import {
+  Search,
+  MoreVertical,
+  Shield,
+  User as UserIcon,
+  Trash2,
+  Key,
   CreditCard,
   CheckCircle2,
   AlertCircle,
   Loader2,
   ArrowLeft,
-  Sparkles
-} from "lucide-react"
+  Sparkles,
+} from "lucide-react";
 
 import {
   Table,
@@ -24,7 +24,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,10 +33,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -44,108 +50,111 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 export default function AdminUsersPage() {
-  const [users, setUsers] = React.useState<any[]>([])
-  const [loading, setLoading] = React.useState(true)
-  const [searchQuery, setSearchQuery] = React.useState("")
-  
+  const [users, setUsers] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [searchQuery, setSearchQuery] = React.useState("");
+
   // Modals state
-  const [selectedUser, setSelectedUser] = React.useState<any>(null)
-  const [isUpdatePlanOpen, setIsUpdatePlanOpen] = React.useState(false)
-  const [isUpdateRoleOpen, setIsUpdateRoleOpen] = React.useState(false)
-  const [isResetPasswordOpen, setIsResetPasswordOpen] = React.useState(false)
-  const [isDeleteOpen, setIsDeleteOpen] = React.useState(false)
-  
-  const [newPlan, setNewPlan] = React.useState("")
-  const [newRole, setNewRole] = React.useState("")
-  const [newPassword, setNewPassword] = React.useState("")
-  const [newCredits, setNewCredits] = React.useState(20)
-  const [isUpdateCreditsOpen, setIsUpdateCreditsOpen] = React.useState(false)
-  const [actionLoading, setActionLoading] = React.useState(false)
+  const [selectedUser, setSelectedUser] = React.useState<any>(null);
+  const [isUpdatePlanOpen, setIsUpdatePlanOpen] = React.useState(false);
+  const [isUpdateRoleOpen, setIsUpdateRoleOpen] = React.useState(false);
+  const [isResetPasswordOpen, setIsResetPasswordOpen] = React.useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
+
+  const [newPlan, setNewPlan] = React.useState("");
+  const [newRole, setNewRole] = React.useState("");
+  const [newPassword, setNewPassword] = React.useState("");
+  const [newCredits, setNewCredits] = React.useState(20);
+  const [isUpdateCreditsOpen, setIsUpdateCreditsOpen] = React.useState(false);
+  const [actionLoading, setActionLoading] = React.useState(false);
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("/api/admin/users")
+      const res = await fetch("/api/admin/users");
       if (!res.ok) {
-        const errorData = await res.json().catch(() => ({ error: "Failed to fetch users" }))
-        console.error("Fetch users error:", errorData)
-        setUsers([])
-        return
+        const errorData = await res
+          .json()
+          .catch(() => ({ error: "Failed to fetch users" }));
+        console.error("Fetch users error:", errorData);
+        setUsers([]);
+        return;
       }
-      const data = await res.json()
-      setUsers(data)
+      const data = await res.json();
+      setUsers(data);
     } catch (error) {
-      console.error("Fetch users exception:", error)
-      setUsers([])
+      console.error("Fetch users exception:", error);
+      setUsers([]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   React.useEffect(() => {
-    fetchUsers()
-  }, [])
+    fetchUsers();
+  }, []);
 
   const handleAction = async (userId: string, body: any) => {
-    setActionLoading(true)
+    setActionLoading(true);
     try {
       const res = await fetch(`/api/admin/users/${userId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      })
+        body: JSON.stringify(body),
+      });
       if (res.ok) {
-        fetchUsers()
+        fetchUsers();
         // Close all modals
-        setIsUpdatePlanOpen(false)
-        setIsUpdateRoleOpen(false)
-        setIsResetPasswordOpen(false)
-        setIsUpdateCreditsOpen(false)
+        setIsUpdatePlanOpen(false);
+        setIsUpdateRoleOpen(false);
+        setIsResetPasswordOpen(false);
+        setIsUpdateCreditsOpen(false);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     } finally {
-      setActionLoading(false)
+      setActionLoading(false);
     }
-  }
+  };
 
   const handleDelete = async (userId: string) => {
-    setActionLoading(true)
+    setActionLoading(true);
     try {
       const res = await fetch(`/api/admin/users/${userId}`, {
-        method: "DELETE"
-      })
+        method: "DELETE",
+      });
       if (res.ok) {
-        fetchUsers()
-        setIsDeleteOpen(false)
+        fetchUsers();
+        setIsDeleteOpen(false);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     } finally {
-      setActionLoading(false)
+      setActionLoading(false);
     }
-  }
+  };
 
-  const filteredUsers = users.filter(user => 
-    user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    user.name?.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const filteredUsers = users.filter(
+    (user) =>
+      user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.name?.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   return (
     <div className="space-y-6">
       <div>
-        <Link 
-          href="/dashboard" 
+        <Link
+          href="/dashboard"
           className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider mb-2"
         >
           <ArrowLeft className="h-3.5 w-3.5" /> Back to Dashboard
@@ -154,13 +163,17 @@ export default function AdminUsersPage() {
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-black tracking-tight leading-none mb-2">User Management</h1>
-          <p className="text-muted-foreground text-sm">Manage all registered users and their permissions.</p>
+          <h1 className="text-3xl font-black tracking-tight leading-none mb-2">
+            User Management
+          </h1>
+          <p className="text-muted-foreground text-sm">
+            Manage all registered users and their permissions.
+          </p>
         </div>
         <div className="relative w-full sm:w-[300px]">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search users..." 
+          <Input
+            placeholder="Search users..."
             className="pl-9 h-9"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -174,10 +187,16 @@ export default function AdminUsersPage() {
             <TableRow className="hover:bg-transparent border-none">
               <TableHead className="font-bold h-10 px-4">User</TableHead>
               <TableHead className="font-bold h-10 px-4">Role</TableHead>
-              <TableHead className="font-bold h-10 px-4">Plan Details</TableHead>
+              <TableHead className="font-bold h-10 px-4">
+                Plan Details
+              </TableHead>
               <TableHead className="font-bold h-10 px-4">Credits</TableHead>
-              <TableHead className="font-bold h-10 px-4">Payment Method</TableHead>
-              <TableHead className="font-bold h-10 px-4">Start / Expire</TableHead>
+              <TableHead className="font-bold h-10 px-4">
+                Payment Method
+              </TableHead>
+              <TableHead className="font-bold h-10 px-4">
+                Start / Expire
+              </TableHead>
               <TableHead className="font-bold h-10 px-4">Joined</TableHead>
               <TableHead className="font-bold h-10 px-4">Actions</TableHead>
             </TableRow>
@@ -188,158 +207,221 @@ export default function AdminUsersPage() {
                 <TableCell colSpan={7} className="h-32 text-center">
                   <div className="flex flex-col items-center gap-2">
                     <Loader2 className="h-6 w-6 animate-spin text-primary" />
-                    <p className="text-xs text-muted-foreground">Loading users...</p>
+                    <p className="text-xs text-muted-foreground">
+                      Loading users...
+                    </p>
                   </div>
                 </TableCell>
               </TableRow>
             ) : filteredUsers.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="h-32 text-center text-muted-foreground text-sm">
+                <TableCell
+                  colSpan={7}
+                  className="h-32 text-center text-muted-foreground text-sm"
+                >
                   No users found matching your search.
                 </TableCell>
               </TableRow>
-            ) : filteredUsers.map((user) => {
-              const currentSub = user.subscriptions?.[0]
-              const hasPremium = user.role === 'PRO' || user.role === 'BUSINESS' || user.role === 'ADMIN' || currentSub?.plan === 'PREMIUM' || currentSub?.plan === 'BUSINESS'
-              const subStatus = currentSub?.status || (hasPremium ? "active" : "inactive")
-              
-              const formatDate = (dateString?: string | Date) => {
-                if (!dateString) return "—"
-                return new Intl.DateTimeFormat('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(dateString))
-              }
-              
-              return (
-                <TableRow key={user.id} className="hover:bg-muted/50 transition-colors border-border">
-                  <TableCell className="py-3 px-4">
-                    <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
-                        {user.name?.[0] || user.email?.[0]?.toUpperCase()}
+            ) : (
+              filteredUsers.map((user) => {
+                const currentSub = user.subscriptions?.[0];
+                const hasPremium =
+                  user.role === "PRO" ||
+                  user.role === "BUSINESS" ||
+                  user.role === "ADMIN" ||
+                  currentSub?.plan === "PREMIUM" ||
+                  currentSub?.plan === "BUSINESS";
+                const subStatus =
+                  currentSub?.status || (hasPremium ? "active" : "inactive");
+
+                const formatDate = (dateString?: string | Date) => {
+                  if (!dateString) return "—";
+                  return new Intl.DateTimeFormat("en-IN", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  }).format(new Date(dateString));
+                };
+
+                return (
+                  <TableRow
+                    key={user.id}
+                    className="hover:bg-muted/50 transition-colors border-border"
+                  >
+                    <TableCell className="py-3 px-4">
+                      <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
+                          {user.name?.[0] || user.email?.[0]?.toUpperCase()}
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="font-bold text-sm leading-none mb-1">
+                            {user.name || "N/A"}
+                          </span>
+                          <span className="text-[11px] text-muted-foreground leading-none">
+                            {user.email}
+                          </span>
+                        </div>
                       </div>
+                    </TableCell>
+                    <TableCell className="py-3 px-4">
+                      <div
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider ${
+                          user.role === "ADMIN"
+                            ? "bg-destructive/10 text-destructive"
+                            : user.role === "BUSINESS"
+                              ? "bg-indigo-500/10 text-indigo-500"
+                              : user.role === "PRO"
+                                ? "bg-primary/10 text-primary"
+                                : "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {user.role === "ADMIN" ? (
+                          <Shield className="h-2.5 w-2.5" />
+                        ) : (
+                          <UserIcon className="h-2.5 w-2.5" />
+                        )}
+                        {user.role}
+                      </div>
+                    </TableCell>
+                    <TableCell className="py-3 px-4">
                       <div className="flex flex-col">
-                        <span className="font-bold text-sm leading-none mb-1">{user.name || "N/A"}</span>
-                        <span className="text-[11px] text-muted-foreground leading-none">{user.email}</span>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span
+                            className={`h-1.5 w-1.5 rounded-full ${
+                              subStatus === "active"
+                                ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+                                : "bg-muted-foreground/50"
+                            }`}
+                          />
+                          <span className="text-xs font-black uppercase">
+                            {currentSub?.plan ||
+                              (hasPremium
+                                ? user.role === "BUSINESS"
+                                  ? "BUSINESS"
+                                  : "PREMIUM"
+                                : "FREE")}
+                          </span>
+                        </div>
+                        {currentSub?.amount && (
+                          <span className="text-[10px] text-muted-foreground font-mono">
+                            {currentSub.currency === "INR" ? "₹" : "$"}
+                            {currentSub.amount}/{currentSub.interval || "month"}
+                          </span>
+                        )}
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell className="py-3 px-4">
-                    <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider ${
-                      user.role === 'ADMIN' ? 'bg-destructive/10 text-destructive' : 
-                      user.role === 'BUSINESS' ? 'bg-indigo-500/10 text-indigo-500' :
-                      user.role === 'PRO' ? 'bg-primary/10 text-primary' : 
-                      'bg-muted text-muted-foreground'
-                    }`}>
-                      {user.role === 'ADMIN' ? <Shield className="h-2.5 w-2.5" /> : <UserIcon className="h-2.5 w-2.5" />}
-                      {user.role}
-                    </div>
-                  </TableCell>
-                  <TableCell className="py-3 px-4">
-                    <div className="flex flex-col">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className={`h-1.5 w-1.5 rounded-full ${
-                          subStatus === 'active' 
-                            ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' 
-                            : 'bg-muted-foreground/50'
-                        }`} />
-                        <span className="text-xs font-black uppercase">
-                          {currentSub?.plan || (hasPremium ? (user.role === 'BUSINESS' ? 'BUSINESS' : 'PREMIUM') : 'FREE')}
+                    </TableCell>
+                    <TableCell className="py-3 px-4 font-mono font-bold text-xs">
+                      {user.creditsRemaining ?? 20}
+                    </TableCell>
+                    <TableCell className="py-3 px-4">
+                      <div className="flex flex-col">
+                        <span className="text-xs font-bold uppercase">
+                          {currentSub?.paymentProvider ||
+                            (hasPremium ? "MANUAL OVERRIDE" : "—")}
                         </span>
-                      </div>
-                      {currentSub?.amount && (
-                        <span className="text-[10px] text-muted-foreground font-mono">
-                          {currentSub.currency === 'INR' ? '₹' : '$'}{currentSub.amount}/{currentSub.interval || 'month'}
-                        </span>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell className="py-3 px-4 font-mono font-bold text-xs">
-                    {user.creditsRemaining ?? 20}
-                  </TableCell>
-                  <TableCell className="py-3 px-4">
-                    <div className="flex flex-col">
-                      <span className="text-xs font-bold uppercase">
-                        {currentSub?.paymentProvider || (hasPremium ? "MANUAL OVERRIDE" : "—")}
-                      </span>
-                      {currentSub?.subscriptionId && (
-                        <span className="text-[9px] text-muted-foreground font-mono truncate max-w-[120px]" title={currentSub.subscriptionId}>
-                          ID: {currentSub.subscriptionId}
-                        </span>
-                      )}
-                      {currentSub?.paymentId && !currentSub?.subscriptionId && (
-                        <span className="text-[9px] text-muted-foreground font-mono truncate max-w-[120px]" title={currentSub.paymentId}>
-                          Pay ID: {currentSub.paymentId}
-                        </span>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell className="py-3 px-4">
-                    <div className="flex flex-col text-xs font-medium">
-                      <span className="text-muted-foreground">Start: {currentSub ? formatDate(currentSub.createdAt) : "—"}</span>
-                      <span className="text-foreground font-bold mt-0.5">
-                        End: {currentSub?.currentPeriodEnd ? formatDate(currentSub.currentPeriodEnd) : "—"}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-[11px] text-muted-foreground py-3 px-4 font-medium">
-                    {formatDate(user.createdAt)}
-                  </TableCell>
-                  <TableCell className="py-3 px-4">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition-colors">
-                        <MoreVertical className="h-4 w-4" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-[200px]">
-                        <DropdownMenuGroup>
-                          <DropdownMenuLabel>User Actions</DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => {
-                            setSelectedUser(user)
-                            setNewRole(user.role)
-                            setIsUpdateRoleOpen(true)
-                          }}>
-                            <Shield className="mr-2 h-4 w-4" />
-                            Update Role
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => {
-                            setSelectedUser(user)
-                            setNewPlan(hasPremium ? 'PREMIUM' : 'FREE')
-                            setIsUpdatePlanOpen(true)
-                          }}>
-                            <CreditCard className="mr-2 h-4 w-4" />
-                            Update Subscription
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => {
-                            setSelectedUser(user)
-                            setNewCredits(user.creditsRemaining ?? 20)
-                            setIsUpdateCreditsOpen(true)
-                          }}>
-                            <Sparkles className="mr-2 h-4 w-4 text-amber-500 fill-amber-500" />
-                            Adjust Credits
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => {
-                            setSelectedUser(user)
-                            setIsResetPasswordOpen(true)
-                          }}>
-                            <Key className="mr-2 h-4 w-4" />
-                            Reset Password
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem 
-                            className="text-destructive focus:bg-destructive/10 focus:text-destructive"
-                            onClick={() => {
-                              setSelectedUser(user)
-                              setIsDeleteOpen(true)
-                            }}
+                        {currentSub?.subscriptionId && (
+                          <span
+                            className="text-[9px] text-muted-foreground font-mono truncate max-w-[120px]"
+                            title={currentSub.subscriptionId}
                           >
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Delete User
-                          </DropdownMenuItem>
-                        </DropdownMenuGroup>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              )
-            })}
+                            ID: {currentSub.subscriptionId}
+                          </span>
+                        )}
+                        {currentSub?.paymentId &&
+                          !currentSub?.subscriptionId && (
+                            <span
+                              className="text-[9px] text-muted-foreground font-mono truncate max-w-[120px]"
+                              title={currentSub.paymentId}
+                            >
+                              Pay ID: {currentSub.paymentId}
+                            </span>
+                          )}
+                      </div>
+                    </TableCell>
+                    <TableCell className="py-3 px-4">
+                      <div className="flex flex-col text-xs font-medium">
+                        <span className="text-muted-foreground">
+                          Start:{" "}
+                          {currentSub ? formatDate(currentSub.createdAt) : "—"}
+                        </span>
+                        <span className="text-foreground font-bold mt-0.5">
+                          End:{" "}
+                          {currentSub?.currentPeriodEnd
+                            ? formatDate(currentSub.currentPeriodEnd)
+                            : "—"}
+                        </span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-[11px] text-muted-foreground py-3 px-4 font-medium">
+                      {formatDate(user.createdAt)}
+                    </TableCell>
+                    <TableCell className="py-3 px-4">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition-colors">
+                          <MoreVertical className="h-4 w-4" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-[200px]">
+                          <DropdownMenuGroup>
+                            <DropdownMenuLabel>User Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setSelectedUser(user);
+                                setNewRole(user.role);
+                                setIsUpdateRoleOpen(true);
+                              }}
+                            >
+                              <Shield className="mr-2 h-4 w-4" />
+                              Update Role
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setSelectedUser(user);
+                                setNewPlan(hasPremium ? "PREMIUM" : "FREE");
+                                setIsUpdatePlanOpen(true);
+                              }}
+                            >
+                              <CreditCard className="mr-2 h-4 w-4" />
+                              Update Subscription
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setSelectedUser(user);
+                                setNewCredits(user.creditsRemaining ?? 20);
+                                setIsUpdateCreditsOpen(true);
+                              }}
+                            >
+                              <Sparkles className="mr-2 h-4 w-4 text-amber-500 fill-amber-500" />
+                              Adjust Credits
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setSelectedUser(user);
+                                setIsResetPasswordOpen(true);
+                              }}
+                            >
+                              <Key className="mr-2 h-4 w-4" />
+                              Reset Password
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                              className="text-destructive focus:bg-destructive/10 focus:text-destructive"
+                              onClick={() => {
+                                setSelectedUser(user);
+                                setIsDeleteOpen(true);
+                              }}
+                            >
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Delete User
+                            </DropdownMenuItem>
+                          </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            )}
           </TableBody>
         </Table>
       </Card>
@@ -355,7 +437,10 @@ export default function AdminUsersPage() {
           </DialogHeader>
           <div className="py-4">
             <Label>Select Role</Label>
-            <Select value={newRole} onValueChange={(val) => setNewRole(val as string)}>
+            <Select
+              value={newRole}
+              onValueChange={(val) => setNewRole(val as string)}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -368,9 +453,19 @@ export default function AdminUsersPage() {
             </Select>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsUpdateRoleOpen(false)}>Cancel</Button>
-            <Button onClick={() => handleAction(selectedUser.id, { role: newRole })} disabled={actionLoading}>
-              {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <Button
+              variant="outline"
+              onClick={() => setIsUpdateRoleOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => handleAction(selectedUser.id, { role: newRole })}
+              disabled={actionLoading}
+            >
+              {actionLoading && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Save Role
             </Button>
           </DialogFooter>
@@ -388,7 +483,10 @@ export default function AdminUsersPage() {
           </DialogHeader>
           <div className="py-4">
             <Label>Select Plan</Label>
-            <Select value={newPlan} onValueChange={(val) => setNewPlan(val as string)}>
+            <Select
+              value={newPlan}
+              onValueChange={(val) => setNewPlan(val as string)}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -400,9 +498,19 @@ export default function AdminUsersPage() {
             </Select>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsUpdatePlanOpen(false)}>Cancel</Button>
-            <Button onClick={() => handleAction(selectedUser.id, { plan: newPlan })} disabled={actionLoading}>
-              {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <Button
+              variant="outline"
+              onClick={() => setIsUpdatePlanOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => handleAction(selectedUser.id, { plan: newPlan })}
+              disabled={actionLoading}
+            >
+              {actionLoading && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Update Plan
             </Button>
           </DialogFooter>
@@ -420,20 +528,29 @@ export default function AdminUsersPage() {
           </DialogHeader>
           <div className="py-4 space-y-2">
             <Label>New Password</Label>
-            <Input 
-              type="password" 
-              placeholder="Minimum 8 characters" 
+            <Input
+              type="password"
+              placeholder="Minimum 8 characters"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsResetPasswordOpen(false)}>Cancel</Button>
-            <Button 
-              onClick={() => handleAction(selectedUser.id, { resetPassword: newPassword })} 
+            <Button
+              variant="outline"
+              onClick={() => setIsResetPasswordOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() =>
+                handleAction(selectedUser.id, { resetPassword: newPassword })
+              }
               disabled={actionLoading || newPassword.length < 8}
             >
-              {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {actionLoading && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Update Password
             </Button>
           </DialogFooter>
@@ -446,21 +563,34 @@ export default function AdminUsersPage() {
           <DialogHeader>
             <DialogTitle>Adjust User Credits</DialogTitle>
             <DialogDescription>
-              Manually set the remaining AI credit quota for {selectedUser?.email}.
+              Manually set the remaining AI credit quota for{" "}
+              {selectedUser?.email}.
             </DialogDescription>
           </DialogHeader>
           <div className="py-4 space-y-2">
             <Label>Credits Remaining</Label>
-            <Input 
+            <Input
               type="number"
               value={newCredits}
               onChange={(e) => setNewCredits(parseInt(e.target.value) || 0)}
             />
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsUpdateCreditsOpen(false)}>Cancel</Button>
-            <Button onClick={() => handleAction(selectedUser.id, { creditsRemaining: newCredits })} disabled={actionLoading}>
-              {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <Button
+              variant="outline"
+              onClick={() => setIsUpdateCreditsOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() =>
+                handleAction(selectedUser.id, { creditsRemaining: newCredits })
+              }
+              disabled={actionLoading}
+            >
+              {actionLoading && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Update Credits
             </Button>
           </DialogFooter>
@@ -476,18 +606,30 @@ export default function AdminUsersPage() {
               Confirm Deletion
             </DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete <span className="font-bold text-foreground">{selectedUser?.email}</span>? This action is permanent and cannot be undone.
+              Are you sure you want to delete{" "}
+              <span className="font-bold text-foreground">
+                {selectedUser?.email}
+              </span>
+              ? This action is permanent and cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>Cancel</Button>
-            <Button variant="destructive" onClick={() => handleDelete(selectedUser.id)} disabled={actionLoading}>
-              {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => handleDelete(selectedUser.id)}
+              disabled={actionLoading}
+            >
+              {actionLoading && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Delete Permanently
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

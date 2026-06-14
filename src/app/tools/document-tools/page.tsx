@@ -1,11 +1,19 @@
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileText, Files } from "lucide-react"
+import { generateSeoMetadata } from "@/app/lib/seo";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { FileText, Files } from "lucide-react";
 
-export const metadata = {
+export const metadata = generateSeoMetadata({
   title: "Document Tools | TheWordOf Tools",
-  description: "Free online document utilities, PDF converters, professional invoice generators, and work report templates.",
-}
+  description:
+    "Free online document utilities, PDF converters, professional invoice generators, and work report templates.",
+});
 
 const tools = [
   {
@@ -24,12 +32,13 @@ const tools = [
   },
   {
     title: "Work Report Generator",
-    description: "Compile daily task trackers and print matching standard A4 PDFs.",
+    description:
+      "Compile daily task trackers and print matching standard A4 PDFs.",
     href: "/tools/document-tools/report",
     icon: FileText,
     pro: false,
   },
-]
+];
 
 export default function DocumentToolsPage() {
   return (
@@ -37,15 +46,20 @@ export default function DocumentToolsPage() {
       <div>
         <h1 className="text-3xl font-black tracking-tight">Document Tools</h1>
         <p className="text-muted-foreground mt-2 text-base">
-          Professional PDF generation, document conversion, and invoicing utilities.
+          Professional PDF generation, document conversion, and invoicing
+          utilities.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tools.map((tool) => {
-          const Icon = tool.icon
+          const Icon = tool.icon;
           return (
-            <Link key={tool.href} href={tool.href} className="group block h-full">
+            <Link
+              key={tool.href}
+              href={tool.href}
+              className="group block h-full"
+            >
               <Card className="h-full border border-border/50 bg-card hover:bg-muted/30 transition-all duration-300 group-hover:border-primary/30 group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 <CardHeader className="flex flex-row items-center gap-4 space-y-0">
                   <div className="p-2.5 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
@@ -69,9 +83,9 @@ export default function DocumentToolsPage() {
                 </CardContent>
               </Card>
             </Link>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }

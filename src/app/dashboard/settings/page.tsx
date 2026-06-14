@@ -1,18 +1,24 @@
-import { auth } from "@/auth"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { SettingsForm } from "@/components/dashboard/settings-form"
-import { redirect } from "next/navigation"
+import { generateSeoMetadata } from "@/app/lib/seo";
+import { auth } from "@/auth";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { SettingsForm } from "@/components/dashboard/settings-form";
+import { redirect } from "next/navigation";
 
-export const metadata = {
+export const metadata = generateSeoMetadata({
   title: "Settings",
   description: "Manage your account settings.",
-}
+});
 
 export default async function SettingsPage() {
-  const session = await auth()
+  const session = await auth();
 
   if (!session?.user) {
-    redirect("/login")
+    redirect("/login");
   }
 
   return (
@@ -28,13 +34,11 @@ export default async function SettingsPage() {
         <Card className="border-primary/10">
           <CardHeader>
             <CardTitle>Profile</CardTitle>
-            <CardDescription>
-              Update your personal details.
-            </CardDescription>
+            <CardDescription>Update your personal details.</CardDescription>
           </CardHeader>
           <SettingsForm user={session.user} />
         </Card>
       </div>
     </div>
-  )
+  );
 }

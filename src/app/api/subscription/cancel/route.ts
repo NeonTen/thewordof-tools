@@ -19,24 +19,42 @@ export async function POST(_req: Request) {
     });
 
     if (!sub || !sub.subscriptionId) {
-      return NextResponse.json({ error: "No active subscription found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "No active subscription found" },
+        { status: 404 },
+      );
     }
 
     if (sub.paymentProvider === "PAYPAL") {
       const res = await cancelPayPalSubscription(sub.subscriptionId);
-      if (res && 'error' in res && res.error) {
+      if (res && "error" in res && res.error) {
         const payPalError = res.error as { message?: string };
-        return NextResponse.json({ error: payPalError.message || "Failed to cancel PayPal subscription" }, { status: 400 });
+        return NextResponse.json(
+          {
+            error:
+              payPalError.message || "Failed to cancel PayPal subscription",
+          },
+          { status: 400 },
+        );
       }
     } else if (sub.paymentProvider === "RAZORPAY") {
       try {
         await razorpay.subscriptions.cancel(sub.subscriptionId);
       } catch (err) {
         const razorpayError = err as Error;
-        return NextResponse.json({ error: razorpayError.message || "Failed to cancel Razorpay subscription" }, { status: 400 });
+        return NextResponse.json(
+          {
+            error:
+              razorpayError.message || "Failed to cancel Razorpay subscription",
+          },
+          { status: 400 },
+        );
       }
     } else {
-      return NextResponse.json({ error: "Unsupported billing provider" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Unsupported billing provider" },
+        { status: 400 },
+      );
     }
 
     // Set status to cancelled in database
@@ -49,6 +67,9 @@ export async function POST(_req: Request) {
   } catch (error) {
     const mainError = error as Error;
     console.error("[CANCEL_SUBSCRIPTION_ERROR]", mainError);
-    return NextResponse.json({ error: mainError.message || "Internal Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: mainError.message || "Internal Error" },
+      { status: 500 },
+    );
   }
 }

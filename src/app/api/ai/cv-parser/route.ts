@@ -1,41 +1,47 @@
-import { google } from '@ai-sdk/google'
-import { generateObject } from 'ai'
-import { NextResponse } from 'next/server'
-import { auth } from '@/auth'
-import { z } from 'zod'
+import { google } from "@ai-sdk/google";
+import { generateObject } from "ai";
+import { NextResponse } from "next/server";
+import { auth } from "@/auth";
+import { z } from "zod";
 
-import { verifyAndDeductCredits } from '@/lib/credits'
+import { verifyAndDeductCredits } from "@/lib/credits";
 
-export const maxDuration = 30
-export const dynamic = "force-dynamic"
+export const maxDuration = 30;
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {
-    const session = await auth()
+    const session = await auth();
     if (!session?.user?.id) {
-      return new NextResponse("Authentication required", { status: 401 })
+      return new NextResponse("Authentication required", { status: 401 });
     }
 
-    const role = session?.user?.role
-    const isBusinessOrAdmin = role === "BUSINESS" || role === "ADMIN"
+    const role = session?.user?.role;
+    const isBusinessOrAdmin = role === "BUSINESS" || role === "ADMIN";
 
     if (!isBusinessOrAdmin) {
-      return new NextResponse("Unauthorized. Business or Admin tier required.", { status: 403 })
+      return new NextResponse(
+        "Unauthorized. Business or Admin tier required.",
+        { status: 403 },
+      );
     }
 
     // Deduct 3 credits for heavy CV parsing task
-    const deduction = await verifyAndDeductCredits(session.user.id, 3)
+    const deduction = await verifyAndDeductCredits(session.user.id, 3);
     if (!deduction.success) {
-      return new NextResponse("Quota Exceeded: You do not have enough credits.", { status: 403 })
+      return new NextResponse(
+        "Quota Exceeded: You do not have enough credits.",
+        { status: 403 },
+      );
     }
 
-    const { text } = await req.json()
+    const { text } = await req.json();
     if (!text || text.trim().length < 100) {
-      return NextResponse.json({ error: 'text_too_short' }, { status: 400 })
+      return NextResponse.json({ error: "text_too_short" }, { status: 400 });
     }
 
     const result = await generateObject({
-      model: google('gemini-2.5-flash'),
+      model: google("gemini-2.5-flash"),
       schema: z.object({
         name: z.string(),
         title: z.string(),
@@ -44,22 +50,28 @@ export async function POST(req: Request) {
         location: z.string(),
         summary: z.string(),
         skillsText: z.string(),
-        experience: z.array(z.object({
-          company: z.string(),
-          role: z.string(),
-          period: z.string(),
-          desc: z.string()
-        })),
-        education: z.array(z.object({
-          school: z.string(),
-          degree: z.string(),
-          period: z.string()
-        })),
-        projects: z.array(z.object({
-          title: z.string(),
-          link: z.string(),
-          desc: z.string()
-        }))
+        experience: z.array(
+          z.object({
+            company: z.string(),
+            role: z.string(),
+            period: z.string(),
+            desc: z.string(),
+          }),
+        ),
+        education: z.array(
+          z.object({
+            school: z.string(),
+            degree: z.string(),
+            period: z.string(),
+          }),
+        ),
+        projects: z.array(
+          z.object({
+            title: z.string(),
+            link: z.string(),
+            desc: z.string(),
+          }),
+        ),
       }),
       prompt: `You are an expert CV Parser.
 Extract professional info from this raw CV text, LinkedIn profile copy, or professional bio. 
@@ -69,12 +81,12 @@ Identify any notable key projects (e.g., LearningMole, ProfileTree) and populate
 
 Raw input text:
 ${text.substring(0, 30000)}
-`
-    })
+`,
+    });
 
-    return NextResponse.json(result.object)
+    return NextResponse.json(result.object);
   } catch (error) {
-    console.error("AI_CV_PARSER_ERROR", error)
-    return NextResponse.json({ error: 'parse_failed' }, { status: 500 })
+    console.error("AI_CV_PARSER_ERROR", error);
+    return NextResponse.json({ error: "parse_failed" }, { status: 500 });
   }
 }

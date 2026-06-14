@@ -14,16 +14,23 @@ export async function POST(req: Request) {
 
     const mappedPlan = plan === "PREMIUM" ? "PRO" : plan;
     const mappedInterval = interval === "year" ? "YEARLY" : "MONTHLY";
-    const planKey = `${mappedPlan}_${mappedInterval}` as keyof typeof SUBSCRIPTION_PLANS.razorpay;
+    const planKey =
+      `${mappedPlan}_${mappedInterval}` as keyof typeof SUBSCRIPTION_PLANS.razorpay;
     const planId = SUBSCRIPTION_PLANS.razorpay[planKey];
 
     if (!planId) {
-      return NextResponse.json({ error: "Invalid subscription plan selection" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid subscription plan selection" },
+        { status: 400 },
+      );
     }
 
     if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
       console.error("Razorpay keys are missing");
-      return NextResponse.json({ error: "Razorpay credentials not configured" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Razorpay credentials not configured" },
+        { status: 500 },
+      );
     }
 
     // Create subscription on Razorpay
@@ -35,14 +42,17 @@ export async function POST(req: Request) {
       notes: {
         userId: session.user.id,
         plan: plan,
-        interval: interval
-      }
+        interval: interval,
+      },
     });
 
     return NextResponse.json(subscription);
   } catch (error) {
     const err = error as Error;
     console.error("[RAZORPAY_CREATE_SUBSCRIPTION_ERROR]", err);
-    return NextResponse.json({ error: err.message || "Internal Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: err.message || "Internal Error" },
+      { status: 500 },
+    );
   }
 }

@@ -1,67 +1,85 @@
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { 
-  Palette
-} from "lucide-react"
+import { generateSeoMetadata } from "@/app/lib/seo";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Palette } from "lucide-react";
 
-export const metadata = {
+export const metadata = generateSeoMetadata({
   title: "Creative Design Palette & Harmony Tools | TheWordOf Tools",
-  description: "Free color theory validation, palette mixers, CSS gradient designers, and export format generators.",
-}
+  description:
+    "Free color theory validation, palette mixers, CSS gradient designers, and export format generators.",
+});
 
 const tools = [
   {
     title: "Color Contrast Checker",
-    description: "Check foreground and background color contrast against WCAG readability standards.",
+    description:
+      "Check foreground and background color contrast against WCAG readability standards.",
     href: "/tools/color-contrast",
     icon: Palette,
     pro: false,
   },
   {
     title: "Color Contrast Scanner",
-    description: "Scan any webpage URL to find element color combinations that fail WCAG readability contrast guidelines.",
+    description:
+      "Scan any webpage URL to find element color combinations that fail WCAG readability contrast guidelines.",
     href: "/tools/color-contrast-scanner",
     icon: Palette,
     pro: true,
   },
   {
     title: "Color Palette Generator",
-    description: "Generate mathematical color harmonies and export codes or images.",
+    description:
+      "Generate mathematical color harmonies and export codes or images.",
     href: "/tools/color-palette",
     icon: Palette,
     pro: false,
   },
   {
     title: "Gradient Generator",
-    description: "Browse, customize and export CSS / Tailwind code for premium gradients.",
+    description:
+      "Browse, customize and export CSS / Tailwind code for premium gradients.",
     href: "/tools/gradient-generator",
     icon: Palette,
     pro: false,
   },
   {
     title: "Gradient Palette Generator",
-    description: "Generate 5 coordinating harmonious gradients and copy CSS variables.",
+    description:
+      "Generate 5 coordinating harmonious gradients and copy CSS variables.",
     href: "/tools/gradient-palette",
     icon: Palette,
     pro: false,
   },
-]
+];
 
 export default function DesignPage() {
   return (
     <div className="flex flex-col gap-8 pb-16">
       <div>
-        <h1 className="text-3xl font-black tracking-tight">Design & Harmony Tools</h1>
+        <h1 className="text-3xl font-black tracking-tight">
+          Design & Harmony Tools
+        </h1>
         <p className="text-muted-foreground mt-2 text-base">
-          Validate WCAG accessibility parameters, extract mathematical color schemes, and design gradient palettes.
+          Validate WCAG accessibility parameters, extract mathematical color
+          schemes, and design gradient palettes.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tools.map((tool) => {
-          const Icon = tool.icon
+          const Icon = tool.icon;
           return (
-            <Link key={tool.href} href={tool.href} className="group block h-full">
+            <Link
+              key={tool.href}
+              href={tool.href}
+              className="group block h-full"
+            >
               <Card className="h-full border border-border/50 bg-card hover:bg-muted/30 transition-all duration-300 group-hover:border-primary/30 group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 <CardHeader className="flex flex-row items-center gap-4 space-y-0">
                   <div className="p-2.5 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
@@ -85,9 +103,9 @@ export default function DesignPage() {
                 </CardContent>
               </Card>
             </Link>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
