@@ -161,32 +161,32 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     container.style.position = "absolute"
     container.style.top = "0"
     container.style.left = "0"
-    container.style.width = "698px" // A4 content area at 96 DPI (595.28pt × 96/72)
-    container.style.padding = "0"
+    container.style.width = "595px" // Mirrors A4 page width (595.28pt) — jsPDF maps 1px = 1pt
+    container.style.padding = "36px" // Margins handled in container (36px = 36pt on PDF)
     container.style.boxSizing = "border-box"
     container.style.background = "#ffffff"
     container.style.color = "#222222"
     container.style.display = "block"
     container.style.overflow = "hidden"
-    container.style.zIndex = "99998" // Layer below the fullscreen loader overlay
+    container.style.zIndex = "99998"
 
     container.innerHTML = `
       <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body, div { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #222; line-height: 1.5; font-size: 16px; overflow-wrap: break-word; word-break: break-word; }
+        #pdf-render-container, #pdf-render-container div { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #222; line-height: 1.5; font-size: 11px; overflow-wrap: break-word; word-break: break-word; }
         h1, h2, h3, h4, h5, h6 { color: #1a1a1a; font-weight: 700; line-height: 1.3; }
-        h1 { font-size: 28px; margin-bottom: 6px; margin-top: 0; }
-        h2 { font-size: 21px; border-bottom: 1px solid #cccccc; padding-bottom: 3px; margin-top: 14px; margin-bottom: 6px; }
-        h3 { font-size: 18px; margin-top: 10px; margin-bottom: 4px; }
-        p { margin: 0 0 6px 0; font-size: 16px; text-align: left; }
-        ul, ol { margin: 0 0 6px 0; padding-left: 24px; }
+        h1 { font-size: 20px; margin-bottom: 4px; margin-top: 0; }
+        h2 { font-size: 15px; border-bottom: 1px solid #cccccc; padding-bottom: 2px; margin-top: 10px; margin-bottom: 4px; }
+        h3 { font-size: 13px; margin-top: 8px; margin-bottom: 3px; }
+        p { margin: 0 0 4px 0; font-size: 11px; text-align: left; }
+        ul, ol { margin: 0 0 4px 0; padding-left: 18px; }
         ul { list-style-type: disc; }
         ol { list-style-type: decimal; }
-        li { margin-bottom: 3px; font-size: 16px; }
+        li { margin-bottom: 2px; font-size: 11px; }
         a { color: #2563eb; text-decoration: none; }
-        hr { border: 0; border-top: 1px solid #e5e7eb; margin: 12px 0; }
-        table { border-collapse: collapse; width: 100%; margin-bottom: 10px; }
-        th, td { border: 1px solid #ddd; padding: 6px; text-align: left; font-size: 14px; }
+        hr { border: 0; border-top: 1px solid #e5e7eb; margin: 8px 0; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 8px; }
+        th, td { border: 1px solid #ddd; padding: 4px; text-align: left; font-size: 10px; }
         th { background-color: #f5f5f5; font-weight: bold; }
         strong { font-weight: 700; }
         em { font-style: italic; }
@@ -202,25 +202,22 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
         format: "a4"
       })
 
-      const pdfWidth = doc.internal.pageSize.getWidth() // 595.28 pt
-      const margin = 36 // 36pt = 0.5 inch margins
-
       await new Promise<void>((resolve, reject) => {
         doc.html(container, {
           callback: function (pdf) {
             pdf.save(filename.replace(/\.[^/.]+$/, "") + ".pdf")
             resolve()
           },
-          x: margin,
-          y: margin,
-          width: pdfWidth - (margin * 2), // Balanced margins on left/right
-          windowWidth: 698,
+          x: 0,
+          y: 0,
+          width: 595.28, // Full A4 page width — container padding provides margins
+          windowWidth: 595,
           autoPaging: "text",
           html2canvas: {
-            scale: 1, // 1:1 rendering — scale factor 523/698 = 0.75 matches px-to-pt ratio
+            scale: 1,
             useCORS: true,
             logging: false,
-            windowWidth: 698, // Match container width for consistent layout
+            windowWidth: 595, // Match container width exactly
             onclone: (clonedDoc) => {
               clonedDoc.body.style.margin = "0"
               clonedDoc.body.style.padding = "0"
