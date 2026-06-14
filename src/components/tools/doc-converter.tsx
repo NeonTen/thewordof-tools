@@ -261,12 +261,28 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
       if (file.type === "docx") {
         const mammoth = await import("mammoth")
         const result = await mammoth.convertToHtml({ arrayBuffer: file.content as ArrayBuffer })
-        const html = result.value
-          .replace(/\u00d8=\u00dc[^\s]*/g, "") // Phone emoji garble (Ø=Ü... variants)
-          .replace(/\u00d8&lt;/g, "")             // Globe emoji garble (HTML-escaped)
-          .replace(/\u00d8</g, "")                // Globe emoji garble (raw)
-          .replace(/\u00d8[^\s]*/g, "")           // Strip any remaining Ø-prefixed garble
-          .replace(/[\u0080-\u00ff]{2,}/g, "")   // Strip runs of Latin-1 supplement garble
+        // Clean garbled emoji/icon remnants using DOM-level text node cleanup
+        // (string regex can't reliably match because exact byte sequences vary per .docx)
+        const cleanDiv = document.createElement("div")
+        cleanDiv.innerHTML = result.value
+        const walker = document.createTreeWalker(cleanDiv, NodeFilter.SHOW_TEXT)
+        while (walker.nextNode()) {
+          const node = walker.currentNode
+          if (node.textContent) {
+            // Strip non-ASCII characters that are NOT embedded within words
+            // Garbled emoji remnants are standalone; legitimate accented chars (é, ñ) are mid-word
+            node.textContent = node.textContent.replace(/[^\x00-\x7F]+/g, (match, offset, str) => {
+              const charBefore = offset > 0 ? str[offset - 1] : ""
+              const charAfter = str[offset + match.length] || ""
+              // Keep if it's inside a word (letter on both sides)
+              if (/[a-zA-Z]/.test(charBefore) && /[a-zA-Z]/.test(charAfter)) {
+                return match
+              }
+              return "" // Strip standalone non-ASCII (garbled emojis, symbol font garbage)
+            })
+          }
+        }
+        const html = cleanDiv.innerHTML
 
         if (target === "txt") {
           const text = html.replace(/<[^>]+>/g, "\n").replace(/\n+/g, "\n")
