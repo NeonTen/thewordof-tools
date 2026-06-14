@@ -43,10 +43,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/tools/design/gradient-generator',
     '/tools/design/gradient-palette',
 
-    // Finance & Dev
-    '/tools/finance-dev',
-    '/tools/finance-dev/invoice-generator',
-    '/tools/finance-dev/report',
+    // Document Tools
+    '/tools/document-tools',
+    '/tools/document-tools/invoice-generator',
+    '/tools/document-tools/report',
 
     // Image & Code
     '/tools/image-code',
