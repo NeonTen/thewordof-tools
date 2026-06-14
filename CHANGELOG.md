@@ -1,9 +1,27 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## [1.1.6] - 2026-06-14
+
+### Added
+- **Document Converter**:
+  - Launched new tool to seamlessly convert document formats like PDF, DOCX, and TXT entirely in the browser.
+
+### Changed
+- **Navigation & Routing**:
+  - Reorganized sidebar navigation: Moved "Doc Converter" from "Image & Code" to "Document Tools".
+  - Renamed category "Finance & Dev" to "Document Tools" and updated related URLs to use `/tools/document-tools` prefix.
+  - Refactored `/tools/document-tools` page into a standalone category landing page instead of a filtered list.
+
+### Fixed
+- **Document Converter**:
+  - Fixed DOCX→PDF double-margin bugs, right-edge text clipping, and blank page rendering issues using nested wrapper visibility strategies.
+  - Switched to native jsPDF text rendering for TXT→PDF conversions.
+  - Fixed multi-page margin handling, page break bands, and resolved garbled emoji remnants using DOM-level text node cleanup.
+- **Links & SEO**:
+  - Cleaned up internal routing links pointing to legacy `/finance-dev` paths.
+  - Updated sitemap entries to reflect new `document-tools` routing structure.
 
 ## [1.1.5] - 2026-06-13
-
 ### Added
 - **AI Resume & CV Builder**:
   - Added 5 new premium templates: **Executive** (formal serif layout), **Minimalist Pro** (clean asymmetrical design), **Developer Pro** (indigo-themed grid details), **Metro Grid** (boxed structural dividers), and **Accent Left** (emerald side-accent layout).
