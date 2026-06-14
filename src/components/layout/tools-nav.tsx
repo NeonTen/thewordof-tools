@@ -45,7 +45,7 @@ const navGroups: NavGroup[] = [
       { title: "QR Code Gen",      href: "/tools/image-code/qr-code",          icon: QrCode },
       { title: "Code Minifier",    href: "/tools/image-code/code-minifier",    icon: FileCode },
       { title: "Text Difference",  href: "/tools/image-code/text-diff",        icon: Split },
-      { title: "Doc Converter",    href: "/tools/image-code/doc-converter",    icon: FileText },
+
     ],
   },
   {
@@ -66,11 +66,12 @@ const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "Finance & Dev",
+    label: "Document Tools",
     items: [
-      { title: "All Finance & Dev",href: "/tools/finance-dev",      icon: LayoutGrid },
-      { title: "Invoice Generator",href: "/tools/finance-dev/invoice-generator",icon: FileText },
-      { title: "Work Report",      href: "/tools/finance-dev/report",           icon: FileText },
+      { title: "All Document Tools",href: "/tools/document-tools",      icon: LayoutGrid },
+      { title: "Doc Converter",    href: "/tools/image-code/doc-converter",    icon: FileText },
+      { title: "Invoice Generator",href: "/tools/document-tools/invoice-generator",icon: FileText },
+      { title: "Work Report",      href: "/tools/document-tools/report",           icon: FileText },
     ],
   },
   {
@@ -120,7 +121,7 @@ export function ToolsNav() {
     "All Tools": true,
     "Image & Code": true,
     "Calculators": false,
-    "Finance & Dev": false,
+    "Document Tools": false,
     "Design": false,
     "Technical SEO": true,
     "AI Tools": false,
