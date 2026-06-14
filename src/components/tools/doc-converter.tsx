@@ -119,58 +119,76 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     URL.revokeObjectURL(url)
   }
 
+  const downloadPdfFromText = async (text: string, filename: string) => {
+    const { jsPDF } = await import("jspdf")
+    const doc = new jsPDF({
+      orientation: "portrait",
+      unit: "pt",
+      format: "a4"
+    })
+
+    const pageWidth = doc.internal.pageSize.getWidth()   // 595.28 pt
+    const pageHeight = doc.internal.pageSize.getHeight()  // 841.89 pt
+    const margin = 72  // 1 inch margins
+    const usableWidth = pageWidth - margin * 2
+    const fontSize = 12
+    const lineHeight = 18  // 1.5x font size
+
+    doc.setFont("helvetica", "normal")
+    doc.setFontSize(fontSize)
+
+    const lines = doc.splitTextToSize(text, usableWidth)
+    let y = margin + fontSize // start baseline below top margin
+
+    for (let i = 0; i < lines.length; i++) {
+      if (y + lineHeight > pageHeight - margin) {
+        doc.addPage()
+        y = margin + fontSize
+      }
+      doc.text(lines[i], margin, y)
+      y += lineHeight
+    }
+
+    doc.save(filename.replace(/\.[^/.]+$/, "") + ".pdf")
+  }
+
   const downloadPdf = async (htmlContent: string, filename: string) => {
     const { jsPDF } = await import("jspdf")
     const html2canvas = (await import("html2canvas")).default
 
-    // Create wrapper that is completely hidden (0x0 overflow hidden) in the real DOM
-    const wrapper = document.createElement("div")
-    wrapper.id = "pdf-render-wrapper"
-    wrapper.style.position = "fixed"
-    wrapper.style.top = "0"
-    wrapper.style.left = "0"
-    wrapper.style.width = "0"
-    wrapper.style.height = "0"
-    wrapper.style.overflow = "hidden"
-    wrapper.style.pointerEvents = "none"
-    wrapper.style.zIndex = "-9999"
-
-    // Create container with full design styling
     const container = document.createElement("div")
     container.id = "pdf-render-container"
+    container.style.position = "absolute"
+    container.style.top = "0"
+    container.style.left = "0"
     container.style.width = "794px" // A4 width at 96 DPI
     container.style.padding = "48px"
     container.style.boxSizing = "border-box"
     container.style.background = "#ffffff"
-    container.style.color = "#000000"
-    container.style.fontFamily = "Arial, sans-serif"
-    container.style.fontSize = "14px"
-    container.style.lineHeight = "1.6"
+    container.style.color = "#1f2937"
     container.style.display = "block"
+    container.style.zIndex = "99998" // Layer below the fullscreen loader overlay
 
     container.innerHTML = `
       <style>
-        h1, h2, h3, h4, h5, h6 { font-weight: bold; margin-top: 1.2em; margin-bottom: 0.6em; color: #111111; line-height: 1.2; }
-        h1 { font-size: 24px; border-bottom: 1.5px solid #333333; padding-bottom: 6px; }
-        h2 { font-size: 18px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
-        h3 { font-size: 15px; }
-        p { margin-top: 0; margin-bottom: 1em; }
-        ul, ol { margin-top: 0; margin-bottom: 1em; padding-left: 24px; list-style-position: outside; }
-        li { margin-bottom: 0.4em; }
-        a { color: #2563eb; text-decoration: underline; }
-        table { border-collapse: collapse; width: 100%; margin-bottom: 1.2em; }
-        th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-size: 13px; }
-        th { background-color: #f8fafc; font-weight: bold; }
-        strong { font-weight: bold; }
-        em { font-style: italic; }
-        blockquote { border-left: 4px solid #cbd5e1; padding-left: 16px; margin: 0 0 1em 0; color: #475569; font-style: italic; }
-        pre { background: #f1f5f9; padding: 12px; border-radius: 6px; overflow-x: auto; font-family: monospace; font-size: 13px; margin-bottom: 1em; }
-        code { font-family: monospace; background: #f1f5f9; padding: 2px 4px; border-radius: 4px; font-size: 13px; }
+        * { box-sizing: border-box; }
+        body, div { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1f2937; line-height: 1.5; }
+        h1, h2, h3, h4, h5, h6 { color: #1e3a8a; font-weight: 700; margin-top: 1.2em; margin-bottom: 0.5em; line-height: 1.2; }
+        h1 { font-size: 26px; border-bottom: 2px solid #1e3a8a; padding-bottom: 8px; margin-top: 0; }
+        h2 { font-size: 18px; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; margin-top: 1.5em; }
+        h3 { font-size: 14px; margin-top: 1.2em; }
+        p { margin-top: 0; margin-bottom: 0.8em; font-size: 13px; text-align: justify; }
+        ul, ol { margin-top: 0; margin-bottom: 0.8em; padding-left: 20px; }
+        li { margin-bottom: 0.3em; font-size: 13px; }
+        a { color: #2563eb; text-decoration: none; }
+        hr { border: 0; border-top: 1px solid #e5e7eb; margin: 1.5em 0; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 1em; }
+        th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; font-size: 12px; }
+        th { background-color: #f9fafb; font-weight: bold; }
       </style>
       <div>${htmlContent}</div>
     `
-    wrapper.appendChild(container)
-    document.body.appendChild(wrapper)
+    document.body.appendChild(container)
 
     try {
       const doc = new jsPDF({
@@ -194,22 +212,14 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
           windowWidth: 794,
           autoPaging: "text",
           html2canvas: {
-            scale: 1,
+            scale: 1, // 1:1 rendering to match jsPDF width calculations
             useCORS: true,
             logging: false,
-            windowWidth: 794, // Force same responsive breakpoint
+            windowWidth: 794, // Force standard responsive breakpoint
             onclone: (clonedDoc) => {
-              // Clean body styles on the clone to prevent layout shifts
               clonedDoc.body.style.margin = "0"
               clonedDoc.body.style.padding = "0"
               clonedDoc.body.style.overflow = "visible"
-              
-              const clonedWrapper = clonedDoc.getElementById("pdf-render-wrapper")
-              if (clonedWrapper) {
-                clonedWrapper.style.width = "794px"
-                clonedWrapper.style.height = "auto"
-                clonedWrapper.style.overflow = "visible"
-              }
             }
           }
         })
@@ -233,7 +243,7 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
       }
       doc.save(filename.replace(/\.[^/.]+$/, "") + ".pdf")
     } finally {
-      document.body.removeChild(wrapper)
+      document.body.removeChild(container)
     }
   }
 
@@ -247,6 +257,10 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
         const mammoth = await import("mammoth")
         const result = await mammoth.convertToHtml({ arrayBuffer: file.content as ArrayBuffer })
         const html = result.value
+          .replace(/Ø=Üª/g, "📞")
+          .replace(/Ø&lt;/g, "🌐")
+          .replace(/Ø</g, "🌐")
+          .replace(/Ø/g, "") // Clean any leftover lone corrupted symbol indicators
 
         if (target === "txt") {
           const text = html.replace(/<[^>]+>/g, "\n").replace(/\n+/g, "\n")
@@ -285,20 +299,13 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
       } else if (file.type === "txt" || file.type === "md") {
         const text = new TextDecoder().decode(file.content as ArrayBuffer)
         if (target === "pdf") {
-          let htmlContent = ""
           if (file.type === "md") {
             const { marked } = await import("marked")
-            htmlContent = await marked.parse(text)
+            const htmlContent = await marked.parse(text)
+            await downloadPdf(htmlContent, file.name)
           } else {
-            const escaped = text
-              .replace(/&/g, "&amp;")
-              .replace(/</g, "&lt;")
-              .replace(/>/g, "&gt;")
-              .replace(/"/g, "&quot;")
-              .replace(/'/g, "&#039;")
-            htmlContent = escaped.split("\n").map(line => `<p style="margin: 0 0 4px 0; min-height: 1em; white-space: pre-wrap;">${line || "&nbsp;"}</p>`).join("")
+            await downloadPdfFromText(text, file.name)
           }
-          await downloadPdf(htmlContent, file.name)
         } else if (target === "docx") {
           downloadDocx(text, file.name)
         }
@@ -314,6 +321,12 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
 
   return (
     <div className="grid gap-6 lg:grid-cols-12">
+      {converting && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[99999] flex flex-col items-center justify-center gap-4">
+          <Loader2 className="h-10 w-10 animate-spin text-primary" />
+          <p className="font-bold text-lg">Generating PDF document...</p>
+        </div>
+      )}
       <div className="lg:col-span-12">
         <div className="bg-card border border-border p-6 rounded-2xl shadow-sm space-y-6">
           {!file ? (
