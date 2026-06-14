@@ -161,30 +161,35 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
     container.style.position = "absolute"
     container.style.top = "0"
     container.style.left = "0"
-    container.style.width = "794px" // A4 width at 96 DPI
-    container.style.padding = "48px"
+    container.style.width = "698px" // A4 content area at 96 DPI (595.28pt × 96/72)
+    container.style.padding = "0"
     container.style.boxSizing = "border-box"
     container.style.background = "#ffffff"
-    container.style.color = "#1f2937"
+    container.style.color = "#222222"
     container.style.display = "block"
+    container.style.overflow = "hidden"
     container.style.zIndex = "99998" // Layer below the fullscreen loader overlay
 
     container.innerHTML = `
       <style>
-        * { box-sizing: border-box; }
-        body, div { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1f2937; line-height: 1.5; }
-        h1, h2, h3, h4, h5, h6 { color: #1e3a8a; font-weight: 700; margin-top: 1.2em; margin-bottom: 0.5em; line-height: 1.2; }
-        h1 { font-size: 26px; border-bottom: 2px solid #1e3a8a; padding-bottom: 8px; margin-top: 0; }
-        h2 { font-size: 18px; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; margin-top: 1.5em; }
-        h3 { font-size: 14px; margin-top: 1.2em; }
-        p { margin-top: 0; margin-bottom: 0.8em; font-size: 13px; text-align: justify; }
-        ul, ol { margin-top: 0; margin-bottom: 0.8em; padding-left: 20px; }
-        li { margin-bottom: 0.3em; font-size: 13px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body, div { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #222; line-height: 1.5; font-size: 16px; overflow-wrap: break-word; word-break: break-word; }
+        h1, h2, h3, h4, h5, h6 { color: #1a1a1a; font-weight: 700; line-height: 1.3; }
+        h1 { font-size: 28px; margin-bottom: 6px; margin-top: 0; }
+        h2 { font-size: 21px; border-bottom: 1px solid #cccccc; padding-bottom: 3px; margin-top: 14px; margin-bottom: 6px; }
+        h3 { font-size: 18px; margin-top: 10px; margin-bottom: 4px; }
+        p { margin: 0 0 6px 0; font-size: 16px; text-align: left; }
+        ul, ol { margin: 0 0 6px 0; padding-left: 24px; }
+        ul { list-style-type: disc; }
+        ol { list-style-type: decimal; }
+        li { margin-bottom: 3px; font-size: 16px; }
         a { color: #2563eb; text-decoration: none; }
-        hr { border: 0; border-top: 1px solid #e5e7eb; margin: 1.5em 0; }
-        table { border-collapse: collapse; width: 100%; margin-bottom: 1em; }
-        th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; font-size: 12px; }
-        th { background-color: #f9fafb; font-weight: bold; }
+        hr { border: 0; border-top: 1px solid #e5e7eb; margin: 12px 0; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 10px; }
+        th, td { border: 1px solid #ddd; padding: 6px; text-align: left; font-size: 14px; }
+        th { background-color: #f5f5f5; font-weight: bold; }
+        strong { font-weight: 700; }
+        em { font-style: italic; }
       </style>
       <div>${htmlContent}</div>
     `
@@ -209,13 +214,13 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
           x: margin,
           y: margin,
           width: pdfWidth - (margin * 2), // Balanced margins on left/right
-          windowWidth: 794,
+          windowWidth: 698,
           autoPaging: "text",
           html2canvas: {
-            scale: 1, // 1:1 rendering to match jsPDF width calculations
+            scale: 1, // 1:1 rendering — scale factor 523/698 = 0.75 matches px-to-pt ratio
             useCORS: true,
             logging: false,
-            windowWidth: 794, // Force standard responsive breakpoint
+            windowWidth: 698, // Match container width for consistent layout
             onclone: (clonedDoc) => {
               clonedDoc.body.style.margin = "0"
               clonedDoc.body.style.padding = "0"
@@ -257,10 +262,10 @@ export function DocConverter({ role = "USER" }: { role?: string }) {
         const mammoth = await import("mammoth")
         const result = await mammoth.convertToHtml({ arrayBuffer: file.content as ArrayBuffer })
         const html = result.value
-          .replace(/Ø=Üª/g, "📞")
+          .replace(/Ø=Ü[^\s]*/g, "📞") // Phone emoji garble (flexible pattern)
           .replace(/Ø&lt;/g, "🌐")
           .replace(/Ø</g, "🌐")
-          .replace(/Ø/g, "") // Clean any leftover lone corrupted symbol indicators
+          .replace(/Ø[^\s]*/g, "") // Strip any remaining Ø-prefixed garble
 
         if (target === "txt") {
           const text = html.replace(/<[^>]+>/g, "\n").replace(/\n+/g, "\n")
