@@ -64,10 +64,11 @@ const CATEGORIES: Record<string, { name: string; tools: Array<{ name: string; hr
       { name: "Text Diff Tool", href: "/tools/image-code/text-diff", desc: "Compare two pieces of text side-by-side to highlight additions and removals." }
     ]
   },
-  "finance-dev": {
-    name: "Finance & Dev Tools",
+  "document-tools": {
+    name: "Document Tools",
     tools: [
-      { name: "Invoice Generator", href: "/tools/finance-dev/invoice-generator", desc: "Create, customize, and export professional invoice receipts." }
+      { name: "Invoice Generator", href: "/tools/document-tools/invoice-generator", desc: "Create, customize, and export professional invoice receipts." },
+      { name: "Work Report Generator", href: "/tools/document-tools/report", desc: "Generate professional work reports and daily trackers." }
     ]
   }
 }

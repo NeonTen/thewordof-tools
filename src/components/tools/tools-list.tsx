@@ -13,6 +13,7 @@ import {
   Code, 
   Cpu, 
   FileText, 
+  FileUp,
   Sparkles, 
   Brain, 
   PenLine, 
@@ -52,10 +53,11 @@ const CATEGORIES: Category[] = [
     ]
   },
   {
-    title: "Finance & Dev",
+    title: "Document Tools",
     tools: [
-      { title: "Invoice Generator", desc: "Create professional PDF invoices in seconds.",                         icon: FileText,   href: "/tools/finance-dev/invoice-generator", pro: true },
-      { title: "Work Report Generator", desc: "Compile daily task trackers and print matching standard A4 PDFs.", icon: FileText,   href: "/tools/finance-dev/report",            pro: false },
+      { title: "Doc Converter",     desc: "Convert document formats like PDF, DOCX, and TXT seamlessly.",         icon: FileText,     href: "/tools/documents/converter",         pro: false },
+      { title: "Invoice Generator", desc: "Create professional PDF invoices in seconds.",                         icon: FileText,   href: "/tools/document-tools/invoice-generator", pro: true },
+      { title: "Work Report Generator", desc: "Compile daily task trackers and print matching standard A4 PDFs.", icon: FileText,   href: "/tools/document-tools/report",            pro: false },
     ]
   },
   {
