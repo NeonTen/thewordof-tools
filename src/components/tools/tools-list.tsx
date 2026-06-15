@@ -57,6 +57,8 @@ const CATEGORIES: Category[] = [
     tools: [
       { title: "Doc Converter",     desc: "Convert document formats like PDF, DOCX, and TXT seamlessly.",         icon: FileText,     href: "/tools/document-tools/doc-converter",         pro: false },
       { title: "Invoice Generator", desc: "Create professional PDF invoices in seconds.",                         icon: FileText,   href: "/tools/document-tools/invoice-generator", pro: true },
+      { title: "PDF Merger",        desc: "Merge multiple PDFs into one or extract specific pages.",              icon: FileText,   href: "/tools/document-tools/pdf-merger",        pro: true },
+      { title: "PDF Watermarker",   desc: "Apply custom text or image watermarks to all pages of a PDF.",         icon: FileText,   href: "/tools/document-tools/pdf-watermark",     pro: true },
       { title: "Work Report Generator", desc: "Compile daily task trackers and print matching standard A4 PDFs.", icon: FileText,   href: "/tools/document-tools/report",            pro: false },
     ]
   },

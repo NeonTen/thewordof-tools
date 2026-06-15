@@ -71,6 +71,8 @@ const navGroups: NavGroup[] = [
       { title: "All Document Tools",href: "/tools/document-tools",      icon: LayoutGrid },
       { title: "Doc Converter",    href: "/tools/document-tools/doc-converter",    icon: FileText },
       { title: "Invoice Generator",href: "/tools/document-tools/invoice-generator",icon: FileText },
+      { title: "PDF Merger",       href: "/tools/document-tools/pdf-merger",       icon: FileText },
+      { title: "PDF Watermarker",  href: "/tools/document-tools/pdf-watermark",    icon: FileText },
       { title: "Work Report",      href: "/tools/document-tools/report",           icon: FileText },
     ],
   },

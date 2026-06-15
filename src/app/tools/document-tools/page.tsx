@@ -31,6 +31,20 @@ const tools = [
     pro: true,
   },
   {
+    title: "PDF Merger",
+    description: "Merge multiple PDFs into one or extract specific pages securely.",
+    href: "/tools/document-tools/pdf-merger",
+    icon: Files,
+    pro: true,
+  },
+  {
+    title: "PDF Watermarker",
+    description: "Apply custom text or image watermarks to all pages of a PDF.",
+    href: "/tools/document-tools/pdf-watermark",
+    icon: Files,
+    pro: true,
+  },
+  {
     title: "Work Report Generator",
     description:
       "Compile daily task trackers and print matching standard A4 PDFs.",

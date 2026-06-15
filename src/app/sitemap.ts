@@ -47,6 +47,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/document-tools",
     "/tools/document-tools/doc-converter",
     "/tools/document-tools/invoice-generator",
+    "/tools/document-tools/pdf-merger",
+    "/tools/document-tools/pdf-watermark",
     "/tools/document-tools/report",
 
     // Image & Code
