@@ -45,6 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Document Tools
     "/tools/document-tools",
+    "/tools/document-tools/doc-converter",
     "/tools/document-tools/invoice-generator",
     "/tools/document-tools/report",
 

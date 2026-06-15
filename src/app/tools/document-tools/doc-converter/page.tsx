@@ -16,8 +16,8 @@ export default async function DocConverterPage() {
     <div className="flex flex-col gap-8">
       <div>
         <ToolHeader
-          category="Image & Code"
-          categoryHref="/tools/image-code"
+          category="Document Tools"
+          categoryHref="/tools/document-tools"
           title="Document Converter"
         />
         <p className="text-muted-foreground mt-2">
