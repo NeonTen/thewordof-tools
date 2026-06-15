@@ -69,7 +69,7 @@ const navGroups: NavGroup[] = [
     label: "Document Tools",
     items: [
       { title: "All Document Tools",href: "/tools/document-tools",      icon: LayoutGrid },
-      { title: "Doc Converter",    href: "/tools/image-code/doc-converter",    icon: FileText },
+      { title: "Doc Converter",    href: "/tools/document-tools/doc-converter",    icon: FileText },
       { title: "Invoice Generator",href: "/tools/document-tools/invoice-generator",icon: FileText },
       { title: "Work Report",      href: "/tools/document-tools/report",           icon: FileText },
     ],

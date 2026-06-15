@@ -19,7 +19,7 @@ const tools = [
   {
     title: "Doc Converter",
     description: "Convert document formats like PDF, DOCX, and TXT seamlessly.",
-    href: "/tools/image-code/doc-converter",
+    href: "/tools/document-tools/doc-converter",
     icon: Files,
     pro: false,
   },
