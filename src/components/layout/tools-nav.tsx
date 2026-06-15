@@ -130,7 +130,7 @@ export function ToolsNav() {
   // Auto-expand group that contains active link
   useEffect(() => {
     const activeGroup = navGroups.find(group => 
-      group.items.some(item => path === item.href || (item.href !== "/tools" && path.startsWith(item.href)))
+      group.items.some(item => path === item.href || (item.href !== "/tools" && path.startsWith(item.href + "/")))
     )
     if (activeGroup) {
       setOpenGroups(prev => ({ ...prev, [activeGroup.label]: true }))
@@ -178,7 +178,8 @@ export function ToolsNav() {
               <div className="mt-1 space-y-0.5 pl-1 animate-in slide-in-from-top-1 duration-150">
                 {group.items.map((item) => {
                   const Icon = item.icon
-                  const isActive = path === item.href || (item.href !== "/tools" && path.startsWith(item.href))
+                  const isCategoryIndex = item.title.startsWith("All ")
+                  const isActive = path === item.href || (!isCategoryIndex && item.href !== "/tools" && path.startsWith(item.href + "/"))
                   return (
                     <Link
                       key={item.href}
