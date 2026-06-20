@@ -1,0 +1,106 @@
+import {
+  Image as ImageIcon,
+  Zap,
+  FileCode,
+  Split,
+  Calculator,
+  Code,
+  Cpu,
+  FileText,
+  Sparkles,
+  PenLine,
+  Search,
+  Brain,
+  LayoutGrid,
+  QrCode,
+  Palette,
+  Type
+} from "lucide-react"
+
+export type NavItem = { title: string; href: string; icon: any }
+export type NavGroup = { label: string; items: NavItem[] }
+
+export const navGroups: NavGroup[] = [
+  {
+    label: "All Tools",
+    items: [
+      { title: "All Tools", href: "/tools", icon: LayoutGrid },
+    ],
+  },
+  {
+    label: "Image & Code",
+    items: [
+      { title: "All Image & Code",  href: "/tools/image-code",      icon: LayoutGrid },
+      { title: "Image Converter",  href: "/tools/image-code/image-converter",  icon: ImageIcon },
+      { title: "SVG Compressor",   href: "/tools/image-code/svg-compressor",   icon: Zap },
+      { title: "QR Code Gen",      href: "/tools/image-code/qr-code",          icon: QrCode },
+      { title: "Code Minifier",    href: "/tools/image-code/code-minifier",    icon: FileCode },
+      { title: "Text Difference",  href: "/tools/image-code/text-diff",        icon: Split },
+
+    ],
+  },
+  {
+    label: "Calculators",
+    items: [
+      { title: "All Calculators",  href: "/tools/calculators",      icon: Calculator },
+      { title: "EMI Calculator",    href: "/tools/calculators/emi",   icon: Calculator },
+      { title: "SIP / Mutual Fund", href: "/tools/calculators/sip",   icon: Calculator },
+      { title: "Compound Interest", href: "/tools/calculators/compound-interest", icon: Calculator },
+      { title: "Salary to Hourly",  href: "/tools/calculators/salary-to-hourly",  icon: Calculator },
+      { title: "GST Calculator",    href: "/tools/calculators/gst-calculator",    icon: Calculator },
+      { title: "BMI Calculator",    href: "/tools/calculators/bmi",   icon: Calculator },
+      { title: "Aspect Ratio",      href: "/tools/calculators/aspect-ratio",     icon: Calculator },
+      { title: "Line-height",       href: "/tools/calculators/line-height",      icon: Calculator },
+      { title: "PX to REM",         href: "/tools/calculators/px-to-rem",        icon: Calculator },
+      { title: "Word Counter",      href: "/tools/calculators/word-counter",      icon: Calculator },
+      { title: "Color Converter",   href: "/tools/calculators/color-converter",   icon: Calculator },
+    ],
+  },
+  {
+    label: "Document Tools",
+    items: [
+      { title: "All Document Tools",href: "/tools/document-tools",      icon: LayoutGrid },
+      { title: "Doc Converter",    href: "/tools/document-tools/doc-converter",    icon: FileText },
+      { title: "Invoice Generator",href: "/tools/document-tools/invoice-generator",icon: FileText },
+      { title: "PDF Merger",       href: "/tools/document-tools/pdf-merger",       icon: FileText },
+      { title: "PDF Watermarker",  href: "/tools/document-tools/pdf-watermark",    icon: FileText },
+      { title: "Work Report",      href: "/tools/document-tools/report",           icon: FileText },
+    ],
+  },
+  {
+    label: "Design",
+    items: [
+      { title: "All Design Tools", href: "/tools/design",           icon: LayoutGrid },
+      { title: "Color Contrast",   href: "/tools/design/color-contrast",   icon: Palette },
+      { title: "Contrast Scanner", href: "/tools/design/color-contrast-scanner", icon: Palette },
+      { title: "Color Palette",    href: "/tools/design/color-palette",    icon: Palette },
+      { title: "Gradient Gen",     href: "/tools/design/gradient-generator", icon: Palette },
+      { title: "Gradient Palette", href: "/tools/design/gradient-palette", icon: Palette },
+    ],
+  },
+  {
+    label: "Technical SEO",
+    items: [
+      { title: "All Technical SEO",href: "/tools/technical-seo",    icon: LayoutGrid },
+      { title: "Schema Generator", href: "/tools/technical-seo/schema-generator", icon: Code },
+      { title: "Robots.txt Gen",   href: "/tools/technical-seo/robots-generator", icon: FileText },
+      { title: "Sitemap Validator",href: "/tools/technical-seo/sitemap-validator",icon: ImageIcon },
+      { title: "LLMS.TXT Gen",     href: "/tools/technical-seo/llms-txt",         icon: Cpu },
+      { title: "SERP Previewer",   href: "/tools/technical-seo/serp-preview",     icon: Search },
+      { title: "Keyword Density",  href: "/tools/technical-seo/keyword-density",  icon: FileText },
+      { title: "SEO Readability",  href: "/tools/technical-seo/readability-grader",icon: Type },
+      { title: "Broken Links",     href: "/tools/technical-seo/broken-links",     icon: Zap },
+    ],
+  },
+  {
+    label: "AI Tools",
+    items: [
+      { title: "All AI Tools",     href: "/tools/ai-tools",         icon: LayoutGrid },
+      { title: "Product Desc Gen", href: "/tools/ai-tools/product-description", icon: Sparkles },
+      { title: "Caption Gen",      href: "/tools/ai-tools/caption-generator",icon: Sparkles },
+      { title: "Prompt Gen",       href: "/tools/ai-tools/prompt-generator", icon: Brain },
+      { title: "CV Builder",       href: "/tools/ai-tools/cv-builder",       icon: PenLine },
+      { title: "SEO Generator",    href: "/tools/ai-tools/seo-generator",    icon: Search },
+    ],
+  },
+]

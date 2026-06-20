@@ -1,6 +1,6 @@
 import { google } from "@ai-sdk/google";
 import { streamText } from "ai";
-import { navGroups } from "@/components/layout/tools-nav";
+import { navGroups } from "@/config/tools";
 
 export const maxDuration = 30;
 
