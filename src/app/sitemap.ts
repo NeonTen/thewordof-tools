@@ -39,6 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Design
     "/tools/design",
     "/tools/design/color-contrast",
+    "/tools/design/color-contrast-scanner",
     "/tools/design/color-palette",
     "/tools/design/gradient-generator",
     "/tools/design/gradient-palette",
