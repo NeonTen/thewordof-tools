@@ -35,7 +35,7 @@ export default async function Home() {
       <main className="flex-1">
         {/* Scarcity Banner */}
         <div className="bg-gradient-to-r from-amber-500 to-orange-600 text-white py-2 text-center text-sm font-bold shadow-md relative z-10 animate-in slide-in-from-top duration-500">
-          🔥 Limited spots for early access — Join before the beta closes in 3 days!
+          🎉 Launch Special: Get 50% off lifetime access for the first 100 users!
         </div>
 
         {/* Hero Section */}
