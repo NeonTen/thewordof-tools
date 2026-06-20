@@ -51,7 +51,7 @@ export default async function Home() {
               <Sparkles className="h-3 w-3" /> The Ultimate AI Productivity
               Toolkit
             </div>
-            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+            <h1 className="text-5xl sm:text-7xl font-black tracking-tight leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
               Boost Your Productivity 10x <br />
               <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
                 All AI Tools, Zero Tab Hunting
