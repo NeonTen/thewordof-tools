@@ -26,10 +26,10 @@ import {
 import { cn } from "@/lib/utils"
 import { useSession } from "next-auth/react"
 
-type NavItem = { title: string; href: string; icon: React.ElementType }
-type NavGroup = { label: string; items: NavItem[] }
+export type NavItem = { title: string; href: string; icon: React.ElementType }
+export type NavGroup = { label: string; items: NavItem[] }
 
-const navGroups: NavGroup[] = [
+export const navGroups: NavGroup[] = [
   {
     label: "All Tools",
     items: [
