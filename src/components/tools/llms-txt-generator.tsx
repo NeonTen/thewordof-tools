@@ -32,10 +32,7 @@ export function LlmsTxtGenerator({
   const [formData, setFormData] = useState({
     brandName: "",
     description: "",
-    sitemapUrl: "",
-    contactInfo: "",
-    documentationUrls: "",
-    apiUrls: ""
+    rawUrls: ""
   })
 
   const [output, setOutput] = useState("")
@@ -138,39 +135,17 @@ export function LlmsTxtGenerator({
                     onChange={(e) => setFormData({...formData, description: e.target.value})}
                   />
                 </div>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>Sitemap URL</Label>
-                    <Input 
-                      placeholder="https://example.com/sitemap.xml" 
-                      value={formData.sitemapUrl}
-                      onChange={(e) => setFormData({...formData, sitemapUrl: e.target.value})}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Contact Info</Label>
-                    <Input 
-                      placeholder="email@example.com" 
-                      value={formData.contactInfo}
-                      onChange={(e) => setFormData({...formData, contactInfo: e.target.value})}
-                    />
-                  </div>
-                </div>
                 <div className="space-y-2">
-                  <Label>Documentation URLs (Optional)</Label>
-                  <Input 
-                    placeholder="https://docs.example.com" 
-                    value={formData.documentationUrls}
-                    onChange={(e) => setFormData({...formData, documentationUrls: e.target.value})}
+                  <Label>Important Links (URLs)</Label>
+                  <Textarea 
+                    placeholder="Paste all your important URLs here (Sitemap, Docs, API, Contact, etc.). The AI will automatically categorize and format them into the correct llms.txt sections!"
+                    rows={8}
+                    value={formData.rawUrls}
+                    onChange={(e) => setFormData({...formData, rawUrls: e.target.value})}
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label>API Endpoints (Optional)</Label>
-                  <Input 
-                    placeholder="https://api.example.com/v1" 
-                    value={formData.apiUrls}
-                    onChange={(e) => setFormData({...formData, apiUrls: e.target.value})}
-                  />
+                  <p className="text-[10px] text-muted-foreground font-semibold">
+                    You don't need to categorize them! Just paste raw links, and our AI will organize them into standard `##` sections (e.g. Getting Started, API Reference, Optional) per the llmstxt.org specification.
+                  </p>
                 </div>
 
                 <Button type="submit" className="w-full h-12 gap-2 mt-4 font-bold rounded-xl shadow-lg shadow-primary/20" disabled={isLoading || limitReached}>

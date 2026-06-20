@@ -19,10 +19,7 @@ export async function POST(req: Request) {
     const {
       brandName,
       description,
-      sitemapUrl,
-      contactInfo,
-      documentationUrls,
-      apiUrls,
+      rawUrls,
     } = body;
 
     if (!brandName || !description) {
@@ -38,25 +35,21 @@ export async function POST(req: Request) {
       );
     }
 
-    const prompt = `You are an AI SEO expert. Generate a professional llms.txt file for the following website.
+    const prompt = `You are an AI SEO expert. Generate a professional llms.txt file strictly following the official llmstxt.org specification for the following website.
+
     Brand Name: ${brandName}
     Description: ${description}
-    Sitemap: ${sitemapUrl || "Not provided"}
-    Contact: ${contactInfo || "Not provided"}
-    Docs: ${documentationUrls || "Not provided"}
-    API: ${apiUrls || "Not provided"}
-    
-    The llms.txt format should follow these rules:
-    1. Start with a # Title (Brand Name)
-    2. Provide a brief summary
-    3. Use > for key information/metadata
-    4. List sections like Documentation, API, and important links as markdown links.
-    5. Keep it concise and machine-readable.
-    
-    Output ONLY the content of the llms.txt file.`;
+    Raw URLs: ${rawUrls || "None provided"}
+
+    The llms.txt format MUST strictly follow these rules:
+    1. The very first line MUST be an H1 header with the brand name (e.g. # ${brandName}).
+    2. The second block MUST be a blockquote (> ) containing a concise 1-2 sentence summary of the website, condensed from the Description.
+    3. Categorize the Raw URLs into appropriate H2 (##) sections (e.g. ## Getting Started, ## API Reference, ## Documentation, ## Optional).
+    4. Format all URLs as markdown lists with a brief descriptive name and optional note: - [Link Name](URL): Brief note explaining what this link is for.
+    5. Do not include introductory text, conversational filler, or wrap the response in markdown code blocks (\`\`\`markdown). Output ONLY the raw markdown content.`;
 
     const result = streamText({
-      model: google("gemini-2.5-flash"),
+      model: google("gemini-1.5-flash-latest"),
       prompt,
     });
 
