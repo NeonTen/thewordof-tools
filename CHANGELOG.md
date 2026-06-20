@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.1.7] - 2026-06-21
+
+### Added
+- **AI Chatbot**:
+  - Implemented a fully functional floating AI assistant to help users navigate tools.
+  - Added auto-scroll to latest messages and auto-send quick reply functionalities.
+  - Upgraded the language model to `gemini-1.5-flash-latest`.
+  - Made the bot dynamically aware of all available site tools.
+- **Document Tools**:
+  - Launched PDF Merger and PDF Watermarker tools.
+
+### Changed
+- **Pricing & Marketing**:
+  - Redesigned landing page UI/UX to improve conversion and readability.
+  - Updated hero banner text to highlight a "50% off lifetime access for the first 100 users" special.
+  - Added explicit "50% Off (First 100)" badges directly into the Pricing Cards.
+- **SEO & Architecture**:
+  - Migrated all hardcoded page metadata to the centralized `generateSeoMetadata` helper for consistent SEO.
+  - Reorganized Document Tools (moved doc-converter) and updated the sitemap accordingly.
+
+### Fixed
+- **UI/UX Polishes**:
+  - Fixed RSC (React Server Components) import issue causing the AI bot to crash.
+  - Adjusted AI bot Send button alignment to be perfectly centered.
+  - Reduced hero title size by removing the overly large `md:text-8xl` class.
+  - Enforced strict active state matching in the sidebar navigation.
+
 ## [1.1.6] - 2026-06-14
 
 ### Added
