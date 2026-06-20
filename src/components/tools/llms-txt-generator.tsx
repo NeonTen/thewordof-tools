@@ -26,13 +26,13 @@ export function LlmsTxtGenerator({
   }, [creditsRemaining])
 
   const limitReached = isLoggedIn 
-    ? (localCredits !== null && localCredits <= 0) 
+    ? (localCredits !== null && localCredits < 3) 
     : false
 
   const [formData, setFormData] = useState({
-    brandName: "",
-    description: "",
-    rawUrls: ""
+    sitemapUrl: "",
+    websiteUrl: "",
+    specificUrls: ""
   })
 
   const [output, setOutput] = useState("")
@@ -116,43 +116,62 @@ export function LlmsTxtGenerator({
 
             ) : (
               <form onSubmit={handleGenerate} className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Brand / Website Name *</Label>
-                  <Input 
-                    required
-                    placeholder="e.g. TheWordOf Tools" 
-                    value={formData.brandName}
-                    onChange={(e) => setFormData({...formData, brandName: e.target.value})}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Description *</Label>
-                  <Textarea 
-                    required
-                    placeholder="What does your site do? Key features, products, or services..."
-                    rows={4}
-                    value={formData.description}
-                    onChange={(e) => setFormData({...formData, description: e.target.value})}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Important Links (URLs)</Label>
-                  <Textarea 
-                    placeholder="Paste all your important URLs here (Sitemap, Docs, API, Contact, etc.). The AI will automatically categorize and format them into the correct llms.txt sections!"
-                    rows={8}
-                    value={formData.rawUrls}
-                    onChange={(e) => setFormData({...formData, rawUrls: e.target.value})}
-                  />
-                  <p className="text-[10px] text-muted-foreground font-semibold">
-                    You don't need to categorize them! Just paste raw links, and our AI will organize them into standard `##` sections (e.g. Getting Started, API Reference, Optional) per the llmstxt.org specification.
-                  </p>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label className="font-bold">Sitemap URL</Label>
+                    <p className="text-xs text-muted-foreground">Best for large sites: point to your sitemap.xml and we'll crawl all listed pages.</p>
+                    <Input 
+                      placeholder="https://example.com/sitemap.xml" 
+                      value={formData.sitemapUrl}
+                      onChange={(e) => setFormData({...formData, sitemapUrl: e.target.value, websiteUrl: "", specificUrls: ""})}
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                      <span className="bg-background px-2 text-muted-foreground font-bold">OR</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="font-bold">Website URL</Label>
+                    <p className="text-xs text-muted-foreground">We'll scan your homepage and follow internal links automatically.</p>
+                    <Input 
+                      placeholder="https://example.com" 
+                      value={formData.websiteUrl}
+                      onChange={(e) => setFormData({...formData, websiteUrl: e.target.value, sitemapUrl: "", specificUrls: ""})}
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                      <span className="bg-background px-2 text-muted-foreground font-bold">OR</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="font-bold">Paste specific URLs</Label>
+                    <p className="text-xs text-muted-foreground">One URL per line, useful when you only want specific pages included.</p>
+                    <Textarea 
+                      placeholder="https://example.com/page1&#10;https://example.com/page2"
+                      rows={5}
+                      value={formData.specificUrls}
+                      onChange={(e) => setFormData({...formData, specificUrls: e.target.value, sitemapUrl: "", websiteUrl: ""})}
+                    />
+                  </div>
                 </div>
 
-                <Button type="submit" className="w-full h-12 gap-2 mt-4 font-bold rounded-xl shadow-lg shadow-primary/20" disabled={isLoading || limitReached}>
+                <Button type="submit" className="w-full h-12 gap-2 mt-4 font-bold rounded-xl shadow-lg shadow-primary/20" disabled={isLoading || limitReached || (!formData.sitemapUrl && !formData.websiteUrl && !formData.specificUrls)}>
                   {isLoading ? (
                     <span className="flex items-center gap-2">
                       <span className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                      Generating...
+                      Crawling & Generating...
                     </span>
                   ) : limitReached ? (
                     "Out of Credits"
@@ -170,7 +189,7 @@ export function LlmsTxtGenerator({
                 )}
                 {!limitReached && (
                   <p className="text-[10px] text-center text-muted-foreground font-semibold mt-2">
-                    Costs 1 credit ({localCredits ?? 0} remaining)
+                    Costs 3 credits ({localCredits ?? 0} remaining)
                   </p>
                 )}
               </form>
