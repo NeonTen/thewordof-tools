@@ -238,9 +238,14 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
                     {currency === "INR" ? `₹${price}` : `$${usdPrice}`}
                   </span>
                   {originalPrice !== undefined && (
-                    <span className="text-lg text-muted-foreground line-through font-bold">
-                      {currency === "INR" ? `₹${originalPrice}` : `$${originalUsdPrice}`}
-                    </span>
+                    <>
+                      <span className="text-lg text-muted-foreground line-through font-bold">
+                        {currency === "INR" ? `₹${originalPrice}` : `$${originalUsdPrice}`}
+                      </span>
+                      <span className="text-[10px] bg-green-500/20 text-green-600 px-2 py-0.5 rounded-full uppercase tracking-widest font-black self-center">
+                        50% Off (First 100)
+                      </span>
+                    </>
                   )}
                   <span className="text-muted-foreground text-sm">/{period}</span>
                 </div>
