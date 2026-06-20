@@ -20,6 +20,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { auth } from "@/auth";
 import { TestimonialsCarousel } from "@/components/home/testimonials-carousel";
+import { AIBot } from "@/components/home/ai-bot";
 
 export default async function Home() {
   const session = await auth();
@@ -310,7 +311,7 @@ export default async function Home() {
                 </div>
                 <CardHeader>
                   <h3 className="text-xl font-bold text-primary">Pro</h3>
-                  <div className="text-4xl font-black mt-2">$9<span className="text-sm font-medium text-muted-foreground">/mo</span></div>
+                  <div className="text-4xl font-black mt-2">$5.99<span className="text-sm font-medium text-muted-foreground">/mo</span></div>
                   <p className="text-sm text-muted-foreground mt-4">For power users and creators.</p>
                   <p className="text-xs font-bold text-amber-500 bg-amber-500/10 px-2 py-1 rounded-md mt-2 inline-block">
                     🎁 Sign up now and get 10 extra AI credits free!
@@ -334,7 +335,7 @@ export default async function Home() {
               <Card className="flex flex-col border-border/50 bg-background/50 hover:border-primary/50 transition-all">
                 <CardHeader>
                   <h3 className="text-xl font-bold text-foreground">Business</h3>
-                  <div className="text-4xl font-black mt-2">$29<span className="text-sm font-medium text-muted-foreground">/mo</span></div>
+                  <div className="text-4xl font-black mt-2">$19.99<span className="text-sm font-medium text-muted-foreground">/mo</span></div>
                   <p className="text-sm text-muted-foreground mt-4">For agencies and large teams.</p>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col justify-between space-y-8">
@@ -440,6 +441,7 @@ export default async function Home() {
         </section>
       </main>
       <Footer />
+      <AIBot />
     </div>
   );
 }
