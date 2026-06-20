@@ -20,11 +20,10 @@ export function AIBot() {
   ])
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmitCustom = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (!input.trim() || isLoading) return
+  const sendChatMessage = async (text: string) => {
+    if (!text.trim() || isLoading) return
 
-    const userMessage = { id: Date.now().toString(), role: "user", content: input }
+    const userMessage = { id: Date.now().toString(), role: "user", content: text }
     setMessages(prev => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
@@ -38,12 +37,10 @@ export function AIBot() {
 
       if (!response.ok) throw new Error("Failed to fetch response")
 
-      // Simple response handling (assuming it returns { text: string } or streams)
-      // Since our API endpoint uses streamText(), it returns a text stream.
       const reader = response.body?.getReader()
       const decoder = new TextDecoder()
       let done = false
-      let text = ""
+      let responseText = ""
 
       setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: "" }])
 
@@ -51,10 +48,10 @@ export function AIBot() {
         const { value, done: doneReading } = await reader.read()
         done = doneReading
         const chunkValue = decoder.decode(value)
-        text += chunkValue
+        responseText += chunkValue
         setMessages(prev => {
           const newMessages = [...prev]
-          newMessages[newMessages.length - 1].content = text
+          newMessages[newMessages.length - 1].content = responseText
           return newMessages
         })
       }
@@ -65,6 +62,11 @@ export function AIBot() {
     }
   }
 
+  const handleSubmitCustom = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    await sendChatMessage(input)
+  }
+
   const quickReplies = [
     "Help me build a CV",
     "Generate an Invoice",
@@ -72,7 +74,7 @@ export function AIBot() {
   ]
 
   const handleQuickReply = (text: string) => {
-    setInput(text)
+    sendChatMessage(text)
   }
 
   return (
