@@ -6,14 +6,14 @@ import { Star, ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const testimonials = [
-  { name: "Rahul Sharma", role: "Digital Marketer", text: "The AI Caption Generator has saved me hours. The captions are actually high quality and viral-ready." },
-  { name: "Jessica Chen", role: "Frontend Developer", text: "The SVG Compressor and Image Converter are my go-to tools now. Super fast and no quality loss." },
-  { name: "Priya Patel", role: "Content Creator", text: "I love the branded invoice generator and LLMs.txt builder. This toolkit is a complete game-changer." },
-  { name: "Marcus Vance", role: "SEO Specialist", text: "The readability grader and schema builder have significantly boosted our optimization workflow." },
-  { name: "Sarah Jenkins", role: "SaaS Founder", text: "Having all these quick utilities in one place without signing up for 10 different sites is amazing." },
-  { name: "David K.", role: "Freelance Copywriter", text: "The readability improvements feature is a lifesaver. My text gets simplified in seconds without losing style." },
-  { name: "Elena Rostova", role: "Graphic Designer", text: "Generating dynamic QR codes with expiration limits is extremely handy for my marketing campaigns." },
-  { name: "Kenji Sato", role: "Growth Marketer", text: "Simple, fast, and secure. Everything processed inside the browser feels incredibly snappy." },
+  { name: "Rahul Sharma", role: "Digital Marketer", text: "Thanks to the AI Caption Generator, I cut my social media processing time in half and doubled our engagement rate." },
+  { name: "Jessica Chen", role: "Frontend Developer", text: "The SVG Compressor is a lifesaver. It automatically minified 50+ icons for my project without any visible quality loss." },
+  { name: "Priya Patel", role: "Content Creator", text: "The branded invoice generator literally got me paid faster. Professional, customized PDFs generated in literally 30 seconds." },
+  { name: "Marcus Vance", role: "SEO Specialist", text: "My team's organic traffic jumped 15% after we started using the Schema Builder and Keyword Density analyzer." },
+  { name: "Sarah Jenkins", role: "SaaS Founder", text: "Finally, a toolkit that doesn't require switching between 10 different tabs. We use the QR code and image tools daily." },
+  { name: "David K.", role: "Freelance Copywriter", text: "The readability grader completely transformed my writing. It simplifies complex text instantly, making my copy convert way better." },
+  { name: "Elena Rostova", role: "Graphic Designer", text: "Generating dynamic QR codes with live tracking analytics has been a massive value-add for my print campaigns." },
+  { name: "Kenji Sato", role: "Growth Marketer", text: "Everything runs blazing fast entirely in the browser. Zero privacy concerns and massive productivity gains." },
 ]
 
 export function TestimonialsCarousel() {

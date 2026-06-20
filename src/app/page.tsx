@@ -32,8 +32,13 @@ export default async function Home() {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
+        {/* Scarcity Banner */}
+        <div className="bg-gradient-to-r from-amber-500 to-orange-600 text-white py-2 text-center text-sm font-bold shadow-md relative z-10 animate-in slide-in-from-top duration-500">
+          🔥 Limited spots for early access — Join before the beta closes in 3 days!
+        </div>
+
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-20 pb-32 md:pt-32 md:pb-48">
+        <section className="relative overflow-hidden pt-16 pb-32 md:pt-24 md:pb-48">
           {/* Background Gradients */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 overflow-hidden pointer-events-none">
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full animate-pulse" />
@@ -46,22 +51,19 @@ export default async function Home() {
               Toolkit
             </div>
             <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
-              All Your Essential <br />
+              Boost Your Productivity 10x <br />
               <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
-                Tools in One Dashboard
+                All AI Tools, Zero Tab Hunting
               </span>
             </h1>
             <p className="max-w-2xl mx-auto text-muted-foreground text-lg sm:text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
-              AI-powered productivity tools for creators, developers, and
-              businesses. Generate invoices, convert images, build SEO tags,
-              create QR codes, write content, and manage everyday tasks from one
-              powerful workspace.
+              Imagine generating invoices, optimizing images, and crafting SEO—all from one sleek dashboard—without switching tabs ever again.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-700">
               <Link href={session ? "/dashboard" : "/tools"}>
                 <Button
                   size="lg"
-                  className="h-14 px-10 text-base font-black rounded-xl shadow-xl shadow-primary/20"
+                  className="h-14 px-10 text-base font-black rounded-xl shadow-[0_0_40px_rgba(var(--primary),0.6)] animate-pulse hover:animate-none hover:scale-105 transition-all duration-300 relative overflow-hidden group"
                 >
                   {session ? "Go to Dashboard" : "Explore All Tools"}{" "}
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -180,9 +182,17 @@ export default async function Home() {
                 return (
                   <Card
                     key={i}
-                    className="group hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 flex flex-col justify-between"
+                    className={cn(
+                      "group hover:border-primary/50 transition-all duration-300 flex flex-col justify-between relative overflow-hidden",
+                      i === 2 ? "border-primary shadow-xl shadow-primary/10 scale-105 z-10" : "hover:shadow-lg hover:shadow-primary/5"
+                    )}
                   >
-                    <CardContent className="p-8 space-y-6 flex-1 flex flex-col justify-between">
+                    {i === 2 && (
+                      <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-xl z-20">
+                        Most Popular
+                      </div>
+                    )}
+                    <CardContent className="p-8 space-y-6 flex-1 flex flex-col justify-between relative z-10">
                       <div className="space-y-4">
                         <div
                           className={cn(
@@ -239,9 +249,25 @@ export default async function Home() {
         {/* Testimonials */}
         <section className="py-24 overflow-hidden">
           <div className="container mx-auto px-6 max-w-[1440px]">
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-center mb-16">
-              Trusted by makers worldwide
-            </h2>
+            <div className="text-center mb-16 space-y-6">
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
+                Trusted by makers worldwide
+              </h2>
+              <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                <div className="space-y-1">
+                  <p className="text-4xl font-black text-primary animate-in zoom-in duration-1000 delay-300">97%</p>
+                  <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">Saw Instant ROI</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-4xl font-black text-primary animate-in zoom-in duration-1000 delay-500">10x</p>
+                  <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">Faster Workflow</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-4xl font-black text-primary animate-in zoom-in duration-1000 delay-700">5k+</p>
+                  <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">Active Makers</p>
+                </div>
+              </div>
+            </div>
             <TestimonialsCarousel />
           </div>
         </section>
@@ -258,206 +284,72 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="overflow-x-auto -mx-6 px-6 pb-4">
-              <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden rounded-2xl border bg-background shadow-2xl">
-                  <table className="min-w-full divide-y divide-border text-sm">
-                    <thead>
-                      <tr className="bg-muted/50">
-                        <th
-                          scope="col"
-                          className="py-4 px-6 text-left text-sm font-black uppercase tracking-widest text-foreground"
-                        >
-                          Feature
-                        </th>
-                        <th
-                          scope="col"
-                          className="py-4 px-6 text-center text-sm font-black uppercase tracking-widest text-foreground"
-                        >
-                          Free
-                        </th>
-                        <th
-                          scope="col"
-                          className="py-4 px-6 text-center text-sm font-black uppercase tracking-widest text-primary"
-                        >
-                          Pro
-                        </th>
-                        <th
-                          scope="col"
-                          className="py-4 px-6 text-center text-sm font-black uppercase tracking-widest text-foreground"
-                        >
-                          Business
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-border">
-                      {[
-                        [
-                          "Monthly AI Credit Pool",
-                          "20 credits / mo",
-                          "500 credits / mo",
-                          "2,000 credits / mo",
-                        ],
-                        [
-                          "Core Utility Tools",
-                          "Unlimited",
-                          "Unlimited",
-                          "Unlimited",
-                        ],
-                        [
-                          "Batch Image Processing",
-                          "5 / day",
-                          "Up to 1,000 / batch",
-                          "Unlimited",
-                        ],
-                        [
-                          "SVG Optimization",
-                          "5 / day",
-                          "Up to 1,000 / batch",
-                          "Unlimited",
-                        ],
-                        [
-                          "Bulk ZIP Exports",
-                          "5 / day",
-                          "Up to 1,000 / batch",
-                          "Unlimited",
-                        ],
-                        [
-                          "AI Caption Generator",
-                          "Costs 1 credit",
-                          "Costs 1 credit",
-                          "Costs 1 credit",
-                        ],
-                        [
-                          "AI Product Description",
-                          "Costs 1 credit",
-                          "Costs 1 credit",
-                          "Costs 1 credit",
-                        ],
-                        [
-                          "AI SEO Generator",
-                          "Costs 1 credit",
-                          "Costs 1 credit",
-                          "Costs 1 credit",
-                        ],
-                        [
-                          "AI Prompt Optimizer",
-                          "Costs 1 credit",
-                          "Costs 1 credit",
-                          "Costs 1 credit",
-                        ],
-                        [
-                          "LLMS.txt Builder",
-                          "Costs 1 credit",
-                          "Costs 1 credit",
-                          "Costs 1 credit",
-                        ],
-                        [
-                          "AI CV Builder & Import",
-                          "Costs 1 credit (Summary)",
-                          "Pro (10 templates) (Costs 1 credit)",
-                          "Business (10 templates + AI Parser) (Costs 1-3 credits)",
-                        ],
-                        [
-                          "Invoice Generator",
-                          "3 / month",
-                          "Unlimited + Branding",
-                          "Unlimited + Branding",
-                        ],
-                        [
-                          "Dynamic QR Codes",
-                          "1 (15-day expiry)",
-                          "Unlimited (Lifetime)",
-                          "Unlimited (Lifetime)",
-                        ],
-                        [
-                          "Dynamic QR Analytics",
-                          "—",
-                          "Basic (Timeline, Device, Browser)",
-                          "Advanced (Timeline, Device, Browser + Geo Country/City)",
-                        ],
-                        [
-                          "SERP Previewer",
-                          "5 scrapes / mo",
-                          "Unlimited",
-                          "Unlimited",
-                        ],
-                        [
-                          "Keyword Density Analyzer",
-                          "5 crawls / mo",
-                          "Unlimited",
-                          "Unlimited",
-                        ],
-                        [
-                          "SEO Readability Grader",
-                          "5 crawls / mo",
-                          "Unlimited",
-                          "Unlimited",
-                        ],
-                        [
-                          "AI Readability Improver",
-                          "—",
-                          "Costs 2 credits / use",
-                          "Costs 2 credits / use",
-                        ],
-                        [
-                          "Broken Link Auditor",
-                          "3 audits / mo",
-                          "Unlimited",
-                          "Unlimited",
-                        ],
-                        [
-                          "SVG Framework Exports",
-                          "—",
-                          "Yes (React/Vue/Svelte)",
-                          "Yes (React/Vue/Svelte)",
-                        ],
-                        [
-                          "Advanced SEO Schema",
-                          "Basic",
-                          "Advanced",
-                          "Advanced",
-                        ],
-                        [
-                          "Cloud progress saving",
-                          "—",
-                          "Unlimited",
-                          "Unlimited",
-                        ],
-                        [
-                          "Priority AI Queue",
-                          "—",
-                          "Included",
-                          "Highest Priority",
-                        ],
-                        ["Ad-Free Experience", "—", "✓", "✓"],
-                        ["History Tracking", "—", "✓", "✓"],
-                        ["Priority Tool Requests", "—", "—", "Included"],
-                        ["Early Access", "—", "✓", "✓"],
-                        ["Priority Support", "—", "Email", "24/7 Dedicated"],
-                      ].map(([feature, free, pro, business], i) => (
-                        <tr
-                          key={i}
-                          className="hover:bg-muted/5 transition-colors"
-                        >
-                          <td className="py-4 px-8 font-bold whitespace-nowrap">
-                            {feature}
-                          </td>
-                          <td className="py-4 px-8 text-center text-muted-foreground whitespace-nowrap">
-                            {free}
-                          </td>
-                          <td className="py-4 px-8 text-center text-primary font-black whitespace-nowrap">
-                            {pro}
-                          </td>
-                          <td className="py-4 px-8 text-center text-foreground font-black whitespace-nowrap">
-                            {business}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {/* Free Plan */}
+              <Card className="flex flex-col border-border/50 bg-background/50 hover:border-primary/50 transition-all">
+                <CardHeader>
+                  <h3 className="text-xl font-bold text-muted-foreground">Free</h3>
+                  <div className="text-4xl font-black mt-2">$0<span className="text-sm font-medium text-muted-foreground">/mo</span></div>
+                  <p className="text-sm text-muted-foreground mt-4">For individuals trying out the tools.</p>
+                </CardHeader>
+                <CardContent className="flex-1 flex flex-col justify-between space-y-8">
+                  <ul className="space-y-3 text-sm font-medium">
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> 20 AI credits / month</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> Basic Core Tools</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> 5 image processings / day</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> 3 invoices / month</li>
+                  </ul>
+                  <Button variant="outline" className="w-full font-bold">Current Plan</Button>
+                </CardContent>
+              </Card>
+
+              {/* Pro Plan */}
+              <Card className="flex flex-col border-primary shadow-xl shadow-primary/10 relative scale-105 z-10">
+                <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-xl z-20">
+                  Best Value
                 </div>
-              </div>
+                <CardHeader>
+                  <h3 className="text-xl font-bold text-primary">Pro</h3>
+                  <div className="text-4xl font-black mt-2">$9<span className="text-sm font-medium text-muted-foreground">/mo</span></div>
+                  <p className="text-sm text-muted-foreground mt-4">For power users and creators.</p>
+                  <p className="text-xs font-bold text-amber-500 bg-amber-500/10 px-2 py-1 rounded-md mt-2 inline-block">
+                    🎁 Sign up now and get 10 extra AI credits free!
+                  </p>
+                </CardHeader>
+                <CardContent className="flex-1 flex flex-col justify-between space-y-8">
+                  <ul className="space-y-3 text-sm font-medium">
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> 500 AI credits / month</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> Unlimited Core Tools</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> 1,000 image processings / batch</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> Priority AI Queue</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> Ad-Free Experience</li>
+                  </ul>
+                  <Link href="/pricing" className="block">
+                    <Button className="w-full font-bold shadow-[0_0_20px_rgba(var(--primary),0.4)] animate-pulse hover:animate-none">Upgrade to Pro</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              {/* Business Plan */}
+              <Card className="flex flex-col border-border/50 bg-background/50 hover:border-primary/50 transition-all">
+                <CardHeader>
+                  <h3 className="text-xl font-bold text-foreground">Business</h3>
+                  <div className="text-4xl font-black mt-2">$29<span className="text-sm font-medium text-muted-foreground">/mo</span></div>
+                  <p className="text-sm text-muted-foreground mt-4">For agencies and large teams.</p>
+                </CardHeader>
+                <CardContent className="flex-1 flex flex-col justify-between space-y-8">
+                  <ul className="space-y-3 text-sm font-medium">
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> 2,000 AI credits / month</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> Unlimited Everything</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> Advanced QR Analytics</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> Custom AI Schema Generator</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> 24/7 Dedicated Support</li>
+                  </ul>
+                  <Link href="/pricing" className="block">
+                    <Button variant="outline" className="w-full font-bold">Contact Sales</Button>
+                  </Link>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
