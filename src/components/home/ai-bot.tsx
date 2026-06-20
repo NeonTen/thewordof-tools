@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Bot, X, Send, User, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,6 +19,15 @@ export function AIBot() {
     }
   ])
   const [isLoading, setIsLoading] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages, isOpen])
 
   const sendChatMessage = async (text: string) => {
     if (!text.trim() || isLoading) return
@@ -183,6 +192,8 @@ export function AIBot() {
                 </div>
               </div>
             )}
+            
+            <div ref={messagesEndRef} />
           </CardContent>
 
           <CardFooter className="p-3 border-t bg-background">
