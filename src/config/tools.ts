@@ -101,6 +101,8 @@ export const navGroups: NavGroup[] = [
       { title: "Prompt Gen",       href: "/tools/ai-tools/prompt-generator", icon: Brain },
       { title: "CV Builder",       href: "/tools/ai-tools/cv-builder",       icon: PenLine },
       { title: "SEO Generator",    href: "/tools/ai-tools/seo-generator",    icon: Search },
+      { title: "Resume Analyzer",  href: "/tools/ai-tools/resume-analyzer",  icon: FileText },
+      { title: "ATS Score Checker",href: "/tools/ai-tools/ats-score-checker",icon: Brain },
     ],
   },
 ]

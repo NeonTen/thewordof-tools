@@ -20,6 +20,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/ai-tools/cv-builder",
     "/tools/ai-tools/product-description",
     "/tools/ai-tools/prompt-generator",
+    "/tools/ai-tools/resume-analyzer",
+    "/tools/ai-tools/ats-score-checker",
     "/tools/ai-tools/seo-generator",
 
     // Calculators
