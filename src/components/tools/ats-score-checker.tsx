@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { Sparkles, CheckCircle2, XCircle, RefreshCw } from "lucide-react"
+import { Sparkles, CheckCircle2, XCircle, RefreshCw, Download } from "lucide-react"
 import Link from "next/link"
 import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts"
 
@@ -15,12 +15,12 @@ type AtsResult = {
   feedback: string
 }
 
-export function AtsScoreChecker({ 
-  creditsRemaining = null, 
-  isLoggedIn = false 
-}: { 
+export function AtsScoreChecker({
+  creditsRemaining = null,
+  isLoggedIn = false
+}: {
   creditsRemaining?: number | null
-  isLoggedIn?: boolean 
+  isLoggedIn?: boolean
 }) {
   const [resumeText, setResumeText] = useState("")
   const [jobDescription, setJobDescription] = useState("")
@@ -29,7 +29,7 @@ export function AtsScoreChecker({
   const [showScore, setShowScore] = useState(false)
   const [isFixing, setIsFixing] = useState(false)
   const [fixedResume, setFixedResume] = useState("")
-  
+
   const limitReached = isLoggedIn ? (creditsRemaining !== null && creditsRemaining <= 0) : false
   const fixLimitReached = isLoggedIn ? (creditsRemaining !== null && creditsRemaining < 2) : false
 
@@ -39,7 +39,7 @@ export function AtsScoreChecker({
     setResult(null)
     setShowScore(false)
     setFixedResume("")
-    
+
     try {
       const res = await fetch("/api/ai/ats-score-checker", {
         method: "POST",
@@ -76,6 +76,18 @@ export function AtsScoreChecker({
     } finally {
       setIsFixing(false)
     }
+  }
+
+  const handleDownload = () => {
+    const blob = new Blob([fixedResume], { type: "text/markdown" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = "ATS_Optimized_Resume.md"
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
   }
 
   const chartData = result ? [
@@ -116,11 +128,11 @@ export function AtsScoreChecker({
                   <CardTitle className="text-sm">Job Description</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Textarea 
-                    value={jobDescription} 
-                    onChange={e => setJobDescription(e.target.value)} 
-                    required 
-                    placeholder="Paste the target job description here..." 
+                  <Textarea
+                    value={jobDescription}
+                    onChange={e => setJobDescription(e.target.value)}
+                    required
+                    placeholder="Paste the target job description here..."
                     className="h-80 resize-none overflow-y-auto"
                   />
                 </CardContent>
@@ -131,11 +143,11 @@ export function AtsScoreChecker({
                   <CardTitle className="text-sm">Your Resume</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Textarea 
-                    value={resumeText} 
-                    onChange={e => setResumeText(e.target.value)} 
-                    required 
-                    placeholder="Paste your resume text here..." 
+                  <Textarea
+                    value={resumeText}
+                    onChange={e => setResumeText(e.target.value)}
+                    required
+                    placeholder="Paste your resume text here..."
                     className="h-80 resize-none overflow-y-auto"
                   />
                 </CardContent>
@@ -206,13 +218,13 @@ export function AtsScoreChecker({
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
-                <p className="text-center text-sm text-muted-foreground max-w-xs mt-4">
+                <p className="text-center text-sm text-muted-foreground mt-4">
                   {result.feedback}
                 </p>
 
                 <div className="mt-8 w-full">
-                  <Button 
-                    variant="default" 
+                  <Button
+                    variant="default"
                     className="w-full h-12 gap-2 font-bold"
                     onClick={handleFixResume}
                     disabled={isFixing || fixLimitReached}
@@ -274,14 +286,20 @@ export function AtsScoreChecker({
 
           {fixedResume && (
             <Card className="mt-12 border-primary/20 animate-in fade-in slide-in-from-bottom-8 duration-700">
-              <CardHeader>
-                <CardTitle>Improved Resume (ATS Optimized)</CardTitle>
-                <CardDescription>Your rewritten resume naturally incorporates the missing keywords.</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Improved Resume (ATS Optimized)</CardTitle>
+                  <CardDescription>Your rewritten resume naturally incorporates the missing keywords.</CardDescription>
+                </div>
+                <Button variant="outline" size="sm" onClick={handleDownload} className="gap-2 shrink-0">
+                  <Download className="h-4 w-4" />
+                  Download .md
+                </Button>
               </CardHeader>
               <CardContent>
-                <Textarea 
-                  value={fixedResume} 
-                  readOnly 
+                <Textarea
+                  value={fixedResume}
+                  readOnly
                   className="h-96 resize-none font-mono text-sm"
                 />
               </CardContent>
