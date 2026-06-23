@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Sparkles, CheckCircle2, XCircle, RefreshCw, Download } from "lucide-react"
 import Link from "next/link"
 import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts"
+import { ResumeUploader } from "./resume-uploader"
 
 type AtsResult = {
   score: number
@@ -28,10 +29,12 @@ export function AtsScoreChecker({
   const [isLoading, setIsLoading] = useState(false)
   const [showScore, setShowScore] = useState(false)
   const [isFixing, setIsFixing] = useState(false)
+  const [hasImproved, setHasImproved] = useState(false)
   const [fixedResume, setFixedResume] = useState("")
+  const [localCredits, setLocalCredits] = useState<number | null>(creditsRemaining ?? null)
 
-  const limitReached = isLoggedIn ? (creditsRemaining !== null && creditsRemaining <= 0) : false
-  const fixLimitReached = isLoggedIn ? (creditsRemaining !== null && creditsRemaining < 2) : false
+  const limitReached = isLoggedIn ? (localCredits !== null && localCredits <= 0) : false
+  const fixLimitReached = isLoggedIn ? (localCredits !== null && localCredits < 2) : false
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -49,6 +52,9 @@ export function AtsScoreChecker({
       if (res.ok) {
         const data = await res.json()
         setResult(data)
+        if (localCredits !== null) {
+          setLocalCredits(prev => (prev !== null ? prev - 1 : null))
+        }
       }
     } finally {
       setIsLoading(false)
@@ -65,6 +71,10 @@ export function AtsScoreChecker({
         body: JSON.stringify({ resumeText, jobDescription })
       })
       if (res.ok && res.body) {
+        if (localCredits !== null) {
+          setLocalCredits(prev => (prev !== null ? prev - 2 : null))
+        }
+        setHasImproved(true)
         const reader = res.body.getReader()
         const decoder = new TextDecoder()
         while (true) {
@@ -141,8 +151,10 @@ export function AtsScoreChecker({
               <Card className="border-primary/10">
                 <CardHeader>
                   <CardTitle className="text-sm">Your Resume</CardTitle>
+                  <CardDescription>Paste your full resume text below to check against the job description.</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
+                  <ResumeUploader onUpload={(text) => setResumeText(text)} />
                   <Textarea
                     value={resumeText}
                     onChange={e => setResumeText(e.target.value)}
@@ -172,7 +184,7 @@ export function AtsScoreChecker({
               </Button>
               {!limitReached && (
                 <p className="text-[10px] text-muted-foreground font-semibold mt-2">
-                  Costs 1 credit ({creditsRemaining ?? 0} remaining)
+                  Costs 1 credit ({localCredits ?? 0} remaining)
                 </p>
               )}
             </div>
@@ -223,17 +235,22 @@ export function AtsScoreChecker({
                 </p>
 
                 <div className="mt-8 w-full">
-                  <Button
-                    variant="default"
+                  <Button 
+                    variant="default" 
                     className="w-full h-12 gap-2 font-bold"
                     onClick={handleFixResume}
-                    disabled={isFixing || fixLimitReached}
+                    disabled={isFixing || fixLimitReached || hasImproved}
                   >
                     {isFixing ? (
                       <span className="flex items-center gap-2">
                         <span className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
                         Improving Resume...
                       </span>
+                    ) : hasImproved ? (
+                      <>
+                        <CheckCircle2 className="h-4 w-4" />
+                        Resume Improved!
+                      </>
                     ) : (
                       <>
                         <RefreshCw className="h-4 w-4" />
@@ -297,11 +314,20 @@ export function AtsScoreChecker({
                 </Button>
               </CardHeader>
               <CardContent>
-                <Textarea
-                  value={fixedResume}
-                  readOnly
+                <Textarea 
+                  value={fixedResume} 
+                  readOnly 
                   className="h-96 resize-none font-mono text-sm"
                 />
+                <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground bg-muted/30 p-4 rounded-xl">
+                  <p>
+                    Want this in a different format? Use our{" "}
+                    <Link href="/tools/document-tools/doc-converter" className="font-semibold text-primary hover:underline">
+                      Document Converter
+                    </Link>{" "}
+                    to easily convert this downloaded .md file into a beautifully formatted .docx or .pdf!
+                  </p>
+                </div>
               </CardContent>
             </Card>
           )}

@@ -25,6 +25,8 @@ const CATEGORIES: Record<string, { name: string; tools: Array<{ name: string; hr
       { name: "CV Builder", href: "/tools/ai-tools/cv-builder", desc: "Build professional resumes and generate cover letters." },
       { name: "Product Description", href: "/tools/ai-tools/product-description", desc: "Create conversion-focused e-commerce product descriptions." },
       { name: "Prompt Generator", href: "/tools/ai-tools/prompt-generator", desc: "Generate optimized prompts for ChatGPT, Gemini, and Claude." },
+      { name: "Resume Analyzer", href: "/tools/ai-tools/resume-analyzer", desc: "Get AI feedback on your resume." },
+      { name: "ATS Score Checker", href: "/tools/ai-tools/ats-score-checker", desc: "Calculate your ATS match score against any job description." },
       { name: "SEO Generator", href: "/tools/ai-tools/seo-generator", desc: "AI-generated meta titles and descriptions." }
     ]
   },

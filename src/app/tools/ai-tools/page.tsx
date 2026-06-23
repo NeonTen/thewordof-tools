@@ -20,7 +20,7 @@ const tools = [
     title: "Product Description Generator",
     description:
       "Generate structured product titles, specifications, and highlighted benefits using AI.",
-    href: "/tools/product-description",
+    href: "/tools/ai-tools/product-description",
     icon: FileText,
     pro: false,
   },
@@ -28,7 +28,7 @@ const tools = [
     title: "AI Caption Gen",
     description:
       "Create platform-optimized captions for Instagram, LinkedIn, and X using Gemini models.",
-    href: "/tools/caption-generator",
+    href: "/tools/ai-tools/caption-generator",
     icon: Sparkles,
     pro: true,
   },
@@ -36,7 +36,7 @@ const tools = [
     title: "AI Prompt Gen",
     description:
       "Build high-quality instructions and expert-level prompts for ChatGPT, Claude, and Gemini.",
-    href: "/tools/prompt-generator",
+    href: "/tools/ai-tools/prompt-generator",
     icon: Brain,
     pro: true,
   },
@@ -44,7 +44,7 @@ const tools = [
     title: "AI CV Builder",
     description:
       "Get professional, ATS-optimized executive summaries for your CV or LinkedIn profile.",
-    href: "/tools/cv-builder",
+    href: "/tools/ai-tools/cv-builder",
     icon: PenLine,
     pro: true,
   },
@@ -52,8 +52,22 @@ const tools = [
     title: "AI SEO Generator",
     description:
       "Generate highly optimized page meta titles and descriptions to boost search click-through rates.",
-    href: "/tools/seo-generator",
+    href: "/tools/ai-tools/seo-generator",
     icon: Search,
+    pro: true,
+  },
+  {
+    title: "ATS Score Checker",
+    description: "Check your resume against a job description to see your ATS match score.",
+    href: "/tools/ai-tools/ats-score-checker",
+    icon: Search,
+    pro: true,
+  },
+  {
+    title: "Resume Analyzer",
+    description: "Get an AI-powered critique and score of your resume with improvement tips.",
+    href: "/tools/ai-tools/resume-analyzer",
+    icon: FileText,
     pro: true,
   },
 ];

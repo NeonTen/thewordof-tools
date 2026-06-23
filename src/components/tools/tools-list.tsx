@@ -83,6 +83,8 @@ const CATEGORIES: Category[] = [
       { title: "AI Prompt Gen",     desc: "Build expert-level prompts for ChatGPT, Claude, and Gemini.",         icon: Brain,      href: "/tools/ai-tools/prompt-generator",  pro: true },
       { title: "AI CV Builder",     desc: "ATS-optimised CV summaries written by AI in under 60 seconds.",       icon: PenLine,    href: "/tools/ai-tools/cv-builder",        pro: true },
       { title: "AI SEO Generator",  desc: "Generate optimised meta titles and descriptions that rank.",          icon: Search,     href: "/tools/ai-tools/seo-generator",     pro: true },
+      { title: "ATS Score Checker", desc: "Check your resume against a job description to see your ATS score.",  icon: Search,     href: "/tools/ai-tools/ats-score-checker", pro: true },
+      { title: "Resume Analyzer",   desc: "Get an AI-powered critique and score of your resume with tips.",      icon: FileText,   href: "/tools/ai-tools/resume-analyzer",   pro: true },
     ]
   },
   {

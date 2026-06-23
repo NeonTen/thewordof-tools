@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.1.8] - 2026-06-23
+
+### Added
+- **AI Resume & ATS Tools**:
+  - Launched **ATS Score Checker** to compare resumes against job descriptions.
+  - Launched **Resume Analyzer** for AI-powered critique, scoring, and improvement tips.
+  - Added **Resume Fixer/Improver** functionality to rewrite and optimize resume text automatically.
+  - Added API routes supporting the new resume analysis features.
+- **Developer Tools**:
+  - Added public `llms.txt` file and generator following standard `llmstxt.org` rules.
+  - Redesigned `llms.txt` UI to support scraping from sitemap or website URLs.
+
+### Changed
+- **Pricing & Marketing**:
+  - Added "50% off first 100 users" badge to pricing cards.
+- **UI/UX Polishes**:
+  - Redesigned and improved layouts for ATS checker and Resume analyzer tools.
+  - Added direct `.md` download button for the improved resume.
+  - Cleaned up duplicate related tools links and improved SEO content for resume tools.
+  - Updated tools sitemap to include all newly launched features.
+
 ## [1.1.7] - 2026-06-21
 
 ### Added

@@ -106,7 +106,7 @@ export function AIBot() {
           isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0 pointer-events-none"
         )}
       >
-        <Card className="h-full flex flex-col shadow-2xl border-primary/20 overflow-hidden">
+        <Card className="h-full flex flex-col shadow-2xl border-primary/20 overflow-hidden !p-0">
           <CardHeader className="bg-primary text-primary-foreground p-4 flex flex-row items-center justify-between space-y-0 rounded-t-xl">
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center">
