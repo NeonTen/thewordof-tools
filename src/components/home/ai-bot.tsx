@@ -56,13 +56,19 @@ export function AIBot() {
       while (reader && !done) {
         const { value, done: doneReading } = await reader.read()
         done = doneReading
-        const chunkValue = decoder.decode(value)
-        responseText += chunkValue
-        setMessages(prev => {
-          const newMessages = [...prev]
-          newMessages[newMessages.length - 1].content = responseText
-          return newMessages
-        })
+        if (value) {
+          const chunkValue = decoder.decode(value)
+          responseText += chunkValue
+          setMessages(prev => {
+            const newMessages = [...prev]
+            newMessages[newMessages.length - 1].content = responseText
+            return newMessages
+          })
+        }
+      }
+      
+      if (!responseText.trim()) {
+        throw new Error("Stream closed with empty response (Likely API Key or Connection issue)")
       }
     } catch (error) {
       console.error(error)
