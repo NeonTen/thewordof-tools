@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.9] - 2026-06-24
+
+### Changed
+- **Pricing & Marketing**:
+  - Redesigned the "Detailed Feature Comparison" table on the pricing page into organized, value-focused categories (Usage & Limits, AI & Generative Tools, SEO & Document Suite, Support & Perks).
+  - Updated the Pro tier pricing card to explicitly state the inclusion of "AI parser import".
+- **AI Chatbot**:
+  - Fixed chat speed issues by upgrading to the explicit `gemini-1.5-flash` model.
+  - Added strict prompt guardrails so the assistant politely declines off-topic questions (e.g., coding, math).
+  - Fixed a UI state mutation bug that caused unanswered prompts to bleed into the next message, ensuring error bubbles render properly on network failures.
+  - Fixed the chat Send button click handler and z-index overlap issues.
+- **UI/UX Polishes**:
+  - Updated sidebar navigation so only the "All Tools" group is expanded by default.
+  - Adjusted `<ProGate>` access to enable "Import with AI" for all Pro users in the AI CV Builder.
 ## [1.1.8] - 2026-06-23
 
 ### Added
