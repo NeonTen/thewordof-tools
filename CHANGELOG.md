@@ -7,9 +7,9 @@
   - Redesigned the "Detailed Feature Comparison" table on the pricing page into organized, value-focused categories (Usage & Limits, AI & Generative Tools, SEO & Document Suite, Support & Perks).
   - Updated the Pro tier pricing card to explicitly state the inclusion of "AI parser import".
 - **AI Chatbot**:
-  - Fixed chat speed issues by upgrading to the explicit `gemini-1.5-flash` model.
-  - Added strict prompt guardrails so the assistant politely declines off-topic questions (e.g., coding, math).
-  - Fixed a UI state mutation bug that caused unanswered prompts to bleed into the next message, ensuring error bubbles render properly on network failures.
+  - Migrated the underlying AI provider from Google Gemini to Groq (`llama-3.1-8b-instant`) to ensure instantaneous responses and bypass rate-limiting bottlenecks.
+  - Improved prompt guardrails: the assistant will intelligently answer questions related to featured platform technologies (e.g. QR Codes, ATS), but gracefully decline completely off-topic questions.
+  - Fixed a UI state mutation bug that caused unanswered prompts to bleed into the next message.
   - Fixed the chat Send button click handler and z-index overlap issues.
 - **UI/UX Polishes**:
   - Updated sidebar navigation so only the "All Tools" group is expanded by default.
