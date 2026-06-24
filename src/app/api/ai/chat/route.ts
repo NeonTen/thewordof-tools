@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       .join("\n");
 
     const result = streamText({
-      model: google("gemini-flash-latest"),
+      model: google("gemini-1.5-flash"),
       system: `You are the friendly, helpful AI Assistant for TheWordOf Tools. 
 Your goal is to help users navigate our suite of free tools. 
 Keep your answers extremely concise (1-3 sentences) and conversational.
