@@ -66,6 +66,17 @@ export function AIBot() {
       }
     } catch (error) {
       console.error(error)
+      setMessages(prev => {
+        const newMessages = [...prev]
+        if (newMessages.length > 0) {
+          if (newMessages[newMessages.length - 1].role === "user") {
+            newMessages.push({ id: Date.now().toString(), role: "assistant", content: "Sorry, I encountered a network error. Please try again." })
+          } else if (newMessages[newMessages.length - 1].role === "assistant" && !newMessages[newMessages.length - 1].content) {
+            newMessages[newMessages.length - 1].content = "Sorry, I encountered a network error while streaming. Please try again."
+          }
+        }
+        return newMessages
+      })
     } finally {
       setIsLoading(false)
     }

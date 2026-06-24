@@ -3,6 +3,7 @@ import { streamText } from "ai";
 import { navGroups } from "@/config/tools";
 
 export const maxDuration = 30;
+export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {
@@ -19,6 +20,8 @@ export async function POST(req: Request) {
       system: `You are the friendly, helpful AI Assistant for TheWordOf Tools. 
 Your goal is to help users navigate our suite of free tools. 
 Keep your answers extremely concise (1-3 sentences) and conversational.
+
+CRITICAL RULE: You MUST ONLY answer questions related to TheWordOf Tools or navigating the site. If the user asks about coding, math, general knowledge, or anything unrelated to this platform, politely decline and state that you are only here to help with TheWordOf Tools.
 
 Available tools include:
 ${toolsList}
