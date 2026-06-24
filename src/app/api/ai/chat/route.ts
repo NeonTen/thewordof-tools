@@ -1,4 +1,4 @@
-import { google } from "@ai-sdk/google";
+import { groq } from "@ai-sdk/groq";
 import { streamText } from "ai";
 import { navGroups } from "@/config/tools";
 
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       .join("\n");
 
     const result = streamText({
-      model: google("gemini-flash-latest"),
+      model: groq("llama3-8b-8192"),
       maxRetries: 0,
       system: `You are the friendly, helpful AI Assistant for TheWordOf Tools. 
 Your goal is to help users navigate our suite of free tools. 
