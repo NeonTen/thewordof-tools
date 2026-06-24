@@ -3,7 +3,6 @@ import { streamText } from "ai";
 import { navGroups } from "@/config/tools";
 
 export const maxDuration = 30;
-export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {
