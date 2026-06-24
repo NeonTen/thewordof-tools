@@ -1,5 +1,6 @@
 import { generateSeoMetadata } from "@/app/lib/seo";
 import Link from "next/link";
+import React from "react";
 import { Check, X, Sparkles, Zap, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -45,6 +46,36 @@ export default async function PricingPage() {
       q: "Can I cancel my subscription anytime?",
       a: "Yes. You can manage, upgrade, or cancel your subscription at any time from your account dashboard. You will retain Pro features until your current billing period expires.",
     },
+  ];
+
+  const tableSections = [
+    {
+      title: "Usage & Limits",
+      rows: [
+        ["Monthly AI Credit Pool", "20 / mo", "500 / mo", "2,000 / mo"],
+        ["Batch Processing Limit", "5 files / batch", "1,000 / batch", "Unlimited"],
+        ["Cloud History & Saving", "—", "✓", "✓"]
+      ]
+    },
+    {
+      title: "AI & Generative Tools",
+      subtitle: "(Consumes AI Credits)",
+      rows: [
+        ["Smart AI Chatbot Assistant", "✓", "✓", "✓"],
+        ["Generative AI (Captions, SEO, Prompts)", "✓", "✓", "✓"],
+        ["ATS Checker & Resume Analyzer", "✓", "✓", "✓"],
+        ["AI Resume & CV Builder", "Basic (Text only)", "10 Templates + AI Parser", "10 Templates + AI Parser"]
+      ]
+    },
+    {
+      title: "SEO & Document Suite",
+      rows: [
+        ["Broken Link & SERP Analyzer", "3-5 crawls / mo", "Unlimited", "Unlimited"],
+        ["Dynamic QR Codes", "1 (15-day expiry)", "Unlimited (Lifetime)", "Unlimited + Analytics"],
+        ["SEO Readability & Schema Gen", "Basic", "Advanced", "Advanced"],
+        ["Document Utilities (PDF/DOCX)", "Unlimited", "Unlimited", "Unlimited"]
+      ]
+    }
   ];
 
   return (
@@ -117,146 +148,35 @@ export default async function PricingPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
-                    {[
-                      [
-                        "Monthly AI Credit Pool",
-                        "20 credits / mo",
-                        "500 credits / mo",
-                        "2,000 credits / mo",
-                      ],
-                      [
-                        "Core Utility Tools",
-                        "Unlimited",
-                        "Unlimited",
-                        "Unlimited",
-                      ],
-                      [
-                        "Batch Image Processing",
-                        "5 / day",
-                        "Up to 1,000 / batch",
-                        "Unlimited",
-                      ],
-                      [
-                        "SVG Optimization",
-                        "5 / day",
-                        "Up to 1,000 / batch",
-                        "Unlimited",
-                      ],
-                      [
-                        "Bulk ZIP Exports",
-                        "5 / day",
-                        "Up to 1,000 / batch",
-                        "Unlimited",
-                      ],
-                      [
-                        "AI Caption Generator",
-                        "Costs 1 credit",
-                        "Costs 1 credit",
-                        "Costs 1 credit",
-                      ],
-                      [
-                        "AI Product Description",
-                        "Costs 1 credit",
-                        "Costs 1 credit",
-                        "Costs 1 credit",
-                      ],
-                      [
-                        "AI SEO Generator",
-                        "Costs 1 credit",
-                        "Costs 1 credit",
-                        "Costs 1 credit",
-                      ],
-                      [
-                        "AI Prompt Optimizer",
-                        "Costs 1 credit",
-                        "Costs 1 credit",
-                        "Costs 1 credit",
-                      ],
-                      [
-                        "LLMS.txt Builder",
-                        "Costs 1 credit",
-                        "Costs 1 credit",
-                        "Costs 1 credit",
-                      ],
-                      [
-                        "AI CV Builder & Import",
-                        "Costs 1 credit (Summary)",
-                        "Pro (10 templates) (Costs 1 credit)",
-                        "Business (10 templates + AI Parser) (Costs 1-3 credits)",
-                      ],
-                      [
-                        "Invoice Generator",
-                        "3 / month",
-                        "Unlimited + Branding",
-                        "Unlimited + Branding",
-                      ],
-                      [
-                        "Dynamic QR Codes",
-                        "1 (15-day expiry)",
-                        "Unlimited (Lifetime)",
-                        "Unlimited + Analytics",
-                      ],
-                      [
-                        "SERP Previewer",
-                        "5 scrapes / mo",
-                        "Unlimited",
-                        "Unlimited",
-                      ],
-                      [
-                        "Keyword Density Analyzer",
-                        "5 crawls / mo",
-                        "Unlimited",
-                        "Unlimited",
-                      ],
-                      [
-                        "SEO Readability Grader",
-                        "5 crawls / mo",
-                        "Unlimited",
-                        "Unlimited",
-                      ],
-                      [
-                        "AI Readability Improver",
-                        "—",
-                        "Costs 2 credits / use",
-                        "Costs 2 credits / use",
-                      ],
-                      [
-                        "Broken Link Auditor",
-                        "3 audits / mo",
-                        "Unlimited",
-                        "Unlimited",
-                      ],
-                      ["Advanced SEO Schema", "Basic", "Advanced", "Advanced"],
-                      ["Cloud progress saving", "—", "Unlimited", "Unlimited"],
-                      [
-                        "Priority AI Queue",
-                        "—",
-                        "Included",
-                        "Highest Priority",
-                      ],
-                      ["Ad-Free Experience", "—", "✓", "✓"],
-                      ["History Tracking", "—", "✓", "✓"],
-                      ["Priority Tool Requests", "—", "—", "Included"],
-                      ["Early Access", "—", "✓", "✓"],
-                      ["Priority Support", "—", "Email", "24/7 Dedicated"],
-                    ].map(([feature, free, pro, business], i) => (
-                      <tr
-                        key={i}
-                        className="hover:bg-muted/5 transition-colors"
-                      >
-                        <td className="py-4 px-8 font-bold whitespace-nowrap">
-                          {feature}
-                        </td>
-                        <td className="py-4 px-8 text-center text-muted-foreground whitespace-nowrap">
-                          {free}
-                        </td>
-                        <td className="py-4 px-8 text-center text-primary font-black whitespace-nowrap">
-                          {pro}
-                        </td>
-                        <td className="py-4 px-8 text-center text-foreground font-black whitespace-nowrap">
-                          {business}
-                        </td>
-                      </tr>
+                    {tableSections.map((section, sIdx) => (
+                      <React.Fragment key={sIdx}>
+                        {/* Section Header */}
+                        <tr className="bg-muted/30">
+                          <td colSpan={4} className="py-3 px-8 text-sm font-black text-foreground uppercase tracking-widest border-y">
+                            {section.title} {section.subtitle && <span className="text-muted-foreground font-semibold normal-case tracking-normal ml-2">{section.subtitle}</span>}
+                          </td>
+                        </tr>
+                        {/* Section Rows */}
+                        {section.rows.map(([feature, free, pro, business], rIdx) => (
+                          <tr
+                            key={`${sIdx}-${rIdx}`}
+                            className="hover:bg-muted/5 transition-colors"
+                          >
+                            <td className="py-4 px-8 font-bold whitespace-nowrap">
+                              {feature}
+                            </td>
+                            <td className="py-4 px-8 text-center text-muted-foreground whitespace-nowrap">
+                              {free === "✓" ? <Check className="h-5 w-5 mx-auto text-green-500" /> : free}
+                            </td>
+                            <td className="py-4 px-8 text-center text-primary font-black whitespace-nowrap">
+                              {pro === "✓" ? <Check className="h-5 w-5 mx-auto text-primary" /> : pro}
+                            </td>
+                            <td className="py-4 px-8 text-center text-foreground font-black whitespace-nowrap">
+                              {business === "✓" ? <Check className="h-5 w-5 mx-auto text-foreground" /> : business}
+                            </td>
+                          </tr>
+                        ))}
+                      </React.Fragment>
                     ))}
                   </tbody>
                 </table>
