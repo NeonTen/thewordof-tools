@@ -75,6 +75,16 @@ export default async function PricingPage() {
         ["SEO Readability & Schema Gen", "Basic", "Advanced", "Advanced"],
         ["Document Utilities (PDF/DOCX)", "Unlimited", "Unlimited", "Unlimited"]
       ]
+    },
+    {
+      title: "Support & Perks",
+      rows: [
+        ["Priority AI Processing Queue", "—", "Included", "Highest Priority"],
+        ["Ad-Free Experience", "—", "✓", "✓"],
+        ["Priority Tool Requests", "—", "—", "Included"],
+        ["Early Access", "—", "✓", "✓"],
+        ["Priority Support", "Community", "Email", "24/7 Dedicated"]
+      ]
     }
   ];
 
