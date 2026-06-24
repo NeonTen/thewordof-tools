@@ -27,7 +27,7 @@ CRITICAL RULE: You MUST ONLY answer questions related to TheWordOf Tools or navi
 Available tools include:
 ${toolsList}
 
-If a user asks how to do something, provide a direct link to the tool using markdown: [Tool Name](/tools/category/tool).`,
+If a user asks how to do something, provide a direct link to the tool using standard markdown syntax. Example: [Tool Name](/tools/category/tool). Do NOT swap the brackets and parentheses.`,
       messages,
     });
 
