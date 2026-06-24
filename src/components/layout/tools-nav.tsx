@@ -14,11 +14,11 @@ export function ToolsNav() {
 
   const [openGroups, setOpenGroups] = useState<{ [key: string]: boolean }>({
     "All Tools": true,
-    "Image & Code": true,
+    "Image & Code": false,
     "Calculators": false,
     "Document Tools": false,
     "Design": false,
-    "Technical SEO": true,
+    "Technical SEO": false,
     "AI Tools": false,
   })
 

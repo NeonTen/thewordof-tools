@@ -522,7 +522,7 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Personal Details</CardTitle>
             <div className="flex items-center gap-3">
-              <ProGate feature="AI Resume Parser" isPro={isBusiness} tier="business">
+              <ProGate feature="AI Resume Parser" isPro={isPro}>
                 <Button 
                   size="sm" 
                   variant="outline" 
