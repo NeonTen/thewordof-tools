@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       .join("\n");
 
     const result = streamText({
-      model: groq("llama3-8b-8192"),
+      model: groq("llama-3.1-8b-instant"),
       maxRetries: 0,
       system: `You are the friendly, helpful AI Assistant for TheWordOf Tools. 
 Your goal is to help users navigate our suite of free tools. 
