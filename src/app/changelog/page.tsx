@@ -14,11 +14,17 @@ import {
   Layers,
 } from "lucide-react";
 
-export const metadata = generateSeoMetadata({
-  title: "Changelog & Product Updates | TheWordOf Tools",
-  description:
-    "Stay up-to-date with our latest tools, feature additions, fixes, and optimizations.",
-});
+export const metadata = {
+  ...generateSeoMetadata({
+    title: "Changelog & Product Updates | TheWordOf Tools",
+    description:
+      "Stay up-to-date with our latest tools, feature additions, fixes, and optimizations.",
+  }),
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 interface Section {
   title: string;

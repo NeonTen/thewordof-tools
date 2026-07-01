@@ -58,7 +58,7 @@ export default async function Home() {
               </span>
             </h1>
             <p className="max-w-2xl mx-auto text-muted-foreground text-lg sm:text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
-              Imagine generating invoices, optimizing images, and crafting SEO—all from one sleek dashboard—without switching tabs ever again.
+              Stop switching tabs. Generate invoices, optimize images, and run SEO audits—all from one simple dashboard.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-700">
               <Link href={session ? "/dashboard" : "/tools"}>
@@ -115,7 +115,7 @@ export default async function Home() {
                 },
                 {
                   title: "AI Resume & CV Builder",
-                  desc: "Design clean, professional Resumes in seconds using ATS-optimized layouts, AI summary writers, and LinkedIn import.",
+                  desc: "Create clean, professional resumes in seconds. Built with ATS-friendly layouts and easy AI summaries.",
                   features: [
                     "10 Premium templates",
                     "AI Resume parser & import",

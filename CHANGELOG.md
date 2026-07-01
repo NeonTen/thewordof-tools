@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.0] - 2026-07-01
+
+### Added
+- **AI Search & GEO Readiness**:
+  - Added a comprehensive `public/llms-full.txt` file containing detailed descriptions, documentation, and specs of all platform tool suites (AI Tools, Calculators, Design Tools, Document Tools, Image/Code Utilities, and Technical SEO Tools) for AI agent parsing.
+  - Implemented Organization schema markup in the layout JSON-LD.
+- **Agentic SEO Skills**:
+  - Integrated the full custom agentic SEO skills framework under `.agents/skills` to automate on-page and technical SEO checks locally.
+
+### Changed
+- **SEO & Readability Improvements**:
+  - Simplified landing page hero and feature descriptions in `src/app/page.tsx` to lower sentence complexity and improve Flesch reading ease scores.
+  - Shortened default meta description length to under 160 characters in `src/app/layout.tsx` to prevent search engine truncation.
+  - Injected Organization JSON-LD structured data in `src/app/layout.tsx` for entity credibility.
+  - Configured 6 recommended security headers globally (HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy) in `next.config.ts`.
+  - Configured `robots: { index: false, follow: true }` metadata for the `/changelog` route to make it noindex.
+
 ## [1.1.9] - 2026-06-24
 
 ### Changed

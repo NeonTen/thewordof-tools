@@ -1,0 +1,125 @@
+# TheWordOf Tools (Full Documentation)
+
+> TheWordOf Tools provides a diverse collection of online tools for various digital needs, encompassing AI-powered utilities, calculators, design aids, document management, image and code processing, and technical SEO functionalities. All core processing (like PDF merging, code minification, or image scaling) happens locally inside the user's web browser for maximum privacy and performance.
+
+---
+
+## Tool Categories & Specifications
+
+### 1. AI Tools
+- **AI Caption Generator**: Creates engaging, high-conversion captions and hashtags for social media platforms (Instagram, TikTok, LinkedIn, YouTube).
+- **AI CV Builder**: Builds clean, ATS-optimized professional resumes using custom layouts and automated summary writers.
+- **AI Product Description Generator**: Generates persuasive e-commerce product descriptions tailored for target demographics.
+- **AI Prompt Generator**: Helps users craft optimized prompts for LLMs (such as ChatGPT, Gemini, or Claude).
+- **AI SEO Generator**: Generates page titles, meta descriptions, and keyword structures optimized for Google Search.
+
+### 2. Calculators
+- **Aspect Ratio Calculator**: Calculates aspect ratios (e.g., 16:9, 4:3) and computes dimensions for responsive images and video blocks.
+- **BMI Calculator**: Computes Body Mass Index (BMI) and provides weight status categories based on standard metrics.
+- **Color Converter**: Converts colors between HEX, RGB, HSL, and CMYK models.
+- **Compound Interest Calculator**: Estimates investment growth over time with annual/monthly compounding periods.
+- **EMI Calculator**: Determines monthly loan repayments (Equated Monthly Installments) with clear amortization schedules.
+- **GST Calculator**: Calculates Goods and Services Tax (inclusive or exclusive) using custom rates.
+- **Line Height Calculator**: Determines perfect typography line-heights based on font size and typographic scale.
+- **PX to REM Converter**: Instantly converts pixel sizes to REMs for responsive web styling.
+- **Salary to Hourly Calculator**: Converts annual or monthly salaries into hourly wage equivalents.
+- **SIP Calculator**: Projects returns on Systematic Investment Plans for mutual funds.
+- **Word Counter**: Computes word counts, character counts, and estimated reading time.
+
+### 3. Design Tools
+- **Color Contrast Checker**: Evaluates color pairs against WCAG 2.1 AA/AAA contrast guidelines.
+- **Color Contrast Scanner**: Scans web page screenshots to detect accessibility contrast failures.
+- **Color Palette Generator**: Creates beautiful, harmonized color palettes (monochromatic, analogous, triadic).
+- **Gradient Generator**: Builds multi-stop CSS gradients with visual previews.
+- **Gradient Palette**: A curated collection of modern, copy-pasteable CSS gradients.
+
+### 4. Document Tools
+- **Document Converter**: Converts Word (DOCX) files to HTML, Markdown, or PDFs locally.
+- **Invoice Generator**: Generates professional PDF invoices with custom branding, tax configurations, and automatic calculation formulas.
+- **PDF Merger**: Merges multiple PDF files into a single document entirely in-browser.
+- **PDF Watermark Tool**: Injects custom text or image watermarks onto PDF pages securely.
+- **Report Generator**: Generates custom PDF summaries, timelines, and analytical reports.
+
+### 5. Image & Code Tools
+- **Code Minifier**: Minifies HTML, CSS, and JavaScript files to reduce page weight and load times.
+- **Image Converter**: Converts images (PNG, JPEG, WebP) and handles scaling or format optimization.
+- **QR Code Generator**: Generates dynamic QR codes with live scan tracking, redirection targets, and custom styling.
+- **SVG Compressor**: Optimizes and minifies SVG files safely using SVGO rules.
+- **Text Diff Tool**: Highlights side-by-side text differences (similar to git diff).
+
+### 6. Technical SEO Tools
+- **Broken Links Checker**: Scans target URLs to find 404s, redirect chains, or server connection errors.
+- **Keyword Density Checker**: Analyzes pages to determine keyword placement frequencies and detect keyword stuffing.
+- **LLMs.txt Generator**: Quickly scaffolds `llms.txt` config files for AI search engine accessibility.
+- **Readability Grader**: Scores page readability using Flesch-Kincaid and Flesch Reading Ease formulas.
+- **Robots.txt Generator**: Generates customized `robots.txt` files mapping out paths and user-agent rules.
+- **Schema Generator**: Builds JSON-LD structured data (Organization, LocalBusiness, Product, FAQ) for Google Rich Snippets.
+- **SERP Preview Tool**: Visualizes how page titles and meta descriptions appear in Google Search results on desktop and mobile.
+- **Sitemap Validator**: Validates XML sitemaps to verify link structures, priority tags, and formatting compliance.
+
+---
+
+## Navigation Directory
+
+### Core Platform Pages
+* [Home](https://thewordof.com)
+* [All Tools Directory](https://thewordof.com/tools)
+* [Pricing and Plans](https://thewordof.com/pricing)
+* [Release Changelog](https://thewordof.com/changelog)
+
+### AI Suite
+* [AI Tools Overview](https://thewordof.com/tools/ai-tools)
+* [AI Caption Generator Tool](https://thewordof.com/tools/ai-tools/caption-generator)
+* [AI CV Builder Tool](https://thewordof.com/tools/ai-tools/cv-builder)
+* [AI Product Description Tool](https://thewordof.com/tools/ai-tools/product-description)
+* [AI Prompt Generator Tool](https://thewordof.com/tools/ai-tools/prompt-generator)
+* [AI SEO Generator Tool](https://thewordof.com/tools/ai-tools/seo-generator)
+
+### Calculators Suite
+* [Calculators Overview](https://thewordof.com/tools/calculators)
+* [Aspect Ratio Calculator Tool](https://thewordof.com/tools/calculators/aspect-ratio)
+* [BMI Calculator Tool](https://thewordof.com/tools/calculators/bmi)
+* [Color Converter Tool](https://thewordof.com/tools/calculators/color-converter)
+* [Compound Interest Calculator Tool](https://thewordof.com/tools/calculators/compound-interest)
+* [EMI Calculator Tool](https://thewordof.com/tools/calculators/emi)
+* [GST Calculator Tool](https://thewordof.com/tools/calculators/gst-calculator)
+* [Line Height Calculator Tool](https://thewordof.com/tools/calculators/line-height)
+* [PX to REM Converter Tool](https://thewordof.com/tools/calculators/px-to-rem)
+* [Salary to Hourly Calculator Tool](https://thewordof.com/tools/calculators/salary-to-hourly)
+* [SIP Calculator Tool](https://thewordof.com/tools/calculators/sip)
+* [Word Counter Tool](https://thewordof.com/tools/calculators/word-counter)
+
+### Design Suite
+* [Design Tools Overview](https://thewordof.com/tools/design)
+* [Color Contrast Checker Tool](https://thewordof.com/tools/design/color-contrast)
+* [Color Contrast Scanner Tool](https://thewordof.com/tools/design/color-contrast-scanner)
+* [Color Palette Generator Tool](https://thewordof.com/tools/design/color-palette)
+* [Gradient Generator Tool](https://thewordof.com/tools/design/gradient-generator)
+* [Gradient Palette Tool](https://thewordof.com/tools/design/gradient-palette)
+
+### Document Suite
+* [Document Tools Overview](https://thewordof.com/tools/document-tools)
+* [Document Converter Tool](https://thewordof.com/tools/document-tools/doc-converter)
+* [Invoice Generator Tool](https://thewordof.com/tools/document-tools/invoice-generator)
+* [PDF Merger Tool](https://thewordof.com/tools/document-tools/pdf-merger)
+* [PDF Watermark Tool](https://thewordof.com/tools/document-tools/pdf-watermark)
+* [Report Generator Tool](https://thewordof.com/tools/document-tools/report)
+
+### Image & Code Suite
+* [Image & Code Tools Overview](https://thewordof.com/tools/image-code)
+* [Code Minifier Tool](https://thewordof.com/tools/image-code/code-minifier)
+* [Image Converter Tool](https://thewordof.com/tools/image-code/image-converter)
+* [QR Code Generator Tool](https://thewordof.com/tools/image-code/qr-code)
+* [SVG Compressor Tool](https://thewordof.com/tools/image-code/svg-compressor)
+* [Text Diff Tool](https://thewordof.com/tools/image-code/text-diff)
+
+### Technical SEO Suite
+* [Technical SEO Overview](https://thewordof.com/tools/technical-seo)
+* [Broken Links Checker Tool](https://thewordof.com/tools/technical-seo/broken-links)
+* [Keyword Density Checker Tool](https://thewordof.com/tools/technical-seo/keyword-density)
+* [LLMs.txt Generator Tool](https://thewordof.com/tools/technical-seo/llms-txt)
+* [Readability Grader Tool](https://thewordof.com/tools/technical-seo/readability-grader)
+* [Robots.txt Generator Tool](https://thewordof.com/tools/technical-seo/robots-generator)
+* [Schema Generator Tool](https://thewordof.com/tools/technical-seo/schema-generator)
+* [SERP Preview Tool](https://thewordof.com/tools/technical-seo/serp-preview)
+* [Sitemap Validator Tool](https://thewordof.com/tools/technical-seo/sitemap-validator)

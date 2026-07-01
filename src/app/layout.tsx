@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s | TheWordOf Tools",
   },
   description:
-    "An ever-expanding collection of professional AI tools in one dashboard. Generate professional invoices, create viral AI captions, optimize images, build CVs, and more - all in one dashboard.",
+    "An ever-expanding collection of professional AI tools. Generate invoices, create viral captions, optimize images, build CVs, and more—all in one dashboard.",
   keywords: [
     "AI Tools",
     "Invoice Generator",
@@ -71,6 +71,18 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "TheWordOf Tools",
+  "url": "https://thewordof.com",
+  "logo": "https://thewordof.com/favicon.ico",
+  "sameAs": [
+    "https://twitter.com/thewordof",
+    "https://www.linkedin.com/company/thewordof"
+  ]
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -79,6 +91,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <Providers>{children}</Providers>
       </body>
     </html>
