@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2026-07-10
+
+### Fixed
+- **Security Headers & Image Converter**:
+  - Allowed `blob:` URLs in the `Content-Security-Policy` image source (`img-src`) and worker source (`worker-src`) rules in `next.config.ts`. This fixes the broken image preview/drag-and-drop issue caused by the strict security headers introduced in v1.2.0.
+
 ## [1.2.0] - 2026-07-01
 
 ### Added
