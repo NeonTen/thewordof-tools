@@ -50,16 +50,7 @@ export async function POST(req: Request) {
         if (res.ok) {
           const html = await res.text();
           const matches = [...html.matchAll(/href=["']([^"']+)["']/gi)];
-          const baseUrl = new URL(websiteUrl);
-          const rawLinks = matches.map(m => {
-            try {
-              const url = new URL(m[1], websiteUrl);
-              return url.hostname === baseUrl.hostname ? url.href : null;
-            } catch {
-              return null;
-            }
-          }).filter(Boolean) as string[];
-          gatheredUrls = Array.from(new Set(rawLinks));
+          gatheredUrls = matches.map(m => m[1]);
         }
       } else if (specificUrls) {
         gatheredUrls = specificUrls.split('\n').map((u: string) => u.trim()).filter(Boolean);
@@ -69,8 +60,11 @@ export async function POST(req: Request) {
       // Fallback if fetch fails, pass empty
     }
 
+    const baseDomainUrl = websiteUrl || sitemapUrl || gatheredUrls[0] || "";
+    const cleanedUrls = cleanAndFilterUrls(gatheredUrls, baseDomainUrl);
+
     // Cap at 150 URLs to prevent timeouts and excessive context
-    const cappedUrls = gatheredUrls.slice(0, 150);
+    const cappedUrls = cleanedUrls.slice(0, 150);
 
     const prompt = `You are an AI SEO expert. Generate a professional llms.txt file strictly following the official llmstxt.org specification.
 
@@ -93,5 +87,65 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("AI_LLMS_TXT_ERROR", error);
     return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+export function cleanAndFilterUrls(urls: string[], baseUrlString: string): string[] {
+  if (!baseUrlString) return [];
+  try {
+    const baseUrl = new URL(baseUrlString);
+    const filtered = urls.map(u => {
+      try {
+        const url = new URL(u, baseUrlString);
+        
+        // 1. Must match hostname of the base URL
+        if (url.hostname !== baseUrl.hostname) {
+          return null;
+        }
+        
+        // 2. Remove hash anchors completely
+        url.hash = "";
+        
+        // 3. No query parameters allowed
+        if (url.search) {
+          return null;
+        }
+        
+        // 4. No static files/assets
+        const pathname = url.pathname.toLowerCase();
+        const fileExtensions = [
+          ".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp",
+          ".pdf", ".xml", ".ico", ".txt", ".woff", ".woff2", ".ttf", ".eot",
+          ".mp4", ".mp3", ".wav", ".zip", ".tar", ".gz"
+        ];
+        if (fileExtensions.some(ext => pathname.endsWith(ext))) {
+          return null;
+        }
+        
+        // 5. Exclude feeds, RSS, API and other non-content endpoints
+        const excludePatterns = [
+          /feed/i,
+          /rss/i,
+          /xmlrpc/i,
+          /wp-json/i,
+          /wp-admin/i,
+          /wp-content\/plugins/i,
+          /wp-content\/themes/i,
+          /oembed/i,
+          /rest_route/i
+        ];
+        if (excludePatterns.some(pattern => pattern.test(url.href))) {
+          return null;
+        }
+        
+        return url.href;
+      } catch {
+        return null;
+      }
+    }).filter(Boolean) as string[];
+    
+    return Array.from(new Set(filtered));
+  } catch {
+    return [];
   }
 }

@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1782283502.356298,
-    "ast_hash": "4eb4fdf4f42eeb8fb67003cd30d1608c",
+    "mtime": 1783656578.4320853,
+    "ast_hash": "887af4b9571202f1edbc2781712b9c68",
     "semantic_hash": ""
   },
   "test-prisma.ts": {
@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "next.config.ts": {
-    "mtime": 1782910640.922001,
-    "ast_hash": "3f1b1b88cc98f5e96c6cfd56eeb7de70",
+    "mtime": 1783150092.3354862,
+    "ast_hash": "ca7e596e8f300ca735aa23eebd55e107",
     "semantic_hash": ""
   },
   ".agents/skills/systematic-debugging/condition-based-waiting-example.ts": {
@@ -585,8 +585,8 @@
     "semantic_hash": ""
   },
   "src/app/api/ai/llms-txt/route.ts": {
-    "mtime": 1781997627.9122808,
-    "ast_hash": "55efd7d63875b844f54c1eb109872d7f",
+    "mtime": 1784601532.3563883,
+    "ast_hash": "9fad18ca3ade3154b3029992be75a3c6",
     "semantic_hash": ""
   },
   "src/app/api/ai/improve-readability/route.ts": {
@@ -1175,8 +1175,8 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1782284656.1483247,
-    "ast_hash": "6c647b14fe960b72714c4f5b7d58670f",
+    "mtime": 1783656582.8224676,
+    "ast_hash": "18a672b373456a248659ce876ba81783",
     "semantic_hash": ""
   },
   "README.md": {
@@ -3329,29 +3329,14 @@
     "ast_hash": "d542f47a41d052e9d3b663437001ee44",
     "semantic_hash": ""
   },
-  "ACTION-PLAN.md": {
-    "mtime": 1782910139.4098516,
-    "ast_hash": "57be25195f5d6af509bff27817a4bc8c",
-    "semantic_hash": ""
-  },
-  "FULL-AUDIT-REPORT.md": {
-    "mtime": 1782910139.4097369,
-    "ast_hash": "476287a99829fc76d6c19fd1ea252d1c",
-    "semantic_hash": ""
-  },
   "public/llms-full.txt": {
     "mtime": 1782911281.2577958,
     "ast_hash": "85461724ba49b239882d18247dd46966",
     "semantic_hash": ""
   },
-  "scratch/homepage.html": {
-    "mtime": 1782910903.743834,
-    "ast_hash": "b2a7d042746015e6b00585812619d455",
-    "semantic_hash": ""
-  },
-  "seo-report-thewordof_com.html": {
-    "mtime": 1782910139.4091136,
-    "ast_hash": "728ab5cb71632fcfb51ffd6ee73b3762",
+  "scratch/test-llms-txt-filter.ts": {
+    "mtime": 1784601518.4880505,
+    "ast_hash": "f5b5c254fd1fa48e09c433c2e8353fa7",
     "semantic_hash": ""
   }
 }

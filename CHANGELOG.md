@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2] - 2026-07-21
+
+### Fixed
+- **llms.txt Tool Improvements**:
+  - Filtered query parameters, hash anchor links, static files (images, CSS, JS, PDFs, etc.), feeds/RSS, and technical/REST API endpoints from crawled website/sitemap URLs to ensure only clean content links are output in the generated `llms.txt` file.
+  - Aligned client-side credit decrement logic to subtract `3` credits (matching the actual backend credit cost) instead of `1` credit.
+
 ## [1.2.1] - 2026-07-10
 
 ### Fixed

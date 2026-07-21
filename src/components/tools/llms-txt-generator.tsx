@@ -22,6 +22,7 @@ export function LlmsTxtGenerator({
   const [localCredits, setLocalCredits] = useState<number | null>(creditsRemaining)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLocalCredits(creditsRemaining)
   }, [creditsRemaining])
 
@@ -52,7 +53,7 @@ export function LlmsTxtGenerator({
       })
 
       if (res.ok && res.body) {
-        setLocalCredits(prev => (prev !== null ? Math.max(0, prev - 1) : null))
+        setLocalCredits(prev => (prev !== null ? Math.max(0, prev - 3) : null))
         const reader = res.body.getReader()
         const decoder = new TextDecoder()
         while (true) {
@@ -98,28 +99,26 @@ export function LlmsTxtGenerator({
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
                   <Sparkles className="h-6 w-6 text-primary animate-pulse" />
                 </div>
-                <div className="space-y-2 max-w-xs">
-                  <h3 className="font-bold text-base">AI Tool Requires Account</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    AI utilities require a free account to track monthly credit allocations. Register today to claim 20 free monthly AI credits!
-                  </p>
+                <div className="max-w-sm space-y-2">
+                  <h3 className="font-bold text-base">Authentication Required</h3>
+                  <p className="text-xs text-muted-foreground">Sign in to generate optimization files for search engines and AI crawlers.</p>
                 </div>
-<div className="flex gap-3 w-full">
-  <Button className="flex-1 font-bold h-9 text-xs" asChild>
-    <Link href="/login">Login</Link>
-  </Button>
-  <Button variant="outline" className="flex-1 font-bold h-9 text-xs" asChild>
-    <Link href="/register">Sign Up</Link>
-  </Button>
-</div>
+                <div className="flex w-full gap-4 max-w-sm">
+                  <Button className="flex-1 font-bold h-9 text-xs" asChild>
+                    <Link href="/login">Login</Link>
+                  </Button>
+                  <Button variant="outline" className="flex-1 font-bold h-9 text-xs" asChild>
+                    <Link href="/register">Sign Up</Link>
+                  </Button>
                 </div>
+              </div>
 
             ) : (
               <form onSubmit={handleGenerate} className="space-y-4">
                 <div className="space-y-6">
                   <div className="space-y-2">
                     <Label className="font-bold">Sitemap URL</Label>
-                    <p className="text-xs text-muted-foreground">Best for large sites: point to your sitemap.xml and we'll crawl all listed pages.</p>
+                    <p className="text-xs text-muted-foreground">Best for large sites: point to your sitemap.xml and we&apos;ll crawl all listed pages.</p>
                     <Input 
                       placeholder="https://example.com/sitemap.xml" 
                       value={formData.sitemapUrl}
@@ -138,7 +137,7 @@ export function LlmsTxtGenerator({
 
                   <div className="space-y-2">
                     <Label className="font-bold">Website URL</Label>
-                    <p className="text-xs text-muted-foreground">We'll scan your homepage and follow internal links automatically.</p>
+                    <p className="text-xs text-muted-foreground">We&apos;ll scan your homepage and follow internal links automatically.</p>
                     <Input 
                       placeholder="https://example.com" 
                       value={formData.websiteUrl}
