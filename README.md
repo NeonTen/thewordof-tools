@@ -2,12 +2,6 @@
 
 A highly optimized, premium utility and generator suite built using Next.js 16 (App Router), React 19, Tailwind CSS v4, and Prisma. The suite provides custom developer, designer, calculator, and productivity tools utilizing a premium glassmorphism design system.
 
-![Tools Suite Dashboard Mockup](docs/screenshots/tools_suite_dashboard.png)
-*Desktop Dashboard Overview*
-
-![Tools Suite Detail Mockup](docs/screenshots/tools_suite_detail.png)
-*Tool Detail View (LLMS.TXT Generator in Action)*
-
 ## Features & Included Tools
 
 Our suite includes a curated collection of 35+ tools organized under cohesive layout groups, featuring client-side usage limits and SEO tracking:
