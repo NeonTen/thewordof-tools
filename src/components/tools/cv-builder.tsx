@@ -44,6 +44,17 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
   const [photo, setPhoto] = useState<string | null>(null)
   const [skillMode, setSkillMode] = useState<'text' | 'bars'>('text')
   const [showAIParserModal, setShowAIParserModal] = useState(false)
+  const [initialParserText, setInitialParserText] = useState("")
+
+  React.useEffect(() => {
+    const savedText = localStorage.getItem("ats_import_text")
+    if (savedText) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setInitialParserText(savedText)
+      setShowAIParserModal(true)
+      localStorage.removeItem("ats_import_text")
+    }
+  }, [])
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [upgradeModalType, setUpgradeModalType] = useState<"template" | "print">("template")
 
@@ -993,6 +1004,7 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
     </div>
     {showAIParserModal && (
       <AIParserModal
+        initialText={initialParserText}
         onApply={handleApplyAIData}
         onClose={() => setShowAIParserModal(false)}
       />

@@ -9,10 +9,11 @@ export type { CVParserResult }
 interface AIParserModalProps {
   onApply: (data: CVParserResult) => void
   onClose: () => void
+  initialText?: string
 }
 
-export function AIParserModal({ onApply, onClose }: AIParserModalProps) {
-  const [text, setText] = useState("")
+export function AIParserModal({ onApply, onClose, initialText = "" }: AIParserModalProps) {
+  const [text, setText] = useState(initialText)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [parsedData, setParsedData] = useState<CVParserResult | null>(null)
