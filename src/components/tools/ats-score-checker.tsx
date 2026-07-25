@@ -8,6 +8,7 @@ import { Sparkles, CheckCircle2, XCircle, RefreshCw, Download } from "lucide-rea
 import Link from "next/link"
 import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts"
 import { ResumeUploader } from "./resume-uploader"
+import { cn } from "@/lib/utils"
 
 type AtsResult = {
   score: number
@@ -26,6 +27,8 @@ export function AtsScoreChecker({
   const [resumeText, setResumeText] = useState("")
   const [jobDescription, setJobDescription] = useState("")
   const [result, setResult] = useState<AtsResult | null>(null)
+  const [improvedResult, setImprovedResult] = useState<AtsResult | null>(null)
+  const [isReEvaluating, setIsReEvaluating] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showScore, setShowScore] = useState(false)
   const [isFixing, setIsFixing] = useState(false)
@@ -40,6 +43,7 @@ export function AtsScoreChecker({
     e.preventDefault()
     setIsLoading(true)
     setResult(null)
+    setImprovedResult(null)
     setShowScore(false)
     setFixedResume("")
 
@@ -64,6 +68,7 @@ export function AtsScoreChecker({
   const handleFixResume = async () => {
     setIsFixing(true)
     setFixedResume("")
+    setImprovedResult(null)
     try {
       const res = await fetch("/api/ai/resume-fixer", {
         method: "POST",
@@ -77,10 +82,32 @@ export function AtsScoreChecker({
         setHasImproved(true)
         const reader = res.body.getReader()
         const decoder = new TextDecoder()
+        let fullFixed = ""
         while (true) {
           const { done, value } = await reader.read()
           if (done) break
-          setFixedResume(prev => prev + decoder.decode(value, { stream: true }))
+          const chunk = decoder.decode(value, { stream: true })
+          fullFixed += chunk
+          setFixedResume(prev => prev + chunk)
+        }
+
+        if (fullFixed.trim()) {
+          setIsReEvaluating(true)
+          try {
+            const evalRes = await fetch("/api/ai/ats-score-checker", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ resumeText: fullFixed, jobDescription })
+            })
+            if (evalRes.ok) {
+              const evalData = await evalRes.json()
+              setImprovedResult(evalData)
+            }
+          } catch (err) {
+            console.error("Auto score re-evaluation failed", err)
+          } finally {
+            setIsReEvaluating(false)
+          }
         }
       }
     } finally {
@@ -303,10 +330,35 @@ export function AtsScoreChecker({
 
           {fixedResume && (
             <Card className="mt-12 border-primary/20 animate-in fade-in slide-in-from-bottom-8 duration-700">
-              <CardHeader className="flex flex-row items-center justify-between">
+              <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <CardTitle>Improved Resume (ATS Optimized)</CardTitle>
-                  <CardDescription>Your rewritten resume naturally incorporates the missing keywords.</CardDescription>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <CardTitle className="text-lg">Improved Resume (ATS Optimized)</CardTitle>
+                    {improvedResult && result && (
+                      <div className="flex items-center gap-2">
+                        <span className={cn(
+                          "px-2.5 py-0.5 rounded-full text-xs font-black border",
+                          improvedResult.score >= 80 ? "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30" : "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border-yellow-500/30"
+                        )}>
+                          {improvedResult.score}% ATS Match
+                        </span>
+                        {improvedResult.score > result.score && (
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                            +{improvedResult.score - result.score}% Boost
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    {isReEvaluating && (
+                      <span className="flex items-center gap-1.5 text-xs text-muted-foreground animate-pulse font-semibold">
+                        <span className="h-3 w-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        Calculating Improved Score...
+                      </span>
+                    )}
+                  </div>
+                  <CardDescription className="mt-1">
+                    Your rewritten resume naturally incorporates missing keywords to maximize your ATS match score.
+                  </CardDescription>
                 </div>
                 <Button variant="outline" size="sm" onClick={handleDownload} className="gap-2 shrink-0">
                   <Download className="h-4 w-4" />
@@ -319,6 +371,30 @@ export function AtsScoreChecker({
                   readOnly 
                   className="h-96 resize-none font-mono text-sm"
                 />
+                <div className="mt-6 p-5 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-sm flex items-center gap-2">
+                      <Sparkles className="h-4 w-4 text-primary" />
+                      Turn this ATS-Optimized Resume into a Professional CV
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      Import this updated text directly into our AI CV Builder to generate a beautifully styled PDF or Word resume.
+                    </p>
+                  </div>
+                  <Button 
+                    className="gap-2 font-bold shrink-0 rounded-xl shadow-md shadow-primary/20"
+                    onClick={() => {
+                      if (fixedResume) {
+                        localStorage.setItem("ats_import_text", fixedResume)
+                      }
+                      window.location.href = "/tools/ai-tools/cv-builder"
+                    }}
+                  >
+                    <Sparkles className="h-4 w-4" />
+                    Turn into Professional CV
+                  </Button>
+                </div>
+
                 <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground bg-muted/30 p-4 rounded-xl">
                   <p>
                     Want this in a different format? Use our{" "}
