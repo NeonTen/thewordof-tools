@@ -400,10 +400,16 @@ export function CvBuilder({
       return <p style={{ margin: 0, ...style }}>{`/* ${text} */`}</p>
     }
 
-    const lines = text.split("\n").map(l => l.trim()).filter(Boolean)
+    // Normalize inline bullet separators like ".- ", ". - ", or " - " after sentences
+    const normalized = text
+      .replace(/([a-zA-Z0-9)])\s*\.-\s*/g, "$1.\n- ")
+      .replace(/([a-zA-Z0-9)])\s+-\s+(?=[A-Z])/g, "$1.\n- ")
+      .replace(/\.{2,}/g, ".")
+
+    const lines = normalized.split("\n").map(l => l.trim()).filter(Boolean)
     const bulletRegex = /^([-*•]|\d+[.)])\s+/
 
-    const hasBullets = lines.some(l => bulletRegex.test(l))
+    const hasBullets = lines.some(l => bulletRegex.test(l)) || text.includes(".- ")
 
     if (hasBullets) {
       return (
