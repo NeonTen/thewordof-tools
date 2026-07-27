@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.3] - 2026-07-27
+
+### Added
+- **ATS Score Checker Improvements**:
+  - Automatically re-evaluates the improved resume against the job description to calculate and display the new ATS match score and score boost percentage.
+  - Added a CTA banner in the "Improved Resume (ATS Optimized)" card linking directly to the AI CV Builder (`/tools/ai-tools/cv-builder`).
+  - Integrated seamless `localStorage` handoff so clicking the CTA opens the AI Parser modal in the CV Builder pre-filled with the improved resume text.
+
 ## [1.2.2] - 2026-07-21
 
 ### Fixed
