@@ -38,7 +38,15 @@ const TEMPLATES = [
 
 const generateUniqueId = () => Date.now() + Math.random()
 
-export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boolean; isBusiness?: boolean }) {
+export function CvBuilder({ 
+  isPro = false, 
+  isBusiness = false,
+  creditsRemaining = null
+}: { 
+  isPro?: boolean; 
+  isBusiness?: boolean;
+  creditsRemaining?: number | null;
+}) {
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
   const [templateId, setTemplateId] = useState('modern')
   const [photo, setPhoto] = useState<string | null>(null)
@@ -1088,6 +1096,7 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
     {showAIParserModal && (
       <AIParserModal
         initialText={initialParserText}
+        creditsRemaining={creditsRemaining}
         onApply={handleApplyAIData}
         onClose={() => setShowAIParserModal(false)}
       />

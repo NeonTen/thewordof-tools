@@ -10,13 +10,15 @@ interface AIParserModalProps {
   onApply: (data: CVParserResult) => void
   onClose: () => void
   initialText?: string
+  creditsRemaining?: number | null
 }
 
-export function AIParserModal({ onApply, onClose, initialText = "" }: AIParserModalProps) {
+export function AIParserModal({ onApply, onClose, initialText = "", creditsRemaining = null }: AIParserModalProps) {
   const [text, setText] = useState(initialText)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [parsedData, setParsedData] = useState<CVParserResult | null>(null)
+  const [localCredits, setLocalCredits] = useState<number | null>(creditsRemaining)
 
   const handleParse = async () => {
     if (!text.trim() || text.trim().length < 100) {
@@ -43,6 +45,9 @@ export function AIParserModal({ onApply, onClose, initialText = "" }: AIParserMo
           setError("AI was unable to extract CV data from your text. Please verify the content and try again.")
         }
       } else {
+        if (localCredits !== null) {
+          setLocalCredits(prev => (prev !== null ? Math.max(0, prev - 3) : null))
+        }
         setParsedData(data)
       }
     } catch (e) {
@@ -112,24 +117,30 @@ Smartworking Solutions (2022 - Present)
             )}
           </div>
 
-          <div className="flex gap-3">
-            <Button variant="outline" className="flex-1 rounded-2xl h-11" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button
-              disabled={isLoading}
-              onClick={handleParse}
-              className="flex-1 rounded-2xl h-11 bg-primary text-primary-foreground font-bold shadow-lg shadow-primary/20"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Parsing...
-                </>
-              ) : (
-                "✨ Parse & Import"
-              )}
-            </Button>
+          <div className="space-y-3">
+            <div className="flex gap-3">
+              <Button variant="outline" className="flex-1 rounded-2xl h-11" onClick={onClose}>
+                Cancel
+              </Button>
+              <Button
+                disabled={isLoading}
+                onClick={handleParse}
+                className="flex-1 rounded-2xl h-11 bg-primary text-primary-foreground font-bold shadow-lg shadow-primary/20"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Parsing...
+                  </>
+                ) : (
+                  "✨ Parse & Import"
+                )}
+              </Button>
+            </div>
+
+            <p className="text-[11px] text-muted-foreground text-center font-medium">
+              Costs 3 credits ({localCredits ?? 0} remaining)
+            </p>
           </div>
         </div>
       </div>
