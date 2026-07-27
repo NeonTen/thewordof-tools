@@ -48,6 +48,7 @@ export async function POST(req: Request) {
         email: z.string(),
         phone: z.string(),
         location: z.string(),
+        summaryHeading: z.string().describe("The exact summary section title used in raw text e.g. 'Professional Summary' or 'Summary'"),
         summary: z.string(),
         skillsText: z.string(),
         experience: z.array(
@@ -72,13 +73,21 @@ export async function POST(req: Request) {
             desc: z.string(),
           }),
         ),
+        customSections: z.array(
+          z.object({
+            title: z.string(),
+            content: z.string(),
+          }),
+        ).describe("Additional custom content sections found after summary such as Certifications, Key Achievements, Languages, Publications, etc."),
       }),
       prompt: `You are an expert CV Parser.
 Extract professional info from this raw CV text, LinkedIn profile copy, or professional bio. 
 Return empty strings or arrays for missing details.
+Extract the exact summary section heading (e.g. "Professional Summary", "Executive Profile", or "Summary") into summaryHeading.
 Ensure skillsText is a flat comma-separated list of extracted skills (e.g. "React, Next.js, TypeScript").
 Identify any notable key projects (e.g., LearningMole, ProfileTree) and populate them in the projects array with title, link (if any), and desc.
-For experience[].desc, projects[].desc, and summary, format multi-item achievements, responsibilities, or bullet points as separate lines starting with "- " separated by newlines \n (e.g., "- Developed scalable APIs\n- Managed team of 4"). NEVER concatenate bullet items onto a single line or join them with ".-".
+Identify any extra custom content sections after summary (e.g., Certifications, Languages, Key Achievements, Awards, Volunteering, Publications) and populate them in customSections with title and content.
+For experience[].desc, projects[].desc, customSections[].content, and summary, format multi-item achievements, responsibilities, or bullet points as separate lines starting with "- " separated by newlines \n (e.g., "- Developed scalable APIs\n- Managed team of 4"). NEVER concatenate bullet items onto a single line or join them with ".-".
 
 Raw input text:
 ${text.substring(0, 30000)}
