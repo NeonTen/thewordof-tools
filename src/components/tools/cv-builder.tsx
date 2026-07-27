@@ -130,6 +130,11 @@ export function CvBuilder({
       skillsText: data.skillsText || prev.skillsText
     }))
 
+    // Map summaryHeading
+    if (data.summaryHeading) {
+      setHeadings(prev => ({ ...prev, summary: data.summaryHeading || prev.summary }))
+    }
+
     // Map experience
     if (data.experience && data.experience.length > 0) {
       setExperience(data.experience.map((exp, idx: number) => ({
@@ -158,6 +163,15 @@ export function CvBuilder({
         title: proj.title || "",
         link: proj.link || "",
         desc: proj.desc || ""
+      })))
+    }
+
+    // Map customSections
+    if (data.customSections && data.customSections.length > 0) {
+      setCustomSections(data.customSections.map((cs, idx: number) => ({
+        id: (Date.now() + idx + Math.random()).toString(),
+        title: cs.title || "Additional Section",
+        content: cs.content || ""
       })))
     }
   }

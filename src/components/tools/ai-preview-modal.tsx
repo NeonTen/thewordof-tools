@@ -9,6 +9,7 @@ export type CVParserResult = {
   email: string
   phone: string
   location: string
+  summaryHeading?: string
   summary: string
   skillsText: string
   experience: Array<{
@@ -26,6 +27,10 @@ export type CVParserResult = {
     title: string
     link: string
     desc: string
+  }>
+  customSections?: Array<{
+    title: string
+    content: string
   }>
 }
 
@@ -178,6 +183,26 @@ export function AIPreviewModal({ data, onApply, onBack, onClose }: AIPreviewModa
               </div>
             )}
           </div>
+
+          {/* Custom Content Sections */}
+          {data.customSections && data.customSections.length > 0 && (
+            <div className="space-y-3 rounded-2xl border p-4 bg-muted/10">
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-sm flex items-center gap-2 text-foreground">
+                  <User className="h-4 w-4 text-primary" /> Custom Sections ({data.customSections.length})
+                </h4>
+                <CheckCircle className="h-4 w-4 text-emerald-500 fill-emerald-500/10" />
+              </div>
+              <div className="space-y-3 pt-2">
+                {data.customSections.map((item, idx) => (
+                  <div key={idx} className="text-xs space-y-1 relative pl-4 border-l-2 border-primary/20 last:pb-0 pb-2">
+                    <h5 className="font-bold text-foreground">{item.title}</h5>
+                    {item.content && <p className="text-muted-foreground leading-relaxed pt-1 whitespace-pre-line">{item.content}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Skills */}
           <div className="space-y-3 rounded-2xl border p-4 bg-muted/10">
