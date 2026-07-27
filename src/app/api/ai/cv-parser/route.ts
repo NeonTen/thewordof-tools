@@ -78,6 +78,7 @@ Extract professional info from this raw CV text, LinkedIn profile copy, or profe
 Return empty strings or arrays for missing details.
 Ensure skillsText is a flat comma-separated list of extracted skills (e.g. "React, Next.js, TypeScript").
 Identify any notable key projects (e.g., LearningMole, ProfileTree) and populate them in the projects array with title, link (if any), and desc.
+For experience[].desc, projects[].desc, and summary, format multi-item achievements, responsibilities, or bullet points as clean lines starting with "- " (e.g., "- Developed scalable APIs\n- Managed team of 4").
 
 Raw input text:
 ${text.substring(0, 30000)}
