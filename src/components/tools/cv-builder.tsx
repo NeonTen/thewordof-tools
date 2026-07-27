@@ -377,18 +377,74 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
     )
   }
 
+  function FormattedCvText({ 
+    text, 
+    style = {}, 
+    templateId: tId = 'modern'
+  }: { 
+    text: string
+    style?: React.CSSProperties
+    templateId?: string
+  }) {
+    if (!text || !text.trim()) return null
+
+    if (tId === 'tech') {
+      return <p style={{ margin: 0, ...style }}>{`/* ${text} */`}</p>
+    }
+
+    const lines = text.split("\n").map(l => l.trim()).filter(Boolean)
+    const bulletRegex = /^([-*•]|\d+[.)])\s+/
+
+    const hasBullets = lines.some(l => bulletRegex.test(l))
+
+    if (hasBullets) {
+      return (
+        <ul style={{ margin: '4px 0', paddingLeft: '18px', listStyleType: 'disc', ...style }}>
+          {lines.map((line, idx) => {
+            const cleanLine = line.replace(bulletRegex, "").trim()
+            if (!cleanLine) return null
+            return (
+              <li key={idx} style={{ marginBottom: '3px', lineHeight: '1.5' }}>
+                {cleanLine}
+              </li>
+            )
+          })}
+        </ul>
+      )
+    }
+
+    if (lines.length > 1) {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          {lines.map((line, idx) => (
+            <p key={idx} style={{ margin: 0, lineHeight: '1.6', ...style }}>
+              {line}
+            </p>
+          ))}
+        </div>
+      )
+    }
+
+    return (
+      <p style={{ margin: 0, lineHeight: '1.6', ...style }}>
+        {text}
+      </p>
+    )
+  }
+
   const renderSummary = (accentColor = '#2563eb') => 
     renderSection("Summary", 
-      <p style={{ 
-        fontSize: '14px', 
-        lineHeight: '1.6', 
-        color: '#374151',
-        margin: 0,
-        textAlign: templateId === 'elegant' ? 'center' : 'left' as const,
-        fontStyle: (templateId === 'elegant' || templateId === 'minimalist-pro') ? 'italic' : 'normal'
-      }}>
-        {templateId === 'tech' ? `/* ${cv.summary} */` : cv.summary}
-      </p>, 
+      <FormattedCvText 
+        text={cv.summary} 
+        templateId={templateId}
+        style={{ 
+          fontSize: '14px', 
+          lineHeight: '1.6', 
+          color: '#374151',
+          textAlign: templateId === 'elegant' ? 'center' : 'left' as const,
+          fontStyle: (templateId === 'elegant' || templateId === 'minimalist-pro') ? 'italic' : 'normal'
+        }} 
+      />, 
       accentColor
     )
 
@@ -438,7 +494,13 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
                 <span>{e.role} {templateId === 'elegant' ? '|' : '@'} {e.company}</span>
                 <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: 'normal' }}>{e.period}</span>
               </div>
-              <p style={{ fontSize: '13px', color: '#4b5563', marginTop: '4px', margin: 0 }}>{e.desc}</p>
+              <div style={{ marginTop: '4px' }}>
+                <FormattedCvText 
+                  text={e.desc} 
+                  templateId={templateId}
+                  style={{ fontSize: '13px', color: '#4b5563' }} 
+                />
+              </div>
             </div>
           )
         })}
@@ -459,7 +521,13 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
                 <h3 style={{ fontWeight: '600', color: '#111827', margin: 0, fontSize: '14px' }}>{p.title}</h3>
                 <span style={{ fontSize: '12px', color: accentColor }}>{p.link}</span>
               </div>
-              <p style={{ fontSize: '14px', color: '#374151', margin: '4px 0 0 0' }}>{p.desc}</p>
+              <div style={{ marginTop: '4px' }}>
+                <FormattedCvText 
+                  text={p.desc} 
+                  templateId={templateId}
+                  style={{ fontSize: '14px', color: '#374151' }} 
+                />
+              </div>
             </div>
           )
         })}
@@ -576,7 +644,12 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
               AI Write
             </Button>
           </CardHeader>
-          <CardContent><Textarea name="summary" value={cv.summary} onChange={handleCvChange} rows={4} /></CardContent>
+          <CardContent>
+            <Textarea name="summary" value={cv.summary} onChange={handleCvChange} rows={4} />
+            <p className="text-[11px] text-muted-foreground mt-1.5">
+              Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists, or use line breaks for paragraphs.
+            </p>
+          </CardContent>
         </Card>
 
         <Card>
@@ -656,7 +729,12 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
                     <div className="space-y-2"><Label>Role</Label><Input value={exp.role} onChange={e => updateExperience(exp.id, 'role', e.target.value)} /></div>
                   </div>
                   <Input placeholder="Period" value={exp.period} onChange={e => updateExperience(exp.id, 'period', e.target.value)} />
-                  <Textarea value={exp.desc} onChange={e => updateExperience(exp.id, 'desc', e.target.value)} rows={3} />
+                  <div>
+                    <Textarea value={exp.desc} onChange={e => updateExperience(exp.id, 'desc', e.target.value)} rows={3} />
+                    <p className="text-[11px] text-muted-foreground mt-1">
+                      Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists.
+                    </p>
+                  </div>
                 </div>
               ))}
             </ProGate>
@@ -677,7 +755,12 @@ export function CvBuilder({ isPro = false, isBusiness = false }: { isPro?: boole
                     <div className="space-y-2"><Label>Title</Label><Input value={p.title} onChange={e => updateProject(p.id, 'title', e.target.value)} /></div>
                     <div className="space-y-2"><Label>Link</Label><Input value={p.link} onChange={e => updateProject(p.id, 'link', e.target.value)} /></div>
                   </div>
-                  <Textarea placeholder="Project summary..." value={p.desc} onChange={e => updateProject(p.id, 'desc', e.target.value)} rows={2} />
+                  <div>
+                    <Textarea placeholder="Project summary..." value={p.desc} onChange={e => updateProject(p.id, 'desc', e.target.value)} rows={2} />
+                    <p className="text-[11px] text-muted-foreground mt-1">
+                      Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists.
+                    </p>
+                  </div>
                 </div>
               ))}
             </ProGate>
