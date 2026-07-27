@@ -47,6 +47,35 @@ export function CvBuilder({
   isBusiness?: boolean;
   creditsRemaining?: number | null;
 }) {
+  const [headings, setHeadings] = useState({
+    summary: "Summary",
+    skills: "Skills & Expertise",
+    experience: "Experience",
+    projects: "Projects",
+    education: "Education"
+  })
+
+  const updateHeading = (key: keyof typeof headings, val: string) => {
+    setHeadings(prev => ({ ...prev, [key]: val }))
+  }
+
+  const [customSections, setCustomSections] = useState<Array<{ id: string; title: string; content: string }>>([])
+
+  const addCustomSection = () => {
+    setCustomSections(prev => [
+      ...prev,
+      { id: (Date.now() + Math.random()).toString(), title: "Additional Section", content: "" }
+    ])
+  }
+
+  const updateCustomSection = (id: string, field: 'title' | 'content', value: string) => {
+    setCustomSections(prev => prev.map(cs => cs.id === id ? { ...cs, [field]: value } : cs))
+  }
+
+  const removeCustomSection = (id: string) => {
+    setCustomSections(prev => prev.filter(cs => cs.id !== id))
+  }
+
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
   const [templateId, setTemplateId] = useState('modern')
   const [photo, setPhoto] = useState<string | null>(null)
@@ -447,7 +476,7 @@ export function CvBuilder({
   }
 
   const renderSummary = (accentColor = '#2563eb') => 
-    renderSection("Summary", 
+    renderSection(headings.summary || "Summary", 
       <FormattedCvText 
         text={cv.summary} 
         templateId={templateId}
@@ -463,7 +492,7 @@ export function CvBuilder({
     )
 
   const renderSkills = (accentColor = '#2563eb') => 
-    renderSection("Skills", 
+    renderSection(headings.skills || "Skills", 
       skillMode === 'text' ? (
         <p style={{ fontSize: '14px', color: '#374151', margin: 0 }}>{cv.skillsText}</p>
       ) : (
@@ -496,7 +525,7 @@ export function CvBuilder({
     )
 
   const renderExperience = (accentColor = '#2563eb') => 
-    renderSection("Experience", 
+    renderSection(headings.experience || "Experience", 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {experience.map(e => {
           if (templateId === 'tech') {
@@ -523,7 +552,7 @@ export function CvBuilder({
     )
 
   const renderProjects = (accentColor = '#2563eb') => 
-    projects.length > 0 && renderSection("Projects", 
+    projects.length > 0 && renderSection(headings.projects || "Projects", 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {projects.map(p => {
           if (templateId === 'tech') {
@@ -550,7 +579,7 @@ export function CvBuilder({
     )
 
   const renderEducation = (accentColor = '#2563eb') => 
-    education.length > 0 && renderSection("Education", 
+    education.length > 0 && renderSection(headings.education || "Education", 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {education.map(edu => {
           if (templateId === 'tech') {
@@ -569,6 +598,25 @@ export function CvBuilder({
       </div>, 
       accentColor
     )
+
+  const renderCustomSections = (accentColor = '#2563eb') => (
+    <>
+      {customSections.map(cs => (
+        cs.content && cs.content.trim() ? (
+          <React.Fragment key={cs.id}>
+            {renderSection(cs.title || "Additional Section", 
+              <FormattedCvText 
+                text={cs.content} 
+                templateId={templateId}
+                style={{ fontSize: '14px', lineHeight: '1.6', color: '#374151' }} 
+              />, 
+              accentColor
+            )}
+          </React.Fragment>
+        ) : null
+      ))}
+    </>
+  )
 
   return (<>
     {/* Global Print Styles to fix margins */}
@@ -652,7 +700,11 @@ export function CvBuilder({
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle>Summary</CardTitle>
+            <Input 
+              value={headings.summary} 
+              onChange={e => updateHeading('summary', e.target.value)} 
+              className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
+            />
             <Button size="sm" variant="secondary" onClick={generateAISummary} disabled={isGeneratingAI}>
               {isGeneratingAI ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Sparkles className="h-4 w-4 mr-2" />}
               AI Write
@@ -666,9 +718,48 @@ export function CvBuilder({
           </CardContent>
         </Card>
 
+        <div className="flex items-center justify-between py-1">
+          <ProGate feature="Custom Sections" isPro={isPro}>
+            <Button size="sm" variant="outline" onClick={addCustomSection} className="gap-1.5 font-bold">
+              <Plus className="h-4 w-4" /> Add Custom Section
+            </Button>
+          </ProGate>
+        </div>
+
+        {customSections.map(cs => (
+          <Card key={cs.id} className="border-primary/20">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <Input
+                value={cs.title}
+                onChange={e => updateCustomSection(cs.id, 'title', e.target.value)}
+                placeholder="Section Heading..."
+                className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[220px]"
+              />
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => removeCustomSection(cs.id)}>
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <Textarea
+                value={cs.content}
+                onChange={e => updateCustomSection(cs.id, 'content', e.target.value)}
+                rows={3}
+                placeholder="Add section details or bullet points..."
+              />
+              <p className="text-[11px] text-muted-foreground mt-1.5">
+                Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists, or use line breaks for paragraphs.
+              </p>
+            </CardContent>
+          </Card>
+        ))}
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Skills & Expertise</CardTitle>
+            <Input 
+              value={headings.skills} 
+              onChange={e => updateHeading('skills', e.target.value)} 
+              className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
+            />
             <ProGate feature="Skill Bars" isPro={isPro}>
               <Tabs 
                 value={skillMode} 
@@ -730,7 +821,11 @@ export function CvBuilder({
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Experience</CardTitle>
+            <Input 
+              value={headings.experience} 
+              onChange={e => updateHeading('experience', e.target.value)} 
+              className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
+            />
             <ProGate feature="Experience Manager" isPro={isPro}><Button size="sm" variant="outline" onClick={addExperience}><Plus className="h-4 w-4 mr-2" /> Add</Button></ProGate>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -757,7 +852,11 @@ export function CvBuilder({
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Projects</CardTitle>
+            <Input 
+              value={headings.projects} 
+              onChange={e => updateHeading('projects', e.target.value)} 
+              className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
+            />
             <ProGate feature="Projects Section" isPro={isPro}><Button size="sm" variant="outline" onClick={addProject}><Plus className="h-4 w-4 mr-2" /> Add</Button></ProGate>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -783,7 +882,11 @@ export function CvBuilder({
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Education</CardTitle>
+            <Input 
+              value={headings.education} 
+              onChange={e => updateHeading('education', e.target.value)} 
+              className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
+            />
             <ProGate feature="Education Details" isPro={isPro}><Button size="sm" variant="outline" onClick={addEducation}><Plus className="h-4 w-4 mr-2" /> Add</Button></ProGate>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -881,6 +984,7 @@ export function CvBuilder({
                 <div style={{ display: 'flex', gap: '15px', marginTop: '10px', fontSize: '13px', color: '#6b7280' }}><span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span></div>
               </div>
               {renderSummary('#2563eb')}
+              {renderCustomSections('#2563eb')}
               {renderSkills('#2563eb')}
               {renderExperience('#2563eb')}
               {renderProjects('#2563eb')}
@@ -893,6 +997,7 @@ export function CvBuilder({
             <div style={{ padding: '60px', fontFamily: 'serif' }}>
               <div style={{ textAlign: 'center', marginBottom: '40px' }}><h1 style={{ fontSize: '38px', letterSpacing: '2px', fontWeight: 'normal', textTransform: 'uppercase', marginBottom: '10px' }}>{cv.name}</h1><div style={{ display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '13px', color: '#666' }}><span>{cv.location}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.email}</span></div></div>
               {renderSummary('#000')}
+              {renderCustomSections('#000')}
               {renderSkills('#000')}
               {renderExperience('#000')}
               {renderProjects('#000')}
@@ -912,6 +1017,7 @@ export function CvBuilder({
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 {renderSummary('#1e3a8a')}
+                {renderCustomSections('#1e3a8a')}
                 {renderSkills('#1e3a8a')}
                 {renderExperience('#1e3a8a')}
                 {renderProjects('#1e3a8a')}
@@ -937,6 +1043,7 @@ export function CvBuilder({
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
                 {renderSummary('#475569')}
+                {renderCustomSections('#475569')}
                 {renderSkills('#475569')}
                 {renderExperience('#475569')}
                 {renderProjects('#475569')}
@@ -957,6 +1064,7 @@ export function CvBuilder({
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
                 {renderSummary('#4f46e5')}
+                {renderCustomSections('#4f46e5')}
                 {renderSkills('#4f46e5')}
                 {renderExperience('#4f46e5')}
                 {renderProjects('#4f46e5')}
@@ -980,6 +1088,7 @@ export function CvBuilder({
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
                 {renderSummary('#0284c7')}
+                {renderCustomSections('#0284c7')}
                 {renderSkills('#0284c7')}
                 {renderExperience('#0284c7')}
                 {renderProjects('#0284c7')}
@@ -1006,6 +1115,7 @@ export function CvBuilder({
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
                   {renderSummary('#059669')}
+                  {renderCustomSections('#059669')}
                   {renderSkills('#059669')}
                   {renderExperience('#059669')}
                   {renderProjects('#059669')}
@@ -1027,6 +1137,7 @@ export function CvBuilder({
                <div style={{ padding: '60px 40px', display: 'flex', flexDirection: 'column' }}>
                   <h1 style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', margin: 0 }}>{cv.name}</h1><p style={{ fontSize: '18px', color: '#64748b', marginBottom: '40px' }}>{cv.title}</p>
                   {renderSummary('#1e293b')}
+                  {renderCustomSections('#1e293b')}
                   {renderExperience('#1e293b')}
                   {renderProjects('#1e293b')}
                   {renderEducation('#1e293b')}
@@ -1048,6 +1159,7 @@ export function CvBuilder({
               </div>
               <div style={{ padding: '40px', display: 'flex', flexDirection: 'column' }}>
                 {renderSummary('#2563eb')}
+                {renderCustomSections('#2563eb')}
                 {renderSkills('#2563eb')}
                 {renderExperience('#2563eb')}
                 {renderProjects('#2563eb')}
@@ -1068,6 +1180,7 @@ export function CvBuilder({
                </div>
                <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column' }}>
                   {renderSummary('#2563eb')}
+                  {renderCustomSections('#2563eb')}
                   {renderSkills('#2563eb')}
                   {renderExperience('#2563eb')}
                   {renderProjects('#2563eb')}
