@@ -144,7 +144,7 @@ export function CreditUsageHistory({ logs, counts }: CreditUsageHistoryProps) {
             </p>
           </div>
         ) : (
-          <div className="space-y-2 max-h-[320px] overflow-y-auto pr-1">
+          <div className="space-y-2 max-h-[480px] overflow-y-auto pr-1">
             {filteredLogs.map((log) => {
               const info = TOOL_NAMES[log.toolKey]
               const toolName = info?.name || log.toolKey.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())

@@ -54,7 +54,7 @@ export default async function DashboardPage() {
     : [];
 
   return (
-    <div className="flex flex-col gap-8 max-w-5xl w-full">
+    <div className="flex flex-col gap-8 w-full">
       <div>
         <h1 className="text-3xl font-black tracking-tight">
           {session?.user?.name
@@ -66,7 +66,7 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      {/* 2-Column Vertical Layout with Natural Heights */}
+      {/* 2-Column Vertical Layout with Full Width */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start w-full">
         {/* Left Column Stack */}
         <div className="flex flex-col gap-6 w-full items-start">
@@ -99,7 +99,7 @@ export default async function DashboardPage() {
             </Card>
           )}
 
-          {/* Card 3: VIP Concierge / Custom Tool Request */}
+          {/* Card 3: Tool & Feature Requests */}
           <Card className="w-full border-border h-auto">
             <CardContent className="p-6 flex flex-col justify-between gap-6">
               <div>
@@ -121,25 +121,8 @@ export default async function DashboardPage() {
               </SupportModal>
             </CardContent>
           </Card>
-        </div>
 
-        {/* Right Column Stack */}
-        <div className="flex flex-col gap-6 w-full items-start">
-          {/* Card 1: Credit & Tool Activity History */}
-          <CreditUsageHistory
-            logs={usageLogs}
-            counts={
-              dbUser
-                ? {
-                    savedResumes: dbUser._count.savedResumes,
-                    savedInvoices: dbUser._count.savedInvoices,
-                    qrCodes: dbUser._count.qrCodes,
-                  }
-                : undefined
-            }
-          />
-
-          {/* Card 2: Priority Email Support */}
+          {/* Card 4: Priority Email Support (Moved directly after Tool & Feature Requests) */}
           <Card className="w-full border-border h-auto">
             <CardContent className="p-6 flex flex-col justify-between gap-6">
               <div>
@@ -162,6 +145,23 @@ export default async function DashboardPage() {
               </SupportModal>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Right Column Stack */}
+        <div className="flex flex-col gap-6 w-full items-start">
+          {/* Card 1: Credit & Tool Activity History */}
+          <CreditUsageHistory
+            logs={usageLogs}
+            counts={
+              dbUser
+                ? {
+                    savedResumes: dbUser._count.savedResumes,
+                    savedInvoices: dbUser._count.savedInvoices,
+                    qrCodes: dbUser._count.qrCodes,
+                  }
+                : undefined
+            }
+          />
         </div>
       </div>
     </div>

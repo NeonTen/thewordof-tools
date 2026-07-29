@@ -69,7 +69,7 @@ export default async function BillingPage() {
     subscription?.createdAt || user?.createdAt || new Date();
 
   return (
-    <div className="flex flex-col gap-8 max-w-5xl">
+    <div className="flex flex-col gap-8 w-full">
       <div>
         <h1 className="text-3xl font-black tracking-tight flex items-center gap-3">
           <CreditCard className="h-8 w-8 text-primary" />

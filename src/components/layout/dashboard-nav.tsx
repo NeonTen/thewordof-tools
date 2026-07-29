@@ -6,7 +6,7 @@ import { LayoutDashboard, Settings, CreditCard, Wrench } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navItems = [
-  { title: "Overview",   href: "/dashboard",          icon: LayoutDashboard },
+  { title: "Dashboard",  href: "/dashboard",          icon: LayoutDashboard },
   { title: "All Tools",  href: "/tools",              icon: Wrench },
   { title: "Billing",    href: "/dashboard/billing",  icon: CreditCard },
   { title: "Settings",   href: "/dashboard/settings", icon: Settings },
