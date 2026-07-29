@@ -66,8 +66,8 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      {/* 2-Column Vertical Layout with Full Width */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start w-full">
+      {/* 2-Column Vertical Layout with Full Width and Matching Card Height */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-stretch w-full">
         {/* Left Column Stack */}
         <div className="flex flex-col gap-6 w-full items-start">
           {/* Card 1: Current Plan Section */}
@@ -148,7 +148,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Right Column Stack */}
-        <div className="flex flex-col gap-6 w-full items-start">
+        <div className="flex flex-col gap-6 w-full h-full">
           {/* Card 1: Credit & Tool Activity History */}
           <CreditUsageHistory
             logs={usageLogs}

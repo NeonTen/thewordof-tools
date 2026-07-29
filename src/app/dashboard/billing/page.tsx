@@ -80,11 +80,11 @@ export default async function BillingPage() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 xl:grid-cols-3">
         {/* Current Plan Summary */}
         <Card
           className={cn(
-            "md:col-span-2 relative overflow-hidden border-2",
+            "xl:col-span-2 relative overflow-hidden border-2",
             hasPremium
               ? "border-primary/50 bg-primary/5 shadow-xl shadow-primary/5"
               : "border-muted",

@@ -11,11 +11,11 @@ export function DashboardShell({
       <div className="print:hidden">
         <Header />
       </div>
-      <div className="flex flex-1 items-start md:grid md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)] px-0">
-        <aside className="fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 overflow-y-auto border-r md:sticky md:block print:hidden bg-muted/30">
+      <div className="flex flex-1 items-start xl:grid xl:grid-cols-[280px_minmax(0,1fr)] px-0">
+        <aside className="fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 overflow-y-auto border-r xl:sticky xl:block print:hidden bg-muted/30">
           <DashboardNav />
         </aside>
-        <main className="flex w-full flex-col overflow-hidden py-8 px-6 md:px-8 lg:px-10 bg-background">
+        <main className="flex w-full flex-col overflow-hidden py-8 px-6 xl:px-10 bg-background">
           {children}
         </main>
       </div>

@@ -20,7 +20,7 @@ export async function Header() {
           {isPro && <ProBadge className="ml-2" role={session?.user?.role} />}
         </Link>
         
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium print:hidden">
+        <nav className="hidden xl:flex items-center space-x-8 text-sm font-medium print:hidden">
           <Link
             href="/tools"
             className="transition-colors hover:text-foreground/80 text-foreground/60"
@@ -46,7 +46,7 @@ export async function Header() {
         <div className="flex items-center space-x-4">
           <nav className="flex items-center space-x-2">
             {session ? (
-              <div className="hidden md:flex items-center space-x-2 print:hidden">
+              <div className="hidden xl:flex items-center space-x-2 print:hidden">
                 <Link href="/dashboard/settings">
                   <Button variant="ghost" className="h-9 px-4 font-bold text-muted-foreground hover:text-foreground">
                     {session.user?.name || "Account"}
@@ -55,7 +55,7 @@ export async function Header() {
                 <LogoutButton />
               </div>
             ) : (
-              <div className="hidden md:flex items-center space-x-2 print:hidden">
+              <div className="hidden xl:flex items-center space-x-2 print:hidden">
                 <Link href="/login" className="hidden sm:block">
                   <Button variant="ghost" className="h-9 px-4 font-bold text-muted-foreground hover:text-foreground">Login</Button>
                 </Link>

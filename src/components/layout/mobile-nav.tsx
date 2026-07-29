@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
 
 interface MobileNavProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   session: any
 }
 
@@ -19,15 +20,17 @@ export function MobileNav({ session }: MobileNavProps) {
   const pathname = usePathname()
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOpen(false)
   }, [pathname])
 
   return (
-    <div className="md:hidden">
+    <div className="xl:hidden">
       <Button 
         variant="ghost" 
         size="icon" 

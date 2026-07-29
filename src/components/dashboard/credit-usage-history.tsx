@@ -58,8 +58,8 @@ export function CreditUsageHistory({ logs, counts }: CreditUsageHistoryProps) {
   }, [logs, activeCategory, searchQuery])
 
   return (
-    <Card className="border-border w-full">
-      <CardHeader className="pb-3 space-y-3">
+    <Card className="border-border w-full h-full flex flex-col justify-between">
+      <CardHeader className="pb-3 space-y-3 shrink-0">
         <CardTitle className="text-sm font-bold uppercase tracking-wider text-muted-foreground flex items-center justify-between">
           <span className="flex items-center gap-2">
             <History className="h-4 w-4 text-primary" /> Credit & Tool Activity
@@ -110,10 +110,10 @@ export function CreditUsageHistory({ logs, counts }: CreditUsageHistoryProps) {
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
         {/* Summary Badges if saved items exist */}
         {counts && (counts.savedResumes > 0 || counts.savedInvoices > 0 || counts.qrCodes > 0) && (
-          <div className="grid grid-cols-3 gap-2 pb-3 border-b text-center">
+          <div className="grid grid-cols-3 gap-2 pb-3 border-b text-center shrink-0">
             <div className="p-2 rounded-xl bg-muted/30 border flex flex-col items-center justify-center">
               <FileText className="h-4 w-4 text-blue-500 mb-1" />
               <span className="text-xs font-bold">{counts.savedResumes}</span>
@@ -134,7 +134,7 @@ export function CreditUsageHistory({ logs, counts }: CreditUsageHistoryProps) {
 
         {/* Scrollable Usage History List */}
         {filteredLogs.length === 0 ? (
-          <div className="py-8 text-center text-xs text-muted-foreground space-y-1">
+          <div className="py-8 text-center text-xs text-muted-foreground space-y-1 my-auto">
             <Wrench className="h-6 w-6 mx-auto text-muted-foreground/50 mb-2" />
             <p className="font-semibold text-foreground">No matching activity logs</p>
             <p>
@@ -144,7 +144,7 @@ export function CreditUsageHistory({ logs, counts }: CreditUsageHistoryProps) {
             </p>
           </div>
         ) : (
-          <div className="space-y-2 max-h-[480px] overflow-y-auto pr-1">
+          <div className="space-y-2 flex-1 min-h-[360px] max-h-[640px] overflow-y-auto pr-1">
             {filteredLogs.map((log) => {
               const info = TOOL_NAMES[log.toolKey]
               const toolName = info?.name || log.toolKey.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())
