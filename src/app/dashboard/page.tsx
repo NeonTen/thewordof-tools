@@ -1,23 +1,18 @@
 import { generateSeoMetadata } from "@/app/lib/seo";
 import { auth } from "@/auth";
-import Link from "next/link";
 import {
-  Wrench,
-  CreditCard,
-  Settings,
-  ArrowRight,
   Sparkles,
   LifeBuoy,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { SyncPlanButton } from "@/components/dashboard/sync-plan-button";
 import { PlanSection } from "@/components/dashboard/plan-section";
 import { SupportModal } from "@/components/dashboard/support-modal";
 import { prisma } from "@/lib/prisma";
 import { getCurrentCreditAllocation } from "@/lib/credits";
 import { CreditOverview } from "@/components/dashboard/credit-overview";
+import { CreditUsageHistory } from "@/components/dashboard/credit-usage-history";
 
 export const dynamic = "force-dynamic";
 
@@ -35,171 +30,132 @@ export default async function DashboardPage() {
   const dbUser = session?.user?.id
     ? await prisma.user.findUnique({
         where: { id: session.user.id },
-        select: { creditsRemaining: true, creditsResetAt: true, role: true },
+        select: {
+          creditsRemaining: true,
+          creditsResetAt: true,
+          role: true,
+          _count: {
+            select: {
+              savedResumes: true,
+              savedInvoices: true,
+              qrCodes: true,
+            },
+          },
+        },
       })
     : null;
 
-  const toolsDesc =
-    userRole === "ADMIN" || userRole === "BUSINESS"
-      ? "Browse and use all business & premium tools."
-      : userRole === "PRO"
-        ? "Browse and use all premium tools."
-        : "Browse and use all free tools.";
-
-  const billingDesc =
-    userRole === "BUSINESS"
-      ? "Manage your Business subscription."
-      : userRole === "PRO"
-        ? "Manage your Pro subscription."
-        : userRole === "ADMIN"
-          ? "Administrative account billing override."
-          : "Upgrade your plan to unlock premium.";
+  const usageLogs = session?.user?.id
+    ? await prisma.toolUsage.findMany({
+        where: { identifier: session.user.id },
+        orderBy: { updatedAt: "desc" },
+        take: 6,
+      })
+    : [];
 
   return (
-    <div className="flex flex-col gap-10 max-w-2xl">
+    <div className="flex flex-col gap-8 max-w-5xl w-full">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">
+        <h1 className="text-3xl font-black tracking-tight">
           {session?.user?.name
             ? `${session.user.name}'s Account`
             : "My Account"}
         </h1>
-        <p className="text-muted-foreground mt-2">
-          Manage your plan, billing, and settings.
+        <p className="text-muted-foreground mt-2 text-base">
+          Manage your subscription plan, credit usage, and account settings.
         </p>
       </div>
 
-      {/* Quick links */}
-      <div className="grid gap-4 sm:grid-cols-3">
-        {[
-          {
-            title: "All Tools",
-            desc: toolsDesc,
-            icon: Wrench,
-            href: "/tools",
-            cta: "Open Tools",
-          },
-          {
-            title: "Billing",
-            desc: billingDesc,
-            icon: CreditCard,
-            href: "/dashboard/billing",
-            cta: "View Billing",
-          },
-          {
-            title: "Settings",
-            desc: "Update your profile and account.",
-            icon: Settings,
-            href: "/dashboard/settings",
-            cta: "Open Settings",
-          },
-        ].map((item) => {
-          const Icon = item.icon;
-          return (
-            <Card
-              key={item.title}
-              className="hover:border-primary/30 hover:bg-primary/5 transition-all"
-            >
-              <CardContent className="p-5 flex flex-col gap-4">
-                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Icon className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <p className="font-bold text-sm">{item.title}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {item.desc}
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full mt-auto"
-                  asChild={false}
-                >
-                  <Link
-                    href={item.href}
-                    className="flex items-center justify-center gap-1"
-                  >
-                    {item.cta} <ArrowRight className="h-3 w-3" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
-
-      {/* Credit overview status */}
-      {dbUser && (
-        <CreditOverview
-          creditsRemaining={dbUser.creditsRemaining}
-          creditsMax={getCurrentCreditAllocation(dbUser.role)}
-          resetDate={dbUser.creditsResetAt}
-          isFree={
-            dbUser.role !== "PRO" &&
-            dbUser.role !== "BUSINESS" &&
-            dbUser.role !== "ADMIN"
-          }
-        />
-      )}
-
-      {/* Current plan */}
+      {/* 1st Main Section: Current Plan */}
       <Card
         className={cn(
-          "bg-gradient-to-br border-primary/10 from-primary/10 via-primary/5 to-background",
+          "bg-gradient-to-br border-primary/10 from-primary/10 via-primary/5 to-background shadow-md",
         )}
       >
         <PlanSection />
       </Card>
 
-      {/* Support & Concierge */}
-      {isPro && (
-        <div className="flex flex-col gap-4">
-          {/* VIP Concierge Card (Only for Business / Admin) */}
-          {(session?.user?.role === "BUSINESS" ||
-            session?.user?.role === "ADMIN") && (
-            <Card className="border-border">
-              <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-                <div>
-                  <h3 className="font-bold text-lg flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-                    VIP Concierge & Tool Requests
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-1 max-w-md">
-                    Need a specific tool built for your workflow? Submit a
-                    request directly to our engineering team.
-                  </p>
-                </div>
-                <SupportModal type="TOOL_REQUEST">
-                  <Button className="shrink-0 font-bold w-full sm:w-auto">
-                    Submit Tool Request
-                  </Button>
-                </SupportModal>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Priority Support Card (For Pro, Business, and Admin) */}
-          <Card className="border-border">
-            <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div>
-                <h3 className="font-bold text-lg flex items-center gap-2">
-                  <LifeBuoy className="h-5 w-5 text-primary" />
-                  Priority Support
-                </h3>
-                <p className="text-sm text-muted-foreground mt-1 max-w-md">
-                  Have an issue or question? Get priority email support directly
-                  from our core team.
-                </p>
-              </div>
-              <SupportModal type="SUPPORT">
-                <Button className="shrink-0 font-bold w-full sm:w-auto">
-                  Contact Support
-                </Button>
-              </SupportModal>
-            </CardContent>
+      {/* 2-Column Grid for Remaining Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Card 1: Credit Overview Status */}
+        {dbUser ? (
+          <CreditOverview
+            creditsRemaining={dbUser.creditsRemaining}
+            creditsMax={getCurrentCreditAllocation(dbUser.role)}
+            resetDate={dbUser.creditsResetAt}
+            isFree={
+              dbUser.role !== "PRO" &&
+              dbUser.role !== "BUSINESS" &&
+              dbUser.role !== "ADMIN"
+            }
+          />
+        ) : (
+          <Card className="p-6 border-border flex items-center justify-center text-sm text-muted-foreground">
+            Sign in to view your credit balance.
           </Card>
-        </div>
-      )}
+        )}
+
+        {/* Card 2: Credit Usage History & Activity */}
+        <CreditUsageHistory
+          logs={usageLogs}
+          counts={
+            dbUser
+              ? {
+                  savedResumes: dbUser._count.savedResumes,
+                  savedInvoices: dbUser._count.savedInvoices,
+                  qrCodes: dbUser._count.qrCodes,
+                }
+              : undefined
+          }
+        />
+
+        {/* Card 3: Priority Support */}
+        <Card className="border-border flex flex-col justify-between">
+          <CardContent className="p-6 flex flex-col h-full justify-between gap-6">
+            <div>
+              <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                <LifeBuoy className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="font-bold text-lg text-foreground">
+                Priority Email Support
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                {isPro
+                  ? "Get priority email support directly from our core engineering team."
+                  : "Need help or have questions? Contact support to resolve issues quickly."}
+              </p>
+            </div>
+            <SupportModal type="SUPPORT">
+              <Button className="font-bold w-full mt-auto">
+                Contact Support
+              </Button>
+            </SupportModal>
+          </CardContent>
+        </Card>
+
+        {/* Card 4: VIP Concierge / Custom Tool Request */}
+        <Card className="border-border flex flex-col justify-between">
+          <CardContent className="p-6 flex flex-col h-full justify-between gap-6">
+            <div>
+              <div className="h-10 w-10 rounded-xl bg-amber-500/10 flex items-center justify-center mb-4">
+                <Sparkles className="h-5 w-5 text-amber-500" />
+              </div>
+              <h3 className="font-bold text-lg text-foreground flex items-center gap-2">
+                Tool & Feature Requests
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Need a specific custom tool built for your workflow? Submit a
+                direct request to our engineers.
+              </p>
+            </div>
+            <SupportModal type="TOOL_REQUEST">
+              <Button variant="outline" className="font-bold w-full mt-auto">
+                Submit Tool Request
+              </Button>
+            </SupportModal>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
