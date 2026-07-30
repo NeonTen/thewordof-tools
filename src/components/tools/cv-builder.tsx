@@ -995,7 +995,7 @@ interface SavedResumeItem {
       </div>
 
       {/* Full-Width Accordion Editor Area */}
-      <div className="w-full max-w-5xl mx-auto space-y-4 print:hidden">
+      <div className="w-full space-y-4 print:hidden">
         <Accordion multiple defaultValue={["personal", "summary", "experience"]} className="space-y-4 w-full">
           {/* Section 1: Personal Details */}
           <AccordionItem value="personal" className="border rounded-2xl bg-card px-5 py-1">
@@ -1079,8 +1079,8 @@ interface SavedResumeItem {
                         placeholder="Section Title (e.g. Certifications)"
                         className="font-bold text-sm bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[240px]"
                       />
-                      <Button size="sm" variant="ghost" onClick={() => removeCustomSection(cs.id)} className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10">
-                        <Trash2 className="h-4 w-4" />
+                      <Button size="sm" variant="ghost" onClick={() => removeCustomSection(cs.id)} className="h-8 px-2 text-destructive hover:bg-destructive/10 gap-1 text-xs font-bold">
+                        <Trash2 className="h-3.5 w-3.5" /> Remove
                       </Button>
                     </CardHeader>
                     <CardContent>
@@ -1125,9 +1125,9 @@ interface SavedResumeItem {
                   {skills.map((s) => (
                     <div key={s.id} className="flex flex-col gap-3 p-3 border rounded-xl bg-muted/20">
                       <div className="flex items-center gap-3">
-                        <Input placeholder="Skill Name" value={s.name} onChange={e => updateSkill(s.id, 'name', e.target.value)} className="h-8" />
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => removeSkill(s.id)}>
-                          <Trash2 className="h-4 w-4" />
+                        <Input placeholder="Skill Name" value={s.name} onChange={e => updateSkill(s.id, 'name', e.target.value)} className="h-8 flex-1" />
+                        <Button variant="ghost" size="sm" className="h-8 px-2 text-destructive hover:bg-destructive/10 font-bold text-xs gap-1" onClick={() => removeSkill(s.id)}>
+                          <Trash2 className="h-3.5 w-3.5" /> Remove
                         </Button>
                       </div>
                       <div className="flex items-center gap-4 px-1">
@@ -1163,12 +1163,15 @@ interface SavedResumeItem {
                 </Button>
               </div>
               {experience.map((exp, idx) => (
-                <div key={exp.id} className={cn("space-y-3 relative p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
-                  {idx > 0 && (
-                    <Button variant="ghost" size="icon" className="absolute top-3 right-3 text-destructive h-7 w-7" onClick={() => removeExperience(exp.id)}>
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  )}
+                <div key={exp.id} className={cn("space-y-3 p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
+                  <div className="flex items-center justify-between gap-2 border-b pb-2">
+                    <span className="text-xs font-bold text-muted-foreground uppercase">Role #{idx + 1}</span>
+                    {experience.length > 1 && (
+                      <Button variant="ghost" size="sm" className="h-7 px-2 text-destructive hover:bg-destructive/10 gap-1 text-[11px] font-bold" onClick={() => removeExperience(exp.id)}>
+                        <Trash2 className="h-3.5 w-3.5" /> Remove
+                      </Button>
+                    )}
+                  </div>
                   <div className="grid sm:grid-cols-2 gap-3">
                     <Input placeholder="Company Name" value={exp.company} onChange={e => updateExperience(exp.id, 'company', e.target.value)} />
                     <Input placeholder="Role / Job Title" value={exp.role} onChange={e => updateExperience(exp.id, 'role', e.target.value)} />
@@ -1205,12 +1208,15 @@ interface SavedResumeItem {
               </div>
               <ProGate feature="Projects Section" isPro={isPro}>
                 {projects.map((proj, idx) => (
-                  <div key={proj.id} className={cn("space-y-3 relative p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
-                    {idx > 0 && (
-                      <Button variant="ghost" size="icon" className="absolute top-3 right-3 text-destructive h-7 w-7" onClick={() => removeProject(proj.id)}>
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    )}
+                  <div key={proj.id} className={cn("space-y-3 p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
+                    <div className="flex items-center justify-between gap-2 border-b pb-2">
+                      <span className="text-xs font-bold text-muted-foreground uppercase">Project #{idx + 1}</span>
+                      {projects.length > 1 && (
+                        <Button variant="ghost" size="sm" className="h-7 px-2 text-destructive hover:bg-destructive/10 gap-1 text-[11px] font-bold" onClick={() => removeProject(proj.id)}>
+                          <Trash2 className="h-3.5 w-3.5" /> Remove
+                        </Button>
+                      )}
+                    </div>
                     <div className="grid sm:grid-cols-2 gap-3">
                       <Input placeholder="Project Title" value={proj.title} onChange={e => updateProject(proj.id, 'title', e.target.value)} />
                       <Input placeholder="Project Link" value={proj.link} onChange={e => updateProject(proj.id, 'link', e.target.value)} />
@@ -1247,12 +1253,15 @@ interface SavedResumeItem {
               </div>
               <ProGate feature="Multiple Degrees" isPro={isPro}>
                 {education.map((edu, idx) => (
-                  <div key={edu.id} className={cn("space-y-3 relative p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
-                    {idx > 0 && (
-                      <Button variant="ghost" size="icon" className="absolute top-3 right-3 text-destructive h-7 w-7" onClick={() => removeEducation(edu.id)}>
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    )}
+                  <div key={edu.id} className={cn("space-y-3 p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
+                    <div className="flex items-center justify-between gap-2 border-b pb-2">
+                      <span className="text-xs font-bold text-muted-foreground uppercase">Education #{idx + 1}</span>
+                      {education.length > 1 && (
+                        <Button variant="ghost" size="sm" className="h-7 px-2 text-destructive hover:bg-destructive/10 gap-1 text-[11px] font-bold" onClick={() => removeEducation(edu.id)}>
+                          <Trash2 className="h-3.5 w-3.5" /> Remove
+                        </Button>
+                      )}
+                    </div>
                     <Input placeholder="School / University Name" value={edu.school} onChange={e => updateEducation(edu.id, 'school', e.target.value)} />
                     <div className="grid sm:grid-cols-2 gap-3">
                       <Input placeholder="Degree / Certification" value={edu.degree} onChange={e => updateEducation(edu.id, 'degree', e.target.value)} />
