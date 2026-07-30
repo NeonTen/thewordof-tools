@@ -1091,6 +1091,9 @@ interface SavedResumeItem {
                         rows={3}
                         className="text-xs"
                       />
+                      <p className="text-[11px] text-muted-foreground mt-1.5">
+                        Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists, or use line breaks for paragraphs.
+                      </p>
                     </CardContent>
                   </Card>
                 ))
@@ -1112,13 +1115,18 @@ interface SavedResumeItem {
             </AccordionTrigger>
             <AccordionContent className="pt-2 pb-4 space-y-4">
               {skillMode === 'text' ? (
-                <Textarea 
-                  name="skillsText" 
-                  value={cv.skillsText} 
-                  onChange={handleCvChange} 
-                  placeholder="React.js, Next.js, TypeScript, Node.js, Tailwind CSS, PostgreSQL" 
-                  rows={3} 
-                />
+                <div>
+                  <Textarea 
+                    name="skillsText" 
+                    value={cv.skillsText} 
+                    onChange={handleCvChange} 
+                    placeholder="React.js, Next.js, TypeScript, Node.js, Tailwind CSS, PostgreSQL" 
+                    rows={3} 
+                  />
+                  <p className="text-[11px] text-muted-foreground mt-1.5">
+                    Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists, or use line breaks for paragraphs.
+                  </p>
+                </div>
               ) : (
                 <div className="space-y-4">
                   <Button size="sm" variant="outline" className="w-full" onClick={addSkill}><Plus className="h-4 w-4 mr-2" /> Add Skill with Rating</Button>
@@ -1177,7 +1185,12 @@ interface SavedResumeItem {
                     <Input placeholder="Role / Job Title" value={exp.role} onChange={e => updateExperience(exp.id, 'role', e.target.value)} />
                   </div>
                   <Input placeholder="Period (e.g. Jan 2022 - Present)" value={exp.period} onChange={e => updateExperience(exp.id, 'period', e.target.value)} />
-                  <Textarea placeholder="Key responsibilities and achievements..." value={exp.desc} onChange={e => updateExperience(exp.id, 'desc', e.target.value)} rows={3} />
+                  <div>
+                    <Textarea placeholder="Key responsibilities and achievements..." value={exp.desc} onChange={e => updateExperience(exp.id, 'desc', e.target.value)} rows={3} />
+                    <p className="text-[11px] text-muted-foreground mt-1.5">
+                      Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists, or use line breaks for paragraphs.
+                    </p>
+                  </div>
                 </div>
               ))}
             </AccordionContent>
@@ -1221,7 +1234,12 @@ interface SavedResumeItem {
                       <Input placeholder="Project Title" value={proj.title} onChange={e => updateProject(proj.id, 'title', e.target.value)} />
                       <Input placeholder="Project Link" value={proj.link} onChange={e => updateProject(proj.id, 'link', e.target.value)} />
                     </div>
-                    <Textarea placeholder="Project summary..." value={proj.desc} onChange={e => updateProject(proj.id, 'desc', e.target.value)} rows={2} />
+                    <div>
+                      <Textarea placeholder="Project summary..." value={proj.desc} onChange={e => updateProject(proj.id, 'desc', e.target.value)} rows={2} />
+                      <p className="text-[11px] text-muted-foreground mt-1.5">
+                        Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists, or use line breaks for paragraphs.
+                      </p>
+                    </div>
                   </div>
                 ))}
               </ProGate>
