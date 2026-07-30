@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.2.4] - 2026-07-30
+
+### Added
+- **AI CV Builder - Editable Headings & Pro Custom Sections**:
+  - Made default section headings (Summary, Skills & Expertise, Experience, Projects, Education) inline-editable in the editor panel; updates reflect dynamically across all 10 CV templates and PDF exports.
+  - Added "+ Add Custom Section" button for Pro/Business users under Summary to create custom content sections (e.g. Certifications, Key Achievements, Languages, Publications) rendered in all 10 templates.
+- **AI CV Parser Integration**:
+  - Updated Gemini parser schema and prompt to extract summary section headings (e.g. "Professional Summary", "Executive Profile") and detect structured custom sections after Summary.
+  - Added Custom Sections preview block to `AIPreviewModal` and mapped parser output directly into CV Builder state upon import.
+- **Dashboard Redesign & Credit Usage History**:
+  - Expanded dashboard right main panel to full width across `/dashboard`, `/dashboard/billing`, and `/dashboard/settings`.
+  - Added new `CreditUsageHistory` component displaying real-time activity logs from Prisma with filter pills (`All`, `AI Tools`, `Docs`, `Other`), quick search, and scrollable container.
+  - Reorganized dashboard layout into a 2-column layout with Current Plan card positioned first and Priority Email Support moved under Tool Requests.
+
+### Changed
+- **Responsive Layout & Navigation**:
+  - Updated sidebar navigation title from "Overview" to "Dashboard".
+  - Updated layout breakpoint for sidebar navigation, header navigation, and multi-column grids from 768px (`md`) to 1280px (`xl`) across layout shells and tool pages.
+  - Configured matching heights for left and right dashboard card stacks.
+
 ## [1.2.3] - 2026-07-27
 
 ### Added
