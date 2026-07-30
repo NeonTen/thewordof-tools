@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Download, Loader2, Sparkles, Plus, Trash2, User, Layout, Image as ImageIcon, Crown, Star, AlignLeft, BarChart3, ArrowRight, X, Save, FolderOpen } from "lucide-react"
+import { Download, Loader2, Sparkles, Plus, Trash2, User, Layout, Image as ImageIcon, Crown, Star, AlignLeft, BarChart3, ArrowRight, X, Save, FolderOpen, Eye, FolderGit2, GraduationCap, Briefcase } from "lucide-react"
 import { ProGate } from "@/components/ui/pro-gate"
 import { cn } from "@/lib/utils"
 import { AIParserModal, type CVParserResult } from "./ai-parser-modal"
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 
 const TEMPLATES = [
   { id: 'modern', name: 'modern', pro: false },
@@ -82,6 +83,7 @@ export function CvBuilder({
   const [skillMode, setSkillMode] = useState<'text' | 'bars'>('text')
   const [showAIParserModal, setShowAIParserModal] = useState(false)
   const [initialParserText, setInitialParserText] = useState("")
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
 
   React.useEffect(() => {
     const savedText = localStorage.getItem("ats_import_text")
@@ -95,8 +97,15 @@ export function CvBuilder({
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [upgradeModalType, setUpgradeModalType] = useState<"template" | "print">("template")
 
+interface SavedResumeItem {
+  id: string
+  title: string
+  updatedAt: string
+  data?: Record<string, unknown>
+}
+
   const [activeResumeId, setActiveResumeId] = useState<string | null>(null)
-  const [savedResumesList, setSavedResumesList] = useState<any[]>([])
+  const [savedResumesList, setSavedResumesList] = useState<SavedResumeItem[]>([])
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false)
   const [isLoadModalOpen, setIsLoadModalOpen] = useState(false)
   const [saveTitle, setSaveTitle] = useState("")
@@ -346,7 +355,7 @@ export function CvBuilder({
         const json = await res.json()
         const resume = json.resume
         if (resume && resume.data) {
-          const loadedData = resume.data as any
+          const loadedData = resume.data as Record<string, any>
           setCv(loadedData.cv || cv)
           setSkills(loadedData.skills || [])
           setExperience(loadedData.experience || [])
@@ -632,6 +641,224 @@ export function CvBuilder({
     </>
   )
 
+  const renderTemplateContent = () => (
+    <>
+      {/* Modern Template */}
+      {templateId === 'modern' && (
+        <div style={{ padding: '40px' }}>
+          <div style={{ marginBottom: '40px', borderBottom: '2px solid #2563eb', paddingBottom: '30px' }}>
+            <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#111827', margin: 0 }}>{cv.name}</h1>
+            <p style={{ fontSize: '20px', color: '#2563eb', fontWeight: '600', margin: '4px 0 0 0' }}>{cv.title}</p>
+            <div style={{ display: 'flex', gap: '15px', marginTop: '10px', fontSize: '13px', color: '#6b7280' }}><span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span></div>
+          </div>
+          {renderSummary('#2563eb')}
+          {renderCustomSections('#2563eb')}
+          {renderSkills('#2563eb')}
+          {renderExperience('#2563eb')}
+          {renderProjects('#2563eb')}
+          {renderEducation('#2563eb')}
+        </div>
+      )}
+
+      {/* Elegant Template */}
+      {templateId === 'elegant' && (
+        <div style={{ padding: '60px', fontFamily: 'serif' }}>
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}><h1 style={{ fontSize: '38px', letterSpacing: '2px', fontWeight: 'normal', textTransform: 'uppercase', marginBottom: '10px' }}>{cv.name}</h1><div style={{ display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '13px', color: '#666' }}><span>{cv.location}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.email}</span></div></div>
+          {renderSummary('#000')}
+          {renderCustomSections('#000')}
+          {renderSkills('#000')}
+          {renderExperience('#000')}
+          {renderProjects('#000')}
+          {renderEducation('#000')}
+        </div>
+      )}
+
+      {/* Executive Template */}
+      {templateId === 'executive' && (
+        <div style={{ padding: '50px 40px', fontFamily: '"Times New Roman", Times, serif', color: '#1e293b' }}>
+          <div style={{ textAlign: 'center', marginBottom: '25px', borderBottom: '2px double #cbd5e1', paddingBottom: '16px' }}>
+            <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: '#1e3a8a', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 8px 0' }}>{cv.name}</h1>
+            <p style={{ fontSize: '15px', color: '#475569', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 12px 0' }}>{cv.title}</p>
+            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '15px', fontSize: '12px', color: '#64748b' }}>
+              <span>{cv.email}</span><span>|</span><span>{cv.phone}</span><span>|</span><span>{cv.location}</span>
+            </div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            {renderSummary('#1e3a8a')}
+            {renderCustomSections('#1e3a8a')}
+            {renderSkills('#1e3a8a')}
+            {renderExperience('#1e3a8a')}
+            {renderProjects('#1e3a8a')}
+            {renderEducation('#1e3a8a')}
+          </div>
+        </div>
+      )}
+
+      {/* Minimalist Pro Template */}
+      {templateId === 'minimalist-pro' && (
+        <div style={{ padding: '50px', color: '#334155', fontFamily: 'Inter, sans-serif' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #e2e8f0', paddingBottom: '30px', marginBottom: '30px' }}>
+            <div>
+              <h1 style={{ fontSize: '36px', fontWeight: '800', letterSpacing: '-0.02em', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
+              <p style={{ fontSize: '16px', color: '#64748b', marginTop: '4px', margin: 0 }}>{cv.title}</p>
+            </div>
+            <div style={{ textAlign: 'right', fontSize: '12px', color: '#64748b', lineHeight: '1.6' }}>
+              {photo && <img src={photo} style={{ width: '80px', height: '80px', borderRadius: '16px', marginBottom: '12px', objectFit: 'cover', marginLeft: 'auto' }} alt="Profile" />}
+              <div>{cv.email}</div>
+              <div>{cv.phone}</div>
+              <div>{cv.location}</div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+            {renderSummary('#475569')}
+            {renderCustomSections('#475569')}
+            {renderSkills('#475569')}
+            {renderExperience('#475569')}
+            {renderProjects('#475569')}
+            {renderEducation('#475569')}
+          </div>
+        </div>
+      )}
+
+      {/* Developer Pro Template */}
+      {templateId === 'developer' && (
+        <div style={{ padding: '45px', color: '#0f172a', fontFamily: 'Inter, sans-serif' }}>
+          <div style={{ borderLeft: '4px solid #4f46e5', paddingLeft: '20px', marginBottom: '35px' }}>
+            <h1 style={{ fontSize: '34px', fontWeight: '900', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
+            <p style={{ fontSize: '18px', color: '#4f46e5', fontWeight: 'bold', margin: '4px 0 0 0' }}>{cv.title}</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '10px', fontSize: '12px', color: '#64748b' }}>
+              <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>
+            </div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+            {renderSummary('#4f46e5')}
+            {renderCustomSections('#4f46e5')}
+            {renderSkills('#4f46e5')}
+            {renderExperience('#4f46e5')}
+            {renderProjects('#4f46e5')}
+            {renderEducation('#4f46e5')}
+          </div>
+        </div>
+      )}
+
+      {/* Metro Grid Template */}
+      {templateId === 'metro' && (
+        <div style={{ padding: '40px', color: '#1e293b', fontFamily: 'Inter, sans-serif' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '20px', border: '1px solid #cbd5e1', padding: '24px', borderRadius: '12px', marginBottom: '30px' }}>
+            <div>
+              <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
+              <p style={{ fontSize: '16px', color: '#0284c7', fontWeight: '600', marginTop: '4px', margin: 0 }}>{cv.title}</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '12px', fontSize: '12px', color: '#64748b' }}>
+                <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>
+              </div>
+            </div>
+            {photo && <img src={photo} style={{ width: '90px', height: '90px', borderRadius: '8px', objectFit: 'cover' }} alt="Profile" />}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
+            {renderSummary('#0284c7')}
+            {renderCustomSections('#0284c7')}
+            {renderSkills('#0284c7')}
+            {renderExperience('#0284c7')}
+            {renderProjects('#0284c7')}
+            {renderEducation('#0284c7')}
+          </div>
+        </div>
+      )}
+
+      {/* Accent Left Template */}
+      {templateId === 'accent' && (
+        <div style={{ display: 'grid', gridTemplateColumns: '8px 1fr', minHeight: '297mm', fontFamily: 'Inter, sans-serif' }}>
+          <div style={{ backgroundColor: '#059669', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }} />
+          <div style={{ padding: '50px 40px', color: '#1f2937' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '35px' }}>
+              <div>
+                <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#111827', margin: 0 }}>{cv.name}</h1>
+                <p style={{ fontSize: '18px', color: '#059669', fontWeight: '700', marginTop: '4px', margin: 0 }}>{cv.title}</p>
+              </div>
+              <div style={{ textAlign: 'right', fontSize: '13px', color: '#4b5563' }}>
+                <p style={{ margin: 0 }}>{cv.email}</p>
+                <p style={{ margin: '4px 0 0 0' }}>{cv.phone}</p>
+                <p style={{ margin: '4px 0 0 0' }}>{cv.location}</p>
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+              {renderSummary('#059669')}
+              {renderCustomSections('#059669')}
+              {renderSkills('#059669')}
+              {renderExperience('#059669')}
+              {renderProjects('#059669')}
+              {renderEducation('#059669')}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Sidebar Template */}
+      {templateId === 'sidebar' && (
+        <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', minHeight: '297mm' }}>
+           <div style={{ backgroundColor: '#f8fafc', padding: '40px 20px', borderRight: '1px solid #e2e8f0', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+              {photo && <img src={photo} style={{ width: '140px', height: '140px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 30px auto', display: 'block', border: '4px solid white', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }} alt="Profile" />}
+              <h2 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '20px', color: '#1e293b' }}>Contact</h2>
+              <div style={{ fontSize: '13px', color: '#64748b', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '40px' }}><p>{cv.email}</p><p>{cv.phone}</p><p>{cv.location}</p></div>
+              {renderSkills('#1e293b')}
+           </div>
+           <div style={{ padding: '60px 40px', display: 'flex', flexDirection: 'column' }}>
+              <h1 style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', margin: 0 }}>{cv.name}</h1><p style={{ fontSize: '18px', color: '#64748b', marginBottom: '40px' }}>{cv.title}</p>
+              {renderSummary('#1e293b')}
+              {renderCustomSections('#1e293b')}
+              {renderExperience('#1e293b')}
+              {renderProjects('#1e293b')}
+              {renderEducation('#1e293b')}
+           </div>
+        </div>
+      )}
+
+      {/* Creative Template */}
+      {templateId === 'creative' && (
+        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', minHeight: '297mm' }}>
+          <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '40px 20px', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+            {photo && <img src={photo} style={{ width: '120px', height: '120px', borderRadius: '24px', objectFit: 'cover', marginBottom: '20px', border: '4px solid rgba(255,255,255,0.2)' }} alt="Profile" />}
+            <h1 style={{ fontSize: '28px', fontWeight: '900', lineHeight: '1.1', marginBottom: '10px' }}>{cv.name}</h1><p style={{ fontSize: '14px', opacity: 0.8, marginBottom: '40px' }}>{cv.title}</p>
+            <div style={{ fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <p style={{ margin: 0 }}>{cv.email}</p>
+              <p style={{ margin: 0 }}>{cv.phone}</p>
+              <p style={{ margin: 0 }}>{cv.location}</p>
+            </div>
+          </div>
+          <div style={{ padding: '40px', display: 'flex', flexDirection: 'column' }}>
+            {renderSummary('#2563eb')}
+            {renderCustomSections('#2563eb')}
+            {renderSkills('#2563eb')}
+            {renderExperience('#2563eb')}
+            {renderProjects('#2563eb')}
+            {renderEducation('#2563eb')}
+          </div>
+        </div>
+      )}
+
+      {/* Tech Template */}
+      {templateId === 'tech' && (
+        <div style={{ padding: '40px', fontFamily: 'monospace', backgroundColor: '#f8fafc', minHeight: '297mm', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+           <div style={{ border: '1px solid #e2e8f0', backgroundColor: 'white', padding: '20px' }}>
+              <h1 style={{ fontSize: '24px', margin: 0 }}>&gt; {cv.name}</h1>
+              <p style={{ color: '#2563eb' }}>{"// "}{cv.title}</p>
+              <div style={{ display: 'flex', gap: '20px', fontSize: '12px', marginTop: '10px' }}>
+                <span>@: {cv.email}</span><span>#: {cv.phone}</span><span>L: {cv.location}</span>
+              </div>
+           </div>
+           <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column' }}>
+              {renderSummary('#2563eb')}
+              {renderCustomSections('#2563eb')}
+              {renderSkills('#2563eb')}
+              {renderExperience('#2563eb')}
+              {renderProjects('#2563eb')}
+              {renderEducation('#2563eb')}
+           </div>
+        </div>
+      )}
+    </>
+  )
+
   return (<>
     {/* Global Print Styles to fix margins */}
     <style dangerouslySetInnerHTML={{ __html: `
@@ -661,552 +888,444 @@ export function CvBuilder({
       }
     `}} />
 
-    <div className="flex flex-col gap-8 print:block print:w-full">
+    <div className="flex flex-col gap-6 print:block print:w-full">
       {!isPro && (
-        <div className="print:hidden flex justify-end -mb-4">
-          <span className="text-xs font-bold text-muted-foreground bg-muted px-4 py-2 rounded-full">
+        <div className="print:hidden flex justify-end -mb-2">
+          <span className="text-xs font-bold text-muted-foreground bg-muted px-4 py-1.5 rounded-full">
             {MAX_FREE_PRINTS - usedThisMonth} of {MAX_FREE_PRINTS} free exports left this month
           </span>
         </div>
       )}
 
-      <div className="grid lg:grid-cols-[1fr_450px] xl:grid-cols-[1fr_600px] gap-8 print:block print:w-full">
-        {/* Editor Panel */}
-        <div className="space-y-6 print:hidden">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Personal Details</CardTitle>
-            <div className="flex items-center gap-3">
-              <ProGate feature="AI Resume Parser" isPro={isPro}>
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  onClick={() => setShowAIParserModal(true)} 
-                  className="font-bold border-purple-500/20 hover:bg-purple-500/5 text-purple-600 dark:text-purple-400 gap-1.5"
-                >
-                  <span className="h-2 w-2 rounded-full bg-purple-500 animate-pulse" />
-                  ✨ Import with AI
-                </Button>
-              </ProGate>
-              <ProGate feature="User Photo" isPro={isPro}>
-                <div className="flex items-center gap-3">
-                  {photo && <img src={photo} className="h-10 w-10 rounded-full object-cover border-2 border-primary shadow-sm" alt="Profile" />}
-                  <label className="cursor-pointer bg-primary text-white hover:bg-primary/90 p-2.5 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center">
-                    <ImageIcon className="h-5 w-5" />
-                    <input type="file" className="hidden" accept="image/*" onChange={handlePhotoUpload} />
-                  </label>
+      {/* Sticky Unified Top Toolbar */}
+      <div className="sticky top-14 z-30 bg-background/95 backdrop-blur border p-3 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-sm print:hidden">
+        {/* Left Toolbar Controls */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <Select 
+            value={templateId} 
+            onValueChange={(val) => {
+              const selected = TEMPLATES.find(t => t.id === val)
+              if (selected?.pro && !isPro) {
+                setUpgradeModalType("template")
+                setShowUpgradeModal(true)
+              } else {
+                setTemplateId(val || "modern")
+              }
+            }}
+          >
+            <SelectTrigger className="w-[170px] h-9 text-xs font-bold capitalize">
+              <SelectValue placeholder="Select Template" />
+            </SelectTrigger>
+            <SelectContent>
+              {TEMPLATES.map((t) => (
+                <SelectItem key={t.id} value={t.id} className="text-xs capitalize">
+                  {t.name}{t.pro && <Crown className="h-3 w-3 text-amber-500 inline ml-1" />}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {/* Photo Uploader */}
+          <ProGate feature="User Photo" isPro={isPro}>
+            <div className="flex items-center gap-2">
+              {photo ? (
+                <div className="relative group">
+                  <img src={photo} alt="Profile" className="h-9 w-9 rounded-full object-cover border-2 border-primary/20" />
+                  <button onClick={() => setPhoto(null)} className="absolute -top-1 -right-1 bg-destructive text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Trash2 className="h-3 w-3" />
+                  </button>
                 </div>
-              </ProGate>
+              ) : (
+                <label className="cursor-pointer flex items-center gap-1.5 px-3 h-9 rounded-xl border border-input bg-background hover:bg-accent text-xs font-bold transition-colors">
+                  <ImageIcon className="h-3.5 w-3.5 text-muted-foreground" /> Add Photo
+                  <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+                </label>
+              )}
             </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2"><Label>Full Name</Label><Input name="name" value={cv.name} onChange={handleCvChange} /></div>
-              <div className="space-y-2"><Label>Professional Title</Label><Input name="title" value={cv.title} onChange={handleCvChange} /></div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2"><Label>Email</Label><Input name="email" value={cv.email} onChange={handleCvChange} /></div>
-              <div className="space-y-2"><Label>Phone</Label><Input name="phone" value={cv.phone} onChange={handleCvChange} /></div>
-            </div>
-            <div className="space-y-2"><Label>Location</Label><Input name="location" value={cv.location} onChange={handleCvChange} /></div>
-          </CardContent>
-        </Card>
+          </ProGate>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <Input 
-              value={headings.summary} 
-              onChange={e => updateHeading('summary', e.target.value)} 
-              className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
-            />
-            <Button size="sm" variant="secondary" onClick={generateAISummary} disabled={isGeneratingAI}>
-              {isGeneratingAI ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Sparkles className="h-4 w-4 mr-2" />}
-              AI Write
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <Textarea name="summary" value={cv.summary} onChange={handleCvChange} rows={4} />
-            <p className="text-[11px] text-muted-foreground mt-1.5">
-              Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists, or use line breaks for paragraphs.
-            </p>
-          </CardContent>
-        </Card>
-
-        <div className="flex items-center justify-between py-1">
-          <ProGate feature="Custom Sections" isPro={isPro}>
-            <Button size="sm" variant="outline" onClick={addCustomSection} className="gap-1.5 font-bold">
-              <Plus className="h-4 w-4" /> Add Custom Section
-            </Button>
+          {/* Skill Mode Toggle */}
+          <ProGate feature="Skill Bars" isPro={isPro}>
+            <Tabs value={skillMode} onValueChange={(val) => setSkillMode(val as 'text' | 'bars')}>
+              <TabsList className="h-9">
+                <TabsTrigger value="text" className="text-[10px] uppercase font-bold px-2.5"><AlignLeft className="h-3 w-3 mr-1" /> Text</TabsTrigger>
+                <TabsTrigger value="bars" className="text-[10px] uppercase font-bold px-2.5"><BarChart3 className="h-3 w-3 mr-1" /> Bars</TabsTrigger>
+              </TabsList>
+            </Tabs>
           </ProGate>
         </div>
 
-        {customSections.map(cs => (
-          <Card key={cs.id} className="border-primary/20">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <Input
-                value={cs.title}
-                onChange={e => updateCustomSection(cs.id, 'title', e.target.value)}
-                placeholder="Section Heading..."
-                className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[220px]"
-              />
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => removeCustomSection(cs.id)}>
-                <Trash2 className="h-4 w-4" />
+        {/* Right Toolbar Actions */}
+        <div className="flex flex-wrap items-center gap-2">
+          <ProGate feature="AI Resume Parser" isPro={isPro}>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              onClick={() => setShowAIParserModal(true)} 
+              className="font-bold border-purple-500/20 hover:bg-purple-500/5 text-purple-600 dark:text-purple-400 gap-1.5 h-9 text-xs"
+            >
+              <Sparkles className="h-3.5 w-3.5 text-purple-500 animate-pulse" /> AI Import
+            </Button>
+          </ProGate>
+
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => setIsPreviewOpen(true)} 
+            className="gap-1.5 font-bold h-9 text-xs bg-primary/5 border-primary/20 text-primary hover:bg-primary/10"
+          >
+            <Eye className="h-3.5 w-3.5" /> Preview CV
+          </Button>
+
+          <ProGate feature="Cloud Save" isPro={isPro}>
+            <div className="flex gap-1.5">
+              <Button variant="outline" size="sm" onClick={async () => { await handleFetchResumes(); setIsLoadModalOpen(true); }} className="font-bold h-9 px-3 text-xs">
+                <FolderOpen className="h-3.5 w-3.5 mr-1" /> Load
               </Button>
-            </CardHeader>
-            <CardContent>
-              <Textarea
-                value={cs.content}
-                onChange={e => updateCustomSection(cs.id, 'content', e.target.value)}
-                rows={3}
-                placeholder="Add section details or bullet points..."
-              />
+              <Button variant="outline" size="sm" onClick={() => { if (activeResumeId) handleSaveResume(saveTitle); else { setSaveTitle(cv.name ? `${cv.name} Resume` : "My Resume"); setIsSaveModalOpen(true); } }} className="font-bold h-9 px-3 text-xs">
+                <Save className="h-3.5 w-3.5 mr-1" /> Save
+              </Button>
+            </div>
+          </ProGate>
+
+          <Button size="sm" onClick={handlePrint} className="bg-primary font-bold shadow-sm h-9 px-4 text-xs">
+            <Download className="mr-1.5 h-3.5 w-3.5" /> Export PDF
+          </Button>
+        </div>
+      </div>
+
+      {/* Full-Width Accordion Editor Area */}
+      <div className="w-full max-w-5xl mx-auto space-y-4 print:hidden">
+        <Accordion multiple defaultValue={["personal", "summary", "experience"]} className="space-y-4 w-full">
+          {/* Section 1: Personal Details */}
+          <AccordionItem value="personal" className="border rounded-2xl bg-card px-5 py-1">
+            <AccordionTrigger className="hover:no-underline font-bold text-base">
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4 text-primary" /> Personal Details
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pt-2 pb-4 space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2"><Label>Full Name</Label><Input name="name" value={cv.name} onChange={handleCvChange} /></div>
+                <div className="space-y-2"><Label>Professional Title</Label><Input name="title" value={cv.title} onChange={handleCvChange} /></div>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2"><Label>Email</Label><Input name="email" value={cv.email} onChange={handleCvChange} /></div>
+                <div className="space-y-2"><Label>Phone</Label><Input name="phone" value={cv.phone} onChange={handleCvChange} /></div>
+              </div>
+              <div className="space-y-2"><Label>Location</Label><Input name="location" value={cv.location} onChange={handleCvChange} /></div>
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Section 2: Summary */}
+          <AccordionItem value="summary" className="border rounded-2xl bg-card px-5 py-1">
+            <AccordionTrigger className="hover:no-underline font-bold text-base">
+              <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
+                <Layout className="h-4 w-4 text-primary" />
+                <Input 
+                  value={headings.summary} 
+                  onChange={e => updateHeading('summary', e.target.value)} 
+                  className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
+                />
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pt-2 pb-4 space-y-3">
+              <div className="flex justify-end">
+                <Button size="sm" variant="secondary" onClick={generateAISummary} disabled={isGeneratingAI} className="font-bold text-xs">
+                  {isGeneratingAI ? <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5 mr-1.5" />}
+                  AI Write
+                </Button>
+              </div>
+              <Textarea name="summary" value={cv.summary} onChange={handleCvChange} rows={4} />
               <p className="text-[11px] text-muted-foreground mt-1.5">
                 Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists, or use line breaks for paragraphs.
               </p>
-            </CardContent>
-          </Card>
-        ))}
+            </AccordionContent>
+          </AccordionItem>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <Input 
-              value={headings.skills} 
-              onChange={e => updateHeading('skills', e.target.value)} 
-              className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
-            />
-            <ProGate feature="Skill Bars" isPro={isPro}>
-              <Tabs 
-                value={skillMode} 
-                onValueChange={(val) => {
-                  const mode = val as 'text' | 'bars'
-                  setSkillMode(mode)
-                  if (mode === 'bars') {
-                    const list = cv.skillsText.split(',').map(s => s.trim()).filter(Boolean)
-                    if (list.length > 0) {
-                      setSkills(list.map((name, i) => {
-                        const existing = skills.find(s => s.name.toLowerCase() === name.toLowerCase())
-                        return {
-                          id: existing?.id || (Date.now() + i + Math.random()),
-                          name,
-                          rating: existing?.rating || 80
-                        }
-                      }))
-                    }
-                  } else {
-                    const text = skills.map(s => s.name).filter(Boolean).join(', ')
-                    setCv(prev => ({ ...prev, skillsText: text }))
-                  }
-                }}
-              >
-                <TabsList className="h-8">
-                  <TabsTrigger value="text" className="text-[10px] uppercase font-bold px-3"><AlignLeft className="h-3 w-3 mr-1" /> Text</TabsTrigger>
-                  <TabsTrigger value="bars" className="text-[10px] uppercase font-bold px-3"><BarChart3 className="h-3 w-3 mr-1" /> Bars</TabsTrigger>
-                </TabsList>
-              </Tabs>
-            </ProGate>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {skillMode === 'text' ? (
-              <div className="space-y-2">
-                <Label>Skills (Comma separated)</Label>
-                <Input name="skillsText" value={cv.skillsText} onChange={handleCvChange} placeholder="React, Next.js, etc." />
+          {/* Section 3: Pro Custom Content Sections */}
+          <AccordionItem value="custom-sections" className="border rounded-2xl bg-card px-5 py-1">
+            <AccordionTrigger className="hover:no-underline font-bold text-base">
+              <div className="flex items-center justify-between w-full pr-4">
+                <div className="flex items-center gap-2">
+                  <Star className="h-4 w-4 text-amber-500" /> Additional Custom Sections
+                  <span className="text-[10px] font-bold bg-amber-500/10 text-amber-600 px-2 py-0.5 rounded-full">
+                    {customSections.length} {customSections.length === 1 ? 'Section' : 'Sections'}
+                  </span>
+                </div>
               </div>
-            ) : (
-              <div className="space-y-4">
-                <Button size="sm" variant="outline" className="w-full" onClick={addSkill}><Plus className="h-4 w-4 mr-2" /> Add Skill with Rating</Button>
-                {skills.map((s) => (
-                  <div key={s.id} className="flex flex-col gap-3 p-3 border rounded-xl bg-muted/20">
-                    <div className="flex items-center gap-3">
-                      <Input placeholder="Skill Name" value={s.name} onChange={e => updateSkill(s.id, 'name', e.target.value)} className="h-8" />
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => removeSkill(s.id)}>
+            </AccordionTrigger>
+            <AccordionContent className="pt-2 pb-4 space-y-4">
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-muted-foreground">Add custom sections like Certifications, Languages, Publications, or Key Achievements.</p>
+                <ProGate feature="Custom Sections" isPro={isPro}>
+                  <Button size="sm" variant="outline" onClick={addCustomSection} className="gap-1.5 font-bold text-xs">
+                    <Plus className="h-3.5 w-3.5" /> Add Section
+                  </Button>
+                </ProGate>
+              </div>
+
+              {customSections.length === 0 ? (
+                <div className="py-6 text-center text-xs text-muted-foreground border border-dashed rounded-xl">
+                  No additional custom sections added yet. Click &quot;Add Section&quot; above to create one.
+                </div>
+              ) : (
+                customSections.map(cs => (
+                  <Card key={cs.id} className="border-primary/20">
+                    <CardHeader className="flex flex-row items-center justify-between pb-2">
+                      <Input
+                        value={cs.title}
+                        onChange={e => updateCustomSection(cs.id, 'title', e.target.value)}
+                        placeholder="Section Title (e.g. Certifications)"
+                        className="font-bold text-sm bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[240px]"
+                      />
+                      <Button size="sm" variant="ghost" onClick={() => removeCustomSection(cs.id)} className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10">
                         <Trash2 className="h-4 w-4" />
                       </Button>
+                    </CardHeader>
+                    <CardContent>
+                      <Textarea
+                        value={cs.content}
+                        onChange={e => updateCustomSection(cs.id, 'content', e.target.value)}
+                        placeholder="Enter section content or bullet points..."
+                        rows={3}
+                        className="text-xs"
+                      />
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Section 4: Skills & Expertise */}
+          <AccordionItem value="skills" className="border rounded-2xl bg-card px-5 py-1">
+            <AccordionTrigger className="hover:no-underline font-bold text-base">
+              <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
+                <BarChart3 className="h-4 w-4 text-primary" />
+                <Input 
+                  value={headings.skills} 
+                  onChange={e => updateHeading('skills', e.target.value)} 
+                  className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
+                />
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pt-2 pb-4 space-y-4">
+              {skillMode === 'text' ? (
+                <Textarea 
+                  name="skillsText" 
+                  value={cv.skillsText} 
+                  onChange={handleCvChange} 
+                  placeholder="React.js, Next.js, TypeScript, Node.js, Tailwind CSS, PostgreSQL" 
+                  rows={3} 
+                />
+              ) : (
+                <div className="space-y-4">
+                  <Button size="sm" variant="outline" className="w-full" onClick={addSkill}><Plus className="h-4 w-4 mr-2" /> Add Skill with Rating</Button>
+                  {skills.map((s) => (
+                    <div key={s.id} className="flex flex-col gap-3 p-3 border rounded-xl bg-muted/20">
+                      <div className="flex items-center gap-3">
+                        <Input placeholder="Skill Name" value={s.name} onChange={e => updateSkill(s.id, 'name', e.target.value)} className="h-8" />
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => removeSkill(s.id)}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <div className="flex items-center gap-4 px-1">
+                        <Slider value={[s.rating]} max={100} step={1} onValueChange={(val) => updateSkill(s.id, 'rating', Array.isArray(val) ? val[0] : val)} className="flex-1" />
+                        <span className="text-xs font-bold w-8 text-right">{s.rating}%</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-4 px-1">
-                      <Slider value={[s.rating]} max={100} step={1} onValueChange={(val) => updateSkill(s.id, 'rating', Array.isArray(val) ? val[0] : val)} className="flex-1" />
-                      <span className="text-xs font-bold w-8 text-right">{s.rating}%</span>
+                  ))}
+                </div>
+              )}
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Section 5: Experience */}
+          <AccordionItem value="experience" className="border rounded-2xl bg-card px-5 py-1">
+            <AccordionTrigger className="hover:no-underline font-bold text-base">
+              <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
+                <Briefcase className="h-4 w-4 text-primary" />
+                <Input 
+                  value={headings.experience} 
+                  onChange={e => updateHeading('experience', e.target.value)} 
+                  className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
+                />
+                <span className="text-[10px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full ml-1">
+                  {experience.length} {experience.length === 1 ? 'Role' : 'Roles'}
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pt-2 pb-4 space-y-4">
+              <div className="flex justify-end">
+                <Button size="sm" variant="outline" onClick={addExperience} className="font-bold text-xs">
+                  <Plus className="mr-1 h-3.5 w-3.5" /> Add Role
+                </Button>
+              </div>
+              {experience.map((exp, idx) => (
+                <div key={exp.id} className={cn("space-y-3 relative p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
+                  {idx > 0 && (
+                    <Button variant="ghost" size="icon" className="absolute top-3 right-3 text-destructive h-7 w-7" onClick={() => removeExperience(exp.id)}>
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  )}
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <Input placeholder="Company Name" value={exp.company} onChange={e => updateExperience(exp.id, 'company', e.target.value)} />
+                    <Input placeholder="Role / Job Title" value={exp.role} onChange={e => updateExperience(exp.id, 'role', e.target.value)} />
+                  </div>
+                  <Input placeholder="Period (e.g. Jan 2022 - Present)" value={exp.period} onChange={e => updateExperience(exp.id, 'period', e.target.value)} />
+                  <Textarea placeholder="Key responsibilities and achievements..." value={exp.desc} onChange={e => updateExperience(exp.id, 'desc', e.target.value)} rows={3} />
+                </div>
+              ))}
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Section 6: Projects */}
+          <AccordionItem value="projects" className="border rounded-2xl bg-card px-5 py-1">
+            <AccordionTrigger className="hover:no-underline font-bold text-base">
+              <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
+                <FolderGit2 className="h-4 w-4 text-primary" />
+                <Input 
+                  value={headings.projects} 
+                  onChange={e => updateHeading('projects', e.target.value)} 
+                  className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
+                />
+                <span className="text-[10px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full ml-1">
+                  {projects.length} {projects.length === 1 ? 'Project' : 'Projects'}
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pt-2 pb-4 space-y-4">
+              <div className="flex justify-end">
+                <ProGate feature="Projects Section" isPro={isPro}>
+                  <Button size="sm" variant="outline" onClick={addProject} className="font-bold text-xs">
+                    <Plus className="mr-1 h-3.5 w-3.5" /> Add Project
+                  </Button>
+                </ProGate>
+              </div>
+              <ProGate feature="Projects Section" isPro={isPro}>
+                {projects.map((proj, idx) => (
+                  <div key={proj.id} className={cn("space-y-3 relative p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
+                    {idx > 0 && (
+                      <Button variant="ghost" size="icon" className="absolute top-3 right-3 text-destructive h-7 w-7" onClick={() => removeProject(proj.id)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      <Input placeholder="Project Title" value={proj.title} onChange={e => updateProject(proj.id, 'title', e.target.value)} />
+                      <Input placeholder="Project Link" value={proj.link} onChange={e => updateProject(proj.id, 'link', e.target.value)} />
+                    </div>
+                    <Textarea placeholder="Project summary..." value={proj.desc} onChange={e => updateProject(proj.id, 'desc', e.target.value)} rows={2} />
+                  </div>
+                ))}
+              </ProGate>
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Section 7: Education */}
+          <AccordionItem value="education" className="border rounded-2xl bg-card px-5 py-1">
+            <AccordionTrigger className="hover:no-underline font-bold text-base">
+              <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
+                <GraduationCap className="h-4 w-4 text-primary" />
+                <Input 
+                  value={headings.education} 
+                  onChange={e => updateHeading('education', e.target.value)} 
+                  className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
+                />
+                <span className="text-[10px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full ml-1">
+                  {education.length} {education.length === 1 ? 'Entry' : 'Entries'}
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pt-2 pb-4 space-y-4">
+              <div className="flex justify-end">
+                <ProGate feature="Multiple Degrees" isPro={isPro}>
+                  <Button size="sm" variant="outline" onClick={addEducation} className="font-bold text-xs">
+                    <Plus className="mr-1 h-3.5 w-3.5" /> Add Degree
+                  </Button>
+                </ProGate>
+              </div>
+              <ProGate feature="Multiple Degrees" isPro={isPro}>
+                {education.map((edu, idx) => (
+                  <div key={edu.id} className={cn("space-y-3 relative p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
+                    {idx > 0 && (
+                      <Button variant="ghost" size="icon" className="absolute top-3 right-3 text-destructive h-7 w-7" onClick={() => removeEducation(edu.id)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                    <Input placeholder="School / University Name" value={edu.school} onChange={e => updateEducation(edu.id, 'school', e.target.value)} />
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      <Input placeholder="Degree / Certification" value={edu.degree} onChange={e => updateEducation(edu.id, 'degree', e.target.value)} />
+                      <Input placeholder="Period (e.g. 2018 - 2022)" value={edu.period} onChange={e => updateEducation(edu.id, 'period', e.target.value)} />
                     </div>
                   </div>
                 ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <Input 
-              value={headings.experience} 
-              onChange={e => updateHeading('experience', e.target.value)} 
-              className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
-            />
-            <ProGate feature="Experience Manager" isPro={isPro}><Button size="sm" variant="outline" onClick={addExperience}><Plus className="h-4 w-4 mr-2" /> Add</Button></ProGate>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <ProGate feature="Experience Manager" isPro={isPro}>
-              {experience.map((exp, idx) => (
-                <div key={exp.id} className={cn("space-y-4 relative", idx > 0 && "pt-6 border-t")}>
-                  {idx > 0 && <Button variant="ghost" size="icon" className="absolute top-4 right-0 text-destructive h-8 w-8" onClick={() => removeExperience(exp.id)}><Trash2 className="h-4 w-4" /></Button>}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2"><Label>Company</Label><Input value={exp.company} onChange={e => updateExperience(exp.id, 'company', e.target.value)} /></div>
-                    <div className="space-y-2"><Label>Role</Label><Input value={exp.role} onChange={e => updateExperience(exp.id, 'role', e.target.value)} /></div>
-                  </div>
-                  <Input placeholder="Period" value={exp.period} onChange={e => updateExperience(exp.id, 'period', e.target.value)} />
-                  <div>
-                    <Textarea value={exp.desc} onChange={e => updateExperience(exp.id, 'desc', e.target.value)} rows={3} />
-                    <p className="text-[11px] text-muted-foreground mt-1">
-                      Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists.
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </ProGate>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <Input 
-              value={headings.projects} 
-              onChange={e => updateHeading('projects', e.target.value)} 
-              className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
-            />
-            <ProGate feature="Projects Section" isPro={isPro}><Button size="sm" variant="outline" onClick={addProject}><Plus className="h-4 w-4 mr-2" /> Add</Button></ProGate>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <ProGate feature="Projects Section" isPro={isPro}>
-              {projects.map((p, idx) => (
-                <div key={p.id} className={cn("space-y-4 relative", idx > 0 && "pt-6 border-t")}>
-                  {idx > 0 && <Button variant="ghost" size="icon" className="absolute top-4 right-0 text-destructive h-8 w-8" onClick={() => removeProject(p.id)}><Trash2 className="h-4 w-4" /></Button>}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2"><Label>Title</Label><Input value={p.title} onChange={e => updateProject(p.id, 'title', e.target.value)} /></div>
-                    <div className="space-y-2"><Label>Link</Label><Input value={p.link} onChange={e => updateProject(p.id, 'link', e.target.value)} /></div>
-                  </div>
-                  <div>
-                    <Textarea placeholder="Project summary..." value={p.desc} onChange={e => updateProject(p.id, 'desc', e.target.value)} rows={2} />
-                    <p className="text-[11px] text-muted-foreground mt-1">
-                      Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists.
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </ProGate>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <Input 
-              value={headings.education} 
-              onChange={e => updateHeading('education', e.target.value)} 
-              className="font-bold text-base bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[200px]" 
-            />
-            <ProGate feature="Education Details" isPro={isPro}><Button size="sm" variant="outline" onClick={addEducation}><Plus className="h-4 w-4 mr-2" /> Add</Button></ProGate>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <ProGate feature="Education Details" isPro={isPro}>
-              {education.map((edu, idx) => (
-                <div key={edu.id} className={cn("space-y-4 relative", idx > 0 && "pt-6 border-t")}>
-                  {idx > 0 && <Button variant="ghost" size="icon" className="absolute top-4 right-0 text-destructive h-8 w-8" onClick={() => removeEducation(edu.id)}><Trash2 className="h-4 w-4" /></Button>}
-                  <Input placeholder="School / University" value={edu.school} onChange={e => updateEducation(edu.id, 'school', e.target.value)} />
-                  <div className="grid grid-cols-2 gap-4">
-                    <Input placeholder="Degree" value={edu.degree} onChange={e => updateEducation(edu.id, 'degree', e.target.value)} />
-                    <Input placeholder="Period" value={edu.period} onChange={e => updateEducation(edu.id, 'period', e.target.value)} />
-                  </div>
-                </div>
-              ))}
-            </ProGate>
-          </CardContent>
-        </Card>
+              </ProGate>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
 
-      {/* Preview Panel */}
-      <div className="space-y-4 relative print:m-0 print:p-0">
-        <div className="sticky top-24 print:hidden">
-          <div className="flex flex-col sm:flex-row gap-3 sm:items-center justify-between bg-card p-4 rounded-2xl border shadow-sm mb-4">
-            <div className="flex items-center gap-3">
-              <Select 
-                value={templateId} 
-                onValueChange={(val) => {
-                  const selected = TEMPLATES.find(t => t.id === val)
-                  if (selected?.pro && !isPro) {
-                    setUpgradeModalType("template")
-                    setShowUpgradeModal(true)
-                  } else {
-                    setTemplateId(val || "modern")
-                  }
-                }}
-              >
-                <SelectTrigger className="w-[180px] font-bold capitalize"><SelectValue placeholder="Modern" /></SelectTrigger>
-                <SelectContent>
-                  {TEMPLATES.map(t => (
-                    <SelectItem key={t.id} value={t.id} className="flex items-center justify-between capitalize">
-                      <span className="flex items-center gap-2">{t.name}{t.pro && <Crown className="h-3 w-3 text-amber-500 inline ml-1" />}</span>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              
-              <ProGate feature="Cloud Save" isPro={isPro}>
-                <div className="flex gap-2">
-                  <Button 
-                    variant="outline" 
-                    onClick={async () => {
-                      await handleFetchResumes()
-                      setIsLoadModalOpen(true)
-                    }}
-                    className="font-bold gap-1.5 h-10 px-4"
-                  >
-                    <FolderOpen className="h-4 w-4" /> Load
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => {
-                      if (activeResumeId) {
-                        handleSaveResume(saveTitle)
-                      } else {
-                        setSaveTitle(cv.name ? `${cv.name} Resume` : "My Resume")
-                        setIsSaveModalOpen(true)
-                      }
-                    }}
-                    className="font-bold gap-1.5 h-10 px-4"
-                  >
-                    <Save className="h-4 w-4" /> {activeResumeId ? "Save" : "Save Cloud"}
-                  </Button>
-                </div>
-              </ProGate>
+      {/* Hidden Print-Only Paper Container */}
+      <div className="hidden print:block print:w-full print:m-0 print:p-0">
+        <div className="bg-white text-black print:shadow-none print:m-0 overflow-hidden relative mx-auto print-full-width"
+          style={{ width: '100%', maxWidth: '210mm', minHeight: '297mm', backgroundColor: '#ffffff', color: '#000000', fontFamily: (templateId === 'elegant' || templateId === 'classic') ? 'serif' : 'Inter, sans-serif' }}>
+          {renderTemplateContent()}
+        </div>
+      </div>
+    </div>
 
-              <Button onClick={handlePrint} className="bg-primary shadow-lg shadow-primary/20 h-10">
-                <Download className="mr-2 h-4 w-4" /> Export PDF
-              </Button>
-            </div>
+    {/* Full Live CV Preview Modal Overlay */}
+    {isPreviewOpen && (
+      <div className="fixed inset-0 z-[100] bg-background/80 backdrop-blur-md flex flex-col no-print animate-in fade-in duration-200">
+        {/* Preview Modal Header */}
+        <div className="sticky top-0 z-10 bg-background border-b px-6 py-3 flex items-center justify-between gap-4 shadow-sm">
+          <div className="flex items-center gap-3">
+            <Eye className="h-5 w-5 text-primary" />
+            <h3 className="font-black text-lg">CV Live Preview</h3>
+            <Select 
+              value={templateId} 
+              onValueChange={(val) => {
+                const selected = TEMPLATES.find(t => t.id === val)
+                if (selected?.pro && !isPro) {
+                  setUpgradeModalType("template")
+                  setShowUpgradeModal(true)
+                } else {
+                  setTemplateId(val || "modern")
+                }
+              }}
+            >
+              <SelectTrigger className="w-[170px] h-8 text-xs font-bold capitalize">
+                <SelectValue placeholder="Modern" />
+              </SelectTrigger>
+              <SelectContent>
+                {TEMPLATES.map(t => (
+                  <SelectItem key={t.id} value={t.id} className="text-xs capitalize">
+                    {t.name}{t.pro && <Crown className="h-3 w-3 text-amber-500 inline ml-1" />}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button size="sm" onClick={handlePrint} className="bg-primary font-bold shadow-sm h-8 px-4 text-xs">
+              <Download className="mr-1.5 h-3.5 w-3.5" /> Export PDF
+            </Button>
+            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setIsPreviewOpen(false)}>
+              <X className="h-4 w-4" />
+            </Button>
           </div>
         </div>
-        
-        <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
-          <div className="bg-white text-black shadow-2xl print:shadow-none print:m-0 overflow-hidden relative mx-auto print-full-width"
-            style={{ width: '100%', maxWidth: '210mm', minHeight: '297mm', backgroundColor: '#ffffff', color: '#000000', fontFamily: (templateId === 'elegant' || templateId === 'classic') ? 'serif' : 'Inter, sans-serif' }}>
-          
-          {/* Modern Template */}
-          {templateId === 'modern' && (
-            <div style={{ padding: '40px' }}>
-              <div style={{ marginBottom: '40px', borderBottom: '2px solid #2563eb', paddingBottom: '30px' }}>
-                <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#111827', margin: 0 }}>{cv.name}</h1>
-                <p style={{ fontSize: '20px', color: '#2563eb', fontWeight: '600', margin: '4px 0 0 0' }}>{cv.title}</p>
-                <div style={{ display: 'flex', gap: '15px', marginTop: '10px', fontSize: '13px', color: '#6b7280' }}><span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span></div>
-              </div>
-              {renderSummary('#2563eb')}
-              {renderCustomSections('#2563eb')}
-              {renderSkills('#2563eb')}
-              {renderExperience('#2563eb')}
-              {renderProjects('#2563eb')}
-              {renderEducation('#2563eb')}
-            </div>
-          )}
 
-          {/* Elegant Template */}
-          {templateId === 'elegant' && (
-            <div style={{ padding: '60px', fontFamily: 'serif' }}>
-              <div style={{ textAlign: 'center', marginBottom: '40px' }}><h1 style={{ fontSize: '38px', letterSpacing: '2px', fontWeight: 'normal', textTransform: 'uppercase', marginBottom: '10px' }}>{cv.name}</h1><div style={{ display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '13px', color: '#666' }}><span>{cv.location}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.email}</span></div></div>
-              {renderSummary('#000')}
-              {renderCustomSections('#000')}
-              {renderSkills('#000')}
-              {renderExperience('#000')}
-              {renderProjects('#000')}
-              {renderEducation('#000')}
-            </div>
-          )}
-
-          {/* Executive Template */}
-          {templateId === 'executive' && (
-            <div style={{ padding: '50px 40px', fontFamily: '"Times New Roman", Times, serif', color: '#1e293b' }}>
-              <div style={{ textAlign: 'center', marginBottom: '25px', borderBottom: '2px double #cbd5e1', paddingBottom: '16px' }}>
-                <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: '#1e3a8a', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 8px 0' }}>{cv.name}</h1>
-                <p style={{ fontSize: '15px', color: '#475569', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 12px 0' }}>{cv.title}</p>
-                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '15px', fontSize: '12px', color: '#64748b' }}>
-                  <span>{cv.email}</span><span>|</span><span>{cv.phone}</span><span>|</span><span>{cv.location}</span>
-                </div>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                {renderSummary('#1e3a8a')}
-                {renderCustomSections('#1e3a8a')}
-                {renderSkills('#1e3a8a')}
-                {renderExperience('#1e3a8a')}
-                {renderProjects('#1e3a8a')}
-                {renderEducation('#1e3a8a')}
-              </div>
-            </div>
-          )}
-
-          {/* Minimalist Pro Template */}
-          {templateId === 'minimalist-pro' && (
-            <div style={{ padding: '50px', color: '#334155', fontFamily: 'Inter, sans-serif' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #e2e8f0', paddingBottom: '30px', marginBottom: '30px' }}>
-                <div>
-                  <h1 style={{ fontSize: '36px', fontWeight: '800', letterSpacing: '-0.02em', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
-                  <p style={{ fontSize: '16px', color: '#64748b', marginTop: '4px', margin: 0 }}>{cv.title}</p>
-                </div>
-                <div style={{ textAlign: 'right', fontSize: '12px', color: '#64748b', lineHeight: '1.6' }}>
-                  {photo && <img src={photo} style={{ width: '80px', height: '80px', borderRadius: '16px', marginBottom: '12px', objectFit: 'cover', marginLeft: 'auto' }} />}
-                  <div>{cv.email}</div>
-                  <div>{cv.phone}</div>
-                  <div>{cv.location}</div>
-                </div>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-                {renderSummary('#475569')}
-                {renderCustomSections('#475569')}
-                {renderSkills('#475569')}
-                {renderExperience('#475569')}
-                {renderProjects('#475569')}
-                {renderEducation('#475569')}
-              </div>
-            </div>
-          )}
-
-          {/* Developer Pro Template */}
-          {templateId === 'developer' && (
-            <div style={{ padding: '45px', color: '#0f172a', fontFamily: 'Inter, sans-serif' }}>
-              <div style={{ borderLeft: '4px solid #4f46e5', paddingLeft: '20px', marginBottom: '35px' }}>
-                <h1 style={{ fontSize: '34px', fontWeight: '900', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
-                <p style={{ fontSize: '18px', color: '#4f46e5', fontWeight: 'bold', margin: '4px 0 0 0' }}>{cv.title}</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '10px', fontSize: '12px', color: '#64748b' }}>
-                  <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>
-                </div>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-                {renderSummary('#4f46e5')}
-                {renderCustomSections('#4f46e5')}
-                {renderSkills('#4f46e5')}
-                {renderExperience('#4f46e5')}
-                {renderProjects('#4f46e5')}
-                {renderEducation('#4f46e5')}
-              </div>
-            </div>
-          )}
-
-          {/* Metro Grid Template */}
-          {templateId === 'metro' && (
-            <div style={{ padding: '40px', color: '#1e293b', fontFamily: 'Inter, sans-serif' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '20px', border: '1px solid #cbd5e1', padding: '24px', borderRadius: '12px', marginBottom: '30px' }}>
-                <div>
-                  <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
-                  <p style={{ fontSize: '16px', color: '#0284c7', fontWeight: '600', marginTop: '4px', margin: 0 }}>{cv.title}</p>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '12px', fontSize: '12px', color: '#64748b' }}>
-                    <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>
-                  </div>
-                </div>
-                {photo && <img src={photo} style={{ width: '90px', height: '90px', borderRadius: '8px', objectFit: 'cover' }} />}
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
-                {renderSummary('#0284c7')}
-                {renderCustomSections('#0284c7')}
-                {renderSkills('#0284c7')}
-                {renderExperience('#0284c7')}
-                {renderProjects('#0284c7')}
-                {renderEducation('#0284c7')}
-              </div>
-            </div>
-          )}
-
-          {/* Accent Left Template */}
-          {templateId === 'accent' && (
-            <div style={{ display: 'grid', gridTemplateColumns: '8px 1fr', minHeight: '297mm', fontFamily: 'Inter, sans-serif' }}>
-              <div style={{ backgroundColor: '#059669', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }} />
-              <div style={{ padding: '50px 40px', color: '#1f2937' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '35px' }}>
-                  <div>
-                    <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#111827', margin: 0 }}>{cv.name}</h1>
-                    <p style={{ fontSize: '18px', color: '#059669', fontWeight: '700', marginTop: '4px', margin: 0 }}>{cv.title}</p>
-                  </div>
-                  <div style={{ textAlign: 'right', fontSize: '13px', color: '#4b5563' }}>
-                    <p style={{ margin: 0 }}>{cv.email}</p>
-                    <p style={{ margin: '4px 0 0 0' }}>{cv.phone}</p>
-                    <p style={{ margin: '4px 0 0 0' }}>{cv.location}</p>
-                  </div>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-                  {renderSummary('#059669')}
-                  {renderCustomSections('#059669')}
-                  {renderSkills('#059669')}
-                  {renderExperience('#059669')}
-                  {renderProjects('#059669')}
-                  {renderEducation('#059669')}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Sidebar Template */}
-          {templateId === 'sidebar' && (
-            <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', minHeight: '297mm' }}>
-               <div style={{ backgroundColor: '#f8fafc', padding: '40px 20px', borderRight: '1px solid #e2e8f0', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
-                  {photo && <img src={photo} style={{ width: '140px', height: '140px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 30px auto', display: 'block', border: '4px solid white', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }} />}
-                  <h2 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '20px', color: '#1e293b' }}>Contact</h2>
-                  <div style={{ fontSize: '13px', color: '#64748b', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '40px' }}><p>{cv.email}</p><p>{cv.phone}</p><p>{cv.location}</p></div>
-                  {renderSkills('#1e293b')}
-               </div>
-               <div style={{ padding: '60px 40px', display: 'flex', flexDirection: 'column' }}>
-                  <h1 style={{ fontSize: '40px', fontWeight: '900', color: '#1e293b', margin: 0 }}>{cv.name}</h1><p style={{ fontSize: '18px', color: '#64748b', marginBottom: '40px' }}>{cv.title}</p>
-                  {renderSummary('#1e293b')}
-                  {renderCustomSections('#1e293b')}
-                  {renderExperience('#1e293b')}
-                  {renderProjects('#1e293b')}
-                  {renderEducation('#1e293b')}
-               </div>
-            </div>
-          )}
-
-          {/* Creative Template */}
-          {templateId === 'creative' && (
-            <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', minHeight: '297mm' }}>
-              <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '40px 20px', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
-                {photo && <img src={photo} style={{ width: '120px', height: '120px', borderRadius: '24px', objectFit: 'cover', marginBottom: '20px', border: '4px solid rgba(255,255,255,0.2)' }} />}
-                <h1 style={{ fontSize: '28px', fontWeight: '900', lineHeight: '1.1', marginBottom: '10px' }}>{cv.name}</h1><p style={{ fontSize: '14px', opacity: 0.8, marginBottom: '40px' }}>{cv.title}</p>
-                <div style={{ fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <p style={{ margin: 0 }}>{cv.email}</p>
-                  <p style={{ margin: 0 }}>{cv.phone}</p>
-                  <p style={{ margin: 0 }}>{cv.location}</p>
-                </div>
-              </div>
-              <div style={{ padding: '40px', display: 'flex', flexDirection: 'column' }}>
-                {renderSummary('#2563eb')}
-                {renderCustomSections('#2563eb')}
-                {renderSkills('#2563eb')}
-                {renderExperience('#2563eb')}
-                {renderProjects('#2563eb')}
-                {renderEducation('#2563eb')}
-              </div>
-            </div>
-          )}
-
-          {/* Tech Template */}
-          {templateId === 'tech' && (
-            <div style={{ padding: '40px', fontFamily: 'monospace', backgroundColor: '#f8fafc', minHeight: '297mm', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
-               <div style={{ border: '1px solid #e2e8f0', backgroundColor: 'white', padding: '20px' }}>
-                  <h1 style={{ fontSize: '24px', margin: 0 }}>&gt; {cv.name}</h1>
-                  <p style={{ color: '#2563eb' }}>{"// "}{cv.title}</p>
-                  <div style={{ display: 'flex', gap: '20px', fontSize: '12px', marginTop: '10px' }}>
-                    <span>@: {cv.email}</span><span>#: {cv.phone}</span><span>L: {cv.location}</span>
-                  </div>
-               </div>
-               <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column' }}>
-                  {renderSummary('#2563eb')}
-                  {renderCustomSections('#2563eb')}
-                  {renderSkills('#2563eb')}
-                  {renderExperience('#2563eb')}
-                  {renderProjects('#2563eb')}
-                  {renderEducation('#2563eb')}
-               </div>
-            </div>
-          )}
+        {/* Paper Preview Canvas */}
+        <div className="flex-1 overflow-y-auto p-6 sm:p-10 flex justify-center bg-muted/40 custom-scrollbar">
+          <div className="bg-white text-black shadow-2xl overflow-hidden relative print-full-width my-auto" style={{ width: '100%', maxWidth: '210mm', minHeight: '297mm', backgroundColor: '#ffffff', color: '#000000', fontFamily: (templateId === 'elegant' || templateId === 'classic') ? 'serif' : 'Inter, sans-serif' }}>
+            {renderTemplateContent()}
+          </div>
         </div>
       </div>
-    </div>
-    </div>
-    </div>
+    )}
 
     {/* SEO Section */}
     <div className="grid md:grid-cols-2 gap-12 mt-16 border-t pt-12 pb-0 print:hidden">
