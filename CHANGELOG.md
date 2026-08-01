@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.5] - 2026-08-01
+
+### Added
+- **AI CV Builder - Full-Width Accordion & Live Preview Redesign**:
+  - Re-architected editor layout from a cramped two-column grid into a clean full-width accordion interface (`w-full`) for focused section editing.
+  - Added sticky top control toolbar consolidating template selection, profile photo uploader, skill display mode toggle (`Text` vs `Bars`), AI resume import, cloud actions (`Load` & `Save`), and `Export PDF`.
+  - Added **Preview CV** button in top toolbar launching an instant full-screen A4 sheet live preview modal overlay (`z-[100]`) with template switcher and PDF export.
+  - Added bullet list & paragraph auto-formatting helper tips underneath all editor `<Textarea>` input fields.
+
+### Fixed
+- **UI & Layout Alignment**:
+  - Vertically centered accordion expand/collapse trigger arrows (`items-center`) and aligned item card headers with clean `Remove` action buttons across Experience, Projects, Education, Skills, and Custom Sections.
+  - Elevated `@/components/ui/select` popover portal `z-index` to `z-[200]` so template selection dropdown menus render properly above modal overlays.
+
 ## [1.2.4] - 2026-07-30
 
 ### Added
