@@ -5,10 +5,20 @@ import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, ResponsiveContainer, L
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
-import { Calculator, Calendar, DollarSign, TrendingDown, Percent, FileSpreadsheet } from "lucide-react"
+import { Calculator, Calendar, ChevronDown, ChevronRight, FileSpreadsheet, Layers } from "lucide-react"
 
 const COLORS = ['#2563eb', '#f97316']
+
+interface MonthlyBreakdown {
+  monthNumber: number
+  overallMonth: number
+  principalPaid: number
+  interestPaid: number
+  totalPaid: number
+  balance: number
+}
 
 interface YearlyAmortization {
   year: number
@@ -17,12 +27,14 @@ interface YearlyAmortization {
   totalPaid: number
   balance: number
   percentPaid: number
+  months: MonthlyBreakdown[]
 }
 
 export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
   const [principal, setPrincipal] = useState(500000)
   const [rate, setRate] = useState(8.5)
   const [tenure, setTenure] = useState(20)
+  const [expandedYears, setExpandedYears] = useState<number[]>([])
 
   // EMI Formula: P x R x (1+R)^N / [(1+R)^N-1]
   const calculateEMI = () => {
@@ -43,7 +55,7 @@ export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
     { name: 'Total Interest', value: totalInterest },
   ]
 
-  // Calculate year-by-year schedule
+  // Calculate year-by-year schedule with monthly breakdown
   const getYearlySchedule = (): YearlyAmortization[] => {
     const monthlyRate = rate / 12 / 100
     const totalMonths = tenure * 12
@@ -53,12 +65,16 @@ export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
     let currentBalance = principal
     const schedule: YearlyAmortization[] = []
 
+    let overallMonthCount = 0
+
     for (let y = 1; y <= tenure; y++) {
       let yearInterest = 0
       let yearPrincipal = 0
+      const monthlyList: MonthlyBreakdown[] = []
 
       for (let m = 1; m <= 12; m++) {
         if (currentBalance <= 0) break
+        overallMonthCount++
         const interestForMonth = currentBalance * monthlyRate
         let principalForMonth = currentEmi - interestForMonth
         if (principalForMonth > currentBalance) {
@@ -67,6 +83,15 @@ export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
         yearInterest += interestForMonth
         yearPrincipal += principalForMonth
         currentBalance -= principalForMonth
+
+        monthlyList.push({
+          monthNumber: m,
+          overallMonth: overallMonthCount,
+          principalPaid: Math.round(principalForMonth),
+          interestPaid: Math.round(interestForMonth),
+          totalPaid: Math.round(principalForMonth + interestForMonth),
+          balance: Math.round(Math.max(0, currentBalance))
+        })
       }
 
       const balanceAtEnd = Math.max(0, currentBalance)
@@ -78,7 +103,8 @@ export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
         interestPaid: Math.round(yearInterest),
         totalPaid: Math.round(yearPrincipal + yearInterest),
         balance: Math.round(balanceAtEnd),
-        percentPaid
+        percentPaid,
+        months: monthlyList
       })
     }
 
@@ -86,6 +112,20 @@ export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
   }
 
   const yearlySchedule = getYearlySchedule()
+
+  const toggleYear = (year: number) => {
+    setExpandedYears(prev => 
+      prev.includes(year) ? prev.filter(y => y !== year) : [...prev, year]
+    )
+  }
+
+  const toggleAllYears = () => {
+    if (expandedYears.length === yearlySchedule.length) {
+      setExpandedYears([])
+    } else {
+      setExpandedYears(yearlySchedule.map(s => s.year))
+    }
+  }
 
   return (
     <div className="space-y-10">
@@ -258,19 +298,32 @@ export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
         </Card>
       </div>
 
-      {/* Year-by-Year Amortization Schedule Table */}
+      {/* Year-by-Year Amortization Schedule Table with Monthly Accordions */}
       <Card className="border-primary/10 shadow-sm overflow-hidden">
         <CardHeader className="bg-muted/20 border-b flex flex-col md:flex-row md:items-center justify-between gap-4 py-4">
           <div>
             <CardTitle className="text-lg font-bold flex items-center gap-2">
-              <FileSpreadsheet className="h-5 w-5 text-primary" /> Year-by-Year Loan Repayment Schedule
+              <FileSpreadsheet className="h-5 w-5 text-primary" /> Year-by-Year & Monthly Loan Repayment Schedule
             </CardTitle>
             <CardDescription className="text-xs">
-              Annual breakdown showing principal paid, interest paid, and remaining balance at the end of each year.
+              Click any year row to expand its detailed 12-month payment report.
             </CardDescription>
           </div>
-          <div className="text-xs font-bold bg-primary/10 text-primary px-3 py-1.5 rounded-full border border-primary/20 w-fit">
-            {tenure} {tenure === 1 ? 'Year' : 'Years'} Loan Duration
+          <div className="flex items-center gap-3">
+            {yearlySchedule.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={toggleAllYears}
+                className="h-8 text-xs font-bold gap-1.5"
+              >
+                <Layers className="h-3.5 w-3.5" />
+                {expandedYears.length === yearlySchedule.length ? "Collapse All Years" : "Expand All Years"}
+              </Button>
+            )}
+            <div className="text-xs font-bold bg-primary/10 text-primary px-3 py-1.5 rounded-full border border-primary/20 shrink-0">
+              {tenure} {tenure === 1 ? 'Year' : 'Years'} Loan Duration
+            </div>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -283,6 +336,7 @@ export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
                   <tr className="border-b bg-muted/40 text-muted-foreground font-bold uppercase tracking-wider text-[11px]">
+                    <th className="py-3 px-4 w-12 text-center"></th>
                     <th className="py-3 px-4">Year</th>
                     <th className="py-3 px-4 text-right">Principal Paid (₹)</th>
                     <th className="py-3 px-4 text-right">Interest Paid (₹)</th>
@@ -292,36 +346,109 @@ export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {yearlySchedule.map((row) => (
-                    <tr key={row.year} className="hover:bg-muted/30 transition-colors">
-                      <td className="py-3 px-4 font-bold text-foreground flex items-center gap-1.5">
-                        <Calendar className="h-3.5 w-3.5 text-primary" /> Year {row.year}
-                      </td>
-                      <td className="py-3 px-4 text-right font-medium text-emerald-600 dark:text-emerald-400">
-                        ₹{row.principalPaid.toLocaleString('en-IN')}
-                      </td>
-                      <td className="py-3 px-4 text-right font-medium text-orange-600 dark:text-orange-400">
-                        ₹{row.interestPaid.toLocaleString('en-IN')}
-                      </td>
-                      <td className="py-3 px-4 text-right font-bold">
-                        ₹{row.totalPaid.toLocaleString('en-IN')}
-                      </td>
-                      <td className="py-3 px-4 text-right font-bold text-muted-foreground">
-                        ₹{row.balance.toLocaleString('en-IN')}
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        <div className="flex items-center gap-2 justify-center">
-                          <div className="w-16 bg-muted h-2 rounded-full overflow-hidden">
-                            <div className="bg-primary h-full rounded-full transition-all duration-300" style={{ width: `${row.percentPaid}%` }} />
-                          </div>
-                          <span className="text-[10px] font-bold w-7 text-right">{row.percentPaid}%</span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                  {yearlySchedule.map((row) => {
+                    const isExpanded = expandedYears.includes(row.year)
+                    return (
+                      <React.Fragment key={row.year}>
+                        <tr 
+                          onClick={() => toggleYear(row.year)}
+                          className="hover:bg-muted/30 transition-colors cursor-pointer select-none group"
+                        >
+                          <td className="py-3 px-4 text-center">
+                            <div className="h-6 w-6 rounded-full bg-muted flex items-center justify-center group-hover:bg-primary/20 group-hover:text-primary transition-colors">
+                              {isExpanded ? (
+                                <ChevronDown className="h-4 w-4 text-primary" />
+                              ) : (
+                                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary" />
+                              )}
+                            </div>
+                          </td>
+                          <td className="py-3 px-4 font-bold text-foreground flex items-center gap-2">
+                            <Calendar className="h-3.5 w-3.5 text-primary" />
+                            <span>Year {row.year}</span>
+                            <span className="text-[10px] font-normal text-muted-foreground">({row.months.length} Months)</span>
+                          </td>
+                          <td className="py-3 px-4 text-right font-medium text-emerald-600 dark:text-emerald-400">
+                            ₹{row.principalPaid.toLocaleString('en-IN')}
+                          </td>
+                          <td className="py-3 px-4 text-right font-medium text-orange-600 dark:text-orange-400">
+                            ₹{row.interestPaid.toLocaleString('en-IN')}
+                          </td>
+                          <td className="py-3 px-4 text-right font-bold">
+                            ₹{row.totalPaid.toLocaleString('en-IN')}
+                          </td>
+                          <td className="py-3 px-4 text-right font-bold text-muted-foreground">
+                            ₹{row.balance.toLocaleString('en-IN')}
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            <div className="flex items-center gap-2 justify-center">
+                              <div className="w-16 bg-muted h-2 rounded-full overflow-hidden">
+                                <div className="bg-primary h-full rounded-full transition-all duration-300" style={{ width: `${row.percentPaid}%` }} />
+                              </div>
+                              <span className="text-[10px] font-bold w-7 text-right">{row.percentPaid}%</span>
+                            </div>
+                          </td>
+                        </tr>
+
+                        {/* Nested Monthly Breakdown Accordion Report */}
+                        {isExpanded && (
+                          <tr className="bg-muted/20 border-b">
+                            <td colSpan={7} className="p-0">
+                              <div className="p-4 pl-12 space-y-3 bg-muted/10 border-y">
+                                <div className="flex items-center justify-between">
+                                  <h4 className="font-bold text-xs flex items-center gap-2 text-foreground uppercase tracking-wider">
+                                    <Calendar className="h-3.5 w-3.5 text-primary" /> Year {row.year} Monthly Breakdown
+                                  </h4>
+                                  <span className="text-[11px] text-muted-foreground font-medium">
+                                    Months {row.months[0]?.overallMonth} - {row.months[row.months.length - 1]?.overallMonth} of {tenure * 12}
+                                  </span>
+                                </div>
+
+                                <div className="overflow-x-auto rounded-xl border bg-background shadow-xs">
+                                  <table className="w-full text-left border-collapse text-[11px]">
+                                    <thead>
+                                      <tr className="bg-muted/40 border-b text-muted-foreground font-bold uppercase text-[10px]">
+                                        <th className="py-2.5 px-3">Month</th>
+                                        <th className="py-2.5 px-3 text-right">Principal Paid (₹)</th>
+                                        <th className="py-2.5 px-3 text-right">Interest Paid (₹)</th>
+                                        <th className="py-2.5 px-3 text-right">Total EMI (₹)</th>
+                                        <th className="py-2.5 px-3 text-right">Ending Balance (₹)</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody className="divide-y">
+                                      {row.months.map((m) => (
+                                        <tr key={m.overallMonth} className="hover:bg-muted/30 transition-colors">
+                                          <td className="py-2 px-3 font-semibold text-foreground">
+                                            Month {m.monthNumber} <span className="text-muted-foreground font-normal">(m#{m.overallMonth})</span>
+                                          </td>
+                                          <td className="py-2 px-3 text-right font-medium text-emerald-600 dark:text-emerald-400">
+                                            ₹{m.principalPaid.toLocaleString('en-IN')}
+                                          </td>
+                                          <td className="py-2 px-3 text-right font-medium text-orange-600 dark:text-orange-400">
+                                            ₹{m.interestPaid.toLocaleString('en-IN')}
+                                          </td>
+                                          <td className="py-2 px-3 text-right font-bold">
+                                            ₹{m.totalPaid.toLocaleString('en-IN')}
+                                          </td>
+                                          <td className="py-2 px-3 text-right font-bold text-muted-foreground">
+                                            ₹{m.balance.toLocaleString('en-IN')}
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    )
+                  })}
                 </tbody>
                 <tfoot>
                   <tr className="bg-primary/5 font-black border-t text-xs">
+                    <td className="py-3.5 px-4 text-center">✓</td>
                     <td className="py-3.5 px-4 text-foreground uppercase">Total ({tenure} Yrs)</td>
                     <td className="py-3.5 px-4 text-right text-emerald-600 dark:text-emerald-400">
                       ₹{Math.round(principal).toLocaleString('en-IN')}
