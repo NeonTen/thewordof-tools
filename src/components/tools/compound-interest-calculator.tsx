@@ -343,7 +343,7 @@ export function CompoundInterestCalculator() {
         </Card>
 
         {/* Breakdown & Returns Summary Card */}
-        <Card className="border-primary/10 shadow-sm flex flex-col justify-between">
+        <Card className="border-primary/10 shadow-sm flex flex-col">
           <CardHeader>
             <CardTitle className="text-xl font-bold">Compounded Returns Summary</CardTitle>
             <CardDescription>Nominal growth vs real inflation-adjusted purchasing power</CardDescription>
@@ -368,7 +368,7 @@ export function CompoundInterestCalculator() {
               </div>
             </div>
 
-            <div className="h-[200px] w-full mt-4">
+            <div className="h-[260px] w-full mt-4">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={yearlySchedule}>
                   <defs>
@@ -485,7 +485,7 @@ export function CompoundInterestCalculator() {
                         {isExpanded && (
                           <tr className="bg-muted/20 border-b">
                             <td colSpan={7} className="p-0">
-                              <div className="p-4 pl-12 space-y-3 bg-muted/10 border-y">
+                              <div className="p-4 space-y-3 bg-muted/10 border-y">
                                 <div className="flex items-center justify-between">
                                   <h4 className="font-bold text-xs flex items-center gap-2 text-foreground uppercase tracking-wider">
                                     <TrendingUp className="h-3.5 w-3.5 text-primary" /> Year {row.year} Monthly Compounding Report

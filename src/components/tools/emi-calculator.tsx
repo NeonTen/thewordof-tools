@@ -394,7 +394,7 @@ export function EmiCalculator({ isPro = false }: { isPro?: boolean }) {
                         {isExpanded && (
                           <tr className="bg-muted/20 border-b">
                             <td colSpan={7} className="p-0">
-                              <div className="p-4 pl-12 space-y-3 bg-muted/10 border-y">
+                              <div className="p-4 space-y-3 bg-muted/10 border-y">
                                 <div className="flex items-center justify-between">
                                   <h4 className="font-bold text-xs flex items-center gap-2 text-foreground uppercase tracking-wider">
                                     <Calendar className="h-3.5 w-3.5 text-primary" /> Year {row.year} Monthly Breakdown
