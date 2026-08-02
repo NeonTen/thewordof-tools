@@ -122,6 +122,7 @@ interface SavedResumeItem {
     phone: "+1 555 123 4567",
     email: "john@example.com",
     location: "San Francisco, CA",
+    website: "johndoe.dev",
     summary: "A passionate software engineer with experience in building scalable web applications.",
     skillsText: "React, Next.js, TypeScript, Node.js, PostgreSQL"
   })
@@ -135,6 +136,7 @@ interface SavedResumeItem {
       email: data.email || prev.email,
       phone: data.phone || prev.phone,
       location: data.location || prev.location,
+      website: data.website || prev.website,
       summary: data.summary || prev.summary,
       skillsText: data.skillsText || prev.skillsText
     }))
@@ -213,6 +215,11 @@ interface SavedResumeItem {
   }
 
   const addExperience = () => {
+    if (!isPro && experience.length >= 2) {
+      setUpgradeModalType("template")
+      setShowUpgradeModal(true)
+      return
+    }
     const id = generateUniqueId()
     setExperience([...experience, { id, company: "", role: "", period: "", desc: "" }])
   }
@@ -222,6 +229,11 @@ interface SavedResumeItem {
   }
 
   const addEducation = () => {
+    if (!isPro && education.length >= 2) {
+      setUpgradeModalType("template")
+      setShowUpgradeModal(true)
+      return
+    }
     const id = generateUniqueId()
     setEducation([...education, { id, school: "", degree: "", period: "" }])
   }
@@ -231,6 +243,11 @@ interface SavedResumeItem {
   }
 
   const addProject = () => {
+    if (!isPro && projects.length >= 2) {
+      setUpgradeModalType("template")
+      setShowUpgradeModal(true)
+      return
+    }
     const id = generateUniqueId()
     setProjects([...projects, { id, title: "", link: "", desc: "" }])
   }
@@ -649,7 +666,9 @@ interface SavedResumeItem {
           <div style={{ marginBottom: '40px', borderBottom: '2px solid #2563eb', paddingBottom: '30px' }}>
             <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#111827', margin: 0 }}>{cv.name}</h1>
             <p style={{ fontSize: '20px', color: '#2563eb', fontWeight: '600', margin: '4px 0 0 0' }}>{cv.title}</p>
-            <div style={{ display: 'flex', gap: '15px', marginTop: '10px', fontSize: '13px', color: '#6b7280' }}><span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span></div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '10px', fontSize: '13px', color: '#6b7280' }}>
+              <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>{cv.website && <><span>•</span><span>{cv.website}</span></>}
+            </div>
           </div>
           {renderSummary('#2563eb')}
           {renderCustomSections('#2563eb')}
@@ -663,7 +682,7 @@ interface SavedResumeItem {
       {/* Elegant Template */}
       {templateId === 'elegant' && (
         <div style={{ padding: '60px', fontFamily: 'serif' }}>
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}><h1 style={{ fontSize: '38px', letterSpacing: '2px', fontWeight: 'normal', textTransform: 'uppercase', marginBottom: '10px' }}>{cv.name}</h1><div style={{ display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '13px', color: '#666' }}><span>{cv.location}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.email}</span></div></div>
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}><h1 style={{ fontSize: '38px', letterSpacing: '2px', fontWeight: 'normal', textTransform: 'uppercase', marginBottom: '10px' }}>{cv.name}</h1><div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', fontSize: '13px', color: '#666' }}><span>{cv.location}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.email}</span>{cv.website && <><span>•</span><span>{cv.website}</span></>}</div></div>
           {renderSummary('#000')}
           {renderCustomSections('#000')}
           {renderSkills('#000')}
@@ -680,7 +699,7 @@ interface SavedResumeItem {
             <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: '#1e3a8a', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 8px 0' }}>{cv.name}</h1>
             <p style={{ fontSize: '15px', color: '#475569', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 12px 0' }}>{cv.title}</p>
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '15px', fontSize: '12px', color: '#64748b' }}>
-              <span>{cv.email}</span><span>|</span><span>{cv.phone}</span><span>|</span><span>{cv.location}</span>
+              <span>{cv.email}</span><span>|</span><span>{cv.phone}</span><span>|</span><span>{cv.location}</span>{cv.website && <><span>|</span><span>{cv.website}</span></>}
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -707,6 +726,7 @@ interface SavedResumeItem {
               <div>{cv.email}</div>
               <div>{cv.phone}</div>
               <div>{cv.location}</div>
+              {cv.website && <div>{cv.website}</div>}
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
@@ -727,7 +747,7 @@ interface SavedResumeItem {
             <h1 style={{ fontSize: '34px', fontWeight: '900', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
             <p style={{ fontSize: '18px', color: '#4f46e5', fontWeight: 'bold', margin: '4px 0 0 0' }}>{cv.title}</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '10px', fontSize: '12px', color: '#64748b' }}>
-              <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>
+              <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>{cv.website && <><span>•</span><span>{cv.website}</span></>}
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
@@ -749,7 +769,7 @@ interface SavedResumeItem {
               <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: '#0f172a', margin: 0 }}>{cv.name}</h1>
               <p style={{ fontSize: '16px', color: '#0284c7', fontWeight: '600', marginTop: '4px', margin: 0 }}>{cv.title}</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '12px', fontSize: '12px', color: '#64748b' }}>
-                <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>
+                <span>{cv.email}</span><span>•</span><span>{cv.phone}</span><span>•</span><span>{cv.location}</span>{cv.website && <><span>•</span><span>{cv.website}</span></>}
               </div>
             </div>
             {photo && <img src={photo} style={{ width: '90px', height: '90px', borderRadius: '8px', objectFit: 'cover' }} alt="Profile" />}
@@ -779,6 +799,7 @@ interface SavedResumeItem {
                 <p style={{ margin: 0 }}>{cv.email}</p>
                 <p style={{ margin: '4px 0 0 0' }}>{cv.phone}</p>
                 <p style={{ margin: '4px 0 0 0' }}>{cv.location}</p>
+                {cv.website && <p style={{ margin: '4px 0 0 0' }}>{cv.website}</p>}
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
@@ -799,7 +820,7 @@ interface SavedResumeItem {
            <div style={{ backgroundColor: '#f8fafc', padding: '40px 20px', borderRight: '1px solid #e2e8f0', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
               {photo && <img src={photo} style={{ width: '140px', height: '140px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 30px auto', display: 'block', border: '4px solid white', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }} alt="Profile" />}
               <h2 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '20px', color: '#1e293b' }}>Contact</h2>
-              <div style={{ fontSize: '13px', color: '#64748b', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '40px' }}><p>{cv.email}</p><p>{cv.phone}</p><p>{cv.location}</p></div>
+              <div style={{ fontSize: '13px', color: '#64748b', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '40px' }}><p>{cv.email}</p><p>{cv.phone}</p><p>{cv.location}</p>{cv.website && <p>{cv.website}</p>}</div>
               {renderSkills('#1e293b')}
            </div>
            <div style={{ padding: '60px 40px', display: 'flex', flexDirection: 'column' }}>
@@ -823,6 +844,7 @@ interface SavedResumeItem {
               <p style={{ margin: 0 }}>{cv.email}</p>
               <p style={{ margin: 0 }}>{cv.phone}</p>
               <p style={{ margin: 0 }}>{cv.location}</p>
+              {cv.website && <p style={{ margin: 0 }}>{cv.website}</p>}
             </div>
           </div>
           <div style={{ padding: '40px', display: 'flex', flexDirection: 'column' }}>
@@ -842,8 +864,8 @@ interface SavedResumeItem {
            <div style={{ border: '1px solid #e2e8f0', backgroundColor: 'white', padding: '20px' }}>
               <h1 style={{ fontSize: '24px', margin: 0 }}>&gt; {cv.name}</h1>
               <p style={{ color: '#2563eb' }}>{"// "}{cv.title}</p>
-              <div style={{ display: 'flex', gap: '20px', fontSize: '12px', marginTop: '10px' }}>
-                <span>@: {cv.email}</span><span>#: {cv.phone}</span><span>L: {cv.location}</span>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', fontSize: '12px', marginTop: '10px' }}>
+                <span>@: {cv.email}</span><span>#: {cv.phone}</span><span>L: {cv.location}</span>{cv.website && <span>W: {cv.website}</span>}
               </div>
            </div>
            <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column' }}>
@@ -1013,7 +1035,10 @@ interface SavedResumeItem {
                 <div className="space-y-2"><Label>Email</Label><Input name="email" value={cv.email} onChange={handleCvChange} /></div>
                 <div className="space-y-2"><Label>Phone</Label><Input name="phone" value={cv.phone} onChange={handleCvChange} /></div>
               </div>
-              <div className="space-y-2"><Label>Location</Label><Input name="location" value={cv.location} onChange={handleCvChange} /></div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2"><Label>Location</Label><Input name="location" value={cv.location} onChange={handleCvChange} /></div>
+                <div className="space-y-2"><Label>Website / Portfolio</Label><Input name="website" value={cv.website || ""} onChange={handleCvChange} placeholder="johndoe.dev" /></div>
+              </div>
             </AccordionContent>
           </AccordionItem>
 
@@ -1167,32 +1192,42 @@ interface SavedResumeItem {
             <AccordionContent className="pt-2 pb-4 space-y-4">
               <div className="flex justify-end">
                 <Button size="sm" variant="outline" onClick={addExperience} className="font-bold text-xs">
-                  <Plus className="mr-1 h-3.5 w-3.5" /> Add Role
+                  <Plus className="mr-1 h-3.5 w-3.5" /> Add Role {!isPro && experience.length >= 2 && <Crown className="h-3 w-3 text-amber-500 ml-1 inline" />}
                 </Button>
               </div>
-              {experience.map((exp, idx) => (
-                <div key={exp.id} className={cn("space-y-3 p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
-                  <div className="flex items-center justify-between gap-2 border-b pb-2">
-                    <span className="text-xs font-bold text-muted-foreground uppercase">Role #{idx + 1}</span>
-                    {experience.length > 1 && (
-                      <Button variant="ghost" size="sm" className="h-7 px-2 text-destructive hover:bg-destructive/10 gap-1 text-[11px] font-bold" onClick={() => removeExperience(exp.id)}>
-                        <Trash2 className="h-3.5 w-3.5" /> Remove
-                      </Button>
-                    )}
+              {experience.map((exp, idx) => {
+                const itemCard = (
+                  <div key={exp.id} className={cn("space-y-3 p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
+                    <div className="flex items-center justify-between gap-2 border-b pb-2">
+                      <span className="text-xs font-bold text-muted-foreground uppercase">Role #{idx + 1}</span>
+                      {experience.length > 1 && (
+                        <Button variant="ghost" size="sm" className="h-7 px-2 text-destructive hover:bg-destructive/10 gap-1 text-[11px] font-bold" onClick={() => removeExperience(exp.id)}>
+                          <Trash2 className="h-3.5 w-3.5" /> Remove
+                        </Button>
+                      )}
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      <Input placeholder="Company Name" value={exp.company} onChange={e => updateExperience(exp.id, 'company', e.target.value)} />
+                      <Input placeholder="Role / Job Title" value={exp.role} onChange={e => updateExperience(exp.id, 'role', e.target.value)} />
+                    </div>
+                    <Input placeholder="Period (e.g. Jan 2022 - Present)" value={exp.period} onChange={e => updateExperience(exp.id, 'period', e.target.value)} />
+                    <div>
+                      <Textarea placeholder="Key responsibilities and achievements..." value={exp.desc} onChange={e => updateExperience(exp.id, 'desc', e.target.value)} rows={3} />
+                      <p className="text-[11px] text-muted-foreground mt-1.5">
+                        Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists, or use line breaks for paragraphs.
+                      </p>
+                    </div>
                   </div>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    <Input placeholder="Company Name" value={exp.company} onChange={e => updateExperience(exp.id, 'company', e.target.value)} />
-                    <Input placeholder="Role / Job Title" value={exp.role} onChange={e => updateExperience(exp.id, 'role', e.target.value)} />
-                  </div>
-                  <Input placeholder="Period (e.g. Jan 2022 - Present)" value={exp.period} onChange={e => updateExperience(exp.id, 'period', e.target.value)} />
-                  <div>
-                    <Textarea placeholder="Key responsibilities and achievements..." value={exp.desc} onChange={e => updateExperience(exp.id, 'desc', e.target.value)} rows={3} />
-                    <p className="text-[11px] text-muted-foreground mt-1.5">
-                      Tip: Start lines with &quot;-&quot; or &quot;&bull;&quot; to auto-format bullet lists, or use line breaks for paragraphs.
-                    </p>
-                  </div>
-                </div>
-              ))}
+                )
+                if (idx >= 2 && !isPro) {
+                  return (
+                    <ProGate key={exp.id} feature="3+ Experience Roles" isPro={isPro}>
+                      {itemCard}
+                    </ProGate>
+                  )
+                }
+                return itemCard
+              })}
             </AccordionContent>
           </AccordionItem>
 
@@ -1213,14 +1248,12 @@ interface SavedResumeItem {
             </AccordionTrigger>
             <AccordionContent className="pt-2 pb-4 space-y-4">
               <div className="flex justify-end">
-                <ProGate feature="Projects Section" isPro={isPro}>
-                  <Button size="sm" variant="outline" onClick={addProject} className="font-bold text-xs">
-                    <Plus className="mr-1 h-3.5 w-3.5" /> Add Project
-                  </Button>
-                </ProGate>
+                <Button size="sm" variant="outline" onClick={addProject} className="font-bold text-xs">
+                  <Plus className="mr-1 h-3.5 w-3.5" /> Add Project {!isPro && projects.length >= 2 && <Crown className="h-3 w-3 text-amber-500 ml-1 inline" />}
+                </Button>
               </div>
-              <ProGate feature="Projects Section" isPro={isPro}>
-                {projects.map((proj, idx) => (
+              {projects.map((proj, idx) => {
+                const itemCard = (
                   <div key={proj.id} className={cn("space-y-3 p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
                     <div className="flex items-center justify-between gap-2 border-b pb-2">
                       <span className="text-xs font-bold text-muted-foreground uppercase">Project #{idx + 1}</span>
@@ -1241,8 +1274,16 @@ interface SavedResumeItem {
                       </p>
                     </div>
                   </div>
-                ))}
-              </ProGate>
+                )
+                if (idx >= 2 && !isPro) {
+                  return (
+                    <ProGate key={proj.id} feature="3+ Projects" isPro={isPro}>
+                      {itemCard}
+                    </ProGate>
+                  )
+                }
+                return itemCard
+              })}
             </AccordionContent>
           </AccordionItem>
 
@@ -1263,14 +1304,12 @@ interface SavedResumeItem {
             </AccordionTrigger>
             <AccordionContent className="pt-2 pb-4 space-y-4">
               <div className="flex justify-end">
-                <ProGate feature="Multiple Degrees" isPro={isPro}>
-                  <Button size="sm" variant="outline" onClick={addEducation} className="font-bold text-xs">
-                    <Plus className="mr-1 h-3.5 w-3.5" /> Add Degree
-                  </Button>
-                </ProGate>
+                <Button size="sm" variant="outline" onClick={addEducation} className="font-bold text-xs">
+                  <Plus className="mr-1 h-3.5 w-3.5" /> Add Degree {!isPro && education.length >= 2 && <Crown className="h-3 w-3 text-amber-500 ml-1 inline" />}
+                </Button>
               </div>
-              <ProGate feature="Multiple Degrees" isPro={isPro}>
-                {education.map((edu, idx) => (
+              {education.map((edu, idx) => {
+                const itemCard = (
                   <div key={edu.id} className={cn("space-y-3 p-4 rounded-xl border bg-muted/20", idx > 0 && "mt-3")}>
                     <div className="flex items-center justify-between gap-2 border-b pb-2">
                       <span className="text-xs font-bold text-muted-foreground uppercase">Education #{idx + 1}</span>
@@ -1286,8 +1325,16 @@ interface SavedResumeItem {
                       <Input placeholder="Period (e.g. 2018 - 2022)" value={edu.period} onChange={e => updateEducation(edu.id, 'period', e.target.value)} />
                     </div>
                   </div>
-                ))}
-              </ProGate>
+                )
+                if (idx >= 2 && !isPro) {
+                  return (
+                    <ProGate key={edu.id} feature="3+ Education Entries" isPro={isPro}>
+                      {itemCard}
+                    </ProGate>
+                  )
+                }
+                return itemCard
+              })}
             </AccordionContent>
           </AccordionItem>
         </Accordion>

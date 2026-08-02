@@ -48,6 +48,7 @@ export async function POST(req: Request) {
         email: z.string(),
         phone: z.string(),
         location: z.string(),
+        website: z.string().describe("Website, portfolio, or LinkedIn URL if present, else empty string"),
         summaryHeading: z.string().describe("The exact summary section title used in raw text e.g. 'Professional Summary' or 'Summary'"),
         summary: z.string(),
         skillsText: z.string(),

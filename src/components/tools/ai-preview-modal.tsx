@@ -9,6 +9,7 @@ export type CVParserResult = {
   email: string
   phone: string
   location: string
+  website?: string
   summaryHeading?: string
   summary: string
   skillsText: string
@@ -95,9 +96,13 @@ export function AIPreviewModal({ data, onApply, onBack, onClose }: AIPreviewModa
                 <span className="text-xs text-muted-foreground block">Phone</span>
                 <span className="font-medium">{data.phone || "—"}</span>
               </div>
-              <div className="col-span-2">
+              <div>
                 <span className="text-xs text-muted-foreground block">Location</span>
                 <span className="font-medium">{data.location || "—"}</span>
+              </div>
+              <div>
+                <span className="text-xs text-muted-foreground block">Website</span>
+                <span className="font-medium">{data.website || "—"}</span>
               </div>
               {data.summary && (
                 <div className="col-span-2 pt-2 border-t">
