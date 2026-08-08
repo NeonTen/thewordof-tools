@@ -45,7 +45,10 @@ export function UpgradeButton({
 }: UpgradeButtonProps) {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
+  const [paypalError, setPaypalError] = useState(false)
   const router = useRouter()
+
+  const paypalClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID
 
   useEffect(() => {
     // Load Razorpay Script
@@ -54,7 +57,9 @@ export function UpgradeButton({
     script.async = true
     document.body.appendChild(script)
     return () => {
-      document.body.removeChild(script)
+      if (document.body.contains(script)) {
+        document.body.removeChild(script)
+      }
     }
   }, [])
 
@@ -171,7 +176,7 @@ export function UpgradeButton({
           )}
 
           {/* Divider — only when both options visible */}
-          {currency === "INR" && (
+          {currency === "INR" && paypalClientId && !paypalError && (
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
@@ -182,32 +187,52 @@ export function UpgradeButton({
             </div>
           )}
 
-          {/* PayPal — always shown */}
-          <PayPalScriptProvider options={{ 
-            clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "test",
-            currency: "USD",
-            vault: true
-          }}>
-            <PayPalButtons 
-              style={{ layout: "vertical", shape: "rect", label: "paypal" }}
-              disabled={!user}
-              createSubscription={async () => {
-                const res = await fetch("/api/paypal/create-subscription", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ plan, interval })
-                })
-                const sub = await res.json()
-                return sub.id
-              }}
-              onApprove={async () => {
-                router.push("/dashboard?status=success")
-              }}
-            />
-          </PayPalScriptProvider>
+          {/* PayPal — rendered only when valid Client ID is configured and script loads without error */}
+          {paypalClientId && !paypalError ? (
+            <PayPalScriptProvider options={{ 
+              clientId: paypalClientId,
+              currency: "USD",
+              vault: true
+            }}>
+              <PayPalButtons 
+                style={{ layout: "vertical", shape: "rect", label: "paypal" }}
+                disabled={!user}
+                createSubscription={async () => {
+                  const res = await fetch("/api/paypal/create-subscription", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ plan, interval })
+                  })
+                  const sub = await res.json()
+                  if (!res.ok) {
+                    throw new Error(sub.error || "Failed to create PayPal subscription")
+                  }
+                  return sub.id
+                }}
+                onApprove={async () => {
+                  router.push("/dashboard?status=success")
+                }}
+                onError={(err) => {
+                  console.warn("PayPal SDK Error:", err)
+                  setPaypalError(true)
+                }}
+              />
+            </PayPalScriptProvider>
+          ) : (
+            currency === "USD" && (
+              <div className="p-4 text-center text-xs text-muted-foreground bg-muted/30 rounded-xl border border-dashed space-y-1">
+                <p className="font-bold text-foreground">PayPal Checkout Unavailable</p>
+                <p className="text-[11px]">
+                  {paypalError 
+                    ? "PayPal SDK failed to load. Please check your internet connection or ad-blocker." 
+                    : "PayPal is currently being configured. Please check back shortly or use INR checkout."}
+                </p>
+              </div>
+            )
+          )}
           
           {/* USD security note */}
-          {currency === "USD" && (
+          {currency === "USD" && paypalClientId && !paypalError && (
             <p className="text-[10px] text-center text-muted-foreground">
               🔒 Secured by PayPal — ${usdAmount}/{interval}
             </p>
