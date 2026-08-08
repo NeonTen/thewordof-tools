@@ -193,7 +193,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
           const period = isYearly ? "per year" : "per month"
           
           let showCurrentPlanBtn = false
-          if (plan.name === "Free" && !isPro && !isBusiness && !isAdmin) showCurrentPlanBtn = true
+          if (plan.name === "Free" && session && !isPro && !isBusiness && !isAdmin) showCurrentPlanBtn = true
           if (plan.name === "Pro" && isPro) showCurrentPlanBtn = true
           if (plan.name === "Business" && isBusiness) showCurrentPlanBtn = true
           
@@ -260,7 +260,7 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
                     </Button>
                   ) : plan.name === "Free" ? (
                     <Button className="w-full h-12 font-bold" variant="outline" asChild>
-                      <Link href={plan.ctaHref!}>
+                      <Link href={session ? "/dashboard" : "/register"}>
                         {session ? "Go to Dashboard" : plan.cta}
                         <ArrowRight className="h-4 w-4 ml-2" />
                       </Link>
