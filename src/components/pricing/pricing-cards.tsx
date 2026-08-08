@@ -208,6 +208,9 @@ export function PricingCards({ session, isPro, isBusiness, isAdmin }: PricingCar
             overrideBtnText = "Downgrade to Pro"
           } else if (isPro && plan.name === "Business") {
             overrideBtnText = "Upgrade to Business"
+          } else if (!session) {
+            if (plan.name === "Pro") overrideBtnText = "Get Started with Pro"
+            if (plan.name === "Business") overrideBtnText = "Get Started with Business"
           }
 
           return (
