@@ -7,11 +7,11 @@ import { Zap, CreditCard } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js"
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
   DialogDescription,
   DialogTrigger
 } from "@/components/ui/dialog"
@@ -34,9 +34,9 @@ declare global {
   }
 }
 
-export function UpgradeButton({ 
-  user, 
-  className, 
+export function UpgradeButton({
+  user,
+  className,
   children,
   amount = 499,
   usdAmount = "5.99",
@@ -67,7 +67,7 @@ export function UpgradeButton({
 
   const handleRazorpay = async () => {
     if (!user) {
-      router.push("/login")
+      router.push("/login?redirect=/pricing")
       return
     }
 
@@ -79,9 +79,9 @@ export function UpgradeButton({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ plan, interval })
       })
-      
+
       const data = await res.json()
-      
+
       if (!res.ok) {
         alert(data.error || "Failed to create Razorpay subscription")
         return
@@ -140,7 +140,7 @@ export function UpgradeButton({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger 
+      <DialogTrigger
         className={cn("w-full h-12 font-bold inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90", className)}
       >
         <Zap className="h-4 w-4 mr-2" />
@@ -155,8 +155,8 @@ export function UpgradeButton({
             {!user
               ? `Create an account or sign in to activate your ${displayPlanName} subscription.`
               : currency === "USD"
-              ? "Pay securely with PayPal — accepted in 200+ countries."
-              : `Select your preferred way to pay for TheWordOf Tools ${displayPlanName}.`}
+                ? "Pay securely with PayPal — accepted in 200+ countries."
+                : `Select your preferred way to pay for TheWordOf Tools ${displayPlanName}.`}
           </DialogDescription>
         </DialogHeader>
 
@@ -184,8 +184,8 @@ export function UpgradeButton({
           <div className="space-y-4 py-4">
             {/* Razorpay — INR only */}
             {currency === "INR" && (
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full h-16 text-lg font-bold flex items-center justify-between px-6 border-2 hover:border-primary hover:bg-primary/5 transition-all"
                 onClick={handleRazorpay}
                 disabled={loading}
@@ -217,12 +217,12 @@ export function UpgradeButton({
 
             {/* PayPal — rendered only when dialog is open, valid Client ID is configured and script loads without error */}
             {open && paypalClientId && !paypalError ? (
-              <PayPalScriptProvider options={{ 
+              <PayPalScriptProvider options={{
                 clientId: paypalClientId,
                 currency: "USD",
                 vault: true
               }}>
-                <PayPalButtons 
+                <PayPalButtons
                   style={{ layout: "vertical", shape: "rect", label: "paypal" }}
                   createSubscription={async () => {
                     const res = await fetch("/api/paypal/create-subscription", {
@@ -250,14 +250,14 @@ export function UpgradeButton({
                 <div className="p-4 text-center text-xs text-muted-foreground bg-muted/30 rounded-xl border border-dashed space-y-1">
                   <p className="font-bold text-foreground">PayPal Checkout Unavailable</p>
                   <p className="text-[11px]">
-                    {paypalError 
-                      ? "PayPal SDK failed to load. Please check your internet connection or ad-blocker." 
+                    {paypalError
+                      ? "PayPal SDK failed to load. Please check your internet connection or ad-blocker."
                       : "PayPal is currently being configured. Please check back shortly or use INR checkout."}
                   </p>
                 </div>
               )
             )}
-            
+
             {/* USD security note */}
             {currency === "USD" && paypalClientId && !paypalError && (
               <p className="text-[10px] text-center text-muted-foreground">
