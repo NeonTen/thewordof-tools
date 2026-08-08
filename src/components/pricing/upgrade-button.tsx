@@ -50,6 +50,7 @@ export function UpgradeButton({
   const router = useRouter()
 
   const paypalClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID
+  const displayPlanName = plan === "PREMIUM" ? "Pro" : plan
 
   useEffect(() => {
     // Load Razorpay Script
@@ -92,7 +93,7 @@ export function UpgradeButton({
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         subscription_id: (subscription as { id: string }).id,
         name: "TheWordOf Tools",
-        description: `${plan} Subscription - ${interval}`,
+        description: `${displayPlanName} Subscription - ${interval}`,
         handler: async function (response: {
           razorpay_payment_id: string;
           razorpay_subscription_id: string;
@@ -152,25 +153,25 @@ export function UpgradeButton({
           </DialogTitle>
           <DialogDescription>
             {!user
-              ? `Create an account or sign in to activate your ${plan} subscription.`
+              ? `Create an account or sign in to activate your ${displayPlanName} subscription.`
               : currency === "USD"
               ? "Pay securely with PayPal — accepted in 200+ countries."
-              : `Select your preferred way to pay for TheWordOf Tools ${plan}.`}
+              : `Select your preferred way to pay for TheWordOf Tools ${displayPlanName}.`}
           </DialogDescription>
         </DialogHeader>
 
         {!user ? (
-          <div className="py-6 text-center space-y-5">
+          <div className="py-4 text-center space-y-4">
             <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
               <Zap className="h-6 w-6" />
             </div>
             <div className="space-y-1">
-              <p className="font-bold text-sm text-foreground">Get Started with {plan}</p>
+              <p className="font-bold text-sm text-foreground">Get Started with {displayPlanName}</p>
               <p className="text-xs text-muted-foreground max-w-xs mx-auto">
                 Sign in to your account or register a free account to proceed with subscription checkout.
               </p>
             </div>
-            <div className="flex gap-3 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 w-full">
               <Button asChild className="w-full font-bold">
                 <Link href="/login">Log In</Link>
               </Button>
