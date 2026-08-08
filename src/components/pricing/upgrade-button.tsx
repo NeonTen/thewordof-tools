@@ -67,7 +67,7 @@ export function UpgradeButton({
 
   const handleRazorpay = async () => {
     if (!user) {
-      router.push("/login?redirect=/pricing")
+      router.push("/login")
       return
     }
 
