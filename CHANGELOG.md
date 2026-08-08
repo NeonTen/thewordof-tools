@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.2.6] - 2026-08-08
+
+### Added
+- **Financial Calculators (Loan EMI, SIP, Compound Interest) Overhaul**:
+  - Added direct numeric `<Input>` fields next to sliders in Loan EMI, SIP Return, and Compound Interest calculators for precise manual value entry.
+  - Added full year-by-year repayment/growth schedule tables with interactive expandable 12-month accordion reports.
+  - Added "Expand All Years" / "Collapse All Years" quick toggle controls.
+- **AI CV Builder - Free Tier Limits & Inline Website Field**:
+  - Unlocked first 2 entries for Experience, Projects, and Education for Free users without ProGate overlays.
+  - Added 50%-50% inline Location & Website/Portfolio field in Personal Details, supported in AI resume parser and rendered dynamically across all 10 CV templates.
+
+### Fixed
+- **Pricing & Payment UX**:
+  - Updated unauthenticated pricing card CTA buttons to "Get Started with Pro" and "Get Started with Business" instead of "Upgrade to...".
+  - Only show "Current Plan" on Free plan card when user is logged in.
+  - Rendered clean "Sign In Required" prompt inside payment dialog for unauthenticated visitors without breaking button grid layout.
+  - Lazy-loaded PayPal SDK script only when payment dialog is open, with fallback UI on network or script failure.
+- **SEO & Routing**:
+  - Removed obsolete 301 permanent redirects from `next.config.ts`.
+  - Audited `sitemap.ts` to include all 54 public routes including `/forgot-password`.
+
 ## [1.2.5] - 2026-08-01
 
 ### Added
