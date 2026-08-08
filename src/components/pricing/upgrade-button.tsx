@@ -187,8 +187,8 @@ export function UpgradeButton({
             </div>
           )}
 
-          {/* PayPal — rendered only when valid Client ID is configured and script loads without error */}
-          {paypalClientId && !paypalError ? (
+          {/* PayPal — rendered only when dialog is open, valid Client ID is configured and script loads without error */}
+          {open && paypalClientId && !paypalError ? (
             <PayPalScriptProvider options={{ 
               clientId: paypalClientId,
               currency: "USD",
