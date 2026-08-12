@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.7] - 2026-08-12
+
+### Fixed
+- **Category Index & Homepage Card Links**:
+  - Updated broken tool card links across Image & Code (`/tools/image-code`), Design (`/tools/design`), Calculators (`/tools/calculators`), and the homepage to point directly to their nested category subpaths (e.g. `/tools/image-code/image-converter`).
+- **AI CV Builder - Resume Parser Response & Authorization**:
+  - Re-architected `/api/ai/cv-parser` endpoint to return structured JSON error objects for all status codes (401, 403, 400, 500) instead of plain text responses.
+  - Resolved client-side `SyntaxError` during JSON parsing and replaced generic network error overlay with precise server error messages.
+  - Enabled credit-based deduction (`verifyAndDeductCredits`) for AI resume parsing across user tiers.
+
 ## [1.2.6] - 2026-08-08
 
 ### Added
