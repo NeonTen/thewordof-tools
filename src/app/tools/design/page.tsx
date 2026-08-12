@@ -20,7 +20,7 @@ const tools = [
     title: "Color Contrast Checker",
     description:
       "Check foreground and background color contrast against WCAG readability standards.",
-    href: "/tools/color-contrast",
+    href: "/tools/design/color-contrast",
     icon: Palette,
     pro: false,
   },
@@ -28,7 +28,7 @@ const tools = [
     title: "Color Contrast Scanner",
     description:
       "Scan any webpage URL to find element color combinations that fail WCAG readability contrast guidelines.",
-    href: "/tools/color-contrast-scanner",
+    href: "/tools/design/color-contrast-scanner",
     icon: Palette,
     pro: true,
   },
@@ -36,7 +36,7 @@ const tools = [
     title: "Color Palette Generator",
     description:
       "Generate mathematical color harmonies and export codes or images.",
-    href: "/tools/color-palette",
+    href: "/tools/design/color-palette",
     icon: Palette,
     pro: false,
   },
@@ -44,7 +44,7 @@ const tools = [
     title: "Gradient Generator",
     description:
       "Browse, customize and export CSS / Tailwind code for premium gradients.",
-    href: "/tools/gradient-generator",
+    href: "/tools/design/gradient-generator",
     icon: Palette,
     pro: false,
   },
@@ -52,7 +52,7 @@ const tools = [
     title: "Gradient Palette Generator",
     description:
       "Generate 5 coordinating harmonious gradients and copy CSS variables.",
-    href: "/tools/gradient-palette",
+    href: "/tools/design/gradient-palette",
     icon: Palette,
     pro: false,
   },

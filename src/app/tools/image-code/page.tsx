@@ -20,7 +20,7 @@ const tools = [
     title: "Image Converter",
     description:
       "Convert JPG, PNG, WEBP, AVIF in bulk. Client-side, completely private.",
-    href: "/tools/image-converter",
+    href: "/tools/image-code/image-converter",
     icon: ImageIcon,
     pro: false,
   },
@@ -28,21 +28,21 @@ const tools = [
     title: "SVG Compressor",
     description:
       "Minify, clean, and optimize SVG files for faster web loading.",
-    href: "/tools/svg-compressor",
+    href: "/tools/image-code/svg-compressor",
     icon: Zap,
     pro: true,
   },
   {
     title: "QR Code Generator",
     description: "Create customizable QR codes with custom colors and sizes.",
-    href: "/tools/qr-code",
+    href: "/tools/image-code/qr-code",
     icon: QrCode,
     pro: true,
   },
   {
     title: "Code Minifier",
     description: "Minify and beautify JS, CSS, HTML code in one click.",
-    href: "/tools/code-minifier",
+    href: "/tools/image-code/code-minifier",
     icon: FileCode,
     pro: false,
   },
@@ -50,7 +50,7 @@ const tools = [
     title: "Text Difference",
     description:
       "Compare two documents and highlight additions, deletions, or edits.",
-    href: "/tools/text-diff",
+    href: "/tools/image-code/text-diff",
     icon: Split,
     pro: false,
   },

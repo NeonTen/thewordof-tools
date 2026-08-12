@@ -94,7 +94,7 @@ const calculators = [
     title: "GST Calculator",
     description:
       "Calculate regional Goods and Services Tax (GST) for baseline or gross sums.",
-    href: "/tools/gst-calculator",
+    href: "/tools/calculators/gst-calculator",
     icon: Percent,
     category: "Finance",
   },
@@ -102,7 +102,7 @@ const calculators = [
     title: "Word Counter",
     description:
       "Get real-time statistics including word, character, and line counts with reading time.",
-    href: "/tools/word-counter",
+    href: "/tools/calculators/word-counter",
     icon: Type,
     category: "Developer",
   },
@@ -110,7 +110,7 @@ const calculators = [
     title: "HEX/RGB/HSL Converter",
     description:
       "Convert colors between different spaces with interactive sliders and a visual picker.",
-    href: "/tools/color-converter",
+    href: "/tools/calculators/color-converter",
     icon: Palette,
     category: "Developer",
   },

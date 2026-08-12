@@ -101,7 +101,7 @@ export default async function Home() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
-                  title: "Dynamic QR Codes",
+                  title: "QR Code Suite",
                   desc: "Create custom-branded QR codes with live tracking, redirection links, and advanced scan analytics.",
                   features: [
                     "Custom shapes & colors",
@@ -111,7 +111,7 @@ export default async function Home() {
                   icon: QrCode,
                   color: "text-blue-500",
                   bg: "bg-blue-500/10",
-                  href: "/tools/qr-code",
+                  href: "/tools/image-code/qr-code",
                 },
                 {
                   title: "AI Resume & CV Builder",
@@ -124,7 +124,7 @@ export default async function Home() {
                   icon: FileText,
                   color: "text-purple-500",
                   bg: "bg-purple-500/10",
-                  href: "/tools/cv-builder",
+                  href: "/tools/ai-tools/cv-builder",
                 },
                 {
                   title: "AI Caption & SEO Suite",
@@ -137,7 +137,7 @@ export default async function Home() {
                   icon: Wand2,
                   color: "text-indigo-500",
                   bg: "bg-indigo-500/10",
-                  href: "/tools/caption-generator",
+                  href: "/tools/ai-tools/caption-generator",
                 },
                 {
                   title: "Branded Invoice Generator",
@@ -150,7 +150,7 @@ export default async function Home() {
                   icon: Calculator,
                   color: "text-emerald-500",
                   bg: "bg-emerald-500/10",
-                  href: "/tools/invoice-generator",
+                  href: "/tools/document-tools/invoice-generator",
                 },
                 {
                   title: "Batch Image & SVG Compressor",
@@ -163,7 +163,7 @@ export default async function Home() {
                   icon: ImageIcon,
                   color: "text-rose-500",
                   bg: "bg-rose-500/10",
-                  href: "/tools/image-converter",
+                  href: "/tools/image-code/image-converter",
                 },
                 {
                   title: "Developer Utilities",
@@ -176,7 +176,7 @@ export default async function Home() {
                   icon: FileCode,
                   color: "text-orange-500",
                   bg: "bg-orange-500/10",
-                  href: "/tools/schema-generator",
+                  href: "/tools/technical-seo/schema-generator",
                 },
               ].map((tool, i) => {
                 const Icon = tool.icon;
