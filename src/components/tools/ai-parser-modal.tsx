@@ -36,13 +36,21 @@ export function AIParserModal({ onApply, onClose, initialText = "", creditsRemai
         body: JSON.stringify({ text })
       })
 
-      const data = await res.json()
+      let data: any
+      try {
+        data = await res.json()
+      } catch {
+        setError("Failed to parse response from server. Please try again.")
+        return
+      }
 
       if (!res.ok || data.error) {
-        if (data.error === "text_too_short") {
+        if (res.status === 401) {
+          setError("Authentication required. Please log in to use the AI resume parser.")
+        } else if (data.error === "text_too_short") {
           setError("The text is too short. Please copy and paste more professional details.")
         } else {
-          setError("AI was unable to extract CV data from your text. Please verify the content and try again.")
+          setError(typeof data.error === "string" ? data.error : "AI was unable to extract CV data from your text. Please verify the content and try again.")
         }
       } else {
         if (localCredits !== null) {

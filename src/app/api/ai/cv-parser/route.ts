@@ -13,25 +13,18 @@ export async function POST(req: Request) {
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return new NextResponse("Authentication required", { status: 401 });
-    }
-
-    const role = session?.user?.role;
-    const isBusinessOrAdmin = role === "BUSINESS" || role === "ADMIN";
-
-    if (!isBusinessOrAdmin) {
-      return new NextResponse(
-        "Unauthorized. Business or Admin tier required.",
-        { status: 403 },
+      return NextResponse.json(
+        { error: "Authentication required. Please log in to use the AI resume parser." },
+        { status: 401 }
       );
     }
 
     // Deduct 3 credits for heavy CV parsing task
     const deduction = await verifyAndDeductCredits(session.user.id, 3);
     if (!deduction.success) {
-      return new NextResponse(
-        "Quota Exceeded: You do not have enough credits.",
-        { status: 403 },
+      return NextResponse.json(
+        { error: "Quota Exceeded: You do not have enough credits (3 credits required)." },
+        { status: 403 }
       );
     }
 
@@ -98,6 +91,6 @@ ${text.substring(0, 30000)}
     return NextResponse.json(result.object);
   } catch (error) {
     console.error("AI_CV_PARSER_ERROR", error);
-    return NextResponse.json({ error: "parse_failed" }, { status: 500 });
+    return NextResponse.json({ error: "AI parser failed to process resume text. Please try again." }, { status: 500 });
   }
 }
