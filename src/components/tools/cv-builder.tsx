@@ -1104,7 +1104,7 @@ interface SavedResumeItem {
                         placeholder="Section Title (e.g. Certifications)"
                         className="font-bold text-sm bg-transparent border-dashed h-8 px-2 focus:bg-background w-auto max-w-[240px]"
                       />
-                      <Button size="sm" variant="ghost" onClick={() => removeCustomSection(cs.id)} className="h-8 px-2 text-destructive hover:bg-destructive/10 gap-1 text-xs font-bold">
+                      <Button size="sm" variant="ghost" onClick={() => removeCustomSection(cs.id)} className="h-8 px-2 text-red-500 dark:text-red-400 hover:bg-red-500/10 dark:hover:bg-red-500/20 gap-1 text-xs font-bold">
                         <Trash2 className="h-3.5 w-3.5" /> Remove
                       </Button>
                     </CardHeader>
@@ -1159,7 +1159,7 @@ interface SavedResumeItem {
                     <div key={s.id} className="flex flex-col gap-3 p-3 border rounded-xl bg-muted/20">
                       <div className="flex items-center gap-3">
                         <Input placeholder="Skill Name" value={s.name} onChange={e => updateSkill(s.id, 'name', e.target.value)} className="h-8 flex-1" />
-                        <Button variant="ghost" size="sm" className="h-8 px-2 text-destructive hover:bg-destructive/10 font-bold text-xs gap-1" onClick={() => removeSkill(s.id)}>
+                        <Button variant="ghost" size="sm" className="h-8 px-2 text-red-500 dark:text-red-400 hover:bg-red-500/10 dark:hover:bg-red-500/20 font-bold text-xs gap-1" onClick={() => removeSkill(s.id)}>
                           <Trash2 className="h-3.5 w-3.5" /> Remove
                         </Button>
                       </div>
@@ -1201,7 +1201,7 @@ interface SavedResumeItem {
                     <div className="flex items-center justify-between gap-2 border-b pb-2">
                       <span className="text-xs font-bold text-muted-foreground uppercase">Role #{idx + 1}</span>
                       {experience.length > 1 && (
-                        <Button variant="ghost" size="sm" className="h-7 px-2 text-destructive hover:bg-destructive/10 gap-1 text-[11px] font-bold" onClick={() => removeExperience(exp.id)}>
+                        <Button variant="ghost" size="sm" className="h-7 px-2 text-red-500 dark:text-red-400 hover:bg-red-500/10 dark:hover:bg-red-500/20 gap-1 text-[11px] font-bold" onClick={() => removeExperience(exp.id)}>
                           <Trash2 className="h-3.5 w-3.5" /> Remove
                         </Button>
                       )}
@@ -1258,7 +1258,7 @@ interface SavedResumeItem {
                     <div className="flex items-center justify-between gap-2 border-b pb-2">
                       <span className="text-xs font-bold text-muted-foreground uppercase">Project #{idx + 1}</span>
                       {projects.length > 1 && (
-                        <Button variant="ghost" size="sm" className="h-7 px-2 text-destructive hover:bg-destructive/10 gap-1 text-[11px] font-bold" onClick={() => removeProject(proj.id)}>
+                        <Button variant="ghost" size="sm" className="h-7 px-2 text-red-500 dark:text-red-400 hover:bg-red-500/10 dark:hover:bg-red-500/20 gap-1 text-[11px] font-bold" onClick={() => removeProject(proj.id)}>
                           <Trash2 className="h-3.5 w-3.5" /> Remove
                         </Button>
                       )}
@@ -1314,7 +1314,7 @@ interface SavedResumeItem {
                     <div className="flex items-center justify-between gap-2 border-b pb-2">
                       <span className="text-xs font-bold text-muted-foreground uppercase">Education #{idx + 1}</span>
                       {education.length > 1 && (
-                        <Button variant="ghost" size="sm" className="h-7 px-2 text-destructive hover:bg-destructive/10 gap-1 text-[11px] font-bold" onClick={() => removeEducation(edu.id)}>
+                        <Button variant="ghost" size="sm" className="h-7 px-2 text-red-500 dark:text-red-400 hover:bg-red-500/10 dark:hover:bg-red-500/20 gap-1 text-[11px] font-bold" onClick={() => removeEducation(edu.id)}>
                           <Trash2 className="h-3.5 w-3.5" /> Remove
                         </Button>
                       )}
@@ -1555,7 +1555,7 @@ interface SavedResumeItem {
                       <Button size="sm" variant="secondary" onClick={() => handleLoadResume(r.id)} className="h-8 text-[10px] font-bold">
                         Load
                       </Button>
-                      <Button size="sm" variant="ghost" onClick={() => handleDeleteResume(r.id)} className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10">
+                      <Button size="sm" variant="ghost" onClick={() => handleDeleteResume(r.id)} className="h-8 w-8 p-0 text-red-500 dark:text-red-400 hover:bg-red-500/10 dark:hover:bg-red-500/20">
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
