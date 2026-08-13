@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.8] - 2026-08-13
+
+### Fixed
+- **Canonical Domain & Sitemap URLs Standardization (`www` Subdomain)**:
+  - Standardized all canonical website URLs, XML sitemap entries (`sitemap.ts`), `robots.txt` (`robots.ts`), metadata base (`layout.tsx`), JSON-LD Organization schema, email transactional fallbacks (`email.ts`), and AI documentation files (`public/llms.txt`, `public/llms-full.txt`) to include the `www` subdomain (`https://www.thewordof.com`).
+
 ## [1.2.7] - 2026-08-12
 
 ### Fixed

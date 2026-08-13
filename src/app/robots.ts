@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin/", "/dashboard/"],
     },
-    sitemap: "https://thewordof.com/sitemap.xml",
+    sitemap: "https://www.thewordof.com/sitemap.xml",
   };
 }

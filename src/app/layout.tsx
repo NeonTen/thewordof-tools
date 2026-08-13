@@ -6,7 +6,7 @@ import { Providers } from "@/components/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://thewordof.com"),
+  metadataBase: new URL("https://www.thewordof.com"),
   title: {
     default: "TheWordOf Tools - Ever-Expanding AI Utility Platform",
     template: "%s | TheWordOf Tools",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     "SaaS Tools",
     "Productivity Toolkit",
   ],
-  authors: [{ name: "TheWordOf", url: "https://thewordof.com" }],
+  authors: [{ name: "TheWordOf", url: "https://www.thewordof.com" }],
   creator: "TheWordOf",
   publisher: "TheWordOf",
   formatDetection: {
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://thewordof.com",
+    url: "https://www.thewordof.com",
     title: "TheWordOf Tools - Ever-Expanding AI Utility Tools",
     description:
       "The ultimate AI utility platform. Stop switching tabs and start getting things done with our all-in-one productivity toolkit.",
@@ -75,8 +75,8 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "TheWordOf Tools",
-  "url": "https://thewordof.com",
-  "logo": "https://thewordof.com/favicon.ico",
+  "url": "https://www.thewordof.com",
+  "logo": "https://www.thewordof.com/favicon.ico",
   "sameAs": [
     "https://twitter.com/thewordof",
     "https://www.linkedin.com/company/thewordof"

@@ -33,7 +33,7 @@ export async function sendPaymentSuccessEmail({
 
   const brandColor = isBusiness ? "#6366f1" : "#f59e0b"; // Indigo for Business, Amber for Pro
   const badgeText = isBusiness ? "Business" : "Pro";
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://thewordof.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.thewordof.com";
 
   const html = `
     <!DOCTYPE html>
@@ -184,7 +184,7 @@ export async function sendPaymentFailedEmail({
     style: 'currency',
     currency: currency === 'INR' ? 'INR' : 'USD'
   }).format(amount);
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://thewordof.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.thewordof.com";
 
   const html = `
     <!DOCTYPE html>
@@ -322,7 +322,7 @@ export async function sendPasswordResetEmail({
   }
 
   const resend = new Resend(resendKey);
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://thewordof.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.thewordof.com";
   const resetLink = `${baseUrl}/reset-password?token=${token}`;
 
   const html = `
