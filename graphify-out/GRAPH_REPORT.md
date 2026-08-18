@@ -1,16 +1,16 @@
-# Graph Report - thewordof-tools  (2026-07-21)
+# Graph Report - thewordof-tools  (2026-08-18)
 
 ## Corpus Check
-- 628 files · ~414,524 words
+- 641 files · ~406,806 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 5483 nodes · 8182 edges · 457 communities (416 shown, 41 thin omitted)
+- 5576 nodes · 8310 edges · 453 communities (422 shown, 31 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 180 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3f94bdcf`
+- Built from commit: `7d3c8aae`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -251,7 +251,6 @@
 - [[_COMMUNITY_Community 236|Community 236]]
 - [[_COMMUNITY_Community 237|Community 237]]
 - [[_COMMUNITY_Community 238|Community 238]]
-- [[_COMMUNITY_Community 239|Community 239]]
 - [[_COMMUNITY_Community 240|Community 240]]
 - [[_COMMUNITY_Community 241|Community 241]]
 - [[_COMMUNITY_Community 242|Community 242]]
@@ -461,27 +460,23 @@
 - [[_COMMUNITY_Community 450|Community 450]]
 - [[_COMMUNITY_Community 451|Community 451]]
 - [[_COMMUNITY_Community 452|Community 452]]
-- [[_COMMUNITY_Community 453|Community 453]]
-- [[_COMMUNITY_Community 454|Community 454]]
-- [[_COMMUNITY_Community 455|Community 455]]
-- [[_COMMUNITY_Community 456|Community 456]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 156 edges
+1. `cn()` - 159 edges
 2. `generateSeoMetadata()` - 108 edges
 3. `ToolHeader()` - 74 edges
-4. `Card()` - 65 edges
-5. `CardContent()` - 64 edges
-6. `CardHeader()` - 60 edges
-7. `Button()` - 58 edges
-8. `CardTitle()` - 54 edges
+4. `Card()` - 66 edges
+5. `CardContent()` - 65 edges
+6. `Button()` - 61 edges
+7. `CardHeader()` - 61 edges
+8. `CardTitle()` - 55 edges
 9. `useUsageLimit()` - 43 edges
-10. `CardDescription()` - 38 edges
+10. `CardDescription()` - 41 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `checker()` --calls--> `load_html()`  [INFERRED]
-  .agents/skills/seo/scripts/a11y_seo_checker.py → .agents/skills/seo/scripts/seo_common.py
 - `extract_internal_anchors()` --calls--> `same_host()`  [INFERRED]
+  .agents/skills/seo/scripts/anchor_text_audit.py → .agents/skills/seo/scripts/seo_common.py
+- `main()` --calls--> `print_json_or_text()`  [INFERRED]
   .agents/skills/seo/scripts/anchor_text_audit.py → .agents/skills/seo/scripts/seo_common.py
 - `_load_source()` --calls--> `load_html()`  [INFERRED]
   .agents/skills/seo/scripts/answer_block_scanner.py → .agents/skills/seo/scripts/seo_common.py
@@ -491,9 +486,9 @@
   .agents/skills/seo/scripts/cache_compression_checker.py → .agents/skills/seo/scripts/seo_common.py
 
 ## Import Cycles
-- 1-file cycle: `.agents/skills/seo/scripts/repo_release_seo.py -> .agents/skills/seo/scripts/repo_release_seo.py`
+- None detected.
 
-## Communities (457 total, 41 thin omitted)
+## Communities (453 total, 31 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.03
@@ -536,8 +531,8 @@ Cohesion: 0.06
 Nodes (29): Acknowledging Correct Feedback, Code Review Reception, code:block1 (WHEN receiving code review feedback:), code:block10 (Reviewer: "Remove legacy code"), code:block11 (Reviewer: "Implement proper metrics tracking with database, ), code:block12 (your human partner: "Fix items 1-6"), code:block2 (IF any item is unclear:), code:block3 (your human partner: "Fix 1-6") (+21 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.13
-Nodes (12): BmiPage(), metadata, BrokenLinksPage(), metadata, InvoiceGeneratorPage(), metadata, SeoMetadataInput, metadata (+4 more)
+Cohesion: 0.06
+Nodes (37): BmiPage(), metadata, ColorConverterPage(), metadata, EmiPage(), metadata, ImageConverterPage(), metadata (+29 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.25
@@ -548,8 +543,8 @@ Cohesion: 0.29
 Nodes (6): code:typescript (features: [), code:typescript (["Dynamic QR Codes", "1 (15-day expiry)", "Unlimited (Lifeti), code:bash (git add src/components/pricing/pricing-cards.tsx src/app/pag), Pricing Table and Comparison Fixes Implementation Plan, Task 1: Update Pricing Cards Features List, Task 2: Update Home Page Comparison Table
 
 ### Community 13 - "Community 13"
-Cohesion: 0.08
-Nodes (28): AspectRatioPage(), metadata, CodeMinifierPage(), metadata, CompoundInterestPage(), metadata, LineHeightPage(), metadata (+20 more)
+Cohesion: 0.06
+Nodes (35): AspectRatioPage(), metadata, metadata, BrokenLinksPage(), metadata, CodeMinifierPage(), metadata, metadata (+27 more)
 
 ### Community 14 - "Community 14"
 Cohesion: 0.09
@@ -564,8 +559,8 @@ Cohesion: 0.08
 Nodes (24): 1. Observe the Symptom, 2. Find Immediate Cause, 3. Ask: What Called This?, 4. Keep Tracing Up, 5. Find Original Trigger, Adding Stack Traces, code:dot (digraph when_to_use {), code:block2 (Error: git init failed in ~/project/packages/core) (+16 more)
 
 ### Community 17 - "Community 17"
-Cohesion: 0.11
-Nodes (17): BillingPage(), QrCodeExpiredPage(), CancelButton(), AtsResult, ProductDescriptionProps, AnalyzerResult, ResumeUploader(), SCHEMA_TYPES (+9 more)
+Cohesion: 0.25
+Nodes (4): DURATION_PRESETS, RichTextEditorProps, TaskRow, WorkReportProps
 
 ### Community 18 - "Community 18"
 Cohesion: 0.05
@@ -596,8 +591,8 @@ Cohesion: 0.20
 Nodes (9): 1. General & UI Verification, 2. Tool-Specific Verification, 3. SEO & Analytics Verification, GST Calculator (`/tools/gst-calculator`), HEX / RGB / HSL Converter (`/tools/color-converter`), Product Description Generator (`/tools/product-description`), QA Checklist - Full Tool Suite Release (v0.2.0), QR Code Generator (`/tools/qr-code`) (+1 more)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.05
-Nodes (15): POST(), DELETE(), POST(), DELETE(), GET(), PATCH(), globalForPrisma, POST() (+7 more)
+Cohesion: 0.04
+Nodes (27): CaptionGeneratorPage(), metadata, POST(), GET(), POST(), DELETE(), POST(), DELETE() (+19 more)
 
 ### Community 26 - "Community 26"
 Cohesion: 0.10
@@ -616,8 +611,8 @@ Cohesion: 0.14
 Nodes (14): Applying the Pattern, code:typescript (function createProject(name: string, workingDirectory: strin), code:typescript (function initializeWorkspace(projectDir: string, sessionId: ), code:typescript (async function gitInit(directory: string) {), Defense-in-Depth Validation, Example from Session, Key Insight, Layer 1: Entry Point Validation (+6 more)
 
 ### Community 30 - "Community 30"
-Cohesion: 0.25
-Nodes (9): CreditOverview(), CreditOverviewProps, DashboardSuccess(), DashboardPage(), metadata, PlanSection(), SupportModal(), SyncPlanButton() (+1 more)
+Cohesion: 0.18
+Nodes (10): 1. Automatic ATS Score Re-Evaluation, 2. UI Representation in "Improved Resume (ATS Optimized)" Card Header, 3. CTA & Handoff to AI CV Builder, Automated Tests, Component Updates & Architecture, Design Specification: ATS Score Checker Improved Resume Score & CV Builder Handoff, Goal, Key Features & User Flow (+2 more)
 
 ### Community 31 - "Community 31"
 Cohesion: 0.14
@@ -636,8 +631,8 @@ Cohesion: 0.20
 Nodes (9): code:typescript (try {), code:bash (git add src/app/api/ai/linkedin-import/route.ts), code:typescript (if (!res.ok || data.error) {), code:bash (git add src/components/tools/linkedin-import-modal.tsx), code:bash (git add docs/superpowers/plans/2026-05-17-linkedin-import-fi), LinkedIn Import Fix Implementation Plan, Task 1: Update API Route User-Agent & 404 Status Handling, Task 2: Enhance LinkedIn Import Modal Error Messages (+1 more)
 
 ### Community 35 - "Community 35"
-Cohesion: 0.17
-Nodes (14): AIParserModal(), AIParserModalProps, AIPreviewModal(), AIPreviewModalProps, CVParserResult, CvBuilder(), TEMPLATES, PdfMerger() (+6 more)
+Cohesion: 0.22
+Nodes (10): AIParserModal(), AIParserModalProps, AIPreviewModal(), AIPreviewModalProps, CVParserResult, TEMPLATES, Accordion(), AccordionContent() (+2 more)
 
 ### Community 36 - "Community 36"
 Cohesion: 0.17
@@ -672,8 +667,8 @@ Cohesion: 0.20
 Nodes (8): code:bash (BASE_SHA=$(git rev-parse HEAD~1)  # or origin/main), code:block2 ([Just completed Task 2: Add verification function]), Example, How to Request, Integration with Workflows, Red Flags, Requesting Code Review, When to Request Review
 
 ### Community 44 - "Community 44"
-Cohesion: 0.13
-Nodes (15): [1.0.2] - 2026-06-02, Added, Changed, Added, Added, Added, Added, Added (+7 more)
+Cohesion: 0.14
+Nodes (14): [1.0.2] - 2026-06-02, Changed, Added, Added, Added, Added, Added, Added (+6 more)
 
 ### Community 45 - "Community 45"
 Cohesion: 0.12
@@ -688,8 +683,8 @@ Cohesion: 0.22
 Nodes (9): code:`markdown (## Research synthesis workflow), code:block26, code:`markdown (## PDF form filling workflow), code:block28, code:markdown (## Content review process), code:markdown (## Document editing process), Implement feedback loops, Use workflows for complex tasks (+1 more)
 
 ### Community 48 - "Community 48"
-Cohesion: 0.36
-Nodes (6): combineGraphs(), { execSync }, extractDotBlocks(), fs, main(), renderToSvg()
+Cohesion: 0.29
+Nodes (9): _candidate_paths(), get_env(), load_env(), _load_file(), _parse_line(), Lightweight .env loader for Agentic-SEO scripts.  Loads KEY=VALUE pairs from `.e, Return the first non-empty value among the given env var names.      Triggers ``, Load a single .env file. Does not overwrite existing env vars. (+1 more)
 
 ### Community 49 - "Community 49"
 Cohesion: 0.33
@@ -704,8 +699,8 @@ Cohesion: 0.29
 Nodes (6): code:toml ([features]), code:bash (GIT_DIR=$(cd "$(git rev-parse --git-dir)" 2>/dev/null && pwd), Codex App Finishing, Codex Tool Mapping, Environment Detection, Subagent dispatch requires multi-agent support
 
 ### Community 52 - "Community 52"
-Cohesion: 0.10
-Nodes (17): POST(), POST(), POST(), POST(), POST(), POST(), POST(), verifyAndDeductCredits() (+9 more)
+Cohesion: 0.27
+Nodes (11): convertSvgToReact(), convertSvgToSvelte(), convertSvgToVue(), optimizeSVG(), prettyPrintSVG(), SVGOptions, toPascalCase(), NativeToggle() (+3 more)
 
 ### Community 53 - "Community 53"
 Cohesion: 0.08
@@ -761,59 +756,59 @@ Nodes (22): 1. Inbound Marketing, 2. Outbound Sales, 3. Paid Digital Advertising
 
 ### Community 66 - "Community 66"
 Cohesion: 0.17
-Nodes (12): Development & Operations, Features & Included Tools, Getting Started, Quality Assurance & Building, Tech Stack & Architecture, TheWordOf Tools Suite (v0.2.0), code:bash (npm install), code:bash (npm run dev) (+4 more)
+Nodes (12): Development & Operations, Features & Included Tools, Getting Started, Quality Assurance & Building, Tech Stack & Architecture, TheWordOf Tools Suite (v1.2.2), code:bash (npm install), code:bash (npm run dev) (+4 more)
 
 ### Community 67 - "Community 67"
 Cohesion: 0.09
 Nodes (21): aliases, components, hooks, lib, ui, utils, iconLibrary, menuAccent (+13 more)
 
 ### Community 68 - "Community 68"
-Cohesion: 0.22
-Nodes (9): source, skillPath, source, sourceType, computedHash, skillPath, sourceType, executing-plans (+1 more)
+Cohesion: 0.61
+Nodes (7): capture_url(), compare_files(), compare_pixels(), file_fingerprint(), main(), _pillow_available(), path
 
 ### Community 69 - "Community 69"
-Cohesion: 0.40
-Nodes (5): computedHash, skillPath, source, sourceType, receiving-code-review
+Cohesion: 0.20
+Nodes (9): 1. Smart Formatting Component (`FormattedCvText`), 2. Integration Across CV Templates, 3. Editor Guidance Helper, Automated Tests, Design Specification: Multi-Paragraph & Bullet List Text Formatting in AI CV Builder, Goal, Manual Verification, Proposed Changes (+1 more)
 
 ### Community 70 - "Community 70"
-Cohesion: 0.25
-Nodes (8): skills, subagent-driven-development, test-driven-development, skillPath, computedHash, source, sourceType, version
+Cohesion: 0.09
+Nodes (40): computedHash, skillPath, skillPath, source, sourceType, sourceType, computedHash, computedHash (+32 more)
 
 ### Community 71 - "Community 71"
 Cohesion: 0.08
 Nodes (44): default_html_path(), main(), write_json(), build_environment_fixes(), calculate_overall_score(), collect_data(), collect_report_findings(), detect_environment() (+36 more)
 
 ### Community 72 - "Community 72"
-Cohesion: 0.40
-Nodes (5): computedHash, skillPath, source, sourceType, requesting-code-review
+Cohesion: 0.20
+Nodes (9): 1. API Route Schema & Prompt Update, 2. Preview Modal Integration, 3. Builder State Mapping, Automated Tests, Design Specification: AI CV Parser Custom Sections & Heading Extraction Integration, Goal, Manual Verification, Proposed Changes (+1 more)
 
 ### Community 73 - "Community 73"
-Cohesion: 0.29
-Nodes (7): computedHash, dispatching-parallel-agents, verification-before-completion, sourceType, computedHash, skillPath, source
+Cohesion: 0.20
+Nodes (9): 1. Unified Sticky Top Control Toolbar, 2. Full-Width Collapsible Accordion Editor, 3. Live Full-Size CV Preview Modal Overlay, Automated Tests, Design Specification: AI CV Builder Full-Width Accordion Redesign & Live Preview Modal, Goal, Manual Verification, Proposed Architectural Changes (+1 more)
 
 ### Community 74 - "Community 74"
 Cohesion: 0.09
 Nodes (21): 10 Best Practices for PM Resumes, 1. Introduction, 2. Detailed Feedback on 10 Best Practices, 3. Conclusion, Additional Tips for Product Managers, Best Practice 10: Use Standard Language and Job Titles, Best Practice 1: Professional Summary, Best Practice 2: Avoid Personal Pronouns (+13 more)
 
 ### Community 75 - "Community 75"
-Cohesion: 0.40
-Nodes (6): systematic-debugging, writing-skills, skillPath, computedHash, source, sourceType
+Cohesion: 0.22
+Nodes (9): [1.1.4] - 2026-06-12, Added, Changed, Fixed, Added, Changed, Changed, Fixed (+1 more)
 
 ### Community 76 - "Community 76"
-Cohesion: 0.25
-Nodes (8): using-git-worktrees, using-superpowers, skillPath, source, sourceType, computedHash, source, sourceType
+Cohesion: 0.22
+Nodes (8): 1. Editable Default Headings, 2. Pro/Business Custom Content Sections, Automated Tests, Design Specification: Editable Section Headings & Pro Custom Content Sections in AI CV Builder, Goal, Manual Verification, Proposed Changes, Verification Plan
 
 ### Community 77 - "Community 77"
-Cohesion: 0.19
-Nodes (15): LogoutButton(), ChangelogPage(), getReleases(), metadata, parseChangelog(), Release, Section, Footer() (+7 more)
+Cohesion: 0.22
+Nodes (8): 1. AI Auto-Formatting Bullet Points, 2. Credit Balance & Cost Display, Automated Tests, Design Specification: AI CV Auto-Formatting Bullets & Credit Balance Display, Goal, Manual Verification, Proposed Changes, Verification Plan
 
 ### Community 78 - "Community 78"
 Cohesion: 0.10
 Nodes (20): 1. Burning Pain Point, 2. Willingness to Pay, 3. Winnable Market Share, 4. Referral Potential, Beachhead Segment, Framework, Further Reading, How It Works (+12 more)
 
 ### Community 79 - "Community 79"
-Cohesion: 0.25
-Nodes (8): computedHash, skillPath, brainstorming, writing-plans, computedHash, skillPath, source, sourceType
+Cohesion: 0.46
+Nodes (7): _asset_urls(), audit(), _cache_max_age(), _check_url(), _is_url(), _load_source(), main()
 
 ### Community 80 - "Community 80"
 Cohesion: 0.10
@@ -836,8 +831,8 @@ Cohesion: 0.40
 Nodes (5): Discipline-Enforcing Skills (rules/requirements), Pattern Skills (mental models), Reference Skills (documentation/APIs), Technique Skills (how-to guides), Testing All Skill Types
 
 ### Community 86 - "Community 86"
-Cohesion: 0.10
-Nodes (38): AdminPage(), metadata, AiToolsPage(), metadata, tools, calculators, CalculatorsPage(), metadata (+30 more)
+Cohesion: 0.08
+Nodes (52): AdminPage(), metadata, AiToolsPage(), metadata, tools, Home(), calculators, CalculatorsPage() (+44 more)
 
 ### Community 87 - "Community 87"
 Cohesion: 0.11
@@ -888,8 +883,8 @@ Cohesion: 0.50
 Nodes (4): Pattern, Reference, Skill Types, Technique
 
 ### Community 102 - "Community 102"
-Cohesion: 0.15
-Nodes (21): SupportModalProps, convertSvgToReact(), convertSvgToSvelte(), convertSvgToVue(), optimizeSVG(), prettyPrintSVG(), SVGOptions, toPascalCase() (+13 more)
+Cohesion: 0.36
+Nodes (6): combineGraphs(), { execSync }, extractDotBlocks(), fs, main(), renderToSvg()
 
 ### Community 106 - "Community 106"
 Cohesion: 0.25
@@ -908,8 +903,8 @@ Cohesion: 0.67
 Nodes (3): code:bash (./render-graphs.js ../some-skill           # Each diagram se), code:dot (digraph when_flowchart {), Flowchart Usage
 
 ### Community 110 - "Community 110"
-Cohesion: 0.11
-Nodes (31): Pattern, main(), matrix(), crawl(), main(), sitemap_seeds(), evaluate(), main() (+23 more)
+Cohesion: 0.09
+Nodes (39): Pattern, checker(), main(), main(), matrix(), crawl(), main(), sitemap_seeds() (+31 more)
 
 ### Community 113 - "Community 113"
 Cohesion: 0.10
@@ -996,8 +991,8 @@ Cohesion: 0.33
 Nodes (4): code:bash (git add src/components/layout/mobile-nav.tsx), Mobile Navigation Drawer Backdrop Fix Implementation Plan, Task 1: Refactor mobile-nav.tsx, Task 2: Verification
 
 ### Community 137 - "Community 137"
-Cohesion: 0.08
-Nodes (30): [1.1.3] - 2026-06-11, [1.1.4] - 2026-06-12, [1.1.5] - 2026-06-13, [1.1.6] - 2026-06-14, Added, Added, Added, Added (+22 more)
+Cohesion: 0.22
+Nodes (9): [1.1.3] - 2026-06-11, Added, Changed, Added, Added, Added, Changed, Changed (+1 more)
 
 ### Community 138 - "Community 138"
 Cohesion: 0.29
@@ -1028,8 +1023,8 @@ Cohesion: 0.22
 Nodes (8): Automated Tests, Design Specification: SVG Framework Component Export, Goal, Manual Verification, Proposed Changes, SVG Compressor Component, SVG Utils, Verification Plan
 
 ### Community 145 - "Community 145"
-Cohesion: 0.07
-Nodes (27): code:typescript (const segments = pathname.split("/").filter(Boolean)), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:) (+19 more)
+Cohesion: 0.08
+Nodes (23): code:typescript (const segments = pathname.split("/").filter(Boolean)), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:), code:bash (git add src/components/tools/related-tools.tsx), code:typescript (// From:), code:typescript (// From:) (+15 more)
 
 ### Community 146 - "Community 146"
 Cohesion: 0.17
@@ -1060,8 +1055,8 @@ Cohesion: 0.17
 Nodes (12): code:block15 (pdf/), code:`markdown (---), code:block17, code:block18 (bigquery-skill/), code:`markdown (# BigQuery Data Analysis), code:block20, code:markdown (# DOCX Processing), Pattern 1: High-level guide with references (+4 more)
 
 ### Community 153 - "Community 153"
-Cohesion: 0.05
-Nodes (52): Home(), FormData, loginSchema, registerSchema, UserAuthForm(), UserAuthFormProps, testimonials, TestimonialsCarousel() (+44 more)
+Cohesion: 0.06
+Nodes (56): SupportModalProps, cn(), UpgradeButtonProps, Window, NativeToggle(), Avatar(), AvatarBadge(), AvatarFallback() (+48 more)
 
 ### Community 154 - "Community 154"
 Cohesion: 0.40
@@ -1088,8 +1083,8 @@ Cohesion: 0.25
 Nodes (7): Design Document: Homepage Showcase & Onboarding Removal, Goal Description, Homepage, Pricing Card Component, Pricing Page, Proposed Changes, Verification Plan
 
 ### Community 160 - "Community 160"
-Cohesion: 0.11
-Nodes (17): NavGroup, navGroups, NavItem, DashboardLayout(), DashboardNav(), navItems, DashboardShell(), MobileNav() (+9 more)
+Cohesion: 0.08
+Nodes (33): LogoutButton(), ChangelogPage(), getReleases(), metadata, parseChangelog(), Release, Section, ThemeToggle() (+25 more)
 
 ### Community 161 - "Community 161"
 Cohesion: 0.29
@@ -1157,7 +1152,7 @@ Nodes (7): Category Restructuring & Layout Polish Implementation Plan, code:tsx 
 
 ### Community 177 - "Community 177"
 Cohesion: 0.11
-Nodes (28): assert_safe_url(), _consume_capped(), default_headers(), _is_blocked_ip(), normalize_url(), _port_for(), Execute an HTTP request with SSRF guards, redirect checks, TLS verification,, Raised when a request is blocked by safe HTTP policy. (+20 more)
+Nodes (25): assert_safe_url(), _consume_capped(), default_headers(), _is_blocked_ip(), normalize_url(), _port_for(), Execute an HTTP request with SSRF guards, redirect checks, TLS verification,, Raised when a request is blocked by safe HTTP policy. (+17 more)
 
 ### Community 178 - "Community 178"
 Cohesion: 0.22
@@ -1188,8 +1183,8 @@ Cohesion: 0.33
 Nodes (4): GradientPalettePage(), metadata, GradientCard, GradientPalette()
 
 ### Community 185 - "Community 185"
-Cohesion: 0.14
-Nodes (14): [1.1.2] - 2026-06-10, Added, Changed, Fixed, Added, Added, Added, Added (+6 more)
+Cohesion: 0.09
+Nodes (26): [1.1.2] - 2026-06-10, [1.1.5] - 2026-06-13, [1.1.6] - 2026-06-14, Added, Added, Added, Changed, Changed (+18 more)
 
 ### Community 186 - "Community 186"
 Cohesion: 0.12
@@ -1200,8 +1195,8 @@ Cohesion: 0.12
 Nodes (16): [1.0.3] - 2026-06-07, Added, Changed, Added, Added, Added, Added, Added (+8 more)
 
 ### Community 188 - "Community 188"
-Cohesion: 0.08
-Nodes (14): AdminLayout(), metadata, ColorConverterPage(), metadata, metadata, metadata, metadata, PromptGeneratorPage() (+6 more)
+Cohesion: 0.60
+Nodes (4): date, check_file(), main(), ReferenceStatus
 
 ### Community 189 - "Community 189"
 Cohesion: 0.16
@@ -1228,8 +1223,8 @@ Cohesion: 0.25
 Nodes (7): 1. Navigation & Routing Fix in `RelatedTools`, 2. Spacing Class Cleanup in Tools, code:typescript (const segments = pathname.split("/").filter(Boolean)), Design Specification: Spacing Standardization and Navigation Fixes, Overview, Proposed Changes, Verification Plan
 
 ### Community 195 - "Community 195"
-Cohesion: 0.07
-Nodes (33): useUsageLimit(), BrokenLinksAuditor(), ScannedLink, CaptionGenerator(), ColorContrastScanner(), ContrastFailure, DocConverter(), UploadedFile (+25 more)
+Cohesion: 0.16
+Nodes (13): ScannedLink, ContrastFailure, DocConverter(), UploadedFile, allTools, categories, CATEGORIES, Category (+5 more)
 
 ### Community 197 - "Community 197"
 Cohesion: 0.50
@@ -1241,7 +1236,7 @@ Nodes (6): 1. SERP Previewer & Meta Tag Analyzer, 2. Keyword Density & Optimizat
 
 ### Community 199 - "Community 199"
 Cohesion: 0.10
-Nodes (37): ThemeToggle(), formatBytes(), IMAGE_PRESETS, processImage(), ResizeOptions, getDailyUsage(), getMonthlyUsage(), incrementDailyUsage() (+29 more)
+Nodes (33): useUsageLimit(), formatBytes(), IMAGE_PRESETS, processImage(), ResizeOptions, getDailyUsage(), getMonthlyUsage(), incrementDailyUsage() (+25 more)
 
 ### Community 200 - "Community 200"
 Cohesion: 0.13
@@ -1288,8 +1283,8 @@ Cohesion: 0.20
 Nodes (10): [1.0.0] - 2026-05-31, Added, Added, Added, Added, Added, Added, Added (+2 more)
 
 ### Community 213 - "Community 213"
-Cohesion: 0.15
-Nodes (15): [1.1.7] - 2026-06-21, [1.1.8] - 2026-06-23, [1.1.9] - 2026-06-24, [1.2.0] - 2026-07-01, [1.2.1] - 2026-07-10, Added, Added, Added (+7 more)
+Cohesion: 0.07
+Nodes (34): [1.1.7] - 2026-06-21, [1.1.8] - 2026-06-23, [1.1.9] - 2026-06-24, [1.2.0] - 2026-07-01, [1.2.1] - 2026-07-10, [1.2.2] - 2026-07-21, [1.2.3] - 2026-07-27, [1.2.4] - 2026-07-30 (+26 more)
 
 ### Community 214 - "Community 214"
 Cohesion: 0.25
@@ -1316,8 +1311,8 @@ Cohesion: 0.20
 Nodes (9): Domain Context, Further Reading, Input Requirements, Instructions, Metadata, Notes, Output, Process (+1 more)
 
 ### Community 220 - "Community 220"
-Cohesion: 0.23
-Nodes (11): PLAN_PRICING, SUBSCRIPTION_PLANS, POST(), sendPasswordResetEmail(), sendPaymentFailedEmail(), sendPaymentSuccessEmail(), getPlanDetailsByPlanId(), POST() (+3 more)
+Cohesion: 0.10
+Nodes (19): AdminLayout(), POST(), POST(), POST(), POST(), POST(), POST(), POST() (+11 more)
 
 ### Community 221 - "Community 221"
 Cohesion: 0.22
@@ -1380,8 +1375,8 @@ Cohesion: 0.22
 Nodes (9): code:block36, code:`markdown (## Commit message format), code:block38, code:block39, code:block40, code:markdown (## Document modification workflow), Conditional workflow pattern, Examples pattern (+1 more)
 
 ### Community 236 - "Community 236"
-Cohesion: 0.23
-Nodes (10): syncPlanStatus(), POST(), POST(), POST(), getCurrentCreditAllocation(), capturePayPalOrder(), createPayPalOrder(), createPayPalSubscription() (+2 more)
+Cohesion: 0.10
+Nodes (25): syncPlanStatus(), POST(), POST(), PLAN_PRICING, SUBSCRIPTION_PLANS, POST(), POST(), POST() (+17 more)
 
 ### Community 237 - "Community 237"
 Cohesion: 0.25
@@ -1391,12 +1386,8 @@ Nodes (7): Brainstorm Team OKRs, Context, Domain Context, Further Reading, Instr
 Cohesion: 0.25
 Nodes (7): Domain Context, Further Reading, North Star Metric, Prompt, The Three Business Games, Tips for Best Results, When to Use
 
-### Community 239 - "Community 239"
-Cohesion: 0.07
-Nodes (24): Implementation Hook, Output Contract, Responsibilities, Verification Rules, AEO Audit Report, AEO vs GEO, Answer Engine Optimization (AEO), Output Format (+16 more)
-
 ### Community 240 - "Community 240"
-Cohesion: 0.07
+Cohesion: 0.08
 Nodes (26): 1. Crawlability, 2. Indexability, 3. Security, 4. URL Structure, 5. Mobile Optimization, 6. Core Web Vitals, 7. Structured Data, 8. JavaScript Rendering (+18 more)
 
 ### Community 241 - "Community 241"
@@ -1496,8 +1487,8 @@ Cohesion: 0.33
 Nodes (5): Context, Customer Interview Script, Domain Context, Further Reading, Instructions
 
 ### Community 265 - "Community 265"
-Cohesion: 0.27
-Nodes (11): datetime, audit_release_seo(), _load_changelog(), _local_tags(), main(), _parse_date(), _release_quality(), build_index() (+3 more)
+Cohesion: 0.24
+Nodes (13): datetime, get_token(), Resolve token from CLI override, env vars, or .env file., build_scorecard(), main(), _score_from_inventory(), _score_from_release(), audit_release_seo() (+5 more)
 
 ### Community 266 - "Community 266"
 Cohesion: 0.33
@@ -1624,12 +1615,12 @@ Cohesion: 0.18
 Nodes (18): BeautifulSoup, safe_get(), analyze_sameas(), check_google_knowledge_graph(), check_nap_consistency(), check_wikidata(), check_wikipedia(), extract_entities_from_schema() (+10 more)
 
 ### Community 311 - "Community 311"
-Cohesion: 0.24
-Nodes (12): Any, check_canonicals(), main(), check_collection_page(), main(), rel_values(), as_list(), check_rating_value() (+4 more)
+Cohesion: 0.23
+Nodes (14): Any, Any, check_canonicals(), main(), as_list(), check_offer(), check_product_schema(), main() (+6 more)
 
 ### Community 312 - "Community 312"
-Cohesion: 0.11
-Nodes (29): RuntimeError, auth_context(), _build_url(), fetch_json(), gh_api_json(), gh_auth_details(), gh_available(), GitHubAPIError (+21 more)
+Cohesion: 0.14
+Nodes (19): RuntimeError, auth_context(), _build_url(), gh_api_json(), gh_auth_details(), gh_available(), GitHubAPIError, graphql_json() (+11 more)
 
 ### Community 313 - "Community 313"
 Cohesion: 0.11
@@ -1652,19 +1643,19 @@ Cohesion: 0.25
 Nodes (13): copy_skill(), install_cline(), install_continue(), install_copilot(), install_cowork(), install_cursor(), install_windsurf(), require_cmd() (+5 more)
 
 ### Community 318 - "Community 318"
-Cohesion: 0.22
-Nodes (12): audit_anchor_text(), _canonical_page(), crawl_internal_anchors(), extract_internal_anchors(), main(), analyze_backlinks(), _first_existing(), main() (+4 more)
+Cohesion: 0.67
+Nodes (5): audit_anchor_text(), _canonical_page(), crawl_internal_anchors(), extract_internal_anchors(), main()
 
 ### Community 319 - "Community 319"
 Cohesion: 0.83
 Nodes (3): generate(), main(), page_title()
 
 ### Community 320 - "Community 320"
-Cohesion: 0.24
-Nodes (14): aggregate_candidates(), build_report(), days_since(), decode_readme_content(), _dedupe(), fetch_readme_metrics(), fetch_repo_metadata(), load_queries() (+6 more)
+Cohesion: 0.22
+Nodes (16): fetch_json(), Unified API accessor.      provider modes:     - api: use direct REST API only., aggregate_candidates(), build_report(), days_since(), decode_readme_content(), _dedupe(), fetch_readme_metrics() (+8 more)
 
 ### Community 321 - "Community 321"
-Cohesion: 0.11
+Cohesion: 0.12
 Nodes (17): ACTIVE — recommend freely:, Article/BlogPosting, Common Schema Templates, DEPRECATED — never recommend:, Detection, Execution Plan, Generation, LocalBusiness (+9 more)
 
 ### Community 322 - "Community 322"
@@ -1672,12 +1663,12 @@ Cohesion: 0.21
 Nodes (16): add_finding(), analyze_title_strategy(), build_audit(), days_since(), _dedupe_keep_order(), _format_title_token(), local_file_signals(), main() (+8 more)
 
 ### Community 323 - "Community 323"
-Cohesion: 0.08
+Cohesion: 0.09
 Nodes (23): 1. Discovery, 2. Competitive Analysis, 3. Architecture Design, 4.5 Topical Authority Cluster Planning, 4. Content Strategy, 5. Technical Foundation, 6. Implementation Roadmap (4 phases), Cluster Article Requirements (+15 more)
 
 ### Community 324 - "Community 324"
-Cohesion: 0.32
-Nodes (4): POST(), cancelPayPalSubscription(), razorpay, POST()
+Cohesion: 0.10
+Nodes (28): FormData, loginSchema, registerSchema, UserAuthForm(), UserAuthFormProps, BillingPage(), CreditOverview(), CreditOverviewProps (+20 more)
 
 ### Community 325 - "Community 325"
 Cohesion: 0.12
@@ -1704,11 +1695,11 @@ Cohesion: 0.21
 Nodes (15): check_key_file(), check_key_in_meta(), check_robots_txt(), extract_sitemap_urls(), fetch_url(), main(), ping_indexnow(), Check 3: See if robots.txt references IndexNow. (+7 more)
 
 ### Community 331 - "Community 331"
-Cohesion: 0.12
+Cohesion: 0.13
 Nodes (15): AI Search Readiness, Content Quality, Crawl Configuration, Executive Summary, Full Website SEO Audit, Images, On-Page SEO, Output Files (+7 more)
 
 ### Community 332 - "Community 332"
-Cohesion: 0.12
+Cohesion: 0.13
 Nodes (15): Content Quality, Core Web Vitals (reference only — not measurable from HTML alone), Execution Plan, Images, Issues Found, On-Page SEO, Output, Output Files (Required) (+7 more)
 
 ### Community 333 - "Community 333"
@@ -1752,15 +1743,15 @@ Cohesion: 0.15
 Nodes (12): AI Crawler Management, Available Scripts, Categories to Analyze, CLS (Cumulative Layout Shift) — Visual Stability, Core Web Vitals Reference, Cross-Skill Delegation, INP (Interaction to Next Paint) — Interactivity, JavaScript Rendering Checklist (+4 more)
 
 ### Community 343 - "Community 343"
-Cohesion: 0.22
-Nodes (9): [1.0.1] - 2026-06-01, Added, Added, Added, Added, Added, Added, Added (+1 more)
+Cohesion: 0.20
+Nodes (10): [1.0.1] - 2026-06-01, Added, Added, Added, Added, Added, Added, Added (+2 more)
 
 ### Community 344 - "Community 344"
-Cohesion: 0.52
-Nodes (6): add_finding(), evaluate(), local_artifacts(), main(), print_text(), utc_now_iso()
+Cohesion: 0.24
+Nodes (12): infer_repo_from_git(), normalize_repo_slug(), Normalize a repo identifier to owner/repo format., Infer owner/repo from local git origin URL., Resolve repository slug from explicit value or local git origin., resolve_repo(), add_finding(), evaluate() (+4 more)
 
 ### Community 345 - "Community 345"
-Cohesion: 0.15
+Cohesion: 0.17
 Nodes (12): 1. Resolve Scope and Access, 2. Run Evidence Scripts, 3. Analyze by Area, 4. Prioritize, 5. Output Artifacts, Auth Setup, Critical Rules, Delegation Guidance (+4 more)
 
 ### Community 346 - "Community 346"
@@ -1784,7 +1775,7 @@ Cohesion: 0.60
 Nodes (5): audit(), _imports_from_css(), _is_cross_origin(), _load_source(), main()
 
 ### Community 351 - "Community 351"
-Cohesion: 0.17
+Cohesion: 0.18
 Nodes (11): 1. Internal Link Analysis (`scripts/internal_links.py`), 2. Broken Link Detection (`scripts/broken_links.py`), 3. External Link Profile (`scripts/link_profile.py`), Analysis Framework, Audit Workflow, Broken Links, External Backlink Profile, Internal Link Equity (+3 more)
 
 ### Community 352 - "Community 352"
@@ -1796,8 +1787,8 @@ Cohesion: 0.33
 Nodes (10): Any, _fetch_url(), _is_responsive_fill_image(), main(), parse_html(), Fetch HTML for direct parsing., Flatten top-level JSON-LD objects and @graph nodes for validation., Parse HTML and extract SEO-relevant elements.      Args:         html: HTML cont (+2 more)
 
 ### Community 354 - "Community 354"
-Cohesion: 0.30
-Nodes (10): Any, Any, Path, diff_schema(), main(), prop_set(), detect_template_type(), get_template() (+2 more)
+Cohesion: 0.24
+Nodes (12): Any, Any, check_social_preview(), main(), diff_schema(), main(), prop_set(), detect_template_type() (+4 more)
 
 ### Community 355 - "Community 355"
 Cohesion: 0.18
@@ -1812,16 +1803,16 @@ Cohesion: 0.20
 Nodes (9): Active — Recommend freely, Deprecated — Never recommend, E-commerce Requirements (Updated), Format Preference, Recent Additions (2024-2026), Restricted — Only for specific site types, Schema.org Types — Status & Recommendations (February 2026), Testing Tools (+1 more)
 
 ### Community 358 - "Community 358"
-Cohesion: 0.27
-Nodes (10): Path, _candidate_paths(), get_env(), load_env(), _load_file(), _parse_line(), Lightweight .env loader for Agentic-SEO scripts.  Loads KEY=VALUE pairs from `.e, Return the first non-empty value among the given env var names.      Triggers `` (+2 more)
+Cohesion: 0.70
+Nodes (4): Any, as_list(), check_video_schema(), main()
 
 ### Community 359 - "Community 359"
 Cohesion: 0.38
 Nodes (9): append_jsonl(), build_snapshot(), collect_traffic(), ensure_dir(), fetch_endpoint(), main(), print_text(), utc_now_iso() (+1 more)
 
 ### Community 360 - "Community 360"
-Cohesion: 0.35
-Nodes (10): analyze_source(), _candidate_lcp_image(), _fetch_ttfb(), _is_url(), _lcp_element_url(), _load_lighthouse(), _load_source(), main() (+2 more)
+Cohesion: 0.38
+Nodes (9): analyze_source(), _candidate_lcp_image(), _is_url(), _lcp_element_url(), _load_lighthouse(), _load_source(), main(), _network_item_for_url() (+1 more)
 
 ### Community 361 - "Community 361"
 Cohesion: 0.20
@@ -1872,8 +1863,8 @@ Cohesion: 0.32
 Nodes (7): check_broken_links(), check_link(), extract_links(), main(), Check all links on a page for broken links.      Args:         url: Page URL to, Extract all links from HTML content., Check a single link's HTTP status.
 
 ### Community 373 - "Community 373"
-Cohesion: 0.22
-Nodes (9): 1. Self-Referencing Tags, 2. Return Tags, 3. x-default Tag, 4. Language Code Validation, 5. Region Code Validation, 6. Canonical URL Alignment, 7. Protocol Consistency, 8. Cross-Domain Support (+1 more)
+Cohesion: 0.08
+Nodes (26): 1. Self-Referencing Tags, 2. Return Tags, 3. x-default Tag, 4. Language Code Validation, 5. Region Code Validation, 6. Canonical URL Alignment, 7. Protocol Consistency, 8. Cross-Domain Support (+18 more)
 
 ### Community 374 - "Community 374"
 Cohesion: 0.46
@@ -1892,12 +1883,12 @@ Cohesion: 0.50
 Nodes (7): _load_source(), main(), map_clusters(), _row_from_source(), _rows_from_csv(), _split_links(), _topic_from_text()
 
 ### Community 378 - "Community 378"
-Cohesion: 0.61
-Nodes (8): Path, capture_url(), compare_files(), compare_pixels(), file_fingerprint(), main(), _pillow_available(), path
+Cohesion: 0.60
+Nodes (3): metadata, SalaryHourlyPage(), SalaryHourlyCalculator()
 
 ### Community 379 - "Community 379"
-Cohesion: 0.25
-Nodes (8): 1. Featured Snippet Optimization, 2. People Also Ask (PAA) Optimization, 3. Knowledge Panel Signals, 4. Sitelinks Searchbox, Audit Checklist, List Snippet (procedures, rankings, comparisons), Paragraph Snippet (most common for informational queries), Table Snippet (comparisons, pricing, specifications)
+Cohesion: 0.17
+Nodes (12): 1. Featured Snippet Optimization, 2. People Also Ask (PAA) Optimization, 3. Knowledge Panel Signals, 4. Sitelinks Searchbox, AEO Audit Report, AEO vs GEO, Answer Engine Optimization (AEO), Audit Checklist (+4 more)
 
 ### Community 380 - "Community 380"
 Cohesion: 0.25
@@ -1968,8 +1959,8 @@ Cohesion: 0.60
 Nodes (5): audit(), _extract_font_faces(), _font_format(), _load_source(), main()
 
 ### Community 397 - "Community 397"
-Cohesion: 0.60
-Nodes (5): audit(), _extension(), _load_source(), _local_size(), main()
+Cohesion: 0.70
+Nodes (4): _local_text(), main(), suggest_topics(), _topicify()
 
 ### Community 398 - "Community 398"
 Cohesion: 0.47
@@ -2016,12 +2007,12 @@ Cohesion: 0.33
 Nodes (6): CI Checks, Current Release, Excluded From Release Assets, Release and Packaging, Runtime Allowlist, Tag-Based Packaging
 
 ### Community 409 - "Community 409"
-Cohesion: 0.53
-Nodes (5): date, Path, check_file(), main(), ReferenceStatus
+Cohesion: 0.07
+Nodes (41): SettingsFormProps, ForgotPasswordPage(), BmiResult, calculateAspectRatio(), calculateBmi(), calculateCompoundInterest(), calculateLineHeight(), calculateSalaryToHourly() (+33 more)
 
 ### Community 410 - "Community 410"
-Cohesion: 0.16
-Nodes (11): CaptionGeneratorPage(), metadata, EmiPage(), metadata, generateSeoMetadata(), LlmsTxtPage(), metadata, metadata (+3 more)
+Cohesion: 0.40
+Nodes (4): Implementation Hook, Output Contract, Responsibilities, Verification Rules
 
 ### Community 411 - "Community 411"
 Cohesion: 0.70
@@ -2032,8 +2023,8 @@ Cohesion: 0.70
 Nodes (4): audit(), main(), render_with_playwright(), summarize()
 
 ### Community 413 - "Community 413"
-Cohesion: 0.09
-Nodes (25): SettingsFormProps, ForgotPasswordPage(), BmiResult, calculateAspectRatio(), calculateBmi(), calculateCompoundInterest(), calculateLineHeight(), CompoundInterestInput (+17 more)
+Cohesion: 0.60
+Nodes (5): audit(), _extension(), _load_source(), _local_size(), main()
 
 ### Community 414 - "Community 414"
 Cohesion: 0.40
@@ -2057,7 +2048,7 @@ Nodes (3): capture_screenshot(), main(), Capture a screenshot of a web page.    
 
 ### Community 419 - "Community 419"
 Cohesion: 0.70
-Nodes (4): Path, inventory_repository(), main(), path_exists()
+Nodes (4): build_index(), build_urlset(), main(), read_manifest()
 
 ### Community 420 - "Community 420"
 Cohesion: 0.67
@@ -2065,7 +2056,7 @@ Nodes (3): check_social_meta(), main(), Validate social media meta tags for a UR
 
 ### Community 421 - "Community 421"
 Cohesion: 0.60
-Nodes (4): Path, documented_count(), list_files(), main()
+Nodes (3): metadata, SeoGeneratorPage(), SeoGenerator()
 
 ### Community 422 - "Community 422"
 Cohesion: 0.83
@@ -2074,6 +2065,14 @@ Nodes (3): load_readability(), test_html_paragraph_tags_count_as_separate_paragr
 ### Community 423 - "Community 423"
 Cohesion: 0.50
 Nodes (4): code:bash (# Use project-appropriate command), code:block9 (Worktree ready at <full-path>), Report, Step 4: Verify Clean Baseline
+
+### Community 424 - "Community 424"
+Cohesion: 0.40
+Nodes (4): ATS Score Checker Improved Score & CV Builder Handoff Implementation Plan, Task 1: Add `initialText` Support to `AIParserModal` and Auto-Open in `CvBuilder`, Task 2: Implement Auto Re-Evaluation & Score Badges in `ats-score-checker.tsx`, Task 3: Build Verification & Clean Up
+
+### Community 425 - "Community 425"
+Cohesion: 0.60
+Nodes (3): CvBuilderPage(), metadata, CvBuilder()
 
 ### Community 426 - "Community 426"
 Cohesion: 0.67
@@ -2084,72 +2083,88 @@ Cohesion: 0.46
 Nodes (7): canonical_key(), main(), _normalize_text(), Verify and dedupe findings.      Returns:     {       "findings": [...],       ", _sev_rank(), should_suppress(), verify_findings()
 
 ### Community 432 - "Community 432"
-Cohesion: 0.19
-Nodes (15): get_token(), Resolve token from CLI override, env vars, or .env file., build_scorecard(), main(), _score_from_inventory(), _score_from_release(), check_docs_site(), _check_url() (+7 more)
+Cohesion: 0.60
+Nodes (5): check_docs_site(), _check_url(), main(), _readme_install_cta(), _readme_urls()
 
 ### Community 433 - "Community 433"
 Cohesion: 0.60
 Nodes (5): audit(), _is_third_party(), _load_source(), main(), _script_category()
 
 ### Community 434 - "Community 434"
-Cohesion: 0.52
-Nodes (4): calculateSalaryToHourly(), metadata, SalaryHourlyPage(), SalaryHourlyCalculator()
+Cohesion: 0.40
+Nodes (4): CV Builder Editable Headings & Pro Custom Content Sections Implementation Plan, Task 1: Add State & Implement Editable Default Headings, Task 2: Implement Pro Custom Content Sections After Summary, Task 3: Production Build Verification & Cleanup
+
+### Community 435 - "Community 435"
+Cohesion: 0.60
+Nodes (3): ColorContrastScannerPage(), metadata, ColorContrastScanner()
 
 ### Community 436 - "Community 436"
-Cohesion: 0.67
-Nodes (5): GET(), getDateStr(), getIdentifier(), POST(), PrismaModuleType
+Cohesion: 0.40
+Nodes (4): CV Builder Multi-Paragraph & Bullet Text Formatting Implementation Plan, Task 1: Create `FormattedCvText` Helper Component & Text Parsing Logic, Task 2: Integrate `FormattedCvText` in Template Renderers & Add Editor Helper Hints, Task 3: Production Build Verification & Cleanup
 
 ### Community 437 - "Community 437"
-Cohesion: 0.67
-Nodes (5): Any, as_list(), check_offer(), check_product_schema(), main()
+Cohesion: 0.40
+Nodes (4): AI CV Auto-Formatting Bullets & Credit Balance Display Implementation Plan, Task 1: Update AI CV Parser Prompt to Auto-Format Bullets, Task 2: Pass and Display `creditsRemaining` in AI Parser Popup, Task 3: Production Build Verification
 
 ### Community 438 - "Community 438"
-Cohesion: 0.33
-Nodes (6): Generated Hreflang Tags, Hreflang Validation Report, Output, Recommendations, Summary, Validation Results
+Cohesion: 0.40
+Nodes (4): AI CV Parser Custom Sections & Heading Extraction Integration Plan, Task 1: Update API Route Schema & Prompt for Summary Heading & Custom Sections, Task 2: Update Preview Modal & Builder State Mapping, Task 3: Production Build Verification & Cleanup
 
-### Community 440 - "Community 440"
+### Community 439 - "Community 439"
+Cohesion: 0.40
+Nodes (4): CV Builder Full-Width Accordion Redesign & Live Preview Modal Implementation Plan, Task 1: Create Unit Test & Build Sticky Top Toolbar with Preview State, Task 2: Build Full-Width Accordion Editor & Live Preview Modal, Task 3: Production Build Verification & Cleanup
+
+### Community 441 - "Community 441"
+Cohesion: 0.60
+Nodes (3): CompoundInterestPage(), metadata, CompoundInterestCalculator()
+
+### Community 442 - "Community 442"
 Cohesion: 0.70
 Nodes (4): local_name(), main(), parse_hreflang_sitemap(), validate_hreflang_sitemaps()
 
-### Community 441 - "Community 441"
-Cohesion: 0.70
-Nodes (4): Any, as_list(), check_video_schema(), main()
-
-### Community 442 - "Community 442"
-Cohesion: 0.60
-Nodes (3): metadata, TextDiffPage(), TextDiff()
-
 ### Community 443 - "Community 443"
 Cohesion: 0.70
-Nodes (4): check_mobile_render(), main(), _rendered_checks(), _static_checks()
+Nodes (4): analyze_backlinks(), _first_existing(), main(), read_backlink_export()
 
-### Community 444 - "Community 444"
+### Community 445 - "Community 445"
 Cohesion: 0.60
-Nodes (3): metadata, SipPage(), SipCalculator()
+Nodes (3): metadata, PromptGeneratorPage(), PromptGenerator()
 
-### Community 452 - "Community 452"
-Cohesion: 0.67
-Nodes (3): fetch_page(), main(), Fetch a web page and return response details.      Args:         url: The URL to
+### Community 446 - "Community 446"
+Cohesion: 0.40
+Nodes (5): 1. Data Extraction, 2. LLM-Driven Analysis, 3. Reporting, Process, SEO Sub-Skill: Article Analysis
+
+### Community 447 - "Community 447"
+Cohesion: 0.83
+Nodes (3): check_collection_page(), main(), rel_values()
+
+### Community 448 - "Community 448"
+Cohesion: 0.83
+Nodes (3): inventory_repository(), main(), path_exists()
+
+### Community 449 - "Community 449"
+Cohesion: 0.83
+Nodes (3): documented_count(), list_files(), main()
 
 ## Knowledge Gaps
-- **2537 isolated node(s):** `start-server.sh script`, `stop-server.sh script`, `agentic-seo-skill`, `Any`, `Any` (+2532 more)
+- **2581 isolated node(s):** `start-server.sh script`, `stop-server.sh script`, `pre_commit_seo_check.sh script`, `find-polluter.sh script`, `fs` (+2576 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **41 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **31 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `datetime` connect `Community 265` to `Community 384`, `Community 320`, `Community 322`, `Community 344`, `Community 389`, `Community 71`, `Community 359`, `Community 329`, `Community 368`, `Community 432`, `Community 338`, `Community 374`, `Community 312`, `Community 409`, `Community 252`, `Community 318`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **Why does `cn()` connect `Community 153` to `Community 160`, `Community 195`, `Community 35`, `Community 102`, `Community 199`, `Community 13`, `Community 17`, `Community 86`, `Community 413`, `Community 30`?**
+- **Why does `Programmatic SEO Analysis & Planning` connect `Community 258` to `Community 239`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **What connects `start-server.sh script`, `stop-server.sh script`, `agentic-seo-skill` to the rest of the system?**
-  _2682 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `cn()` connect `Community 153` to `Community 160`, `Community 195`, `Community 324`, `Community 35`, `Community 199`, `Community 10`, `Community 13`, `Community 52`, `Community 86`, `Community 409`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Why does `Content Quality & E-E-A-T Analysis` connect `Community 193` to `Community 239`?**
+  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+- **What connects `start-server.sh script`, `stop-server.sh script`, `Agentic SEO script package.` to the rest of the system?**
+  _2726 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.03333333333333333 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.045454545454545456 - nodes in this community are weakly interconnected._
-- **Should `Community 4` be split into smaller, more focused modules?**
-  _Cohesion score 0.05405405405405406 - nodes in this community are weakly interconnected._

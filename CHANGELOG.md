@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.9] - 2026-08-18
+
+### Changed
+- **AI Chat Model Migration (`openai/gpt-oss-20b`)**:
+  - Migrated the Groq AI Chat assistant (`/api/ai/chat`) from the decommissioned `llama-3.1-8b-instant` to `openai/gpt-oss-20b` for ultra-fast, uninterrupted conversational navigation and higher rate limits.
+- **AI Assistant Knowledge & Pricing Tiers**:
+  - Enhanced system prompt in `/api/ai/chat` with detailed Free, Pro, and Business tier limits (e.g. 3 invoices/month on Free vs unlimited with branding on Pro, 20 vs 500 vs 2,000 AI credits, dynamic QR codes, batch limits).
+  - Standardized AI response link formatting to use clean relative markdown paths (e.g. `[Pricing](/pricing)`, `[Invoice Generator](/tools/document-tools/invoice-generator)`) without host/domain prefixes.
+
 ## [1.2.8] - 2026-08-13
 
 ### Fixed
