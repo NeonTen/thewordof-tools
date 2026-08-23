@@ -19,6 +19,7 @@ export const dynamic = "force-dynamic";
 export const metadata = generateSeoMetadata({
   title: "My Account — TheWordOf Tools",
   description: "Manage your account, billing, and settings.",
+  canonical: "/dashboard",
 });
 
 export default async function DashboardPage() {

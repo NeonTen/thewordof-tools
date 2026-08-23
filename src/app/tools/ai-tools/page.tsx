@@ -13,6 +13,7 @@ export const metadata = generateSeoMetadata({
   title: "AI Creativity & Productivity Tools | TheWordOf Tools",
   description:
     "Leverage AI models to generate high-performing meta details, write social captions, compile ATS-friendly resumes, and format structured prompts.",
+  canonical: "/tools/ai-tools",
 });
 
 const tools = [

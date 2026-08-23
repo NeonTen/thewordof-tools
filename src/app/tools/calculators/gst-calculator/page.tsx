@@ -15,6 +15,7 @@ export const metadata = generateSeoMetadata({
     "gst inclusive",
     "gst exclusive",
   ],
+  canonical: "/tools/calculators/gst-calculator",
 });
 
 export default async function GSTCalculatorPage() {

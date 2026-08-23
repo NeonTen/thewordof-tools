@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "PX to REM Converter & Tailwind Scale Chart | TheWordOf Tools",
   description:
     "Convert pixels to REM values dynamically based on base font sizes and view CSS conversion charts.",
+  canonical: "/tools/calculators/px-to-rem",
 });
 
 export default function PxToRemPage() {

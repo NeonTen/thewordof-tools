@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "Gradient Generator - CSS Gradient Builder & Preset Explorer",
   description:
     "Browse curated gradients, customize parameters, swap angles, and export code snippets for CSS or Tailwind.",
+  canonical: "/tools/design/gradient-generator",
 });
 
 export default function GradientGeneratorPage() {

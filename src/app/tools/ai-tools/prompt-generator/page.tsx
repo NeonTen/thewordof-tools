@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 export const metadata = generateSeoMetadata({
   title: "AI Prompt Generator",
   description: "Create high-quality prompts for ChatGPT, Midjourney, and more.",
+  canonical: "/tools/ai-tools/prompt-generator",
 });
 
 export default async function PromptGeneratorPage() {

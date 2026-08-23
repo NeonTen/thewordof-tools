@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.0] - 2026-08-24
+
+### Added
+- **Complete Canonical URL Support Across All Pages**:
+  - Configured root canonical alternate (`alternates: { canonical: "/" }`) in `layout.tsx` using `metadataBase` to ensure the root domain (`https://www.thewordof.com`) is canonicalized properly.
+  - Upgraded SEO metadata helper `generateSeoMetadata` in `src/app/lib/seo.ts` to accept `canonical?: string`, configuring both self-referencing `alternates.canonical` and `openGraph.url`.
+  - Added self-referencing canonical URLs to all 64 page routes across marketing, legal, auth, dashboard, admin, and all 50+ utility tools (AI Tools, Calculators, Design, Document Tools, Image & Code, Technical SEO).
+  - Modularized `forgot-password` and `reset-password` pages into Server Components with extracted client form components (`ForgotPasswordForm`, `ResetPasswordForm`) for full SEO metadata and canonical tag generation.
+  - Added segment layout metadata for `/admin/users` and added explicit metadata to `/dashboard/billing`, `/admin`, and `/tools/image-code/qr-code/expired`.
+
 ## [1.2.9] - 2026-08-18
 
 ### Changed

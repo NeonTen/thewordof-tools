@@ -9,6 +9,7 @@ export const metadata = generateSeoMetadata({
   description:
     "AI-powered tool to generate optimized titles, feature lists, and descriptions for e-commerce products.",
   keywords: ["product description", "ai writer", "copywriting", "e-commerce"],
+  canonical: "/tools/ai-tools/product-description",
 });
 
 export default async function ProductDescriptionPage() {

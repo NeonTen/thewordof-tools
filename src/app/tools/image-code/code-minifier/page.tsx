@@ -7,6 +7,7 @@ export const metadata = generateSeoMetadata({
   title: "JS/CSS/HTML Minifier & Beautifier",
   description:
     "Compress or format your JavaScript, CSS, and HTML code for better performance and readability.",
+  canonical: "/tools/image-code/code-minifier",
 });
 
 export default function CodeMinifierPage() {

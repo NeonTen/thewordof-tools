@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 export const metadata = generateSeoMetadata({
   title: "llms.txt Generator",
   description: "Generate AI-optimized descriptions for your website.",
+  canonical: "/tools/technical-seo/llms-txt",
 });
 
 export default async function LlmsTxtPage() {

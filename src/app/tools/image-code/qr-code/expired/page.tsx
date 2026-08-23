@@ -1,7 +1,14 @@
+import { generateSeoMetadata } from "@/app/lib/seo";
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle } from "lucide-react";
+
+export const metadata = generateSeoMetadata({
+  title: "QR Code Expired — TheWordOf Tools",
+  description: "This QR code has expired.",
+  canonical: "/tools/image-code/qr-code/expired",
+});
 
 export default function QrCodeExpiredPage() {
   return (

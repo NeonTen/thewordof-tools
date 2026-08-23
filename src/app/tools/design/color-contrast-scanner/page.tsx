@@ -7,6 +7,7 @@ export const metadata = generateSeoMetadata({
   title: "Color Contrast Scanner - WCAG 2.1 Web Accessibility Auditor",
   description:
     "Scan any webpage URL for contrast accessibility. Find elements failing WCAG AA & AAA standards with detailed selector reports.",
+  canonical: "/tools/design/color-contrast-scanner",
 });
 
 export default async function ColorContrastScannerPage() {

@@ -13,6 +13,7 @@ export const metadata = generateSeoMetadata({
   title: "Creative Design Palette & Harmony Tools | TheWordOf Tools",
   description:
     "Free color theory validation, palette mixers, CSS gradient designers, and export format generators.",
+  canonical: "/tools/design",
 });
 
 const tools = [

@@ -4,6 +4,9 @@ import { Users, FileText, Database } from "lucide-react";
 
 export const metadata = {
   title: "Admin Dashboard",
+  alternates: {
+    canonical: "/admin",
+  },
 };
 
 export default async function AdminPage() {

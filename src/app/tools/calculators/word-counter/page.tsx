@@ -13,6 +13,7 @@ export const metadata = generateSeoMetadata({
     "letter counter",
     "text statistics",
   ],
+  canonical: "/tools/calculators/word-counter",
 });
 
 export default async function WordCounterPage() {

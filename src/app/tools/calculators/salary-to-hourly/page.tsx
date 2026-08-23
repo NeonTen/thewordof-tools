@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "Salary to Hourly Converter & Pay Rate Calculator | TheWordOf Tools",
   description:
     "Convert annual salary into daily rates, hourly wages, weekly equivalents, and vice versa.",
+  canonical: "/tools/calculators/salary-to-hourly",
 });
 
 export default function SalaryHourlyPage() {

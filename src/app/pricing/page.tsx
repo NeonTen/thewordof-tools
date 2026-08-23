@@ -11,6 +11,7 @@ export const metadata = generateSeoMetadata({
   title: "Transparent Pricing — TheWordOf Tools Pro",
   description:
     "Start for free and stay for free. Upgrade to Pro for unlimited batch processing, priority AI generation, and full CV building. Simple monthly billing, cancel anytime.",
+  canonical: "/pricing",
 });
 
 import { Header } from "@/components/layout/header";

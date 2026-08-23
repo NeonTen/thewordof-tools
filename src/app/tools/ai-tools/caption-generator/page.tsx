@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 export const metadata = generateSeoMetadata({
   title: "AI Caption Generator",
   description: "Generate engaging social media captions with AI.",
+  canonical: "/tools/ai-tools/caption-generator",
 });
 
 export default async function CaptionGeneratorPage() {

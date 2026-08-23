@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "SIP & Mutual Fund Return Calculator | TheWordOf Tools",
   description:
     "Project future returns of your Systematic Investment Plan (SIP) investments.",
+  canonical: "/tools/calculators/sip",
 });
 
 export default function SipPage() {

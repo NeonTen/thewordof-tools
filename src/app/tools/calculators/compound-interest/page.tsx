@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "Compound Interest Calculator (Inflation-Adjusted) | TheWordOf Tools",
   description:
     "Calculate compounding growth returns for savings or investments adjusted for yearly inflation.",
+  canonical: "/tools/calculators/compound-interest",
 });
 
 export default function CompoundInterestPage() {

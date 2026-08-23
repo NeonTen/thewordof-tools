@@ -7,6 +7,7 @@ export const metadata = generateSeoMetadata({
   title: "Document Converter - PDF, DOCX & Text Conversion",
   description:
     "Convert Word documents, PDFs, and text files client-side instantly.",
+  canonical: "/tools/document-tools/doc-converter",
 });
 
 export default async function DocConverterPage() {

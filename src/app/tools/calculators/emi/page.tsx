@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "Home & Car Loan EMI Calculator | TheWordOf Tools",
   description:
     "Calculate your monthly EMI payments for home, car, or personal loans with visual breakdowns.",
+  canonical: "/tools/calculators/emi",
 });
 
 export default function EmiPage() {

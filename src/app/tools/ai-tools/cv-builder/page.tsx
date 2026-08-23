@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 export const metadata = generateSeoMetadata({
   title: "AI CV Builder",
   description: "Create a professional, ATS-optimized CV with AI.",
+  canonical: "/tools/ai-tools/cv-builder",
 });
 
 export default async function CvBuilderPage() {

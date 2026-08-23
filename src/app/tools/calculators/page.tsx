@@ -23,6 +23,7 @@ export const metadata = generateSeoMetadata({
   title: "Interactive Calculators Suite | TheWordOf Tools",
   description:
     "A comprehensive collection of free finance, design, utility, and health calculators.",
+  canonical: "/tools/calculators",
 });
 
 const calculators = [

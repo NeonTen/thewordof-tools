@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 export const metadata = generateSeoMetadata({
   title: "SEO Schema Generator",
   description: "Generate JSON-LD schema markup for your website.",
+  canonical: "/tools/technical-seo/schema-generator",
 });
 
 export default async function SchemaGeneratorPage() {

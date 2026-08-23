@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 export const metadata = generateSeoMetadata({
   title: "Invoice Generator – Document Tools",
   description: "Create and export professional invoices.",
+  canonical: "/tools/document-tools/invoice-generator",
 });
 
 export default async function InvoiceGeneratorPage() {

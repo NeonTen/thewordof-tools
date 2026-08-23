@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 export const metadata = generateSeoMetadata({
   title: "Image Converter",
   description: "Convert and optimize images in bulk directly in your browser.",
+  canonical: "/tools/image-code/image-converter",
 });
 
 export default async function ImageConverterPage() {

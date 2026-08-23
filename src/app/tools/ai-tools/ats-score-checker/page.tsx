@@ -1,12 +1,14 @@
+import { generateSeoMetadata } from "@/app/lib/seo"
 import { AtsScoreChecker } from "@/components/tools/ats-score-checker"
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { ToolHeader } from "@/components/tools/tool-header"
 
-export const metadata = {
+export const metadata = generateSeoMetadata({
   title: "ATS Score Checker - TheWordOf Tools",
   description: "Compare your resume against a job description. Get an ATS match score and discover missing keywords instantly.",
-}
+  canonical: "/tools/ai-tools/ats-score-checker",
+})
 
 export default async function Page() {
   const session = await auth()

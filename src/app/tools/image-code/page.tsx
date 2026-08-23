@@ -13,6 +13,7 @@ export const metadata = generateSeoMetadata({
   title: "Image & Code Optimization Tools | TheWordOf Tools",
   description:
     "Free client-side tools to convert images, compress SVGs, generate QR codes, minify files, and check text diffs.",
+  canonical: "/tools/image-code",
 });
 
 const tools = [

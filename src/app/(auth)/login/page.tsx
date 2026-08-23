@@ -10,6 +10,7 @@ import { UserAuthForm } from "@/components/auth/user-auth-form";
 export const metadata = generateSeoMetadata({
   title: "Login",
   description: "Login to your account",
+  canonical: "/login",
 });
 
 export default function LoginPage() {

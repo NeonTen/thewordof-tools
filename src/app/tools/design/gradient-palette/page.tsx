@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "Gradient Palette Generator - Generate Harmonious Gradients",
   description:
     "Generate mathematical gradient palettes and export CSS codes. Lock favorites and copy styles in one click.",
+  canonical: "/tools/design/gradient-palette",
 });
 
 export default function GradientPalettePage() {

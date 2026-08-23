@@ -7,6 +7,7 @@ export const metadata = generateSeoMetadata({
   title: "Free Online AI Tools & Growing — TheWordOf Utility Dashboard",
   description:
     "Access a suite of free, browser-based tools for image conversion, SVG optimization, AI SEO generation, professional invoices, and financial calculators. No sign-up required.",
+  canonical: "/tools",
 });
 
 export default async function ToolsPage() {

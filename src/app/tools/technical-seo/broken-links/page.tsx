@@ -7,6 +7,7 @@ export const metadata = generateSeoMetadata({
   title: "Broken Link & Anchor Text Auditor | TheWordOf Tools",
   description:
     "Audit webpage outbound links, detect broken URLs, identify redirects, and optimize anchor texts.",
+  canonical: "/tools/technical-seo/broken-links",
 });
 
 export default async function BrokenLinksPage() {

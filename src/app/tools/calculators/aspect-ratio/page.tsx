@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "Aspect Ratio Calculator & Resizer | TheWordOf Tools",
   description:
     "Calculate layouts and scale image dimensions easily based on custom or standard aspect ratios.",
+  canonical: "/tools/calculators/aspect-ratio",
 });
 
 export default function AspectRatioPage() {

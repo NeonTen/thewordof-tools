@@ -6,6 +6,7 @@ export const metadata = generateSeoMetadata({
   title: "Refund Policy — TheWordOf Tools",
   description:
     "Learn about subscription refunds and our 7-day money-back guarantee.",
+  canonical: "/refund",
 });
 
 export default function RefundPage() {

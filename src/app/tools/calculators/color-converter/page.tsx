@@ -16,6 +16,7 @@ export const metadata = generateSeoMetadata({
     "hsl converter",
     "hex converter",
   ],
+  canonical: "/tools/calculators/color-converter",
 });
 
 export default async function ColorConverterPage() {

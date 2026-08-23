@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 export const metadata = generateSeoMetadata({
   title: "Google SERP Previewer & Meta Tag Generator | TheWordOf Tools",
   description: "Preview search result listings and optimize meta tags for SEO.",
+  canonical: "/tools/technical-seo/serp-preview",
 });
 
 export default async function SerpPreviewPage() {

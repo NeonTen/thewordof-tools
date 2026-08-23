@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "Robots.txt Generator & Validator - Technical SEO Tools",
   description:
     "Create, customize, and validate robots.txt files for search engine crawlers with interactive rule mapping.",
+  canonical: "/tools/technical-seo/robots-generator",
 });
 
 export default function RobotsGeneratorPage() {

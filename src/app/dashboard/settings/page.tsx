@@ -12,6 +12,7 @@ import { redirect } from "next/navigation";
 export const metadata = generateSeoMetadata({
   title: "Settings",
   description: "Manage your account settings.",
+  canonical: "/dashboard/settings",
 });
 
 export default async function SettingsPage() {

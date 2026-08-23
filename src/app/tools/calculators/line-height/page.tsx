@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "CSS Line-Height Converter & Live Preview | TheWordOf Tools",
   description:
     "Convert line-height pixel, rem, or percentage values to relative unitless values for web designs.",
+  canonical: "/tools/calculators/line-height",
 });
 
 export default function LineHeightPage() {

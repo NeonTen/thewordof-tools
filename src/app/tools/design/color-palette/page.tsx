@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "Color Palette Generator - Generate Color Harmonies",
   description:
     "Generate mathematical color palettes based on harmony rules. Lock colors and export to CSS or Tailwind.",
+  canonical: "/tools/design/color-palette",
 });
 
 export default function ColorPalettePage() {

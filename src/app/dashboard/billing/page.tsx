@@ -1,6 +1,13 @@
+import { generateSeoMetadata } from "@/app/lib/seo";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+
+export const metadata = generateSeoMetadata({
+  title: "Billing & Plans — TheWordOf Tools",
+  description: "Manage your subscription, invoices, and billing history.",
+  canonical: "/dashboard/billing",
+});
 import {
   Card,
   CardContent,

@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "Body Mass Index (BMI) Calculator | TheWordOf Tools",
   description:
     "Calculate your body mass index instantly with support for metric and imperial scales.",
+  canonical: "/tools/calculators/bmi",
 });
 
 export default function BmiPage() {

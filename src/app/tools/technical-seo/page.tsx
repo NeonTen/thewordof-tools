@@ -13,6 +13,7 @@ export const metadata = generateSeoMetadata({
   title: "Technical SEO Validation & Audit Tools | TheWordOf Tools",
   description:
     "Free online tools to generate structured schema markup, manage robots.txt directives, inspect sitemaps, analyze SERP layouts, and check readability.",
+  canonical: "/tools/technical-seo",
 });
 
 const tools = [

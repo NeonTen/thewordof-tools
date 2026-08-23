@@ -7,6 +7,7 @@ export const metadata = generateSeoMetadata({
   title: "Text Difference Checker",
   description:
     "Compare two text blocks or files side-by-side to find differences and changes.",
+  canonical: "/tools/image-code/text-diff",
 });
 
 export default function TextDiffPage() {

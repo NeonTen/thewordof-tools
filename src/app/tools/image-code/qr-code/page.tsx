@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   description:
     "Create customizable QR codes with custom size, background, and foreground colors.",
   keywords: ["qr generator", "qr code", "make qr", "free qr generator"],
+  canonical: "/tools/image-code/qr-code",
 });
 
 export default async function QRCodeGeneratorPage() {

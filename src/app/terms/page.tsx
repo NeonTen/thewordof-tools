@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 export const metadata = generateSeoMetadata({
   title: "Terms of Service — TheWordOf Tools",
   description: "Terms and conditions for using TheWordOf Tools.",
+  canonical: "/terms",
 });
 
 export default function TermsPage() {

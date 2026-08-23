@@ -19,6 +19,7 @@ export const metadata = {
     title: "Changelog & Product Updates | TheWordOf Tools",
     description:
       "Stay up-to-date with our latest tools, feature additions, fixes, and optimizations.",
+    canonical: "/changelog",
   }),
   robots: {
     index: false,

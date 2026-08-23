@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 export const metadata = generateSeoMetadata({
   title: "Privacy Policy — TheWordOf Tools",
   description: "Learn how we handle your data and protect your privacy.",
+  canonical: "/privacy",
 });
 
 export default function PrivacyPage() {

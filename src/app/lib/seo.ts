@@ -4,12 +4,14 @@ interface SeoMetadataInput {
   title: string;
   description: string;
   keywords?: string[];
+  canonical?: string;
 }
 
 export function generateSeoMetadata({
   title,
   description,
   keywords = [],
+  canonical,
 }: SeoMetadataInput): Metadata {
   const baseKeywords = [
     "online tools",
@@ -27,11 +29,19 @@ export function generateSeoMetadata({
       description,
       type: "website",
       siteName: "TheWordOf Tools",
+      ...(canonical ? { url: canonical } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | TheWordOf Tools`,
       description,
     },
+    ...(canonical
+      ? {
+          alternates: {
+            canonical,
+          },
+        }
+      : {}),
   };
 }

@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.thewordof.com"),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     default: "TheWordOf Tools - Ever-Expanding AI Utility Platform",
     template: "%s | TheWordOf Tools",

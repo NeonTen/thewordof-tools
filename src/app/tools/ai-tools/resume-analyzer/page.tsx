@@ -1,12 +1,14 @@
+import { generateSeoMetadata } from "@/app/lib/seo"
 import { ResumeAnalyzer } from "@/components/tools/resume-analyzer"
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { ToolHeader } from "@/components/tools/tool-header"
 
-export const metadata = {
+export const metadata = generateSeoMetadata({
   title: "AI Resume Analyzer - TheWordOf Tools",
   description: "Get instant AI feedback on your resume. Improve action verbs, formatting, grammar, and overall impact.",
-}
+  canonical: "/tools/ai-tools/resume-analyzer",
+})
 
 export default async function Page() {
   const session = await auth()

@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 export const metadata = generateSeoMetadata({
   title: "AI SEO Generator",
   description: "Generate SEO-optimized meta titles and descriptions.",
+  canonical: "/tools/ai-tools/seo-generator",
 });
 
 export default async function SeoGeneratorPage() {

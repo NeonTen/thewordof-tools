@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 export const metadata = generateSeoMetadata({
   title: "Work Report Generator – Document Tools",
   description: "Generate detailed work reports.",
+  canonical: "/tools/document-tools/report",
 });
 
 export default async function WorkReportPage() {

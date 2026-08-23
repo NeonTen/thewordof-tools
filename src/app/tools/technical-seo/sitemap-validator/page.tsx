@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "XML Sitemap Validator & Visualizer - Technical SEO Tools",
   description:
     "Load, parse, validate and visualize your website's XML sitemaps to verify crawler link coverage.",
+  canonical: "/tools/technical-seo/sitemap-validator",
 });
 
 export default function SitemapValidatorPage() {

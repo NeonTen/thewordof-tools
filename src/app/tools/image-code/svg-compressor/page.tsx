@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 export const metadata = generateSeoMetadata({
   title: "SVG Compressor",
   description: "Compress and optimize SVG files for faster web performance.",
+  canonical: "/tools/image-code/svg-compressor",
 });
 
 export default async function SVGCompressorPage() {

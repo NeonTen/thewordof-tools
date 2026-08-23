@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "Color Contrast Checker - WCAG 2.1 Accessibility Tool",
   description:
     "Check text legibility and accessibility contrast ratios under WCAG 2.1 AA & AAA standards dynamically.",
+  canonical: "/tools/design/color-contrast",
 });
 
 export default function ColorContrastPage() {

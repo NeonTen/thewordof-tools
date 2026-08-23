@@ -8,6 +8,7 @@ export const metadata = generateSeoMetadata({
   title: "SEO Readability & Content Grader | TheWordOf Tools",
   description:
     "Grade writing readability using Flesch Reading Ease metrics, inspect sentence lengths, and optimize text readability.",
+  canonical: "/tools/technical-seo/readability-grader",
 });
 
 export default async function ReadabilityGraderPage() {

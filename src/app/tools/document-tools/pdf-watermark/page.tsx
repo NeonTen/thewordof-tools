@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 export const metadata = generateSeoMetadata({
   title: "PDF Watermarker | Add Text & Image Watermarks Free",
   description: "Securely add custom text or image logo watermarks to multiple pages of a PDF entirely in your browser.",
+  canonical: "/tools/document-tools/pdf-watermark",
 });
 
 export default async function PdfWatermarkPage() {

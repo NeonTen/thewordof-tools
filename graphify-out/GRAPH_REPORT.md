@@ -1,16 +1,16 @@
-# Graph Report - thewordof-tools  (2026-08-18)
+# Graph Report - thewordof-tools  (2026-08-24)
 
 ## Corpus Check
-- 641 files · ~406,806 words
+- 644 files · ~407,264 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 5576 nodes · 8310 edges · 453 communities (422 shown, 31 thin omitted)
+- 5578 nodes · 8344 edges · 455 communities (423 shown, 32 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 180 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7d3c8aae`
+- Built from commit: `cdbb304a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -251,6 +251,7 @@
 - [[_COMMUNITY_Community 236|Community 236]]
 - [[_COMMUNITY_Community 237|Community 237]]
 - [[_COMMUNITY_Community 238|Community 238]]
+- [[_COMMUNITY_Community 239|Community 239]]
 - [[_COMMUNITY_Community 240|Community 240]]
 - [[_COMMUNITY_Community 241|Community 241]]
 - [[_COMMUNITY_Community 242|Community 242]]
@@ -460,20 +461,24 @@
 - [[_COMMUNITY_Community 450|Community 450]]
 - [[_COMMUNITY_Community 451|Community 451]]
 - [[_COMMUNITY_Community 452|Community 452]]
+- [[_COMMUNITY_Community 453|Community 453]]
+- [[_COMMUNITY_Community 454|Community 454]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 159 edges
-2. `generateSeoMetadata()` - 108 edges
+2. `generateSeoMetadata()` - 114 edges
 3. `ToolHeader()` - 74 edges
 4. `Card()` - 66 edges
 5. `CardContent()` - 65 edges
-6. `Button()` - 61 edges
+6. `Button()` - 63 edges
 7. `CardHeader()` - 61 edges
 8. `CardTitle()` - 55 edges
 9. `useUsageLimit()` - 43 edges
 10. `CardDescription()` - 41 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `checker()` --calls--> `load_html()`  [INFERRED]
+  .agents/skills/seo/scripts/a11y_seo_checker.py → .agents/skills/seo/scripts/seo_common.py
 - `extract_internal_anchors()` --calls--> `same_host()`  [INFERRED]
   .agents/skills/seo/scripts/anchor_text_audit.py → .agents/skills/seo/scripts/seo_common.py
 - `main()` --calls--> `print_json_or_text()`  [INFERRED]
@@ -482,13 +487,11 @@
   .agents/skills/seo/scripts/answer_block_scanner.py → .agents/skills/seo/scripts/seo_common.py
 - `_load_source()` --calls--> `load_html()`  [INFERRED]
   .agents/skills/seo/scripts/cache_compression_checker.py → .agents/skills/seo/scripts/seo_common.py
-- `audit()` --calls--> `require_bs4()`  [INFERRED]
-  .agents/skills/seo/scripts/cache_compression_checker.py → .agents/skills/seo/scripts/seo_common.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (453 total, 31 thin omitted)
+## Communities (455 total, 32 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.03
@@ -532,7 +535,7 @@ Nodes (29): Acknowledging Correct Feedback, Code Review Reception, code:block1 (
 
 ### Community 10 - "Community 10"
 Cohesion: 0.06
-Nodes (37): BmiPage(), metadata, ColorConverterPage(), metadata, EmiPage(), metadata, ImageConverterPage(), metadata (+29 more)
+Nodes (38): AspectRatioPage(), metadata, CodeMinifierPage(), metadata, ColorContrastScannerPage(), metadata, ColorConverterPage(), metadata (+30 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.25
@@ -544,7 +547,7 @@ Nodes (6): code:typescript (features: [), code:typescript (["Dynamic QR Codes", 
 
 ### Community 13 - "Community 13"
 Cohesion: 0.06
-Nodes (35): AspectRatioPage(), metadata, metadata, BrokenLinksPage(), metadata, CodeMinifierPage(), metadata, metadata (+27 more)
+Nodes (34): metadata, BmiPage(), metadata, CompoundInterestPage(), metadata, metadata, EmiPage(), metadata (+26 more)
 
 ### Community 14 - "Community 14"
 Cohesion: 0.09
@@ -592,7 +595,7 @@ Nodes (9): 1. General & UI Verification, 2. Tool-Specific Verification, 3. SEO &
 
 ### Community 25 - "Community 25"
 Cohesion: 0.04
-Nodes (27): CaptionGeneratorPage(), metadata, POST(), GET(), POST(), DELETE(), POST(), DELETE() (+19 more)
+Nodes (24): POST(), GET(), POST(), DELETE(), POST(), DELETE(), GET(), PATCH() (+16 more)
 
 ### Community 26 - "Community 26"
 Cohesion: 0.10
@@ -667,8 +670,8 @@ Cohesion: 0.20
 Nodes (8): code:bash (BASE_SHA=$(git rev-parse HEAD~1)  # or origin/main), code:block2 ([Just completed Task 2: Add verification function]), Example, How to Request, Integration with Workflows, Red Flags, Requesting Code Review, When to Request Review
 
 ### Community 44 - "Community 44"
-Cohesion: 0.14
-Nodes (14): [1.0.2] - 2026-06-02, Changed, Added, Added, Added, Added, Added, Added (+6 more)
+Cohesion: 0.13
+Nodes (15): [1.0.2] - 2026-06-02, Added, Changed, Added, Added, Added, Added, Added (+7 more)
 
 ### Community 45 - "Community 45"
 Cohesion: 0.12
@@ -699,8 +702,8 @@ Cohesion: 0.29
 Nodes (6): code:toml ([features]), code:bash (GIT_DIR=$(cd "$(git rev-parse --git-dir)" 2>/dev/null && pwd), Codex App Finishing, Codex Tool Mapping, Environment Detection, Subagent dispatch requires multi-agent support
 
 ### Community 52 - "Community 52"
-Cohesion: 0.27
-Nodes (11): convertSvgToReact(), convertSvgToSvelte(), convertSvgToVue(), optimizeSVG(), prettyPrintSVG(), SVGOptions, toPascalCase(), NativeToggle() (+3 more)
+Cohesion: 0.13
+Nodes (27): calculators, CalculatorsPage(), metadata, useUsageLimit(), convertSvgToReact(), convertSvgToSvelte(), convertSvgToVue(), optimizeSVG() (+19 more)
 
 ### Community 53 - "Community 53"
 Cohesion: 0.08
@@ -771,8 +774,8 @@ Cohesion: 0.20
 Nodes (9): 1. Smart Formatting Component (`FormattedCvText`), 2. Integration Across CV Templates, 3. Editor Guidance Helper, Automated Tests, Design Specification: Multi-Paragraph & Bullet List Text Formatting in AI CV Builder, Goal, Manual Verification, Proposed Changes (+1 more)
 
 ### Community 70 - "Community 70"
-Cohesion: 0.09
-Nodes (40): computedHash, skillPath, skillPath, source, sourceType, sourceType, computedHash, computedHash (+32 more)
+Cohesion: 0.14
+Nodes (32): computedHash, skillPath, source, sourceType, sourceType, computedHash, computedHash, skillPath (+24 more)
 
 ### Community 71 - "Community 71"
 Cohesion: 0.08
@@ -791,8 +794,8 @@ Cohesion: 0.09
 Nodes (21): 10 Best Practices for PM Resumes, 1. Introduction, 2. Detailed Feedback on 10 Best Practices, 3. Conclusion, Additional Tips for Product Managers, Best Practice 10: Use Standard Language and Job Titles, Best Practice 1: Professional Summary, Best Practice 2: Avoid Personal Pronouns (+13 more)
 
 ### Community 75 - "Community 75"
-Cohesion: 0.22
-Nodes (9): [1.1.4] - 2026-06-12, Added, Changed, Fixed, Added, Changed, Changed, Fixed (+1 more)
+Cohesion: 0.10
+Nodes (19): AdminLayout(), POST(), POST(), POST(), POST(), POST(), POST(), POST() (+11 more)
 
 ### Community 76 - "Community 76"
 Cohesion: 0.22
@@ -807,8 +810,8 @@ Cohesion: 0.10
 Nodes (20): 1. Burning Pain Point, 2. Willingness to Pay, 3. Winnable Market Share, 4. Referral Potential, Beachhead Segment, Framework, Further Reading, How It Works (+12 more)
 
 ### Community 79 - "Community 79"
-Cohesion: 0.46
-Nodes (7): _asset_urls(), audit(), _cache_max_age(), _check_url(), _is_url(), _load_source(), main()
+Cohesion: 0.36
+Nodes (5): SettingsForm(), SettingsFormProps, metadata, SettingsPage(), Separator()
 
 ### Community 80 - "Community 80"
 Cohesion: 0.10
@@ -831,8 +834,8 @@ Cohesion: 0.40
 Nodes (5): Discipline-Enforcing Skills (rules/requirements), Pattern Skills (mental models), Reference Skills (documentation/APIs), Technique Skills (how-to guides), Testing All Skill Types
 
 ### Community 86 - "Community 86"
-Cohesion: 0.08
-Nodes (52): AdminPage(), metadata, AiToolsPage(), metadata, tools, Home(), calculators, CalculatorsPage() (+44 more)
+Cohesion: 0.07
+Nodes (46): syncPlanStatus(), AdminPage(), metadata, AiToolsPage(), metadata, tools, Home(), CreditOverview() (+38 more)
 
 ### Community 87 - "Community 87"
 Cohesion: 0.11
@@ -903,8 +906,8 @@ Cohesion: 0.67
 Nodes (3): code:bash (./render-graphs.js ../some-skill           # Each diagram se), code:dot (digraph when_flowchart {), Flowchart Usage
 
 ### Community 110 - "Community 110"
-Cohesion: 0.09
-Nodes (39): Pattern, checker(), main(), main(), matrix(), crawl(), main(), sitemap_seeds() (+31 more)
+Cohesion: 0.12
+Nodes (30): Pattern, main(), matrix(), crawl(), main(), sitemap_seeds(), evaluate(), main() (+22 more)
 
 ### Community 113 - "Community 113"
 Cohesion: 0.10
@@ -991,8 +994,8 @@ Cohesion: 0.33
 Nodes (4): code:bash (git add src/components/layout/mobile-nav.tsx), Mobile Navigation Drawer Backdrop Fix Implementation Plan, Task 1: Refactor mobile-nav.tsx, Task 2: Verification
 
 ### Community 137 - "Community 137"
-Cohesion: 0.22
-Nodes (9): [1.1.3] - 2026-06-11, Added, Changed, Added, Added, Added, Changed, Changed (+1 more)
+Cohesion: 0.11
+Nodes (21): [1.1.3] - 2026-06-11, [1.1.5] - 2026-06-13, [1.1.6] - 2026-06-14, Added, Added, Added, Changed, Changed (+13 more)
 
 ### Community 138 - "Community 138"
 Cohesion: 0.29
@@ -1023,8 +1026,8 @@ Cohesion: 0.22
 Nodes (8): Automated Tests, Design Specification: SVG Framework Component Export, Goal, Manual Verification, Proposed Changes, SVG Compressor Component, SVG Utils, Verification Plan
 
 ### Community 145 - "Community 145"
-Cohesion: 0.08
-Nodes (23): code:typescript (const segments = pathname.split("/").filter(Boolean)), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:), code:bash (git add src/components/tools/related-tools.tsx), code:typescript (// From:), code:typescript (// From:) (+15 more)
+Cohesion: 0.09
+Nodes (21): code:typescript (const segments = pathname.split("/").filter(Boolean)), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:), code:typescript (// From:), code:bash (git add src/components/tools/related-tools.tsx), code:typescript (// From:), code:typescript (// From:) (+13 more)
 
 ### Community 146 - "Community 146"
 Cohesion: 0.17
@@ -1056,7 +1059,7 @@ Nodes (12): code:block15 (pdf/), code:`markdown (---), code:block17, code:block1
 
 ### Community 153 - "Community 153"
 Cohesion: 0.06
-Nodes (56): SupportModalProps, cn(), UpgradeButtonProps, Window, NativeToggle(), Avatar(), AvatarBadge(), AvatarFallback() (+48 more)
+Nodes (60): SupportModalProps, cn(), UpgradeButtonProps, Window, NativeToggle(), Avatar(), AvatarBadge(), AvatarFallback() (+52 more)
 
 ### Community 154 - "Community 154"
 Cohesion: 0.40
@@ -1107,8 +1110,8 @@ Cohesion: 0.33
 Nodes (5): Client Components, Design Document: AI Tools Login Overlay Flex Fix, Goal Description, Proposed Changes, Verification Plan
 
 ### Community 166 - "Community 166"
-Cohesion: 0.22
-Nodes (9): [1.1.1] - 2026-06-09, Fixed, Fixed, Fixed, Fixed, Fixed, Fixed, Fixed (+1 more)
+Cohesion: 0.11
+Nodes (18): [1.1.1] - 2026-06-09, [1.1.4] - 2026-06-12, Added, Changed, Fixed, Fixed, Added, Changed (+10 more)
 
 ### Community 167 - "Community 167"
 Cohesion: 0.29
@@ -1152,7 +1155,7 @@ Nodes (7): Category Restructuring & Layout Polish Implementation Plan, code:tsx 
 
 ### Community 177 - "Community 177"
 Cohesion: 0.11
-Nodes (25): assert_safe_url(), _consume_capped(), default_headers(), _is_blocked_ip(), normalize_url(), _port_for(), Execute an HTTP request with SSRF guards, redirect checks, TLS verification,, Raised when a request is blocked by safe HTTP policy. (+17 more)
+Nodes (28): assert_safe_url(), _consume_capped(), default_headers(), _is_blocked_ip(), normalize_url(), _port_for(), Execute an HTTP request with SSRF guards, redirect checks, TLS verification,, Raised when a request is blocked by safe HTTP policy. (+20 more)
 
 ### Community 178 - "Community 178"
 Cohesion: 0.22
@@ -1183,8 +1186,8 @@ Cohesion: 0.33
 Nodes (4): GradientPalettePage(), metadata, GradientCard, GradientPalette()
 
 ### Community 185 - "Community 185"
-Cohesion: 0.09
-Nodes (26): [1.1.2] - 2026-06-10, [1.1.5] - 2026-06-13, [1.1.6] - 2026-06-14, Added, Added, Added, Changed, Changed (+18 more)
+Cohesion: 0.14
+Nodes (14): [1.1.2] - 2026-06-10, Added, Changed, Fixed, Added, Added, Added, Added (+6 more)
 
 ### Community 186 - "Community 186"
 Cohesion: 0.12
@@ -1223,8 +1226,8 @@ Cohesion: 0.25
 Nodes (7): 1. Navigation & Routing Fix in `RelatedTools`, 2. Spacing Class Cleanup in Tools, code:typescript (const segments = pathname.split("/").filter(Boolean)), Design Specification: Spacing Standardization and Navigation Fixes, Overview, Proposed Changes, Verification Plan
 
 ### Community 195 - "Community 195"
-Cohesion: 0.16
-Nodes (13): ScannedLink, ContrastFailure, DocConverter(), UploadedFile, allTools, categories, CATEGORIES, Category (+5 more)
+Cohesion: 0.19
+Nodes (11): ContrastFailure, UploadedFile, allTools, categories, CATEGORIES, Category, ToolItem, ToolsList() (+3 more)
 
 ### Community 197 - "Community 197"
 Cohesion: 0.50
@@ -1236,7 +1239,7 @@ Nodes (6): 1. SERP Previewer & Meta Tag Analyzer, 2. Keyword Density & Optimizat
 
 ### Community 199 - "Community 199"
 Cohesion: 0.10
-Nodes (33): useUsageLimit(), formatBytes(), IMAGE_PRESETS, processImage(), ResizeOptions, getDailyUsage(), getMonthlyUsage(), incrementDailyUsage() (+25 more)
+Nodes (35): ForgotPasswordForm(), ResetPasswordForm(), ForgotPasswordPage(), metadata, formatBytes(), IMAGE_PRESETS, processImage(), ResizeOptions (+27 more)
 
 ### Community 200 - "Community 200"
 Cohesion: 0.13
@@ -1283,8 +1286,8 @@ Cohesion: 0.20
 Nodes (10): [1.0.0] - 2026-05-31, Added, Added, Added, Added, Added, Added, Added (+2 more)
 
 ### Community 213 - "Community 213"
-Cohesion: 0.07
-Nodes (34): [1.1.7] - 2026-06-21, [1.1.8] - 2026-06-23, [1.1.9] - 2026-06-24, [1.2.0] - 2026-07-01, [1.2.1] - 2026-07-10, [1.2.2] - 2026-07-21, [1.2.3] - 2026-07-27, [1.2.4] - 2026-07-30 (+26 more)
+Cohesion: 0.09
+Nodes (28): [1.1.8] - 2026-06-23, [1.1.9] - 2026-06-24, [1.2.0] - 2026-07-01, [1.2.2] - 2026-07-21, [1.2.3] - 2026-07-27, [1.2.4] - 2026-07-30, [1.2.5] - 2026-08-01, [1.2.6] - 2026-08-08 (+20 more)
 
 ### Community 214 - "Community 214"
 Cohesion: 0.25
@@ -1311,8 +1314,8 @@ Cohesion: 0.20
 Nodes (9): Domain Context, Further Reading, Input Requirements, Instructions, Metadata, Notes, Output, Process (+1 more)
 
 ### Community 220 - "Community 220"
-Cohesion: 0.10
-Nodes (19): AdminLayout(), POST(), POST(), POST(), POST(), POST(), POST(), POST() (+11 more)
+Cohesion: 0.48
+Nodes (3): metadata, SerpPreviewPage(), SerpPreviewer()
 
 ### Community 221 - "Community 221"
 Cohesion: 0.22
@@ -1375,8 +1378,8 @@ Cohesion: 0.22
 Nodes (9): code:block36, code:`markdown (## Commit message format), code:block38, code:block39, code:block40, code:markdown (## Document modification workflow), Conditional workflow pattern, Examples pattern (+1 more)
 
 ### Community 236 - "Community 236"
-Cohesion: 0.10
-Nodes (25): syncPlanStatus(), POST(), POST(), PLAN_PRICING, SUBSCRIPTION_PLANS, POST(), POST(), POST() (+17 more)
+Cohesion: 0.11
+Nodes (23): POST(), POST(), PLAN_PRICING, SUBSCRIPTION_PLANS, POST(), POST(), POST(), sendPasswordResetEmail() (+15 more)
 
 ### Community 237 - "Community 237"
 Cohesion: 0.25
@@ -1385,6 +1388,10 @@ Nodes (7): Brainstorm Team OKRs, Context, Domain Context, Further Reading, Instr
 ### Community 238 - "Community 238"
 Cohesion: 0.25
 Nodes (7): Domain Context, Further Reading, North Star Metric, Prompt, The Three Business Games, Tips for Best Results, When to Use
+
+### Community 239 - "Community 239"
+Cohesion: 0.16
+Nodes (4): Implementation Hook, Output Contract, Responsibilities, Verification Rules
 
 ### Community 240 - "Community 240"
 Cohesion: 0.08
@@ -1615,12 +1622,12 @@ Cohesion: 0.18
 Nodes (18): BeautifulSoup, safe_get(), analyze_sameas(), check_google_knowledge_graph(), check_nap_consistency(), check_wikidata(), check_wikipedia(), extract_entities_from_schema() (+10 more)
 
 ### Community 311 - "Community 311"
-Cohesion: 0.23
-Nodes (14): Any, Any, check_canonicals(), main(), as_list(), check_offer(), check_product_schema(), main() (+6 more)
+Cohesion: 0.22
+Nodes (15): Any, Any, check_collection_page(), main(), rel_values(), as_list(), check_offer(), check_product_schema() (+7 more)
 
 ### Community 312 - "Community 312"
 Cohesion: 0.14
-Nodes (19): RuntimeError, auth_context(), _build_url(), gh_api_json(), gh_auth_details(), gh_available(), GitHubAPIError, graphql_json() (+11 more)
+Nodes (22): RuntimeError, auth_context(), _build_url(), fetch_json(), gh_api_json(), gh_auth_details(), gh_available(), GitHubAPIError (+14 more)
 
 ### Community 313 - "Community 313"
 Cohesion: 0.11
@@ -1651,8 +1658,8 @@ Cohesion: 0.83
 Nodes (3): generate(), main(), page_title()
 
 ### Community 320 - "Community 320"
-Cohesion: 0.22
-Nodes (16): fetch_json(), Unified API accessor.      provider modes:     - api: use direct REST API only., aggregate_candidates(), build_report(), days_since(), decode_readme_content(), _dedupe(), fetch_readme_metrics() (+8 more)
+Cohesion: 0.24
+Nodes (14): aggregate_candidates(), build_report(), days_since(), decode_readme_content(), _dedupe(), fetch_readme_metrics(), fetch_repo_metadata(), load_queries() (+6 more)
 
 ### Community 321 - "Community 321"
 Cohesion: 0.12
@@ -1663,12 +1670,12 @@ Cohesion: 0.21
 Nodes (16): add_finding(), analyze_title_strategy(), build_audit(), days_since(), _dedupe_keep_order(), _format_title_token(), local_file_signals(), main() (+8 more)
 
 ### Community 323 - "Community 323"
-Cohesion: 0.09
-Nodes (23): 1. Discovery, 2. Competitive Analysis, 3. Architecture Design, 4.5 Topical Authority Cluster Planning, 4. Content Strategy, 5. Technical Foundation, 6. Implementation Roadmap (4 phases), Cluster Article Requirements (+15 more)
+Cohesion: 0.12
+Nodes (17): 1. Discovery, 2. Competitive Analysis, 3. Architecture Design, 4.5 Topical Authority Cluster Planning, 4. Content Strategy, 5. Technical Foundation, 6. Implementation Roadmap (4 phases), Cluster Article Requirements (+9 more)
 
 ### Community 324 - "Community 324"
-Cohesion: 0.10
-Nodes (28): FormData, loginSchema, registerSchema, UserAuthForm(), UserAuthFormProps, BillingPage(), CreditOverview(), CreditOverviewProps (+20 more)
+Cohesion: 0.13
+Nodes (19): FormData, loginSchema, registerSchema, UserAuthForm(), UserAuthFormProps, BillingPage(), metadata, LoginPage() (+11 more)
 
 ### Community 325 - "Community 325"
 Cohesion: 0.12
@@ -1743,8 +1750,8 @@ Cohesion: 0.15
 Nodes (12): AI Crawler Management, Available Scripts, Categories to Analyze, CLS (Cumulative Layout Shift) — Visual Stability, Core Web Vitals Reference, Cross-Skill Delegation, INP (Interaction to Next Paint) — Interactivity, JavaScript Rendering Checklist (+4 more)
 
 ### Community 343 - "Community 343"
-Cohesion: 0.20
-Nodes (10): [1.0.1] - 2026-06-01, Added, Added, Added, Added, Added, Added, Added (+2 more)
+Cohesion: 0.22
+Nodes (9): [1.0.1] - 2026-06-01, Added, Added, Added, Added, Added, Added, Added (+1 more)
 
 ### Community 344 - "Community 344"
 Cohesion: 0.24
@@ -1771,8 +1778,8 @@ Cohesion: 0.27
 Nodes (11): Any, _empty_result(), get_pagespeed(), get_pagespeed_for_strategies(), main(), parse_pagespeed_response(), print_result(), Fetch PageSpeed Insights data for a URL.      Args:         url: URL to analyze (+3 more)
 
 ### Community 350 - "Community 350"
-Cohesion: 0.60
-Nodes (5): audit(), _imports_from_css(), _is_cross_origin(), _load_source(), main()
+Cohesion: 0.23
+Nodes (10): check_canonicals(), main(), audit(), _imports_from_css(), _is_cross_origin(), _load_source(), main(), same_host() (+2 more)
 
 ### Community 351 - "Community 351"
 Cohesion: 0.18
@@ -1787,8 +1794,8 @@ Cohesion: 0.33
 Nodes (10): Any, _fetch_url(), _is_responsive_fill_image(), main(), parse_html(), Fetch HTML for direct parsing., Flatten top-level JSON-LD objects and @graph nodes for validation., Parse HTML and extract SEO-relevant elements.      Args:         html: HTML cont (+2 more)
 
 ### Community 354 - "Community 354"
-Cohesion: 0.24
-Nodes (12): Any, Any, check_social_preview(), main(), diff_schema(), main(), prop_set(), detect_template_type() (+4 more)
+Cohesion: 0.18
+Nodes (15): Any, Any, analyze_backlinks(), _first_existing(), main(), read_backlink_export(), main(), diff_schema() (+7 more)
 
 ### Community 355 - "Community 355"
 Cohesion: 0.18
@@ -1803,16 +1810,16 @@ Cohesion: 0.20
 Nodes (9): Active — Recommend freely, Deprecated — Never recommend, E-commerce Requirements (Updated), Format Preference, Recent Additions (2024-2026), Restricted — Only for specific site types, Schema.org Types — Status & Recommendations (February 2026), Testing Tools (+1 more)
 
 ### Community 358 - "Community 358"
-Cohesion: 0.70
-Nodes (4): Any, as_list(), check_video_schema(), main()
+Cohesion: 0.25
+Nodes (5): metadata, metadata, SeoGeneratorPage(), ResumeAnalyzer(), SeoGenerator()
 
 ### Community 359 - "Community 359"
 Cohesion: 0.38
 Nodes (9): append_jsonl(), build_snapshot(), collect_traffic(), ensure_dir(), fetch_endpoint(), main(), print_text(), utc_now_iso() (+1 more)
 
 ### Community 360 - "Community 360"
-Cohesion: 0.38
-Nodes (9): analyze_source(), _candidate_lcp_image(), _is_url(), _lcp_element_url(), _load_lighthouse(), _load_source(), main(), _network_item_for_url() (+1 more)
+Cohesion: 0.35
+Nodes (10): analyze_source(), _candidate_lcp_image(), _fetch_ttfb(), _is_url(), _lcp_element_url(), _load_lighthouse(), _load_source(), main() (+2 more)
 
 ### Community 361 - "Community 361"
 Cohesion: 0.20
@@ -1863,7 +1870,7 @@ Cohesion: 0.32
 Nodes (7): check_broken_links(), check_link(), extract_links(), main(), Check all links on a page for broken links.      Args:         url: Page URL to, Extract all links from HTML content., Check a single link's HTTP status.
 
 ### Community 373 - "Community 373"
-Cohesion: 0.08
+Cohesion: 0.07
 Nodes (26): 1. Self-Referencing Tags, 2. Return Tags, 3. x-default Tag, 4. Language Code Validation, 5. Region Code Validation, 6. Canonical URL Alignment, 7. Protocol Consistency, 8. Cross-Domain Support (+18 more)
 
 ### Community 374 - "Community 374"
@@ -1883,8 +1890,8 @@ Cohesion: 0.50
 Nodes (7): _load_source(), main(), map_clusters(), _row_from_source(), _rows_from_csv(), _split_links(), _topic_from_text()
 
 ### Community 378 - "Community 378"
-Cohesion: 0.60
-Nodes (3): metadata, SalaryHourlyPage(), SalaryHourlyCalculator()
+Cohesion: 0.48
+Nodes (4): BrokenLinksPage(), metadata, BrokenLinksAuditor(), ScannedLink
 
 ### Community 379 - "Community 379"
 Cohesion: 0.17
@@ -1959,8 +1966,8 @@ Cohesion: 0.60
 Nodes (5): audit(), _extract_font_faces(), _font_format(), _load_source(), main()
 
 ### Community 397 - "Community 397"
-Cohesion: 0.70
-Nodes (4): _local_text(), main(), suggest_topics(), _topicify()
+Cohesion: 0.28
+Nodes (5): CaptionGeneratorPage(), metadata, ImageConverterPage(), metadata, CaptionGenerator()
 
 ### Community 398 - "Community 398"
 Cohesion: 0.47
@@ -2007,12 +2014,12 @@ Cohesion: 0.33
 Nodes (6): CI Checks, Current Release, Excluded From Release Assets, Release and Packaging, Runtime Allowlist, Tag-Based Packaging
 
 ### Community 409 - "Community 409"
-Cohesion: 0.07
-Nodes (41): SettingsFormProps, ForgotPasswordPage(), BmiResult, calculateAspectRatio(), calculateBmi(), calculateCompoundInterest(), calculateLineHeight(), calculateSalaryToHourly() (+33 more)
+Cohesion: 0.06
+Nodes (33): BmiResult, calculateAspectRatio(), calculateBmi(), calculateCompoundInterest(), calculateLineHeight(), calculateSalaryToHourly(), CompoundInterestInput, CompoundInterestYearData (+25 more)
 
 ### Community 410 - "Community 410"
-Cohesion: 0.40
-Nodes (4): Implementation Hook, Output Contract, Responsibilities, Verification Rules
+Cohesion: 0.25
+Nodes (8): [1.1.7] - 2026-06-21, [1.2.1] - 2026-07-10, [1.2.8] - 2026-08-13, Added, Changed, Fixed, Fixed, Fixed
 
 ### Community 411 - "Community 411"
 Cohesion: 0.70
@@ -2047,8 +2054,8 @@ Cohesion: 0.67
 Nodes (3): capture_screenshot(), main(), Capture a screenshot of a web page.      Args:         url: URL to capture
 
 ### Community 419 - "Community 419"
-Cohesion: 0.70
-Nodes (4): build_index(), build_urlset(), main(), read_manifest()
+Cohesion: 0.33
+Nodes (6): Deliverables, Industry Templates, KPI Targets, Output, Strategic SEO Planning, Success Criteria
 
 ### Community 420 - "Community 420"
 Cohesion: 0.67
@@ -2056,7 +2063,7 @@ Nodes (3): check_social_meta(), main(), Validate social media meta tags for a UR
 
 ### Community 421 - "Community 421"
 Cohesion: 0.60
-Nodes (3): metadata, SeoGeneratorPage(), SeoGenerator()
+Nodes (3): metadata, ProductDescriptionPage(), ProductDescription()
 
 ### Community 422 - "Community 422"
 Cohesion: 0.83
@@ -2095,8 +2102,8 @@ Cohesion: 0.40
 Nodes (4): CV Builder Editable Headings & Pro Custom Content Sections Implementation Plan, Task 1: Add State & Implement Editable Default Headings, Task 2: Implement Pro Custom Content Sections After Summary, Task 3: Production Build Verification & Cleanup
 
 ### Community 435 - "Community 435"
-Cohesion: 0.60
-Nodes (3): ColorContrastScannerPage(), metadata, ColorContrastScanner()
+Cohesion: 0.67
+Nodes (3): fetch_page(), main(), Fetch a web page and return response details.      Args:         url: The URL to
 
 ### Community 436 - "Community 436"
 Cohesion: 0.40
@@ -2115,28 +2122,28 @@ Cohesion: 0.40
 Nodes (4): CV Builder Full-Width Accordion Redesign & Live Preview Modal Implementation Plan, Task 1: Create Unit Test & Build Sticky Top Toolbar with Preview State, Task 2: Build Full-Width Accordion Editor & Live Preview Modal, Task 3: Production Build Verification & Cleanup
 
 ### Community 441 - "Community 441"
-Cohesion: 0.60
-Nodes (3): CompoundInterestPage(), metadata, CompoundInterestCalculator()
+Cohesion: 0.70
+Nodes (4): Any, as_list(), check_video_schema(), main()
 
 ### Community 442 - "Community 442"
 Cohesion: 0.70
 Nodes (4): local_name(), main(), parse_hreflang_sitemap(), validate_hreflang_sitemaps()
 
 ### Community 443 - "Community 443"
-Cohesion: 0.70
-Nodes (4): analyze_backlinks(), _first_existing(), main(), read_backlink_export()
-
-### Community 445 - "Community 445"
 Cohesion: 0.60
 Nodes (3): metadata, PromptGeneratorPage(), PromptGenerator()
+
+### Community 444 - "Community 444"
+Cohesion: 0.70
+Nodes (4): _local_text(), main(), suggest_topics(), _topicify()
+
+### Community 445 - "Community 445"
+Cohesion: 0.36
+Nodes (6): checker(), main(), check_mobile_render(), main(), _rendered_checks(), _static_checks()
 
 ### Community 446 - "Community 446"
 Cohesion: 0.40
 Nodes (5): 1. Data Extraction, 2. LLM-Driven Analysis, 3. Reporting, Process, SEO Sub-Skill: Article Analysis
-
-### Community 447 - "Community 447"
-Cohesion: 0.83
-Nodes (3): check_collection_page(), main(), rel_values()
 
 ### Community 448 - "Community 448"
 Cohesion: 0.83
@@ -2146,19 +2153,23 @@ Nodes (3): inventory_repository(), main(), path_exists()
 Cohesion: 0.83
 Nodes (3): documented_count(), list_files(), main()
 
+### Community 450 - "Community 450"
+Cohesion: 0.70
+Nodes (4): build_index(), build_urlset(), main(), read_manifest()
+
 ## Knowledge Gaps
 - **2581 isolated node(s):** `start-server.sh script`, `stop-server.sh script`, `pre_commit_seo_check.sh script`, `find-polluter.sh script`, `fs` (+2576 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **31 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **32 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Programmatic SEO Analysis & Planning` connect `Community 258` to `Community 239`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `cn()` connect `Community 153` to `Community 160`, `Community 195`, `Community 324`, `Community 35`, `Community 199`, `Community 10`, `Community 13`, `Community 52`, `Community 86`, `Community 409`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
-- **Why does `Content Quality & E-E-A-T Analysis` connect `Community 193` to `Community 239`?**
+- **Why does `cn()` connect `Community 153` to `Community 160`, `Community 195`, `Community 324`, `Community 35`, `Community 452`, `Community 199`, `Community 10`, `Community 13`, `Community 79`, `Community 52`, `Community 86`, `Community 409`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Why does `generateSeoMetadata()` connect `Community 10` to `Community 13`, `Community 397`, `Community 160`, `Community 421`, `Community 425`, `Community 173`, `Community 174`, `Community 52`, `Community 440`, `Community 184`, `Community 443`, `Community 190`, `Community 195`, `Community 324`, `Community 199`, `Community 200`, `Community 79`, `Community 86`, `Community 220`, `Community 358`, `Community 378`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **What connects `start-server.sh script`, `stop-server.sh script`, `Agentic SEO script package.` to the rest of the system?**
   _2726 weakly-connected nodes found - possible documentation gaps or missing edges._

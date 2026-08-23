@@ -13,6 +13,7 @@ export const metadata = generateSeoMetadata({
   title: "Document Tools | TheWordOf Tools",
   description:
     "Free online document utilities, PDF converters, professional invoice generators, and work report templates.",
+  canonical: "/tools/document-tools",
 });
 
 const tools = [

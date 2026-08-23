@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 export const metadata = generateSeoMetadata({
   title: "PDF Merger & Splitter | Free Online Tool",
   description: "Merge multiple PDFs into one or extract specific pages securely in your browser. Free online PDF utility.",
+  canonical: "/tools/document-tools/pdf-merger",
 });
 
 export default async function PdfMergerPage() {

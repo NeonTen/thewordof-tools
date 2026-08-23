@@ -10,6 +10,7 @@ import { UserAuthForm } from "@/components/auth/user-auth-form";
 export const metadata = generateSeoMetadata({
   title: "Create an account",
   description: "Create an account to get started.",
+  canonical: "/register",
 });
 
 export default function RegisterPage() {

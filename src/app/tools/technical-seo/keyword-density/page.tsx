@@ -7,6 +7,7 @@ export const metadata = generateSeoMetadata({
   title: "Keyword Density & Frequency Analyzer | TheWordOf Tools",
   description:
     "Calculate keyword density percentages, count phrase frequencies, and optimize on-page SEO targeting guidelines.",
+  canonical: "/tools/technical-seo/keyword-density",
 });
 
 export default async function KeywordDensityPage() {
